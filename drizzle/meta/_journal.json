@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1788457312697,
+      "tag": "0000_mushy_red_skull",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1788533198834,
+      "tag": "0001_equal_praxagora",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1788870848179,
+      "tag": "0002_sloppy_ironclad",
+      "breakpoints": true
+    }
+  ]
+}
