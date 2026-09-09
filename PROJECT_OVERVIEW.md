@@ -48,6 +48,17 @@ The estimates below apply to a polished internal prototype that continues to use
 
 ## Recommended build sequence
 
+### Phase 1.5: Prepare the internal QA and regulatory demonstration
+
+1. Add a 10 to 12 minute hands-on walkthrough around the timing-change scenario.
+2. Require the presenter to demonstrate accept, reject and revise, and edit-action decisions before using a labelled fixture helper for the remaining review.
+3. Produce an annotated PDF handoff guide with the same step numbers and boundaries.
+4. Use factual incoming and outgoing relationship labels until QA and regulatory reviewers ratify dependency semantics.
+5. Display sub-minute review times and loading feedback for document baseline changes.
+6. Keep provisional evaluation results outside the main walkthrough.
+
+Implemented in the phase 1.5 guided demonstration. The answer keys remain provisional and unchanged pending independent QA and regulatory review.
+
 ### Phase 1: Complete the controlled change loop
 
 1. Add recent-change navigation.
@@ -67,14 +78,21 @@ Implemented. Stored changes reopen at their current stage, QA can return candida
 
 This phase creates the clearest Ketryx and Infera comparison. All five capabilities can work against the existing fictional evidence graph.
 
+### Phase 2.5: Demonstrate Jira-shaped connected work
+
+1. Import a small fixture set of Jira-shaped records.
+2. Show explicit field mapping and typed links to requirements, risks, and tests.
+3. Demonstrate a simulated round-trip status change.
+
+Use a fixture-backed adapter to test the internal evidence model and mapping rules. Do not depend on Jira administration, credentials, or a live customer project at this stage.
+
 ### Phase 3: Demonstrate ingestion and connected work
 
-1. Import a small set of fictional PDFs, product requirements, and Jira-shaped records.
+1. Import a small set of fictional PDFs and product requirements.
 2. Show extracted requirement candidates before a person accepts them.
-3. Add a fixture-backed Jira adapter that demonstrates field mapping, typed links, and round-trip status changes.
-4. Add controlled document redlines and a package-completeness view.
+3. Add controlled document redlines and a package-completeness view.
 
-Use a fixture-backed adapter before a live Jira integration. The team can settle the internal evidence model and mapping rules without depending on Jira administration or credentials.
+Keep every extracted requirement as a candidate until a person accepts it into controlled scope.
 
 ### Phase 4: Connect real systems
 

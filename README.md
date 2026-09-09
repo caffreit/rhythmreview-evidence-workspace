@@ -22,6 +22,12 @@ Replay mode works without an API key. To run live analysis, copy `.env.example` 
 
 ## Run a demonstration
 
+For the rehearsed 10–12 minute internal QA/RA path, select **Start guided walkthrough** in the sidebar. The walkthrough highlights each target, waits for required workflow state, and keeps every controlled action under the presenter's control. Its restart action offers a workspace reset instead of changing server-backed workflow state silently.
+
+The shareable companion is the eight-page [Phase 1.5 walkthrough PDF](output/pdf/rhythmreview_phase_1_5_walkthrough.pdf). The detailed rehearsal reference remains [the presenter script](docs/presenter-script.md).
+
+The unguided workflow is:
+
 1. Open **Change workspace**.
 2. Select a scenario.
 3. Create the controlled change as Alex Morgan, the author.
@@ -48,7 +54,7 @@ npm run verify:demo
 npm run build
 ```
 
-`verify:demo` walks all three scenarios. It checks recent-change ordering, replay paths, live no-key failure recovery, QA decisions, return/edit/restore/resubmit, successful reanalysis, immutable superseded history, detailed audit values, baseline and candidate checks, exact-fingerprint waiver carry-forward, stale candidate results, separate approval, selected-run evaluation, historical document snapshots, and reset.
+`verify:demo` walks all three scenarios. For the timing scenario it follows the exact guided path, including the three required manual examples, pending-only guided completion, fixture provenance, retained rejection history, separate approval, RR-1.0/RR-1.1 comparison, and reset. It also checks recent-change ordering, replay paths, live no-key failure recovery, return/edit/restore/resubmit, successful reanalysis, immutable superseded history, detailed audit values, baseline and candidate checks, exact-fingerprint waiver carry-forward, stale candidate results, and selected-run evaluation.
 
 ## Regenerate controlled data
 

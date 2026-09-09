@@ -86,6 +86,7 @@ export const ReviewDecisionInputSchema = z.object({ decision:z.enum(['accepted',
   if (value.decision === 'edited' && !value.editedAction) context.addIssue({ code:'custom',path:['editedAction'],message:'An edited decision requires a replacement action.' });
   if (value.decision !== 'edited' && value.editedAction) context.addIssue({ code:'custom',path:['editedAction'],message:'A replacement action is valid only for an edited decision.' });
 });
+export const GuidedReviewCompletionInputSchema = z.object({ actor:QaActorSchema,confirmation:z.literal(true) });
 export const ApprovalInputSchema = z.object({ actor:QaActorSchema, confirmation:z.literal(true) });
 export const AuthorActionInputSchema = z.object({ actor:AuthorActorSchema });
 export const ReturnToAuthorInputSchema = z.object({ actor:QaActorSchema,reason:z.string().min(2).max(1000) });
@@ -127,6 +128,7 @@ export type AnalysisRunStatus = z.infer<typeof AnalysisRunStatusSchema>;
 export type ProposedUpdateStatus = z.infer<typeof ProposedUpdateStatusSchema>;
 export type CreateChangeInput = z.infer<typeof CreateChangeInputSchema>;
 export type ReviewDecisionInput = z.infer<typeof ReviewDecisionInputSchema>;
+export type GuidedReviewCompletionInput = z.infer<typeof GuidedReviewCompletionInputSchema>;
 export type UpdateDraftInput = z.infer<typeof UpdateDraftInputSchema>;
 export type ReopenAnalysisInput = z.infer<typeof ReopenAnalysisInputSchema>;
 export type CheckScope = z.infer<typeof CheckScopeSchema>;

@@ -95,12 +95,28 @@ for (const scenarioId of ['SCN-001','SCN-002','SCN-003']) {
   await expectStatus(`/api/changes/${change.id}/draft-updates`,409,{ method:'POST',body:JSON.stringify({ actor:'Alex Morgan · Author' }) });
 
   let reviewed = analysed;
-  for (const suggestion of analysed.suggestions) {
-    let decision = 'accepted';
-    let editedAction;
-    if (scenarioId === 'SCN-001' && suggestion.targetId === 'UN-003') decision = 'rejected';
-    if (scenarioId === 'SCN-001' && suggestion.targetId === 'CLM-002') { decision = 'edited';editedAction = 'new_link'; }
-    reviewed = await request(`/api/suggestions/${suggestion.id}/decision`,{ method:'POST',body:JSON.stringify({ decision,editedAction,reason:`QA verification decision for ${suggestion.targetId}.`,actor:'Jamie Chen · QA reviewer' }) });
+  if (scenarioId === 'SCN-002') {
+    await expectStatus(`/api/changes/${change.id}/guided-review-completion`,409,{ method:'POST',body:JSON.stringify({ actor:'Jamie Chen · QA reviewer',confirmation:true }) });
+    const req004 = analysed.suggestions.find((suggestion) => suggestion.targetId === 'REQ-004');
+    const test007 = analysed.suggestions.find((suggestion) => suggestion.targetId === 'TEST-007');
+    const un004 = analysed.suggestions.find((suggestion) => suggestion.targetId === 'UN-004');
+    assert.ok(req004 && test007 && un004);
+    reviewed = await request(`/api/suggestions/${req004.id}/decision`,{ method:'POST',body:JSON.stringify({ decision:'accepted',reason:'The timing requirement is the controlled anchor for this change.',actor:'Jamie Chen · QA reviewer' }) });
+    reviewed = await request(`/api/suggestions/${test007.id}/decision`,{ method:'POST',body:JSON.stringify({ decision:'rejected',reason:'Demonstrate retained decision history before correcting the scope.',actor:'Jamie Chen · QA reviewer' }) });
+    reviewed = await request(`/api/suggestions/${test007.id}/decision`,{ method:'POST',body:JSON.stringify({ decision:'accepted',reason:'Workflow validation must cover the revised result window.',actor:'Jamie Chen · QA reviewer' }) });
+    reviewed = await request(`/api/suggestions/${un004.id}/decision`,{ method:'POST',body:JSON.stringify({ decision:'edited',editedAction:'update',reason:'The user need contains the old timing expectation and needs controlled revision.',actor:'Jamie Chen · QA reviewer' }) });
+    reviewed = await request(`/api/changes/${change.id}/guided-review-completion`,{ method:'POST',body:JSON.stringify({ actor:'Jamie Chen · QA reviewer',confirmation:true }) });
+    assert.equal(reviewed.audit.filter((event) => event.details?.references?.completionMode === 'guided_replay_fixture').length,8);
+    assert.equal(reviewed.suggestions.filter((suggestion) => suggestion.decisionReason?.startsWith('Guided replay fixture:')).length,8);
+    await expectStatus(`/api/changes/${change.id}/guided-review-completion`,409,{ method:'POST',body:JSON.stringify({ actor:'Jamie Chen · QA reviewer',confirmation:true }) });
+  } else {
+    for (const suggestion of analysed.suggestions) {
+      let decision = 'accepted';
+      let editedAction;
+      if (scenarioId === 'SCN-001' && suggestion.targetId === 'UN-003') decision = 'rejected';
+      if (scenarioId === 'SCN-001' && suggestion.targetId === 'CLM-002') { decision = 'edited';editedAction = 'new_link'; }
+      reviewed = await request(`/api/suggestions/${suggestion.id}/decision`,{ method:'POST',body:JSON.stringify({ decision,editedAction,reason:`QA verification decision for ${suggestion.targetId}.`,actor:'Jamie Chen · QA reviewer' }) });
+    }
   }
   assert.equal(reviewed.suggestions.every((suggestion) => suggestion.decision !== 'pending'),true);
   if (scenarioId === 'SCN-001') {
@@ -204,6 +220,7 @@ for (const scenarioId of ['SCN-001','SCN-002','SCN-003']) {
   assert.equal(evaluation.groundTruth.locked,true);
   assert.ok(evaluation.calculated);
   assert.equal(evaluation.calculated.criticalRecall,100);
+  assert.equal(Number.isInteger(evaluation.calculated.reviewSeconds),true);
   summaries.push({ scenarioId,changeId:change.id,suggestions:analysed.suggestions.length,updates:drafted.updates.length,calculated:evaluation.calculated });
 }
 

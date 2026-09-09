@@ -3,9 +3,9 @@ import { seed } from './data';
 import { schemaStatements } from '@/db/runtime-schema';
 import {
   ChangeIdSchema, ChangeStatusSchema, CheckScopeSchema, CreateChangeInputSchema, DocumentTemplateSchema, EvidenceIdSchema, EvidenceItemSchema,
-  FindingDispositionInputSchema, ImpactSuggestionSchema, RelationshipSchema, ReviewDecisionInputSchema,
+  FindingDispositionInputSchema, GuidedReviewCompletionInputSchema, ImpactSuggestionSchema, RelationshipSchema, ReviewDecisionInputSchema,
   RunCoherenceCheckInputSchema, ScenarioIdSchema, type CreateChangeInput, type EvidenceId,
-  type EvidenceItem, type ImpactSuggestion, type ReviewDecisionInput, type UpdateDraftInput,
+  type EvidenceItem, type GuidedReviewCompletionInput, type ImpactSuggestion, type ReviewDecisionInput, type UpdateDraftInput,
 } from './domain';
 import { runCoherenceChecks } from './coherence';
 import { auditDetails } from './audit';
@@ -333,6 +333,50 @@ export async function recordDecision(db:D1Database,suggestionId:string,raw:unkno
   return getChange(db,run.changeId);
 }
 
+export async function completeGuidedReview(db:D1Database,changeId:string,raw:unknown) {
+  const input:GuidedReviewCompletionInput = GuidedReviewCompletionInputSchema.parse(raw);
+  const change = await getChange(db,changeId);
+  if (!change || change.scenarioId !== 'SCN-002' || change.run?.mode !== 'replay' || change.status !== 'under_review') return null;
+
+  const req004 = change.suggestions.find((suggestion) => suggestion.targetId === 'REQ-004');
+  const test007 = change.suggestions.find((suggestion) => suggestion.targetId === 'TEST-007');
+  const un004 = change.suggestions.find((suggestion) => suggestion.targetId === 'UN-004');
+  const test007Rejected = change.audit.some((event) => event.entityId === test007?.id && event.action === 'suggestion_rejected');
+  const manualExamplesComplete = req004?.decision === 'accepted'
+    && test007?.decision === 'accepted'
+    && test007Rejected
+    && un004?.decision === 'edited'
+    && un004.effectiveAction === 'update';
+  const pending = change.suggestions.filter((suggestion) => suggestion.decision === 'pending');
+  if (!manualExamplesComplete || pending.length === 0 || !change.run) return null;
+
+  const createdAt = now();
+  const reason = 'Guided replay fixture: accepted to complete the saved walkthrough after the presenter recorded the required QA examples.';
+  const statements:D1PreparedStatement[] = [];
+  for (const suggestion of pending) {
+    statements.push(
+      db.prepare('INSERT INTO review_decisions (id,suggestion_id,decision,edited_action,reason,actor,created_at) VALUES (?,?,?,?,?,?,?)')
+        .bind(makeId('DEC'),suggestion.id,'accepted',null,reason,input.actor,createdAt),
+      auditStatement(db,{
+        aggregateType:'change',aggregateId:change.id,entityType:'suggestion',entityId:suggestion.id,action:'suggestion_accepted',actor:input.actor,createdAt,
+        details:auditDetails({
+          reason,
+          changes:[
+            { field:'decision',oldValue:'pending',newValue:'accepted' },
+            { field:'effectiveAction',oldValue:suggestion.action,newValue:suggestion.action },
+            { field:'reason',oldValue:null,newValue:reason },
+          ],
+          references:{ suggestionId:suggestion.id,runId:change.run.id,completionMode:'guided_replay_fixture' },
+        }),
+      }),
+    );
+  }
+  statements.push(db.prepare('UPDATE change_requests SET updated_at=? WHERE id=? AND status=? AND current_analysis_run_id=?')
+    .bind(createdAt,change.id,'under_review',change.run.id));
+  await db.batch(statements);
+  return getChange(db,change.id);
+}
+
 function draftText(item:EvidenceItem,change:{ anchorItemId:EvidenceId; proposedText:string },scenarioDrafts:Map<string,string>): string {
   if (scenarioDrafts.has(item.id)) return scenarioDrafts.get(item.id) ?? item.statement;
   if (item.id === change.anchorItemId) return change.proposedText;
@@ -605,7 +649,8 @@ export async function getEvaluation(db:D1Database,scenarioId:string,selectedRunI
     const expectedActionById = new Map(scenario.groundTruth.map((entry) => [entry.itemId,entry.expectedAction]));
     const relevantActionable = actionable.filter((entry) => expectedActionById.get(entry.targetId) === (entry.editedAction ?? entry.action)).length;
     const latestDecisionAt = suggestions.results.map((entry) => entry.decidedAt).filter((value):value is string => value !== null).sort().at(-1);
-    const elapsedMinutes = latestDecisionAt ? Math.max(0,Math.round(((Date.parse(latestDecisionAt) - Date.parse(selectedRun.createdAt)) / 60000) * 10) / 10) : 0;
+    const reviewSeconds = latestDecisionAt ? Math.max(0,Math.round((Date.parse(latestDecisionAt) - Date.parse(selectedRun.createdAt)) / 1000)) : 0;
+    const elapsedMinutes = Math.round((reviewSeconds / 60) * 10) / 10;
     calculated = {
       runId:selectedRun.id,mode:selectedRun.mode,model:selectedRun.model,promptVersion:selectedRun.promptVersion,
       criticalRecall:criticalIds.size === 0 ? 100 : Math.round(foundCritical / criticalIds.size * 100),
@@ -613,7 +658,7 @@ export async function getEvaluation(db:D1Database,scenarioId:string,selectedRunI
       actionablePrecision:actionable.length === 0 ? 0 : Math.round(relevantActionable / actionable.length * 100),
       corrections:suggestions.results.filter((entry) => entry.decision === 'edited').length,
       reviewed:suggestions.results.filter((entry) => entry.decision !== 'pending').length,totalSuggestions:suggestions.results.length,
-      accepted:accepted.length,reviewMinutes:elapsedMinutes,
+      accepted:accepted.length,reviewSeconds,reviewMinutes:elapsedMinutes,
     };
   }
   return {

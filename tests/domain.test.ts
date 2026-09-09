@@ -1,9 +1,11 @@
 import { describe,expect,it } from 'vitest';
+import { positionWalkthroughCallout } from '../components/guided-walkthrough';
 import { graphCandidates,lexicalCandidates,mergeCandidates,relationshipDirection,validateSuggestionReferences } from '../lib/analysis';
 import { findingFingerprint,runCoherenceChecks } from '../lib/coherence';
 import { canEditDraft,nextChangeStatus } from '../lib/change-workflow';
 import { seed } from '../lib/data';
-import { EvidenceIdSchema,type ChangeStatus } from '../lib/domain';
+import { EvidenceIdSchema,GuidedReviewCompletionInputSchema,type ChangeStatus } from '../lib/domain';
+import { formatReviewDuration } from '../lib/presentation';
 
 describe('RhythmReview seed pack',() => {
   it('contains the agreed evidence and document counts',() => {
@@ -91,6 +93,12 @@ describe('impact candidate selection',() => {
 });
 
 describe('controlled change workflow',() => {
+  it('validates the explicit guided-review confirmation boundary',() => {
+    expect(GuidedReviewCompletionInputSchema.safeParse({ actor:'Jamie Chen · QA reviewer',confirmation:true }).success).toBe(true);
+    expect(GuidedReviewCompletionInputSchema.safeParse({ actor:'Alex Morgan · Author',confirmation:true }).success).toBe(false);
+    expect(GuidedReviewCompletionInputSchema.safeParse({ actor:'Jamie Chen · QA reviewer',confirmation:false }).success).toBe(false);
+  });
+
   it('allows every documented transition and rejects every other state-command pair',() => {
     const statuses:ChangeStatus[] = ['draft','analysing','ready_for_review','under_review','updates_proposed','qa_review','returned_to_author','approved'];
     const expected = new Map<string,ChangeStatus>([
@@ -135,5 +143,24 @@ describe('controlled change workflow',() => {
     const findings = runCoherenceChecks({ evidence,relationships:seed.relationships,documents:seed.documents });
     expect(findings.filter((finding) => finding.basis === 'evaluation_fixture')).toHaveLength(0);
     expect(findings.filter((finding) => finding.basis === 'deterministic_check')).toHaveLength(3);
+  });
+});
+
+describe('phase 1.5 presentation helpers',() => {
+  it.each([
+    [0,0,'0 sec'],[1,0,'1 sec'],[59,1,'59 sec'],[60,1,'1 min'],[83,1.4,'1.4 min'],
+  ])('formats %s seconds without displaying a zero-minute review',(seconds,minutes,expected) => {
+    expect(formatReviewDuration(seconds,minutes)).toBe(expected);
+  });
+
+  it('keeps the walkthrough callout inside narrow viewports',() => {
+    const position = positionWalkthroughCallout({ top:80,right:690,bottom:180,left:590,width:100,height:100 },{ width:720,height:640 });
+    expect(position.left).toBeGreaterThanOrEqual(12);
+    expect(position.left).toBeLessThanOrEqual(348);
+    expect(position.top).toBeGreaterThanOrEqual(12);
+  });
+
+  it('places the walkthrough beside a target when room is available',() => {
+    expect(positionWalkthroughCallout({ top:100,right:300,bottom:180,left:180,width:120,height:80 },{ width:1200,height:800 }).placement).toBe('right');
   });
 });

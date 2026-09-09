@@ -57,7 +57,7 @@ export const EvaluationSchema = z.object({
   expectedIds:z.array(z.string()),criticalIds:z.array(z.string()),groundTruth:z.object({ locked:z.boolean(),provisional:z.boolean() }),
   runs:z.array(z.object({ id:z.string(),mode:z.string(),model:z.string(),promptVersion:z.string(),status:z.string(),createdAt:z.string(),changeId:z.string() })),
   selectedRun:z.object({ id:z.string(),mode:z.string(),model:z.string(),promptVersion:z.string(),status:z.string(),createdAt:z.string(),changeId:z.string() }).nullable(),
-  calculated:z.object({ runId:z.string(),mode:z.string(),model:z.string(),promptVersion:z.string(),criticalRecall:z.number(),overallRecall:z.number(),actionablePrecision:z.number(),corrections:z.number(),reviewed:z.number(),totalSuggestions:z.number(),accepted:z.number(),reviewMinutes:z.number() }).nullable(),
+  calculated:z.object({ runId:z.string(),mode:z.string(),model:z.string(),promptVersion:z.string(),criticalRecall:z.number(),overallRecall:z.number(),actionablePrecision:z.number(),corrections:z.number(),reviewed:z.number(),totalSuggestions:z.number(),accepted:z.number(),reviewSeconds:z.number(),reviewMinutes:z.number() }).nullable(),
   illustrativeComparisons:z.object({ manual:z.object({ recall:z.number(),precision:z.number(),minutes:z.number() }),chat:z.object({ recall:z.number(),precision:z.number(),minutes:z.number() }) }),
 });
 

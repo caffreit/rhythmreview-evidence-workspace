@@ -1,6 +1,6 @@
 # Walkthrough findings
 
-This log records the implementation audit completed on 4 September 2026. Each original finding was checked against the application, the local database, and generated document views. The final pass ran all three scenarios from reset through QA approval with `npm run verify:demo`. A browser walkthrough also covered finding navigation, relationship direction, replay review, action editing, draft editing, role gates, approval, audit history, and historical document selection.
+This log records the implementation audit completed on 4 September 2026 and the Phase 1.5 verification completed on 8 September 2026. Each original finding was checked against the application, the local database, and generated document views. The final pass ran all three scenarios from reset through QA approval with `npm run verify:demo`. The 15-step guided browser walkthrough also covered target recovery, finding navigation, factual relationship direction, replay review, retained rejection history, action editing, guided pending-decision completion, draft editing, role gates, approval, audit history, historical document selection, and reset.
 
 ## 1. Must fix before an internal Blue Bridge showcase
 
@@ -8,7 +8,7 @@ This log records the implementation audit completed on 4 September 2026. Each or
 
 | ID | Verified finding | Resolution and check |
 | --- | --- | --- |
-| WF-001 | Evidence relationships did not show direction. | The evidence detail now groups provisional upstream and downstream relationships and prints the stored source, type, and target. `REQ-004` shows `UN-004` upstream and `DES-004` and `TEST-004` downstream. Blue Bridge QA and RA still need to ratify the direction rules. |
+| WF-001 | Evidence relationships did not show direction. | The evidence detail now groups factual incoming and outgoing relationships and prints the stored source, type, and target. `REQ-004` is clearly identified as the stored target for incoming links and the stored source for outgoing links. Controlled dependency meaning remains an explicit QA/RA question. |
 | WF-002 | Replay and UI records implied direct links that did not exist. | The seed generator now stores real graph paths for linked suggestions. Semantic candidates store only the candidate ID and display **No direct relationship asserted**. The verifier checks every graph-path edge against a stored relationship. |
 | WF-003 | Six authored defects appeared to be automated detections. | The UI now separates three calculated findings from three seeded evaluation fixtures. The calculated rules cover a missing verification link, superseded evidence in current document views, and a design component absent from the component inventory. Reset reproduces the findings from stored evidence, relationships, and document rules. |
 | WF-004 | Document metadata always used RR-1.0 and one fixed snapshot ID. | Rendering now resolves a selected approved or historical baseline through `baseline_items`. Each document and baseline pair has one immutable snapshot and exact source-version list. The verifier opens distinct RR-1.0 and RR-1.1 snapshots after every scenario. |
@@ -34,6 +34,9 @@ This log records the implementation audit completed on 4 September 2026. Each or
 | WF-027 | Audit entries omitted structured details and repeated-decision history. | Mutations now append versioned aggregate audit events with actors, reasons, references, and full old/new values. The interface renders expandable comparisons and retains a readable fallback for earlier events. |
 | WF-030 | Completed changes disappeared from the interface after leaving the page. | The change workspace lists recent changes by update time and restores their scenario, workflow stage, analysis history, drafts, findings, and audit history. Approved changes reopen read-only. |
 | WF-031 | Coherence findings had no controlled rerun or disposition workflow. | Baseline and projected-candidate checks are persisted. Candidate edits make results stale; exact fingerprints carry QA waivers across reruns; changed failures invalidate waivers; and findings resolve only when a later deterministic run no longer detects them. |
+| WF-025 | Upstream and downstream labels implied unratified dependency semantics. | The interface now uses neutral incoming and outgoing groups derived directly from stored source and target direction. It states that controlled dependency semantics still require QA/RA ratification. |
+| WF-028 | Fast reviews displayed as `0.0` minutes. | Calculated evaluation results now include `reviewSeconds`; the interface displays seconds below one minute and retains `reviewMinutes` for compatibility and comparisons. Boundary tests cover 0, 1, 59, 60, and more than 60 seconds. |
+| WF-029 | Baseline changes had no local loading state. | The document viewer retains the current snapshot during loading, disables repeat selection, reports failures in place, and ignores stale responses during rapid changes. |
 
 ### Open QA and RA decisions
 
@@ -41,14 +44,14 @@ This log records the implementation audit completed on 4 September 2026. Each or
 | --- | --- | --- |
 | WF-021 | The provisional answer keys contain questionable omissions and actions. Scenario 2 omits `CLM-003`, although its claim still promises a result within 30 seconds. Scenario 3 omits `LBL-004`, although that label says “adults aged 22 and over.” Scenario 3 also assigns `update` to `REQ-001` by evidence type even though the recording-duration statement has no age limit. | QA and RA should add the omitted items and revise the action for `REQ-001`, or document why the current entries are correct. The implementation does not change the locked provisional answer key without that judgment. |
 | WF-022 | Replay suggestions are authored from the same provisional answer key used to score the run. A complete accepted replay therefore reaches 100 percent by construction. | Use replay to demonstrate workflow mechanics and calculation only. Do not present replay scores as model performance. A valid evaluation needs answer keys authored blind to model or replay output and separately recorded model runs. |
-| WF-025 | Upstream and downstream labels require controlled semantics for each relationship type, especially `MAY_AFFECT`, `SUPPORTED_BY`, and `DISCLOSED_IN`. | The demo uses a documented provisional mapping. QA and RA can ratify it or replace upstream and downstream with neutral incoming and outgoing labels. |
+| QA/RA-REL | Controlled dependency semantics remain undefined for relationship types including `MAY_AFFECT`, `SUPPORTED_BY`, and `DISCLOSED_IN`. | Ratify and version a relationship policy before interpreting incoming and outgoing storage direction as regulatory or engineering dependency direction. |
 
-## 2. Worth improving if the change is contained
+## 2. Phase 1.5 presentation package
 
-| ID | Finding | Suggested contained improvement |
-| --- | --- | --- |
-| WF-028 | Review duration uses server timestamps and may display `0.0` minutes for a fast demonstration. | Display seconds for runs under one minute while retaining minutes in exports. |
-| WF-029 | The document baseline selector takes a short moment to refresh but gives no local loading state. | Add a loading label inside the document viewer during a baseline switch. |
+- A persistent, accessible 15-step walkthrough uses stable targets, viewport-aware callouts, keyboard controls, state gates, and asynchronous target recovery.
+- The SCN-002 guided helper requires Jamie Chen, the correct replay workflow state, and the three manual examples. It fills pending decisions only and records a guided replay fixture reason plus structured audit provenance.
+- The eight-page landscape PDF matches walkthrough step numbers and includes speaker notes, boundaries, reset instructions, evaluation cautions, open questions, and the Phase 2 roadmap.
+- The fixture-backed Jira adapter is positioned after Phase 2. Live Jira remains outside Phase 1.5.
 
 ## 3. Later product work
 
