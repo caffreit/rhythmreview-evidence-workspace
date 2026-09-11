@@ -1,5 +1,7 @@
 import { analyseWithOpenAI } from './openai-provider';
+import { EvidenceIdSchema, type EvidenceId, type EvidenceItem, type ImpactSuggestion } from './domain';
 import { beginAnalysis, listEvidence, listRelationships, loadReplaySuggestions, saveAnalysis } from './repository';
+import { getCollectionsForEvidence } from './source-repository';
 
 type AnalysisRequest = {
   db:D1Database;
@@ -15,6 +17,19 @@ export type AnalysisResult =
   | { kind:'missing_replay' }
   | { kind:'completed';change:NonNullable<Awaited<ReturnType<typeof saveAnalysis>>>;warning?:string };
 
+async function collectionSuggestions(db:D1Database,anchorId:EvidenceId,evidence:EvidenceItem[]):Promise<ImpactSuggestion[]> {
+  const raw = await getCollectionsForEvidence(db,[anchorId]); const itemById = new Map(evidence.map((item) => [item.id,item]));
+  return raw.flatMap((candidate,index) => {
+    const parsed = EvidenceIdSchema.safeParse(candidate.targetId); if (!parsed.success || !itemById.has(parsed.data)) return [];
+    return [{ id:`SUG-COL-${String(index + 1).padStart(2,'0')}`,targetId:parsed.data,action:'review',origin:'collection',rationale:`${parsed.data} belongs to the same controlled collection as ${anchorId}; review it for contextual impact even though collection membership is not a direct trace link.`,path:[anchorId,parsed.data],citations:[parsed.data],critical:itemById.get(parsed.data)?.criticality === 'high',decision:'pending' } satisfies ImpactSuggestion];
+  });
+}
+
+function mergeSuggestions(primary:ImpactSuggestion[],collection:ImpactSuggestion[]):ImpactSuggestion[] {
+  const seen = new Set(primary.map((suggestion) => suggestion.targetId));
+  return [...primary,...collection.filter((suggestion) => !seen.has(suggestion.targetId))];
+}
+
 export async function runChangeAnalysis(args:AnalysisRequest):Promise<AnalysisResult> {
   const started = await beginAnalysis(args.db,{ changeId:args.changeId,mode:args.mode,actor:args.actor,reopen:args.reopen,reason:args.reason });
   if (!started) return { kind:'conflict' };
@@ -29,7 +44,8 @@ export async function runChangeAnalysis(args:AnalysisRequest):Promise<AnalysisRe
       await saveAnalysis(args.db,{ changeId:args.changeId,runId:started.runId,mode:'replay',model:'saved-output-no-api',promptVersion:'impact-v1',suggestions:[],error:'Replay run not found.' });
       return { kind:'missing_replay' };
     }
-    const change = await saveAnalysis(args.db,{ changeId:args.changeId,runId:started.runId,mode:'replay',...replay });
+    const evidence = await listEvidence(args.db); const collections = await collectionSuggestions(args.db,started.change.anchorItemId,evidence);
+    const change = await saveAnalysis(args.db,{ changeId:args.changeId,runId:started.runId,mode:'replay',...replay,suggestions:mergeSuggestions(replay.suggestions,collections) });
     return change ? { kind:'completed',change } : { kind:'conflict' };
   }
 
@@ -38,12 +54,13 @@ export async function runChangeAnalysis(args:AnalysisRequest):Promise<AnalysisRe
   for (let attempt = 0; attempt < 2; attempt += 1) {
     try {
       const live = await analyseWithOpenAI({ db:args.db,anchorId:started.change.anchorItemId,title:started.change.title,rationale:started.change.rationale,proposedText:started.change.proposedText,evidence,relationships });
-      const change = await saveAnalysis(args.db,{ changeId:args.changeId,runId:started.runId,mode:'live',...live });
+      const collections = await collectionSuggestions(args.db,started.change.anchorItemId,evidence);
+      const change = await saveAnalysis(args.db,{ changeId:args.changeId,runId:started.runId,mode:'live',...live,suggestions:mergeSuggestions(live.suggestions,collections) });
       return change ? { kind:'completed',change } : { kind:'conflict' };
     } catch (error:unknown) { lastError = error; }
   }
   const message = lastError instanceof Error ? lastError.message : 'Live analysis failed';
-  const change = await saveAnalysis(args.db,{ changeId:args.changeId,runId:started.runId,mode:'live',model:process.env.OPENAI_MODEL ?? 'gpt-5.5',promptVersion:'impact-v1',suggestions:[],error:message });
+  const change = await saveAnalysis(args.db,{ changeId:args.changeId,runId:started.runId,mode:'live',model:process.env.OPENAI_MODEL ?? 'gpt-5.6-luna',promptVersion:'impact-v2',suggestions:[],error:message });
   if (!change) return { kind:'conflict' };
   return { kind:'completed',change,warning:`Live AI failed after one retry. No AI suggestions were saved. The prior workflow state was restored. ${message}` };
 }

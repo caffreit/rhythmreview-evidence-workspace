@@ -1,6 +1,6 @@
 import type { EvidenceId, EvidenceItem, EvidenceRelationship } from './domain';
 
-export type CandidatePath = { targetId:EvidenceId; path:EvidenceId[]; origin:'linked'|'semantic' };
+export type CandidatePath = { targetId:EvidenceId; path:EvidenceId[]; origin:'linked'|'semantic'|'collection' };
 
 const sourceDependsOnTarget = new Set<EvidenceRelationship['type']>([
   'REFINES','MITIGATES','IMPLEMENTS','VERIFIES','VALIDATES','SUPPORTED_BY','DEPENDS_ON',

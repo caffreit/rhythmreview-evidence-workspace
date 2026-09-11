@@ -56,5 +56,21 @@ export const schemaStatements: readonly string[] = [
   "ALTER TABLE `change_requests` ADD `revision` integer DEFAULT 1 NOT NULL;",
   "ALTER TABLE `change_requests` ADD `current_analysis_run_id` text;",
   "CREATE INDEX IF NOT EXISTS `idx_change_requests_updated_at` ON `change_requests` (`updated_at`);",
-  "ALTER TABLE `proposed_updates` ADD `analysis_run_id` text DEFAULT '' NOT NULL;"
+  "ALTER TABLE `proposed_updates` ADD `analysis_run_id` text DEFAULT '' NOT NULL;",
+  "CREATE TABLE IF NOT EXISTS `collection_members` (\n\t`collection_id` text NOT NULL,\n\t`item_id` text NOT NULL,\n\t`member_kind` text NOT NULL,\n\tPRIMARY KEY(`collection_id`, `item_id`)\n);",
+  "CREATE INDEX IF NOT EXISTS `idx_collection_members_item` ON `collection_members` (`item_id`);",
+  "CREATE TABLE IF NOT EXISTS `collections` (\n\t`id` text PRIMARY KEY NOT NULL,\n\t`kind` text NOT NULL,\n\t`title` text NOT NULL,\n\t`version` text NOT NULL,\n\t`status` text NOT NULL\n);",
+  "CREATE INDEX IF NOT EXISTS `idx_collections_kind` ON `collections` (`kind`);",
+  "CREATE TABLE IF NOT EXISTS `releases` (\n\t`id` text PRIMARY KEY NOT NULL,\n\t`label` text NOT NULL,\n\t`baseline_id` text NOT NULL,\n\t`status` text NOT NULL,\n\t`code_revision` text,\n\t`ci_status` text,\n\t`approved_by` text NOT NULL,\n\t`created_at` text NOT NULL\n);",
+  "CREATE INDEX IF NOT EXISTS `idx_releases_baseline` ON `releases` (`baseline_id`);",
+  "CREATE TABLE IF NOT EXISTS `source_artifacts` (\n\t`id` text PRIMARY KEY NOT NULL,\n\t`title` text NOT NULL,\n\t`kind` text NOT NULL,\n\t`status` text NOT NULL,\n\t`latest_revision_id` text NOT NULL,\n\t`created_at` text NOT NULL\n);",
+  "CREATE INDEX IF NOT EXISTS `idx_source_artifacts_status` ON `source_artifacts` (`status`);",
+  "CREATE TABLE IF NOT EXISTS `source_candidates` (\n\t`id` text PRIMARY KEY NOT NULL,\n\t`run_id` text NOT NULL,\n\t`source_id` text NOT NULL,\n\t`type` text NOT NULL,\n\t`level` text NOT NULL,\n\t`title` text NOT NULL,\n\t`statement` text NOT NULL,\n\t`rationale` text NOT NULL,\n\t`origin` text NOT NULL,\n\t`status` text NOT NULL,\n\t`parent_ids_json` text NOT NULL,\n\t`citations_json` text NOT NULL,\n\t`advisory_clarification_ids_json` text NOT NULL,\n\t`model` text NOT NULL,\n\t`policy_version` text NOT NULL,\n\t`reviewed_by` text,\n\t`reviewed_at` text,\n\t`review_reason` text\n);",
+  "CREATE INDEX IF NOT EXISTS `idx_source_candidates_source` ON `source_candidates` (`source_id`,`type`,`status`);",
+  "CREATE TABLE IF NOT EXISTS `source_clarifications` (\n\t`id` text PRIMARY KEY NOT NULL,\n\t`run_id` text NOT NULL,\n\t`source_id` text NOT NULL,\n\t`kind` text NOT NULL,\n\t`severity` text NOT NULL,\n\t`question` text NOT NULL,\n\t`rationale` text NOT NULL,\n\t`citations_json` text NOT NULL,\n\t`status` text NOT NULL,\n\t`answer` text,\n\t`decision_reason` text,\n\t`actor` text,\n\t`updated_at` text NOT NULL\n);",
+  "CREATE INDEX IF NOT EXISTS `idx_source_clarifications_source` ON `source_clarifications` (`source_id`,`status`);",
+  "CREATE TABLE IF NOT EXISTS `source_processing_runs` (\n\t`id` text PRIMARY KEY NOT NULL,\n\t`source_id` text NOT NULL,\n\t`revision_id` text NOT NULL,\n\t`kind` text NOT NULL,\n\t`mode` text NOT NULL,\n\t`model` text NOT NULL,\n\t`reasoning_effort` text NOT NULL,\n\t`policy_version` text NOT NULL,\n\t`status` text NOT NULL,\n\t`input_json` text NOT NULL,\n\t`output_json` text,\n\t`error` text,\n\t`created_at` text NOT NULL\n);",
+  "CREATE INDEX IF NOT EXISTS `idx_source_runs_source` ON `source_processing_runs` (`source_id`,`created_at`);",
+  "CREATE TABLE IF NOT EXISTS `source_revisions` (\n\t`id` text PRIMARY KEY NOT NULL,\n\t`source_id` text NOT NULL,\n\t`revision` integer NOT NULL,\n\t`content` text NOT NULL,\n\t`content_hash` text NOT NULL,\n\t`origin` text NOT NULL,\n\t`captured_at` text NOT NULL\n);",
+  "CREATE INDEX IF NOT EXISTS `idx_source_revisions_source` ON `source_revisions` (`source_id`,`revision`);"
 ];

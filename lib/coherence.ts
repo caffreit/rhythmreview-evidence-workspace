@@ -64,8 +64,8 @@ export function runCoherenceChecks(args:{
   const architecture = args.documents.find((document) => document.code === 'SAD');
   const inventory = args.documents.find((document) => document.code === 'CCI');
   if (architecture && inventory) {
-    const architectureItems = args.evidence.filter((item) => item.type === 'design' && architecture.types.includes(item.type) && !item.flags.some((flag) => architecture.excludeFlags?.includes(flag)));
-    const inventoryIds = new Set(args.evidence.filter((item) => item.type === 'design' && inventory.types.includes(item.type) && !item.flags.some((flag) => inventory.excludeFlags?.includes(flag))).map((item) => item.id));
+    const architectureItems = args.evidence.filter((item) => item.type === 'component' && architecture.types.includes(item.type) && !item.flags.some((flag) => architecture.excludeFlags?.includes(flag)));
+    const inventoryIds = new Set(args.evidence.filter((item) => item.type === 'component' && inventory.types.includes(item.type) && !item.flags.some((flag) => inventory.excludeFlags?.includes(flag))).map((item) => item.id));
     for (const item of architectureItems.filter((entry) => !inventoryIds.has(entry.id))) findings.push({
       id:`CHECK-INVENTORY-${item.id}`,itemId:item.id,code:'CMP-004',severity:'medium',title:'Architecture component absent from inventory',
       detail:`${item.id} appears in SAD but is excluded from CCI.`,basis:'deterministic_check',
@@ -75,6 +75,16 @@ export function runCoherenceChecks(args:{
   }
 
   const itemById = new Map<string,EvidenceItem>(args.evidence.map((item) => [item.id,item]));
+  for (const relation of args.relationships.filter((entry) => entry.active && entry.type === 'REFINES')) {
+    const child = itemById.get(relation.sourceId);
+    const parent = itemById.get(relation.targetId);
+    if (parent?.status === 'proposed' && child && child.status !== 'proposed') findings.push({
+      id:`CHECK-HIERARCHY-${parent.id}-${child.id}`,itemId:child.id,code:'HIE-001',severity:'high',title:'Child review is stale after parent change',
+      detail:`${parent.id} has a candidate change while child ${child.id} has not been reviewed in the same change set.`,basis:'deterministic_check',
+      rule:'A changed parent and each refining child require independent review before a coherent baseline can be approved.',
+      expected:`${child.id} is reviewed independently after the ${parent.id} change.`,actual:`${child.id} remains unchanged in the candidate baseline.`,
+    });
+  }
   const seconds = (id:string) => itemById.get(id)?.statement.match(/\b(\d+) seconds?\b/)?.[1] ?? 'not stated';
   const timingValues = ['REQ-004','CLM-003','LBL-002'].map(seconds);
   if (new Set(timingValues).size > 1) findings.push({

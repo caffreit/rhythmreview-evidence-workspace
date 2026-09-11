@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-export type WalkthroughView = 'overview'|'evidence'|'documents'|'changes'|'evaluation';
+export type WalkthroughView = 'overview'|'sources'|'connected'|'review'|'product-definition'|'requirements'|'components'|'risk'|'verification'|'clinical'|'evidence'|'trace-matrix'|'trace-graph'|'coverage'|'baselines'|'releases'|'documents'|'design-reviews'|'changes'|'integration-setup'|'analysis-policies'|'templates'|'people'|'evaluation';
 type StepBase = { id:string;view:WalkthroughView;target:string;title:string;body:string };
 export type WalkthroughStep = StepBase & (
   | { kind:'explain' }

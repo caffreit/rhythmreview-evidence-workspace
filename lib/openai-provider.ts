@@ -4,12 +4,12 @@ import { ModelImpactOutputSchema, type EvidenceId, type EvidenceItem, type Impac
 import { cosineSimilarity, graphCandidates, mergeCandidates, type CandidatePath } from './analysis';
 import type { EvidenceRelationship } from './domain';
 
-type AiConfig = { apiKey:string; model:string; embeddingModel:string };
+type AiConfig = { apiKey:string; model:string; embeddingModel:string; reasoningEffort:'medium' };
 
 function readConfig(): AiConfig {
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) throw new Error('OPENAI_API_KEY is not configured. Choose replay mode or add the key to the local environment.');
-  return { apiKey,model:process.env.OPENAI_MODEL ?? 'gpt-5.5',embeddingModel:process.env.OPENAI_EMBEDDING_MODEL ?? 'text-embedding-3-small' };
+  return { apiKey,model:process.env.OPENAI_MODEL ?? 'gpt-5.6-luna',embeddingModel:process.env.OPENAI_EMBEDDING_MODEL ?? 'text-embedding-3-small',reasoningEffort:'medium' };
 }
 
 async function semanticCandidates(args:{ client:OpenAI; db:D1Database; embeddingModel:string; query:string; evidence:EvidenceItem[]; excluded:Set<EvidenceId>; limit:number }): Promise<CandidatePath[]> {
@@ -55,6 +55,7 @@ export async function analyseWithOpenAI(args:{ db:D1Database; anchorId:EvidenceI
   const response = await client.responses.parse({
     model:config.model,
     store:false,
+    reasoning:{ effort:config.reasoningEffort },
     instructions:'You are supporting a regulated medical-software QA reviewer. Select only evidence that the proposed change may require a person to review, update, retest, or newly link. Cite only supplied candidate IDs. Do not approve anything. Use no_change sparingly and do not invent facts.',
     input:JSON.stringify({ change:{ anchorId:args.anchorId,title:args.title,rationale:args.rationale,proposedText:args.proposedText },allowedActions:['review','update','retest','new_link','no_change'],candidates:candidatePayload }),
     text:{ format:zodTextFormat(ModelImpactOutputSchema,'impact_analysis') },
@@ -67,5 +68,5 @@ export async function analyseWithOpenAI(args:{ db:D1Database; anchorId:EvidenceI
     if (!candidate) throw new Error('Validated suggestion was not present in the candidate set.');
     return { id:`SUG-LIVE-${String(index + 1).padStart(2,'0')}`,targetId:suggestion.targetId,action:suggestion.action,origin:candidate.origin,rationale:suggestion.rationale,path:candidate.path,citations:suggestion.citations,critical:byId.get(suggestion.targetId)?.criticality === 'high',decision:'pending' } satisfies ImpactSuggestion;
   });
-  return { model:config.model,promptVersion:'impact-v1',suggestions };
+  return { model:config.model,promptVersion:'impact-v2',suggestions };
 }

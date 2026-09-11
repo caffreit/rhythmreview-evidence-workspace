@@ -60,6 +60,8 @@ async function initializeWorkspace(db:D1Database): Promise<void> {
     db.prepare("UPDATE audit_events SET aggregate_type='change',aggregate_id=entity_id WHERE aggregate_id='' AND entity_type='change'"),
     db.prepare("UPDATE audit_events SET aggregate_type='change',aggregate_id=(SELECT r.change_id FROM impact_suggestions s JOIN analysis_runs r ON r.id=s.run_id WHERE s.id=audit_events.entity_id) WHERE aggregate_id='' AND entity_type='suggestion'"),
     db.prepare("UPDATE audit_events SET aggregate_type='change',aggregate_id=(SELECT change_id FROM proposed_updates WHERE id=audit_events.entity_id) WHERE aggregate_id='' AND entity_type='proposed_update'"),
+    db.prepare("UPDATE evidence_items SET type='component' WHERE type='design'"),
+    db.prepare("UPDATE document_templates SET types_json=replace(types_json,'\"design\"','\"component\"') WHERE types_json LIKE '%\"design\"%'"),
   ]);
   const existing = await db.prepare('SELECT COUNT(*) AS count FROM baselines').first<{ count:number }>();
   if ((existing?.count ?? 0) > 0) return;
@@ -77,7 +79,7 @@ async function initializeWorkspace(db:D1Database): Promise<void> {
     statements.push(db.prepare('INSERT OR IGNORE INTO scenarios (id,number,slug,title,scale,anchor_id,proposed_text,rationale,presenter,non_impacts_json,drafts_json,metrics_json) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)').bind(scenario.id,scenario.number,scenario.slug,scenario.title,scenario.scale,scenario.anchorId,scenario.proposedText,scenario.rationale,scenario.presenter,JSON.stringify(scenario.nonImpacts),JSON.stringify(scenario.drafts),JSON.stringify(scenario.metrics)));
     for (const itemId of scenario.expected) {
       const item = seed.evidence.find((entry) => entry.id === itemId);
-      const action = item?.type === 'test' ? 'retest' : item?.type === 'design' || item?.type === 'requirement' || item?.type === 'label' || item?.type === 'intended_use' ? 'update' : 'review';
+      const action = item?.type === 'test' ? 'retest' : item?.type === 'component' || item?.type === 'requirement' || item?.type === 'label' || item?.type === 'intended_use' ? 'update' : 'review';
       statements.push(db.prepare('INSERT OR IGNORE INTO ground_truth_impacts (scenario_id,item_id,critical,expected_action) VALUES (?,?,?,?)').bind(scenario.id,itemId,scenario.critical.includes(itemId) ? 1 : 0,action));
     }
   }
@@ -510,7 +512,8 @@ export async function resetWorkspace(db:D1Database) {
   await ensureWorkspace(db);
   const statements = [
     "DELETE FROM finding_dispositions","DELETE FROM coherence_check_results","DELETE FROM coherence_check_runs","DELETE FROM review_decisions","DELETE FROM impact_suggestions","DELETE FROM analysis_runs","DELETE FROM proposed_updates","DELETE FROM change_requests","DELETE FROM audit_events","DELETE FROM embeddings","DELETE FROM document_snapshots",
-    "DELETE FROM relationships WHERE baseline_id != 'BL-RR-1.0'","DELETE FROM baseline_items WHERE baseline_id != 'BL-RR-1.0'","DELETE FROM baselines WHERE id != 'BL-RR-1.0'","DELETE FROM evidence_versions WHERE version != '1.0'",
+    "DELETE FROM releases","DELETE FROM source_clarifications","DELETE FROM source_candidates","DELETE FROM source_processing_runs","DELETE FROM source_revisions","DELETE FROM source_artifacts","DELETE FROM collection_members","DELETE FROM collections",
+    "DELETE FROM relationships WHERE baseline_id != 'BL-RR-1.0'","DELETE FROM baseline_items WHERE baseline_id != 'BL-RR-1.0'","DELETE FROM baselines WHERE id != 'BL-RR-1.0'","DELETE FROM evidence_versions WHERE item_id NOT IN (SELECT item_id FROM baseline_items WHERE baseline_id='BL-RR-1.0')","DELETE FROM evidence_items WHERE id NOT IN (SELECT item_id FROM baseline_items WHERE baseline_id='BL-RR-1.0')","DELETE FROM evidence_versions WHERE version != '1.0'",
     "UPDATE evidence_items SET current_version_id = id || '-v1.0'","UPDATE baselines SET status='approved',approved_by='Jamie Chen · QA reviewer',approved_at='2026-08-14T10:00:00.000Z' WHERE id='BL-RR-1.0'",
   ];
   await runBatches(db,statements.map((sql) => db.prepare(sql)),20);

@@ -14,7 +14,7 @@ describe('RhythmReview seed pack',() => {
     expect(seed.documents).toHaveLength(10);
     expect(seed.scenarios).toHaveLength(3);
     expect(Object.fromEntries([...new Set(seed.evidence.map((item) => item.type))].map((type) => [type,seed.evidence.filter((item) => item.type === type).length]))).toEqual({
-      intended_use:1,claim:4,user_need:8,requirement:16,hazard:8,risk_control:9,design:7,test:12,clinical_evidence:3,label:4,
+      intended_use:1,claim:4,user_need:8,requirement:16,hazard:8,risk_control:9,component:7,test:12,clinical_evidence:3,label:4,
     });
   });
 
@@ -42,10 +42,10 @@ describe('RhythmReview seed pack',() => {
   it('labels requirement inputs separately from implementations and tests',() => {
     const requirement = EvidenceIdSchema.parse('REQ-004');
     const userNeed = seed.relationships.find((relation) => relation.sourceId === requirement && relation.targetId === 'UN-004');
-    const design = seed.relationships.find((relation) => relation.sourceId === 'DES-004' && relation.targetId === requirement);
+    const component = seed.relationships.find((relation) => relation.sourceId === 'DES-004' && relation.targetId === requirement);
     const test = seed.relationships.find((relation) => relation.sourceId === 'TEST-004' && relation.targetId === requirement);
     expect(userNeed && relationshipDirection(userNeed,requirement)).toBe('upstream');
-    expect(design && relationshipDirection(design,requirement)).toBe('downstream');
+    expect(component && relationshipDirection(component,requirement)).toBe('downstream');
     expect(test && relationshipDirection(test,requirement)).toBe('downstream');
   });
 
@@ -131,6 +131,12 @@ describe('controlled change workflow',() => {
     if (!finding) return;
     expect(findingFingerprint(finding)).toBe(finding.fingerprint);
     expect(findingFingerprint({ ...finding,actual:`${finding.actual} Changed.` })).not.toBe(finding.fingerprint);
+  });
+
+  it('blocks a candidate baseline when a changed parent leaves a child unreviewed',() => {
+    const evidence = seed.evidence.map((item) => item.id === 'UN-004' ? { ...item,status:'proposed' as const,statement:`${item.statement} Updated.` } : item);
+    const findings = runCoherenceChecks({ evidence,relationships:seed.relationships,documents:seed.documents });
+    expect(findings.some((finding) => finding.code === 'HIE-001' && finding.itemId === 'REQ-004' && finding.severity === 'high')).toBe(true);
   });
 
   it('clears authored fixtures only when their defined comparisons stop reproducing the issue',() => {

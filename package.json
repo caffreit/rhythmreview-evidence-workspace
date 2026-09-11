@@ -15,7 +15,8 @@
     "seed:generate": "node scripts/generate-seed.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
-    "verify:demo": "node scripts/verify-demo.mjs"
+    "verify:demo": "node scripts/verify-demo.mjs",
+    "verify:architecture": "node scripts/verify-product-architecture.mjs"
   },
   "dependencies": {
     "drizzle-orm": "0.45.2",

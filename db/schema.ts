@@ -118,3 +118,45 @@ export const findingDispositions = sqliteTable('finding_dispositions', {
 export const embeddings = sqliteTable('embeddings', {
   itemId: text('item_id').primaryKey(), model: text('model').notNull(), vectorJson: text('vector_json').notNull(), createdAt: text('created_at').notNull(),
 });
+
+export const sourceArtifacts = sqliteTable('source_artifacts', {
+  id:text('id').primaryKey(),title:text('title').notNull(),kind:text('kind').notNull(),status:text('status').notNull(),
+  latestRevisionId:text('latest_revision_id').notNull(),createdAt:text('created_at').notNull(),
+}, (table) => [index('idx_source_artifacts_status').on(table.status)]);
+
+export const sourceRevisions = sqliteTable('source_revisions', {
+  id:text('id').primaryKey(),sourceId:text('source_id').notNull(),revision:integer('revision').notNull(),content:text('content').notNull(),
+  contentHash:text('content_hash').notNull(),origin:text('origin').notNull(),capturedAt:text('captured_at').notNull(),
+}, (table) => [index('idx_source_revisions_source').on(table.sourceId,table.revision)]);
+
+export const sourceProcessingRuns = sqliteTable('source_processing_runs', {
+  id:text('id').primaryKey(),sourceId:text('source_id').notNull(),revisionId:text('revision_id').notNull(),kind:text('kind').notNull(),
+  mode:text('mode').notNull(),model:text('model').notNull(),reasoningEffort:text('reasoning_effort').notNull(),policyVersion:text('policy_version').notNull(),
+  status:text('status').notNull(),inputJson:text('input_json').notNull(),outputJson:text('output_json'),error:text('error'),createdAt:text('created_at').notNull(),
+}, (table) => [index('idx_source_runs_source').on(table.sourceId,table.createdAt)]);
+
+export const sourceClarifications = sqliteTable('source_clarifications', {
+  id:text('id').primaryKey(),runId:text('run_id').notNull(),sourceId:text('source_id').notNull(),kind:text('kind').notNull(),severity:text('severity').notNull(),
+  question:text('question').notNull(),rationale:text('rationale').notNull(),citationsJson:text('citations_json').notNull(),status:text('status').notNull(),
+  answer:text('answer'),decisionReason:text('decision_reason'),actor:text('actor'),updatedAt:text('updated_at').notNull(),
+}, (table) => [index('idx_source_clarifications_source').on(table.sourceId,table.status)]);
+
+export const sourceCandidates = sqliteTable('source_candidates', {
+  id:text('id').primaryKey(),runId:text('run_id').notNull(),sourceId:text('source_id').notNull(),type:text('type').notNull(),level:text('level').notNull(),
+  title:text('title').notNull(),statement:text('statement').notNull(),rationale:text('rationale').notNull(),origin:text('origin').notNull(),status:text('status').notNull(),
+  parentIdsJson:text('parent_ids_json').notNull(),citationsJson:text('citations_json').notNull(),advisoryClarificationIdsJson:text('advisory_clarification_ids_json').notNull(),
+  model:text('model').notNull(),policyVersion:text('policy_version').notNull(),reviewedBy:text('reviewed_by'),reviewedAt:text('reviewed_at'),reviewReason:text('review_reason'),
+}, (table) => [index('idx_source_candidates_source').on(table.sourceId,table.type,table.status)]);
+
+export const collections = sqliteTable('collections', {
+  id:text('id').primaryKey(),kind:text('kind').notNull(),title:text('title').notNull(),version:text('version').notNull(),status:text('status').notNull(),
+}, (table) => [index('idx_collections_kind').on(table.kind)]);
+
+export const collectionMembers = sqliteTable('collection_members', {
+  collectionId:text('collection_id').notNull(),itemId:text('item_id').notNull(),memberKind:text('member_kind').notNull(),
+}, (table) => [primaryKey({ columns:[table.collectionId,table.itemId] }),index('idx_collection_members_item').on(table.itemId)]);
+
+export const releases = sqliteTable('releases', {
+  id:text('id').primaryKey(),label:text('label').notNull(),baselineId:text('baseline_id').notNull(),status:text('status').notNull(),
+  codeRevision:text('code_revision'),ciStatus:text('ci_status'),approvedBy:text('approved_by').notNull(),createdAt:text('created_at').notNull(),
+}, (table) => [index('idx_releases_baseline').on(table.baselineId)]);

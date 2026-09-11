@@ -1036,10 +1036,10 @@
       "id": "DES-001",
       "versionId": "DES-001-v1.0",
       "version": "1.0",
-      "type": "design",
+      "type": "component",
       "title": "Upload gateway",
       "statement": "Validates file shape, duration, sampling metadata, role, and transfer integrity before accepting an ECG.",
-      "rationale": "Defines controlled design evidence for RhythmReview.",
+      "rationale": "Defines controlled component evidence for RhythmReview.",
       "owner": "Engineering",
       "criticality": "high",
       "jurisdictions": [
@@ -1058,10 +1058,10 @@
       "id": "DES-002",
       "versionId": "DES-002-v1.0",
       "version": "1.0",
-      "type": "design",
+      "type": "component",
       "title": "Analysis orchestrator",
       "statement": "Coordinates quality assessment, locked-model inference, timing control, and result persistence.",
-      "rationale": "Defines controlled design evidence for RhythmReview.",
+      "rationale": "Defines controlled component evidence for RhythmReview.",
       "owner": "Engineering",
       "criticality": "high",
       "jurisdictions": [
@@ -1080,10 +1080,10 @@
       "id": "DES-003",
       "versionId": "DES-003-v1.0",
       "version": "1.0",
-      "type": "design",
+      "type": "component",
       "title": "Clinician result panel",
       "statement": "Renders the three permitted results, review prompt, limitations, and acknowledgement control.",
-      "rationale": "Defines controlled design evidence for RhythmReview.",
+      "rationale": "Defines controlled component evidence for RhythmReview.",
       "owner": "Engineering",
       "criticality": "high",
       "jurisdictions": [
@@ -1102,10 +1102,10 @@
       "id": "DES-004",
       "versionId": "DES-004-v1.0",
       "version": "1.0",
-      "type": "design",
+      "type": "component",
       "title": "Timeout supervisor",
       "statement": "Tracks elapsed analysis time and transitions the request to a controlled failure state.",
-      "rationale": "Defines controlled design evidence for RhythmReview.",
+      "rationale": "Defines controlled component evidence for RhythmReview.",
       "owner": "Engineering",
       "criticality": "high",
       "jurisdictions": [
@@ -1124,10 +1124,10 @@
       "id": "DES-005",
       "versionId": "DES-005-v1.0",
       "version": "1.0",
-      "type": "design",
+      "type": "component",
       "title": "Audit ledger",
       "statement": "Stores immutable workflow events and released component identifiers.",
-      "rationale": "Defines controlled design evidence for RhythmReview.",
+      "rationale": "Defines controlled component evidence for RhythmReview.",
       "owner": "Engineering",
       "criticality": "medium",
       "jurisdictions": [
@@ -1146,10 +1146,10 @@
       "id": "DES-006",
       "versionId": "DES-006-v1.0",
       "version": "1.0",
-      "type": "design",
+      "type": "component",
       "title": "PDF evidence exporter",
       "statement": "Produces an administrative PDF copy of completed audit events for internal review.",
-      "rationale": "Defines controlled design evidence for RhythmReview.",
+      "rationale": "Defines controlled component evidence for RhythmReview.",
       "owner": "Engineering",
       "criticality": "low",
       "jurisdictions": [
@@ -1170,10 +1170,10 @@
       "id": "DES-007",
       "versionId": "DES-007-v1.0",
       "version": "1.0",
-      "type": "design",
+      "type": "component",
       "title": "Telemetry monitor",
       "statement": "Collects service health and analysis-latency metrics without ECG signal payloads.",
-      "rationale": "Defines controlled design evidence for RhythmReview.",
+      "rationale": "Defines controlled component evidence for RhythmReview.",
       "owner": "Engineering",
       "criticality": "medium",
       "jurisdictions": [
@@ -2606,7 +2606,7 @@
       "title": "Software architecture and design",
       "description": "Components that implement controlled requirements.",
       "types": [
-        "design",
+        "component",
         "requirement"
       ]
     },
@@ -2616,7 +2616,7 @@
       "title": "Component and cybersecurity inventory",
       "description": "Released components and security-relevant controls.",
       "types": [
-        "design"
+        "component"
       ],
       "excludeFlags": [
         "missing_from_component_inventory"

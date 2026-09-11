@@ -3,12 +3,12 @@ import { z } from 'zod';
 export const EvidenceIdSchema = z.string().regex(/^(IU|CLM|UN|REQ|HAZ|RC|DES|TEST|CE|LBL)-\d{3}$/).brand<'EvidenceId'>();
 export const ScenarioIdSchema = z.string().regex(/^SCN-\d{3}$/).brand<'ScenarioId'>();
 export const ChangeIdSchema = z.string().regex(/^CHG-[A-Z0-9-]+$/).brand<'ChangeId'>();
-export const EvidenceTypeSchema = z.enum(['intended_use','claim','user_need','requirement','hazard','risk_control','design','test','clinical_evidence','label']);
+export const EvidenceTypeSchema = z.enum(['intended_use','claim','user_need','requirement','hazard','risk_control','component','test','clinical_evidence','label']);
 export const CriticalitySchema = z.enum(['high','medium','low']);
 export const EvidenceStatusSchema = z.enum(['approved','proposed','superseded']);
 export const RelationshipTypeSchema = z.enum(['REFINES','MITIGATES','IMPLEMENTS','VERIFIES','VALIDATES','SUPPORTED_BY','DISCLOSED_IN','DEPENDS_ON','MAY_AFFECT']);
 export const ImpactActionSchema = z.enum(['review','update','retest','new_link','no_change']);
-export const SuggestionOriginSchema = z.enum(['linked','semantic']);
+export const SuggestionOriginSchema = z.enum(['linked','semantic','collection']);
 export const DecisionSchema = z.enum(['pending','accepted','rejected','edited']);
 export const ChangeStatusSchema = z.enum(['draft','analysing','ready_for_review','under_review','updates_proposed','qa_review','returned_to_author','approved']);
 export const AnalysisRunStatusSchema = z.enum(['running','completed','failed','superseded']);
@@ -138,5 +138,5 @@ export type ModelImpactOutput = z.infer<typeof ModelImpactOutputSchema>;
 
 export const EVIDENCE_TYPE_LABELS: Record<EvidenceType,string> = {
   intended_use:'Intended use', claim:'Product claim', user_need:'User need', requirement:'Requirement', hazard:'Hazard',
-  risk_control:'Risk control', design:'Design component', test:'Test and result', clinical_evidence:'Clinical evidence', label:'Labelling',
+  risk_control:'Risk control', component:'Component', test:'Test and result', clinical_evidence:'Clinical evidence', label:'Labelling',
 };

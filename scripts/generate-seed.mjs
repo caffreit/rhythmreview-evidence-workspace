@@ -92,7 +92,7 @@ addGroup('RC', 'risk_control', 'Risk management', [
   { title: 'Released-model enforcement', statement: 'Deployment shall block models whose identifier is absent from the approved release configuration.', criticality: 'high' },
 ]);
 
-addGroup('DES', 'design', 'Engineering', [
+addGroup('DES', 'component', 'Engineering', [
   { title: 'Upload gateway', statement: 'Validates file shape, duration, sampling metadata, role, and transfer integrity before accepting an ECG.', criticality: 'high' },
   { title: 'Analysis orchestrator', statement: 'Coordinates quality assessment, locked-model inference, timing control, and result persistence.', criticality: 'high' },
   { title: 'Clinician result panel', statement: 'Renders the three permitted results, review prompt, limitations, and acknowledgement control.', criticality: 'high' },
@@ -168,8 +168,8 @@ const documents = [
   { id:'DOC-002', code:'UNS', title:'User-needs specification', description:'The needs that anchor the system and software requirements.', types:['user_need'] },
   { id:'DOC-003', code:'SRS', title:'Software requirements specification', description:'Atomic, testable requirements for the released system.', types:['requirement'] },
   { id:'DOC-004', code:'RMS', title:'Risk-management summary', description:'Hazards, hazardous situations, and their risk controls.', types:['hazard','risk_control'] },
-  { id:'DOC-005', code:'SAD', title:'Software architecture and design', description:'Components that implement controlled requirements.', types:['design','requirement'] },
-  { id:'DOC-006', code:'CCI', title:'Component and cybersecurity inventory', description:'Released components and security-relevant controls.', types:['design'], excludeFlags:['missing_from_component_inventory'] },
+  { id:'DOC-005', code:'SAD', title:'Software architecture and design', description:'Components that implement controlled requirements.', types:['component','requirement'] },
+  { id:'DOC-006', code:'CCI', title:'Component and cybersecurity inventory', description:'Released components and security-relevant controls.', types:['component'], excludeFlags:['missing_from_component_inventory'] },
   { id:'DOC-007', code:'VVP', title:'Verification and validation plan', description:'Planned verification of requirements and controls.', types:['requirement','risk_control','test'] },
   { id:'DOC-008', code:'VVR', title:'Verification and validation report', description:'Released test evidence, including one deliberately stale reference.', types:['test'] },
   { id:'DOC-009', code:'CES', title:'Clinical-evaluation summary', description:'Clinical evidence supporting the intended use and claims.', types:['clinical_evidence','claim'] },
@@ -231,7 +231,7 @@ const scenarioDefinitions = [
 ];
 
 const itemById = new Map(evidence.map((item) => [item.id, item]));
-const actionFor = (type) => type === 'test' ? 'retest' : type === 'design' || type === 'requirement' || type === 'label' || type === 'intended_use' ? 'update' : 'review';
+const actionFor = (type) => type === 'test' ? 'retest' : type === 'component' || type === 'requirement' || type === 'label' || type === 'intended_use' ? 'update' : 'review';
 const rationaleByScenario = {
   'SCN-001':{
     'LBL-001':'The controlled result label is the wording being changed and needs a new approved version.',
