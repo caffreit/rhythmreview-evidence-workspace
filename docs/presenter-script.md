@@ -40,7 +40,7 @@ Say that these are abbreviated evidence-grouped views, not submission-ready docu
 3. Compare the approved 30-second requirement with the human-authored 60-second proposal fixture.
 4. Create the change as Alex Morgan.
 5. Keep **Replay fixture** selected and choose **Load replay fixture**.
-6. Say that replay loads saved structured output and makes no OpenAI call.
+6. Say that replay loads saved structured output and makes no external AI call.
 7. Compare a confirmed graph path with an **Unlinked semantic candidate**. The unlinked card states that no direct relationship is asserted.
 8. Switch to Jamie Chen.
 9. Accept `REQ-004`. Record that the timing requirement is the controlled anchor for the change.
@@ -81,8 +81,8 @@ Close with this statement: the prototype tests whether structured evidence and A
 
 ## Disclosures for questions
 
-- Live OpenAI impact analysis requires an API key. This cleanup tested the no-key failure and replay recovery path, not a successful live call.
-- The draft endpoint does not call OpenAI. Guided replay drafts are curated fixtures, and custom or live workflows receive an author drafting template.
+- Live OpenRouter impact analysis requires a hosted `OPENROUTER_API_KEY`. This cleanup tested the no-key failure and replay recovery path, not a successful live call.
+- The draft endpoint does not call an external model. Guided replay drafts are curated fixtures, and custom or live workflows receive an author drafting template.
 - The provisional answer keys need QA and RA review. Scenario 2 omits the 30-second claim in `CLM-003`. Scenario 3 omits the adult age limit in `LBL-004` and may assign the wrong action to `REQ-001`.
 - The simulated roles demonstrate separation of duties but do not authenticate identity or provide electronic signatures.
 - The prototype does not include an eQMS, SharePoint, Jira, Git, Word round trip, or submission generation.

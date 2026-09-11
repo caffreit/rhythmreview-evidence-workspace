@@ -1,6 +1,27 @@
 import { describe,expect,it } from 'vitest';
+import { configuredOpenRouterModel,readOpenRouterConfig } from '../lib/openrouter-config';
 import { CandidateOutputSchema,ContextOutputSchema } from '../lib/source-analysis-policies';
 import { SOURCE_SEED,requirementsReplay,sourceContextReplay,userNeedsReplay } from '../lib/source-seed';
+
+describe('OpenRouter configuration',() => {
+  it('uses the agreed gateway and model defaults',() => {
+    expect(configuredOpenRouterModel({})).toMatchObject({
+      baseURL:'https://openrouter.ai/api/v1',
+      model:'openai/gpt-5.6-luna',
+      embeddingModel:'openai/text-embedding-3-small',
+      reasoningEffort:'medium',
+    });
+  });
+
+  it('requires the OpenRouter key only at the live-call boundary',() => {
+    expect(() => readOpenRouterConfig({})).toThrow('OPENROUTER_API_KEY is not configured');
+    expect(readOpenRouterConfig({ OPENROUTER_API_KEY:'test-key',OPENROUTER_REASONING_EFFORT:'low' })).toMatchObject({ apiKey:'test-key',reasoningEffort:'low' });
+  });
+
+  it('rejects unsupported reasoning settings at the environment boundary',() => {
+    expect(() => configuredOpenRouterModel({ OPENROUTER_REASONING_EFFORT:'turbo' })).toThrow();
+  });
+});
 
 describe('source-to-baseline policy fixtures',() => {
   it('keeps required and advisory context separate with exact source spans',() => {

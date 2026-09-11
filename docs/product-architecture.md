@@ -159,7 +159,7 @@ Collect approved changes, run coherence and readiness checks, freeze a baseline,
 
 ## AI policies and provenance
 
-BlueBridge calls OpenAI directly. The API key is an environment secret. The default model is `gpt-5.6-luna` with medium reasoning. Each policy has a stable name, explicit version and strict structured-output schema.
+BlueBridge calls OpenRouter through its OpenAI-compatible API, without a provider-neutral application layer. `OPENROUTER_API_KEY` is an environment secret. The default analysis model is `openai/gpt-5.6-luna` with medium reasoning, and semantic retrieval uses `openai/text-embedding-3-small`. The model remains configurable for testing. Each policy has a stable name, explicit version and strict structured-output schema.
 
 1. `source-context-v1` extracts facts and cited contradictions, ambiguities, missing decisions and scope questions.
 2. `user-needs-v1` generates cited user-need candidates after the context gate passes.
@@ -201,4 +201,4 @@ The prototype defers real Jira, GitHub and CI synchronization, PDF and DOCX pars
 | Demonstration | Source to baseline and release record |
 | Requirement hierarchy | Product, system and subsystem |
 | Architecture artifact | One living record with separate wireframes |
-
+| AI gateway | OpenRouter via its OpenAI-compatible Responses and embeddings endpoints; no multi-provider adapter |

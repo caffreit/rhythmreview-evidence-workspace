@@ -81,6 +81,6 @@ The simulated Author and QA reviewer roles demonstrate separation of duties. The
 - The ten document views are abbreviated groups of evidence items, not submission-ready controlled documents.
 - `TEST-009` is intentionally superseded but included by both VVP and VVR. The UI now warns about it and the deterministic check reports both views. The demo does not silently remove the fixture.
 - Three coherence findings remain human-authored fixtures because the current model does not represent structured timing values, claim strength, or review dates. The timing fixture reads the current statements and reports their current values, but the rule and item selection remain authored for the evaluation pack.
-- Replay loads saved structured output and curated drafts without calling OpenAI. Live analysis was tested only for its no-key failure path in this cleanup pass.
-- Live analysis provides AI-assisted impact classification. The current draft endpoint does not call OpenAI and must not be presented as live AI drafting.
+- Replay loads saved structured output and curated drafts without calling an external model. Live OpenRouter analysis was tested only for its no-key failure path in this cleanup pass.
+- Live analysis provides AI-assisted impact classification through OpenRouter. The current draft endpoint does not call an external model and must not be presented as live AI drafting.
 - The internal evaluation page calculates the selected structured run. Its manual and document-chat comparisons are illustrative fixtures.

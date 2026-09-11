@@ -18,7 +18,7 @@ This local prototype tests whether linked evidence plus AI can help a QA or regu
 
 3. Open the local address shown in the terminal. The default is `http://localhost:3000`.
 
-Replay mode works without an API key. To run live analysis, copy `.env.example` to `.env.local` and set `OPENAI_API_KEY`. The server sends only the fictional candidate evidence to the API.
+Replay mode works without an API key. To run live analysis, copy `.env.example` to `.env.local` and set `OPENROUTER_API_KEY`. The server uses OpenRouter's OpenAI-compatible API and sends only the fictional candidate evidence. The default models are `openai/gpt-5.6-luna` for analysis and `openai/text-embedding-3-small` for semantic retrieval.
 
 ## Run a demonstration
 
@@ -31,7 +31,7 @@ The unguided workflow is:
 1. Open **Change workspace**.
 2. Select a scenario.
 3. Create the controlled change as Alex Morgan, the author.
-4. Load the saved replay fixture or run live OpenAI analysis.
+4. Load the saved replay fixture or run live OpenRouter analysis.
 5. Select the role control in the header to switch to Jamie Chen, the QA reviewer.
 6. Accept, reject, or edit each impact suggestion and record a reason.
 7. Switch to the author and create, edit, or discard candidate versions.

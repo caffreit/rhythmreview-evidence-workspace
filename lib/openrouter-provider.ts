@@ -3,14 +3,7 @@ import { zodTextFormat } from 'openai/helpers/zod';
 import { ModelImpactOutputSchema, type EvidenceId, type EvidenceItem, type ImpactSuggestion } from './domain';
 import { cosineSimilarity, graphCandidates, mergeCandidates, type CandidatePath } from './analysis';
 import type { EvidenceRelationship } from './domain';
-
-type AiConfig = { apiKey:string; model:string; embeddingModel:string; reasoningEffort:'medium' };
-
-function readConfig(): AiConfig {
-  const apiKey = process.env.OPENAI_API_KEY;
-  if (!apiKey) throw new Error('OPENAI_API_KEY is not configured. Choose replay mode or add the key to the local environment.');
-  return { apiKey,model:process.env.OPENAI_MODEL ?? 'gpt-5.6-luna',embeddingModel:process.env.OPENAI_EMBEDDING_MODEL ?? 'text-embedding-3-small',reasoningEffort:'medium' };
-}
+import { createOpenRouterClient,readOpenRouterConfig } from './openrouter-config';
 
 async function semanticCandidates(args:{ client:OpenAI; db:D1Database; embeddingModel:string; query:string; evidence:EvidenceItem[]; excluded:Set<EvidenceId>; limit:number }): Promise<CandidatePath[]> {
   const missing = args.evidence.filter((item) => !args.excluded.has(item.id) && item.status !== 'superseded');
@@ -41,8 +34,8 @@ async function semanticCandidates(args:{ client:OpenAI; db:D1Database; embedding
     .map(({ item }) => ({ targetId:item.id,path:[item.id],origin:'semantic' }));
 }
 
-export async function analyseWithOpenAI(args:{ db:D1Database; anchorId:EvidenceId; title:string; rationale:string; proposedText:string; evidence:EvidenceItem[]; relationships:EvidenceRelationship[] }): Promise<{ model:string; promptVersion:string; suggestions:ImpactSuggestion[] }> {
-  const config = readConfig(); const client = new OpenAI({ apiKey:config.apiKey });
+export async function analyseWithOpenRouter(args:{ db:D1Database; anchorId:EvidenceId; title:string; rationale:string; proposedText:string; evidence:EvidenceItem[]; relationships:EvidenceRelationship[] }): Promise<{ model:string; promptVersion:string; suggestions:ImpactSuggestion[] }> {
+  const config = readOpenRouterConfig(); const client = createOpenRouterClient(config);
   const linked = graphCandidates(args.anchorId,args.relationships,3);
   const linkedIds = new Set(linked.map((candidate) => candidate.targetId));
   const semantic = await semanticCandidates({ client,db:args.db,embeddingModel:config.embeddingModel,query:`${args.title}\n${args.rationale}\n${args.proposedText}`,evidence:args.evidence,excluded:linkedIds,limit:12 });

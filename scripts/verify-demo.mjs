@@ -64,7 +64,7 @@ for (const scenarioId of ['SCN-001','SCN-002','SCN-003']) {
   assert.equal(recent.changes[0].id,change.id);
   assert.equal((await request('/api/overview')).baseline.label,'RR-1.0');
 
-  if (scenarioId === 'SCN-001' && !process.env.OPENAI_API_KEY) {
+  if (scenarioId === 'SCN-001' && !process.env.OPENROUTER_API_KEY) {
     const failed = await request(`/api/changes/${change.id}/analyse`,{ method:'POST',body:JSON.stringify({ mode:'live' }) });
     assert.equal(failed.status,'draft');
     assert.equal(failed.run,null);
@@ -177,7 +177,7 @@ for (const scenarioId of ['SCN-001','SCN-002','SCN-003']) {
     assert.equal(returned.updates.find((update) => update.id === restorable.id).status,'discarded');
     returned = await request(`/api/updates/${restorable.id}`,{ method:'PATCH',body:JSON.stringify({ operation:'restore',actor:'Alex Morgan · Author',reason:'Retain the candidate after author review.' }) });
     assert.equal(returned.updates.find((update) => update.id === restorable.id).status,'proposed');
-    if (!process.env.OPENAI_API_KEY) {
+    if (!process.env.OPENROUTER_API_KEY) {
       const failedReanalysis = await request(`/api/changes/${change.id}/reopen-analysis`,{ method:'POST',body:JSON.stringify({ actor:'Alex Morgan · Author',mode:'live',reason:'Exercise failed reanalysis recovery.' }) });
       assert.equal(failedReanalysis.status,'returned_to_author');
       assert.equal(failedReanalysis.run.id,retainedRunId);

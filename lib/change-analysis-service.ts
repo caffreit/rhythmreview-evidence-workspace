@@ -1,4 +1,5 @@
-import { analyseWithOpenAI } from './openai-provider';
+import { analyseWithOpenRouter } from './openrouter-provider';
+import { configuredOpenRouterModel } from './openrouter-config';
 import { EvidenceIdSchema, type EvidenceId, type EvidenceItem, type ImpactSuggestion } from './domain';
 import { beginAnalysis, listEvidence, listRelationships, loadReplaySuggestions, saveAnalysis } from './repository';
 import { getCollectionsForEvidence } from './source-repository';
@@ -53,14 +54,14 @@ export async function runChangeAnalysis(args:AnalysisRequest):Promise<AnalysisRe
   let lastError:unknown;
   for (let attempt = 0; attempt < 2; attempt += 1) {
     try {
-      const live = await analyseWithOpenAI({ db:args.db,anchorId:started.change.anchorItemId,title:started.change.title,rationale:started.change.rationale,proposedText:started.change.proposedText,evidence,relationships });
+      const live = await analyseWithOpenRouter({ db:args.db,anchorId:started.change.anchorItemId,title:started.change.title,rationale:started.change.rationale,proposedText:started.change.proposedText,evidence,relationships });
       const collections = await collectionSuggestions(args.db,started.change.anchorItemId,evidence);
       const change = await saveAnalysis(args.db,{ changeId:args.changeId,runId:started.runId,mode:'live',...live,suggestions:mergeSuggestions(live.suggestions,collections) });
       return change ? { kind:'completed',change } : { kind:'conflict' };
     } catch (error:unknown) { lastError = error; }
   }
   const message = lastError instanceof Error ? lastError.message : 'Live analysis failed';
-  const change = await saveAnalysis(args.db,{ changeId:args.changeId,runId:started.runId,mode:'live',model:process.env.OPENAI_MODEL ?? 'gpt-5.6-luna',promptVersion:'impact-v2',suggestions:[],error:message });
+  const change = await saveAnalysis(args.db,{ changeId:args.changeId,runId:started.runId,mode:'live',model:configuredOpenRouterModel().model,promptVersion:'impact-v2',suggestions:[],error:message });
   if (!change) return { kind:'conflict' };
   return { kind:'completed',change,warning:`Live AI failed after one retry. No AI suggestions were saved. The prior workflow state was restored. ${message}` };
 }

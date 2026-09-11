@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { graphCandidates,lexicalCandidates } from './analysis';
-import { analyseWithOpenAI } from './openai-provider';
+import { analyseWithOpenRouter } from './openrouter-provider';
+import { configuredOpenRouterModel } from './openrouter-config';
 import { ensureWorkspace,listEvidence,listRelationships } from './repository';
 import { WorkflowConflictError } from './http';
 import { analyzeSourceContext, generateSourceCandidates } from './source-ai';
@@ -191,13 +192,14 @@ async function createSourceImpactAnalysis(db:D1Database,sourceId:string):Promise
     if (fallback) semantic = [{ targetId:fallback.id,path:[fallback.id],origin:'semantic' }];
   }
   const runId = makeId('PRC');
-  let mode:'live'|'replay' = 'live'; let model = process.env.OPENAI_MODEL ?? 'gpt-5.6-luna'; let reasoningEffort = process.env.OPENAI_REASONING_EFFORT ?? 'medium'; let warning:string|undefined;
+  const liveConfig = configuredOpenRouterModel();
+  let mode:'live'|'replay' = 'live'; let model = liveConfig.model; let reasoningEffort = liveConfig.reasoningEffort; let warning:string|undefined;
   let rawSuggestions:Array<{ targetId:string;origin:'linked'|'semantic';action:'review'|'update'|'retest'|'new_link'|'no_change';rationale:string;citations:string[] }> = [];
   try {
     const anchor = semantic[0];
     if (!anchor) throw new Error('No bounded impact candidates were available.');
-    const live = await analyseWithOpenAI({ db,anchorId:anchor.targetId,title:'Source-derived candidate batch',rationale:'New reviewed user needs and requirements are proposed for the product baseline.',proposedText:query,evidence,relationships });
-    model = live.model; reasoningEffort = 'medium';
+    const live = await analyseWithOpenRouter({ db,anchorId:anchor.targetId,title:'Source-derived candidate batch',rationale:'New reviewed user needs and requirements are proposed for the product baseline.',proposedText:query,evidence,relationships });
+    model = live.model; reasoningEffort = liveConfig.reasoningEffort;
     rawSuggestions = live.suggestions.map((suggestion) => ({ targetId:suggestion.targetId,origin:suggestion.origin === 'linked' ? 'linked' : 'semantic',action:suggestion.action,rationale:suggestion.rationale,citations:suggestion.citations }));
   } catch (error:unknown) {
     mode = 'replay'; model = 'saved-demo-output'; reasoningEffort = 'not-run'; warning = error instanceof Error ? error.message : 'Live impact analysis failed.';
