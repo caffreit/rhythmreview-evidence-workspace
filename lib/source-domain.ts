@@ -10,6 +10,11 @@ export const ClarificationStatusSchema = z.enum(['open','answered','deferred','d
 export const CandidateTypeSchema = z.enum(['user_need','requirement']);
 export const RequirementLevelSchema = z.enum(['product','system','subsystem']);
 export const CandidateStatusSchema = z.enum(['pending_review','approved_for_baseline','rejected','revision_requested']);
+export const SourceImpactSuggestionSchema = z.object({
+  id:z.string(),sourceId:z.string(),runId:z.string(),targetId:z.string(),origin:z.enum(['linked','semantic','collection']),
+  category:z.string(),proposedAction:z.enum(['review','update','retest','new_link','no_change']),rationale:z.string(),citations:z.array(z.string()),
+  decision:z.enum(['pending','accepted','rejected']),decisionReason:z.string().nullable(),decidedBy:z.string().nullable(),
+});
 const AuthorActorSchema = z.string().refine((value) => value.includes('Author'),{ message:'Author permission is required.' });
 const QaActorSchema = z.string().refine((value) => value.includes('QA reviewer'),{ message:'QA reviewer permission is required.' });
 
@@ -38,7 +43,7 @@ export const SourceSummarySchema = z.object({
 });
 
 export const ProcessingRunSchema = z.object({
-  id:z.string(),sourceId:z.string(),revisionId:z.string(),kind:z.enum(['source_revision_impact','source_context','user_needs','requirements']),mode:ProcessingModeSchema,
+  id:z.string(),sourceId:z.string(),revisionId:z.string(),kind:z.enum(['source_revision_impact','source_context','user_needs','requirements','impact_analysis']),mode:ProcessingModeSchema,
   model:z.string(),reasoningEffort:z.string(),policyVersion:z.string(),status:ProcessingStatusSchema,error:z.string().nullable(),createdAt:z.string(),
 });
 
@@ -50,6 +55,7 @@ export const SourceDetailSchema = z.object({
 
 export const SourceListResponseSchema = z.object({
   sources:z.array(SourceSummarySchema),reviewCount:z.number(),approvedCandidateCount:z.number(),candidateBaselineReady:z.boolean(),
+  impactSuggestions:z.array(SourceImpactSuggestionSchema),impactMode:ProcessingModeSchema.nullable(),impactModel:z.string().nullable(),
   release:z.object({ id:z.string(),label:z.string(),baselineId:z.string(),status:z.string(),codeRevision:z.string().nullable(),ciStatus:z.string().nullable(),createdAt:z.string() }).nullable(),
 });
 
@@ -65,11 +71,13 @@ export const ClarificationDecisionInputSchema = z.discriminatedUnion('action',[
 ]);
 export const GenerateCandidatesInputSchema = z.object({ kind:z.enum(['user_needs','requirements']),mode:ProcessingModeSchema,actor:AuthorActorSchema });
 export const CandidateDecisionInputSchema = z.object({ decision:z.enum(['approved_for_baseline','rejected','revision_requested']),reason:z.string().min(2).max(1000),actor:QaActorSchema });
+export const SourceImpactDecisionInputSchema = z.object({ decision:z.enum(['accepted','rejected']),reason:z.string().min(2).max(1000),actor:QaActorSchema });
 export const ApproveSourceBaselineInputSchema = z.object({ actor:QaActorSchema,confirmation:z.literal(true) });
 
 export type SourceCitation = z.infer<typeof SourceCitationSchema>;
 export type Clarification = z.infer<typeof ClarificationSchema>;
 export type SourceCandidate = z.infer<typeof SourceCandidateSchema>;
+export type SourceImpactSuggestion = z.infer<typeof SourceImpactSuggestionSchema>;
 export type SourceSummary = z.infer<typeof SourceSummarySchema>;
 export type SourceDetail = z.infer<typeof SourceDetailSchema>;
 export type SourceListResponse = z.infer<typeof SourceListResponseSchema>;

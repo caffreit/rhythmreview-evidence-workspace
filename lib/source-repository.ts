@@ -1,5 +1,7 @@
 import { z } from 'zod';
-import { ensureWorkspace } from './repository';
+import { graphCandidates,lexicalCandidates } from './analysis';
+import { analyseWithOpenAI } from './openai-provider';
+import { ensureWorkspace,listEvidence,listRelationships } from './repository';
 import { WorkflowConflictError } from './http';
 import { analyzeSourceContext, generateSourceCandidates } from './source-ai';
 import { REQUIREMENTS_POLICY, SOURCE_CONTEXT_POLICY, USER_NEEDS_POLICY, type CandidateOutput, type ContextOutput } from './source-analysis-policies';
@@ -7,7 +9,7 @@ import { SOURCE_SEED, requirementsReplay, sourceContextReplay, userNeedsReplay }
 import {
   ApproveSourceBaselineInputSchema,CandidateDecisionInputSchema,ClarificationDecisionInputSchema,ClarificationSchema,GenerateCandidatesInputSchema,
   ImportSourceInputSchema,ProcessingRunSchema,RunSourceAnalysisInputSchema,SourceCandidateSchema,SourceCitationSchema,SourceDetailSchema,SourceKindSchema,UpdateSourceRevisionInputSchema,
-  SourceListResponseSchema,SourceStatusSchema,SourceSummarySchema,type SourceCitation,type SourceDetail,type SourceListResponse,
+  SourceImpactDecisionInputSchema,SourceImpactSuggestionSchema,SourceListResponseSchema,SourceStatusSchema,SourceSummarySchema,type SourceCitation,type SourceDetail,type SourceImpactSuggestion,type SourceListResponse,
 } from './source-domain';
 
 const CitationArraySchema = z.array(SourceCitationSchema);
@@ -66,9 +68,17 @@ export async function listSourceWorkspace(db:D1Database):Promise<SourceListRespo
   const sources = await sourceSummaries(db);
   const release = await db.prepare('SELECT id,label,baseline_id AS baselineId,status,code_revision AS codeRevision,ci_status AS ciStatus,created_at AS createdAt FROM releases ORDER BY created_at DESC LIMIT 1').first<{ id:string;label:string;baselineId:string;status:string;codeRevision:string|null;ciStatus:string|null;createdAt:string }>();
   const openCandidates = await db.prepare("SELECT COUNT(*) AS count FROM source_candidates c JOIN source_processing_runs p ON p.id=c.run_id JOIN source_artifacts a ON a.id=c.source_id AND a.latest_revision_id=p.revision_id WHERE c.status IN ('pending_review','revision_requested')").first<{ count:number }>();
-  const reviewCount = sources.reduce((sum,source) => sum + source.requiredOpen + source.advisoryOpen,0) + (openCandidates?.count ?? 0);
+  const impactRuns = await db.prepare("SELECT p.id,p.source_id AS sourceId,p.mode,p.model,p.output_json AS outputJson FROM source_processing_runs p JOIN source_artifacts a ON a.id=p.source_id AND a.latest_revision_id=p.revision_id WHERE p.kind='impact_analysis' ORDER BY p.created_at DESC,p.id DESC").all<{ id:string;sourceId:string;mode:'live'|'replay';model:string;outputJson:string }>();
+  const latestImpactBySource = new Map<string,typeof impactRuns.results[number]>();
+  for (const run of impactRuns.results) if (!latestImpactBySource.has(run.sourceId)) latestImpactBySource.set(run.sourceId,run);
+  const impactSuggestions = [...latestImpactBySource.values()].flatMap((run) => z.object({ suggestions:z.array(SourceImpactSuggestionSchema) }).parse(parseJson(run.outputJson)).suggestions);
+  const pendingImpacts = impactSuggestions.filter((suggestion) => suggestion.decision === 'pending').length;
+  const reviewCount = sources.reduce((sum,source) => sum + source.requiredOpen + source.advisoryOpen,0) + (openCandidates?.count ?? 0) + pendingImpacts;
   const approvedCandidateCount = sources.reduce((sum,source) => sum + source.approvedCandidateCount,0);
-  return SourceListResponseSchema.parse({ sources,reviewCount,approvedCandidateCount,candidateBaselineReady:sources.some((source) => source.status === 'candidate_baseline'),release:release ?? null });
+  const candidateSources = sources.filter((source) => source.status === 'candidate_baseline');
+  const candidateBaselineReady = candidateSources.length > 0 && candidateSources.every((source) => latestImpactBySource.has(source.id)) && pendingImpacts === 0;
+  const latestImpact = impactRuns.results[0];
+  return SourceListResponseSchema.parse({ sources,reviewCount,approvedCandidateCount,candidateBaselineReady,impactSuggestions,impactMode:latestImpact?.mode ?? null,impactModel:latestImpact?.model ?? null,release:release ?? null });
 }
 
 type RunRow = { id:string;sourceId:string;revisionId:string;kind:string;mode:string;model:string;reasoningEffort:string;policyVersion:string;status:string;error:string|null;createdAt:string };
@@ -123,8 +133,8 @@ function citationsBelongToRevision(citations:SourceCitation[],revisionId:string,
   return citations.every((citation) => citation.sourceRevisionId === revisionId && content.includes(citation.quote));
 }
 
-async function saveProcessingRun(db:D1Database,args:{ sourceId:string;revisionId:string;kind:'source_context'|'user_needs'|'requirements';mode:'live'|'replay';model:string;reasoningEffort:string;policyVersion:string;input:unknown;output:unknown;error?:string }):Promise<string> {
-  const id = makeId('PRC');
+async function saveProcessingRun(db:D1Database,args:{ id?:string;sourceId:string;revisionId:string;kind:'source_context'|'user_needs'|'requirements'|'impact_analysis';mode:'live'|'replay';model:string;reasoningEffort:string;policyVersion:string;input:unknown;output:unknown;error?:string }):Promise<string> {
+  const id = args.id ?? makeId('PRC');
   await db.prepare('INSERT INTO source_processing_runs (id,source_id,revision_id,kind,mode,model,reasoning_effort,policy_version,status,input_json,output_json,error,created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)')
     .bind(id,args.sourceId,args.revisionId,args.kind,args.mode,args.model,args.reasoningEffort,args.policyVersion,'completed',JSON.stringify(args.input),JSON.stringify(args.output),args.error ?? null,now()).run();
   return id;
@@ -165,6 +175,46 @@ async function refreshSourceStatus(db:D1Database,sourceId:string):Promise<void> 
   else if (requirements.some((entry) => entry.status === 'pending_review' || entry.status === 'revision_requested')) status = 'needs_review';
   else if (requirements.some((entry) => entry.status === 'approved_for_baseline')) status = 'candidate_baseline';
   await db.prepare('UPDATE source_artifacts SET status=? WHERE id=?').bind(status,sourceId).run();
+}
+
+async function createSourceImpactAnalysis(db:D1Database,sourceId:string):Promise<void> {
+  const detail = await getSourceDetail(db,sourceId);
+  if (!detail || detail.source.status !== 'candidate_baseline') return;
+  const existing = detail.runs.some((run) => run.kind === 'impact_analysis');
+  if (existing) return;
+  const approved = detail.candidates.filter((candidate) => candidate.status === 'approved_for_baseline');
+  const [evidence,relationships] = await Promise.all([listEvidence(db),listRelationships(db)]);
+  const query = approved.map((candidate) => `${candidate.title} ${candidate.statement} ${candidate.rationale}`).join('\n');
+  let semantic = lexicalCandidates(query,evidence,new Set(),5);
+  if (semantic.length === 0) {
+    const fallback = evidence.find((item) => item.type === 'requirement') ?? evidence[0];
+    if (fallback) semantic = [{ targetId:fallback.id,path:[fallback.id],origin:'semantic' }];
+  }
+  const runId = makeId('PRC');
+  let mode:'live'|'replay' = 'live'; let model = process.env.OPENAI_MODEL ?? 'gpt-5.6-luna'; let reasoningEffort = process.env.OPENAI_REASONING_EFFORT ?? 'medium'; let warning:string|undefined;
+  let rawSuggestions:Array<{ targetId:string;origin:'linked'|'semantic';action:'review'|'update'|'retest'|'new_link'|'no_change';rationale:string;citations:string[] }> = [];
+  try {
+    const anchor = semantic[0];
+    if (!anchor) throw new Error('No bounded impact candidates were available.');
+    const live = await analyseWithOpenAI({ db,anchorId:anchor.targetId,title:'Source-derived candidate batch',rationale:'New reviewed user needs and requirements are proposed for the product baseline.',proposedText:query,evidence,relationships });
+    model = live.model; reasoningEffort = 'medium';
+    rawSuggestions = live.suggestions.map((suggestion) => ({ targetId:suggestion.targetId,origin:suggestion.origin === 'linked' ? 'linked' : 'semantic',action:suggestion.action,rationale:suggestion.rationale,citations:suggestion.citations }));
+  } catch (error:unknown) {
+    mode = 'replay'; model = 'saved-demo-output'; reasoningEffort = 'not-run'; warning = error instanceof Error ? error.message : 'Live impact analysis failed.';
+    const semanticIds = new Set(semantic.map((candidate) => candidate.targetId));
+    const linked = semantic.slice(0,2).flatMap((candidate) => graphCandidates(candidate.targetId,relationships,1)).filter((candidate) => !semanticIds.has(candidate.targetId)).slice(0,6);
+    rawSuggestions = [
+      ...linked.map((candidate) => ({ targetId:candidate.targetId,origin:'linked' as const,action:(evidence.find((item) => item.id === candidate.targetId)?.type === 'test' ? 'retest' : 'review') as 'review'|'retest',rationale:`A stored relationship path from ${candidate.path[0]} reaches ${candidate.targetId}; review the controlled dependency for the new source-derived evidence.`,citations:candidate.path })),
+      ...semantic.map((candidate) => ({ targetId:candidate.targetId,origin:'semantic' as const,action:'review' as const,rationale:`The content of ${candidate.targetId} overlaps the new source-derived needs and requirements even though no new direct relationship has been asserted.`,citations:[candidate.targetId] })),
+    ];
+  }
+  const seen = new Set(rawSuggestions.map((suggestion) => suggestion.targetId));
+  const collection = await getCollectionsForEvidence(db,semantic.map((candidate) => candidate.targetId));
+  const collectionSuggestions = collection.filter((candidate) => !seen.has(candidate.targetId)).slice(0,6).map((candidate) => ({ targetId:candidate.targetId,origin:'collection' as const,action:'review' as const,rationale:`${candidate.targetId} shares a controlled collection with a semantic impact candidate; review it without claiming a direct trace link.`,citations:candidate.path }));
+  const suggestions:SourceImpactSuggestion[] = [...rawSuggestions,...collectionSuggestions].slice(0,16).map((suggestion) => SourceImpactSuggestionSchema.parse({
+    id:makeId('SUG'),sourceId,runId,targetId:suggestion.targetId,origin:suggestion.origin,category:suggestion.origin === 'linked' ? 'direct_dependency' : suggestion.origin === 'collection' ? 'shared_collection' : 'semantic_overlap',proposedAction:suggestion.action,rationale:suggestion.rationale,citations:suggestion.citations,decision:'pending',decisionReason:null,decidedBy:null,
+  }));
+  await saveProcessingRun(db,{ id:runId,sourceId,revisionId:detail.revision.id,kind:'impact_analysis',mode,model,reasoningEffort,policyVersion:'impact-v2',input:{ sourceRevisionId:detail.revision.id,candidateIds:approved.map((candidate) => candidate.id),boundedEvidenceIds:semantic.map((candidate) => candidate.targetId) },output:{ suggestions },error:warning });
 }
 
 export async function decideClarification(db:D1Database,id:string,raw:unknown):Promise<SourceDetail|null> {
@@ -226,7 +276,22 @@ export async function decideCandidate(db:D1Database,id:string,raw:unknown):Promi
   if (!candidate || candidate.status !== 'pending_review') return null;
   await db.prepare("UPDATE source_candidates SET status=?,reviewed_by=?,reviewed_at=?,review_reason=? WHERE id=? AND status='pending_review'").bind(input.decision,input.actor,now(),input.reason,id).run();
   await refreshSourceStatus(db,candidate.sourceId);
+  await createSourceImpactAnalysis(db,candidate.sourceId);
   return getSourceDetail(db,candidate.sourceId);
+}
+
+export async function decideSourceImpactSuggestion(db:D1Database,id:string,raw:unknown):Promise<SourceListResponse|null> {
+  const input = SourceImpactDecisionInputSchema.parse(raw); await initializeSources(db);
+  const runs = await db.prepare("SELECT p.id,p.output_json AS outputJson FROM source_processing_runs p JOIN source_artifacts a ON a.id=p.source_id AND a.latest_revision_id=p.revision_id WHERE p.kind='impact_analysis' ORDER BY p.created_at DESC,p.id DESC").all<{ id:string;outputJson:string }>();
+  for (const run of runs.results) {
+    const output = z.object({ suggestions:z.array(SourceImpactSuggestionSchema) }).parse(parseJson(run.outputJson));
+    const suggestion = output.suggestions.find((entry) => entry.id === id);
+    if (!suggestion || suggestion.decision !== 'pending') continue;
+    const suggestions = output.suggestions.map((entry) => entry.id === id ? { ...entry,decision:input.decision,decisionReason:input.reason,decidedBy:input.actor } : entry);
+    await db.prepare('UPDATE source_processing_runs SET output_json=? WHERE id=?').bind(JSON.stringify({ suggestions }),run.id).run();
+    return listSourceWorkspace(db);
+  }
+  return null;
 }
 
 function nextBaselineLabel(current:string):string {
@@ -241,6 +306,8 @@ function nextEvidenceId(prefix:'UN'|'REQ',used:string[]):string {
 
 export async function approveSourceBaseline(db:D1Database,raw:unknown):Promise<SourceListResponse> {
   const input = ApproveSourceBaselineInputSchema.parse(raw); await initializeSources(db);
+  const readiness = await listSourceWorkspace(db);
+  if (!readiness.candidateBaselineReady) throw new WorkflowConflictError('Complete impact review, candidate review, and required clarifications before approving the baseline.');
   const candidates = await db.prepare("SELECT c.id,c.source_id AS sourceId,c.type,c.level,c.title,c.statement,c.rationale,c.parent_ids_json AS parentIdsJson,c.citations_json AS citationsJson FROM source_candidates c JOIN source_processing_runs p ON p.id=c.run_id JOIN source_artifacts a ON a.id=c.source_id AND a.latest_revision_id=p.revision_id WHERE c.status='approved_for_baseline' AND a.status='candidate_baseline' ORDER BY c.type,c.id").all<{ id:string;sourceId:string;type:'user_need'|'requirement';level:string;title:string;statement:string;rationale:string;parentIdsJson:string;citationsJson:string }>();
   const pending = await db.prepare("SELECT COUNT(*) AS count FROM source_candidates c JOIN source_processing_runs p ON p.id=c.run_id JOIN source_artifacts a ON a.id=c.source_id AND a.latest_revision_id=p.revision_id WHERE c.status IN ('pending_review','revision_requested')").first<{ count:number }>();
   const required = await db.prepare("SELECT COUNT(*) AS count FROM source_clarifications c JOIN source_processing_runs p ON p.id=c.run_id JOIN source_artifacts a ON a.id=c.source_id AND a.latest_revision_id=p.revision_id WHERE c.severity='required' AND c.status='open'").first<{ count:number }>();
