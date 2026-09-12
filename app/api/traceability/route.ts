@@ -1,6 +1,6 @@
 import { env } from 'cloudflare:workers';
 import { apiError } from '@/lib/http';
-import { getTraceabilityCoverage } from '@/lib/repository';
+import { getTraceabilityCoverage } from '@/lib/traceability-service';
 
 export async function GET() {
   try { return Response.json(await getTraceabilityCoverage(env.DB)); }
