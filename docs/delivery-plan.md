@@ -10,7 +10,7 @@ Work packages have stable IDs. A package is complete only when its completion ga
 | Work package | Status | Depends on | Outcome | Completion gate |
 | --- | --- | --- | --- | --- |
 | WP-00 Foundation and live proof | Complete | None | Versioned prompt contracts, explicit live failures, reproducible regression checks, OpenRouter smoke test, and a recorded fictional source-to-baseline run | Passed: offline checks and seed-corpus review passed; `SRC-001` reached `RR-1.1` using live runs only |
-| WP-10A Controlled relationship lifecycle | Acceptance in progress | WP-00 | Ratified prototype policy, curated relationship fixture, controlled proposals, baseline-aware matrix, and gap analysis | Invalid link combinations are blocked; revision-bound QA decisions and immutable baseline outcomes pass the traceability workflow |
+| WP-10A Controlled relationship lifecycle | Accepted | WP-00 | Ratified prototype policy, curated relationship fixture, controlled proposals, baseline-aware matrix, and gap analysis | Invalid link combinations are blocked; revision-bound QA decisions, immutable baseline outcomes, browser checks, and live corpus gates pass |
 | WP-10B Interactive traceability graph | Planned | WP-10A | Explorable graph with controlled, proposed, rejected, and review-only links | Graph state matches the Matrix projection for every supported change state |
 | WP-20 Risk, verification, and release readiness | Planned | WP-10 | Structured hazards, controls, residual risk, verification plans and executions, and release gates | A candidate release cannot proceed with unresolved required risk, verification, traceability, or review work |
 | WP-30 Document inputs and outputs | Planned | WP-20 | PDF and DOCX ingestion, source and controlled-document redlines, versioned templates, and package completeness | An imported document can produce reviewed evidence and a baseline-linked output package |
@@ -29,7 +29,7 @@ WP-10A has its implementation slice:
 5. `trace-coverage-v1` reports four honest gaps: `CLM-002`, `RC-001`, `RC-002`, and `RC-005`. Coverage gaps do not gate WP-10A approval; WP-20 owns that release gate.
 6. `verify:traceability` exercises the five-minute guided flow, revision invalidation, all-rejected closure, stale-baseline conflict, and workspace reset.
 
-WP-10A has passed the full offline regression suite and desktop and 390 px browser acceptance. It remains in acceptance until the paid three-scenario corpus is explicitly authorized and rerun against the curated graph. The interactive graph is deliberately deferred to WP-10B. See [Controlled prototype relationship and coverage policy](relationship-policy.md).
+WP-10A passed the full offline regression suite, desktop and 390 px browser acceptance, and the authorized paid three-scenario corpus against the curated graph. The interactive graph is deliberately deferred to WP-10B. See [Controlled prototype relationship and coverage policy](relationship-policy.md).
 
 ## Completed foundation package
 

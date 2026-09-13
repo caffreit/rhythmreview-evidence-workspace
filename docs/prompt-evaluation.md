@@ -1,16 +1,46 @@
 # Prototype prompt evaluation
 
-Evaluation date: 2026-09-12  
+Evaluation dates: 2026-09-12 (pre-WP-10A) and 2026-09-13 (curated graph)
+
 Configuration: `openai/gpt-5.6-luna`, medium reasoning, `openai/text-embedding-3-small`  
-Scope: fictional seed data only, before the WP-10A curated relationship graph
+Scope: fictional seed data only
 
 Historical decision: approved for the pre-WP-10A prototype
 
-Current WP-10A decision: pending a newly authorized paid corpus run
+Current WP-10A decision: approved for the controlled prototype
 
 This is a prototype prompt evaluation. It is not regulatory validation, production model approval, or evidence of compliance.
 
-The results below are historical and do not support a live-quality claim for the curated 122-link graph. WP-10A acceptance requires a fresh three-scenario run against that graph. Until it is explicitly authorized and passes every locked threshold, the current quality claim remains withdrawn.
+The original results below remain as historical evidence. WP-10A was separately rerun against the curated 122-link graph and passed every locked aggregate threshold.
+
+## WP-10A curated-graph decision
+
+The authorized 2026-09-13 run used `impact-v6` and the controlled 122-link graph. The evaluator classified every bounded candidate, validated cited evidence IDs, and recorded model-positive metrics before human decisions.
+
+| Gate | Result | Decision |
+| --- | ---: | --- |
+| Critical-impact recall | 100% (13/13) | Pass |
+| Overall impact recall | 94% (34/36) | Pass |
+| Actionable impact precision | 81% (13/16) | Pass |
+| Invented evidence IDs | 0 | Pass |
+| Invalid target citations | 0 | Pass |
+
+| Scenario | Run ID | Duration | Input / output / embedding tokens | Critical recall | Overall recall | Actionable precision | Human action corrections |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| `SCN-001` | `RUN-B291C24E` | 24,180 ms | 8,550 / 2,622 / 2,529 | 100% | 83% | 80% | 1 |
+| `SCN-002` | `RUN-E4C8E402` | 33,625 ms | 12,134 / 3,837 / 39 | 100% | 100% | 100% | 2 |
+| `SCN-003` | `RUN-F10D150F` | 41,364 ms | 12,993 / 4,688 / 54 | 100% | 95% | 60% | 3 |
+| **Aggregate** | — | — | **33,677 / 11,147 / 2,622** | **100%** | **94%** | **81%** | **6** |
+
+The locked gates apply to the corpus aggregate. Individual scenario variation remains visible rather than being hidden by human edits. Across the nine source-processing runs and three impact runs, the evaluation recorded 40,637 input tokens, 17,399 output tokens, and 2,622 embedding tokens. Every run completed on its first attempt with `openai/gpt-5.6-luna`.
+
+| Source | Context run | User-needs run | Requirements run |
+| --- | --- | --- | --- |
+| `SRC-001` | `PRC-73C4F615` | `PRC-3EDD5326` | `PRC-253AA5AC` |
+| `SRC-002` | `PRC-733C3906` | `PRC-D0CEE1D2` | `PRC-D9DEEA98` |
+| `SRC-003` | `PRC-1DBDEAC2` | `PRC-0C6E8B4C` | `PRC-8033D013` |
+
+The human source review rejected three unsupported `SRC-001` requirement candidates. Those rejections are retained as review outcomes and do not inflate the impact metrics.
 
 ## Historical decision against the gates
 

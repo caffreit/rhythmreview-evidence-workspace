@@ -19,7 +19,7 @@ The implemented workflows are:
 
 The foundation package is complete. Its versioned prompt contracts, explicit live-failure behavior, model-run metadata, offline regression, live source-to-baseline proof, and prompt evaluation are recorded in the delivery plan.
 
-WP-10A controlled relationship authoring is implemented and under acceptance. `relationship-policy-v1.0` recognizes all 122 curated links. Coverage reports honest gaps for `CLM-002`, `RC-001`, `RC-002`, and `RC-005`; the `RC-005` verification gap remains intentionally open for WP-20. The interactive graph remains WP-10B.
+WP-10A controlled relationship authoring is implemented and accepted. `relationship-policy-v1.0` recognizes all 122 curated links. Coverage reports honest gaps for `CLM-002`, `RC-001`, `RC-002`, and `RC-005`; the `RC-005` verification gap remains intentionally open for WP-20. The interactive graph remains WP-10B.
 
 ## Delivery plan
 
