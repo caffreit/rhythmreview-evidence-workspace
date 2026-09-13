@@ -4,6 +4,7 @@ import { analyseWithOpenRouter } from './openrouter-provider';
 import { configuredOpenRouterModel,isTransientOpenRouterError } from './openrouter-config';
 import { ensureWorkspace,listEvidence,listRelationships } from './repository';
 import { LiveProcessingError,WorkflowConflictError } from './http';
+import { RELATIONSHIP_POLICY } from './traceability';
 import { analyzeSourceContext, generateSourceCandidates, type ModelRunMetadata } from './source-ai';
 import { ContextOutputSchema,REQUIREMENTS_POLICY, RequirementsOutputSchema, SOURCE_CONTEXT_POLICY, USER_NEEDS_POLICY, UserNeedsOutputSchema, validateCandidateCitations, type CandidateOutput, type ContextOutput } from './source-analysis-policies';
 import { SOURCE_SEED, requirementsReplay, sourceContextReplay, userNeedsReplay } from './source-seed';
@@ -396,7 +397,7 @@ export async function approveSourceBaseline(db:D1Database,raw:unknown):Promise<S
   const existingIds = (await db.prepare('SELECT id FROM evidence_items').all<{ id:string }>()).results.map((row) => row.id);
   const candidateToEvidence = new Map<string,string>(); const allocated = [...existingIds];
   for (const candidate of candidates.results) { const id = nextEvidenceId(candidate.type === 'user_need' ? 'UN' : 'REQ',allocated); candidateToEvidence.set(candidate.id,id); allocated.push(id); }
-  const relationRows = await db.prepare('SELECT source_id AS sourceId,target_id AS targetId,type FROM relationships WHERE baseline_id=? AND active=1 ORDER BY id').bind(active.id).all<{ sourceId:string;targetId:string;type:string }>();
+  const relationRows = await db.prepare('SELECT id,source_id AS sourceId,target_id AS targetId,type,rationale FROM relationships WHERE baseline_id=? AND active=1 ORDER BY id').bind(active.id).all<{ id:string;sourceId:string;targetId:string;type:string;rationale:string }>();
   const relationCount = await db.prepare('SELECT COUNT(*) AS count FROM relationships').first<{ count:number }>(); let relationNumber = (relationCount?.count ?? 0) + 1;
   const statements:D1PreparedStatement[] = [db.prepare('INSERT INTO baselines (id,label,status,approved_by,approved_at) VALUES (?,?,?,?,?)').bind(baselineId,baselineLabel,'candidate',input.actor,approvedAt)];
   const oldItems = await db.prepare('SELECT item_id AS itemId,version_id AS versionId FROM baseline_items WHERE baseline_id=?').bind(active.id).all<{ itemId:string;versionId:string }>();
@@ -410,11 +411,11 @@ export async function approveSourceBaseline(db:D1Database,raw:unknown):Promise<S
       db.prepare('INSERT INTO baseline_items (baseline_id,item_id,version_id) VALUES (?,?,?)').bind(baselineId,evidenceId,versionId),
     );
   }
-  for (const relation of relationRows.results) statements.push(db.prepare('INSERT INTO relationships (id,source_id,target_id,type,baseline_id,active) VALUES (?,?,?,?,?,1)').bind(`REL-${String(relationNumber++).padStart(3,'0')}-SRC`,relation.sourceId,relation.targetId,relation.type,baselineId));
+  for (const relation of relationRows.results) statements.push(db.prepare('INSERT INTO relationships (id,source_id,target_id,type,baseline_id,active,policy_id,policy_version,rationale,origin,predecessor_relationship_id,approved_by,approved_at) VALUES (?,?,?,?,?,1,?,?,?,?,?,?,?)').bind(`REL-${String(relationNumber++).padStart(3,'0')}-SRC`,relation.sourceId,relation.targetId,relation.type,baselineId,RELATIONSHIP_POLICY.id,RELATIONSHIP_POLICY.version,relation.rationale,'baseline_copy',relation.id,input.actor,approvedAt));
   for (const candidate of candidates.results.filter((entry) => entry.type === 'requirement')) {
     const requirementId = candidateToEvidence.get(candidate.id); if (!requirementId) continue;
     const parentIds = StringArraySchema.parse(parseJson(candidate.parentIdsJson));
-    for (const parentId of parentIds) { const needId = candidateToEvidence.get(parentId); if (needId) statements.push(db.prepare('INSERT INTO relationships (id,source_id,target_id,type,baseline_id,active) VALUES (?,?,?,?,?,1)').bind(`REL-${String(relationNumber++).padStart(3,'0')}-SRC`,requirementId,needId,'REFINES',baselineId)); }
+    for (const parentId of parentIds) { const needId = candidateToEvidence.get(parentId); if (needId) statements.push(db.prepare('INSERT INTO relationships (id,source_id,target_id,type,baseline_id,active,policy_id,policy_version,rationale,origin,predecessor_relationship_id,approved_by,approved_at) VALUES (?,?,?,?,?,1,?,?,?,?,?,?,?)').bind(`REL-${String(relationNumber++).padStart(3,'0')}-SRC`,requirementId,needId,'REFINES',baselineId,RELATIONSHIP_POLICY.id,RELATIONSHIP_POLICY.version,`The approved source-derived requirement refines its reviewed parent user need.`, 'source_generation',null,input.actor,approvedAt)); }
   }
   const collectionId = makeId('COL');
   statements.push(db.prepare('INSERT INTO collections (id,kind,title,version,status) VALUES (?,?,?,?,?)').bind(collectionId,'processing_batch',`Source-derived evidence for ${baselineLabel}`,'1.0','approved'));

@@ -4,13 +4,13 @@ import { graphCandidates,lexicalCandidates,mergeCandidates,relationshipDirection
 import { findingFingerprint,runCoherenceChecks } from '../lib/coherence';
 import { canEditDraft,nextChangeStatus } from '../lib/change-workflow';
 import { seed } from '../lib/data';
-import { EvidenceIdSchema,GuidedReviewCompletionInputSchema,type ChangeStatus } from '../lib/domain';
+import { EvidenceIdSchema,GuidedReviewCompletionInputSchema,RelationshipProposalDecisionInputSchema,type ChangeStatus } from '../lib/domain';
 import { formatReviewDuration } from '../lib/presentation';
 
 describe('RhythmReview seed pack',() => {
   it('contains the agreed evidence and document counts',() => {
     expect(seed.evidence).toHaveLength(72);
-    expect(seed.relationships).toHaveLength(118);
+    expect(seed.relationships).toHaveLength(122);
     expect(seed.documents).toHaveLength(10);
     expect(seed.scenarios).toHaveLength(3);
     expect(Object.fromEntries([...new Set(seed.evidence.map((item) => item.type))].map((type) => [type,seed.evidence.filter((item) => item.type === type).length]))).toEqual({
@@ -33,8 +33,8 @@ describe('RhythmReview seed pack',() => {
 
   it('reproduces three structural checks without hard-coded issue records',() => {
     const findings = runCoherenceChecks({ evidence:seed.evidence,relationships:seed.relationships,documents:seed.documents });
-    expect(findings).toHaveLength(6);
-    expect(findings.filter((finding) => finding.basis === 'deterministic_check').map((finding) => finding.itemId).sort()).toEqual(['DES-007','RC-005','TEST-009']);
+    expect(findings).toHaveLength(8);
+    expect(findings.filter((finding) => finding.basis === 'deterministic_check').map((finding) => finding.itemId).sort()).toEqual(['DES-007','RC-001','RC-002','RC-005','TEST-009']);
     expect(findings.find((finding) => finding.itemId === 'TEST-009')?.detail).toContain('VVP and VVR');
     expect(findings.find((finding) => finding.code === 'VAL-022')?.actual).toContain('REQ-004 states 30 seconds, CLM-003 states 30 seconds, and LBL-002 states 35 seconds');
   });
@@ -42,8 +42,8 @@ describe('RhythmReview seed pack',() => {
   it('labels requirement inputs separately from implementations and tests',() => {
     const requirement = EvidenceIdSchema.parse('REQ-004');
     const userNeed = seed.relationships.find((relation) => relation.sourceId === requirement && relation.targetId === 'UN-004');
-    const component = seed.relationships.find((relation) => relation.sourceId === 'DES-004' && relation.targetId === requirement);
-    const test = seed.relationships.find((relation) => relation.sourceId === 'TEST-004' && relation.targetId === requirement);
+    const component = seed.relationships.find((relation) => relation.sourceId === 'DES-002' && relation.targetId === requirement);
+    const test = seed.relationships.find((relation) => relation.sourceId === 'TEST-003' && relation.targetId === requirement);
     expect(userNeed && relationshipDirection(userNeed,requirement)).toBe('upstream');
     expect(component && relationshipDirection(component,requirement)).toBe('downstream');
     expect(test && relationshipDirection(test,requirement)).toBe('downstream');
@@ -64,6 +64,14 @@ describe('RhythmReview seed pack',() => {
       }
     }
     expect(seed.replayRuns[0]?.suggestions.find((suggestion) => suggestion.targetId === 'TEST-005')?.rationale).toContain('newly approved result wording');
+  });
+});
+
+describe('relationship review command boundary',() => {
+  it('rejects endpoint mutations in a QA decision',() => {
+    expect(RelationshipProposalDecisionInputSchema.safeParse({
+      actor:'qa',decision:'accepted',reason:'The relationship is semantically supported.',sourceId:'IU-001',
+    }).success).toBe(false);
   });
 });
 
@@ -100,7 +108,7 @@ describe('controlled change workflow',() => {
   });
 
   it('allows every documented transition and rejects every other state-command pair',() => {
-    const statuses:ChangeStatus[] = ['draft','analysing','ready_for_review','under_review','updates_proposed','qa_review','returned_to_author','approved'];
+    const statuses:ChangeStatus[] = ['draft','analysing','ready_for_review','under_review','updates_proposed','qa_review','returned_to_author','approved','closed'];
     const expected = new Map<string,ChangeStatus>([
       ['draft:start_analysis','analysing'],
       ['ready_for_review:record_decision','under_review'],
@@ -115,8 +123,9 @@ describe('controlled change workflow',() => {
       ['updates_proposed:reopen_analysis','analysing'],
       ['returned_to_author:reopen_analysis','analysing'],
       ['qa_review:approve','approved'],
+      ['qa_review:close','closed'],
     ]);
-    const commands = ['start_analysis','record_decision','draft_updates','submit','return_to_author','reopen_analysis','approve'] as const;
+    const commands = ['start_analysis','record_decision','draft_updates','submit','return_to_author','reopen_analysis','approve','close'] as const;
     for (const status of statuses) for (const command of commands) {
       expect(nextChangeStatus(status,command),`${status} + ${command}`).toBe(expected.get(`${status}:${command}`) ?? null);
     }
@@ -148,7 +157,7 @@ describe('controlled change workflow',() => {
     });
     const findings = runCoherenceChecks({ evidence,relationships:seed.relationships,documents:seed.documents });
     expect(findings.filter((finding) => finding.basis === 'evaluation_fixture')).toHaveLength(0);
-    expect(findings.filter((finding) => finding.basis === 'deterministic_check')).toHaveLength(3);
+    expect(findings.filter((finding) => finding.basis === 'deterministic_check')).toHaveLength(5);
   });
 });
 

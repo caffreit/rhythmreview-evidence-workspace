@@ -51,6 +51,7 @@ export async function runChangeAnalysis(args:AnalysisRequest):Promise<AnalysisRe
   }
 
   const [evidence,relationships] = await Promise.all([listEvidence(args.db),listRelationships(args.db)]);
+  if (!started.change.proposedText) return { kind:'conflict' };
   let lastError:unknown; let attemptCount = 0;
   for (let attempt = 0; attempt < 2; attempt += 1) {
     try {

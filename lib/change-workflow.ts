@@ -1,6 +1,6 @@
 import type { ChangeStatus } from './domain';
 
-export type ChangeCommand = 'start_analysis'|'record_decision'|'draft_updates'|'submit'|'return_to_author'|'reopen_analysis'|'approve';
+export type ChangeCommand = 'start_analysis'|'record_decision'|'draft_updates'|'submit'|'return_to_author'|'reopen_analysis'|'approve'|'close';
 
 const transitions:Record<ChangeCommand,Partial<Record<ChangeStatus,ChangeStatus>>> = {
   start_analysis:{ draft:'analysing' },
@@ -10,6 +10,7 @@ const transitions:Record<ChangeCommand,Partial<Record<ChangeStatus,ChangeStatus>
   return_to_author:{ qa_review:'returned_to_author' },
   reopen_analysis:{ ready_for_review:'analysing',under_review:'analysing',updates_proposed:'analysing',returned_to_author:'analysing' },
   approve:{ qa_review:'approved' },
+  close:{ qa_review:'closed' },
 };
 
 export function nextChangeStatus(status:ChangeStatus,command:ChangeCommand):ChangeStatus|null {

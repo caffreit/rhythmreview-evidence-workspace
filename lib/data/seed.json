@@ -8,7 +8,7 @@
     "population": "Adults aged 22 and over",
     "algorithm": "Locked model",
     "evidenceCount": 72,
-    "relationshipCount": 118
+    "relationshipCount": 122
   },
   "baseline": {
     "id": "BL-RR-1.0",
@@ -1622,7 +1622,14 @@
       "targetId": "IU-001",
       "type": "REFINES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Possible AF indication adds controlled detail to Intended use.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-002",
@@ -1630,7 +1637,14 @@
       "targetId": "IU-001",
       "type": "REFINES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Three controlled outcomes adds controlled detail to Intended use.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-003",
@@ -1638,7 +1652,14 @@
       "targetId": "IU-001",
       "type": "REFINES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Time to result adds controlled detail to Intended use.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-004",
@@ -1646,7 +1667,14 @@
       "targetId": "IU-001",
       "type": "REFINES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Clinician decision support adds controlled detail to Intended use.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-005",
@@ -1654,7 +1682,14 @@
       "targetId": "IU-001",
       "type": "REFINES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Upload a short ECG adds controlled detail to Intended use.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-006",
@@ -1662,7 +1697,14 @@
       "targetId": "IU-001",
       "type": "REFINES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Recognise unusable signals adds controlled detail to Intended use.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-007",
@@ -1670,7 +1712,14 @@
       "targetId": "IU-001",
       "type": "REFINES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Interpret the result correctly adds controlled detail to Intended use.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-008",
@@ -1678,7 +1727,14 @@
       "targetId": "IU-001",
       "type": "REFINES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Receive a timely result adds controlled detail to Intended use.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-009",
@@ -1686,7 +1742,14 @@
       "targetId": "IU-001",
       "type": "REFINES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Know the use limitations adds controlled detail to Intended use.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-010",
@@ -1694,7 +1757,14 @@
       "targetId": "IU-001",
       "type": "REFINES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Trust the analysed version adds controlled detail to Intended use.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-011",
@@ -1702,7 +1772,14 @@
       "targetId": "IU-001",
       "type": "REFINES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Protect ECG data adds controlled detail to Intended use.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-012",
@@ -1710,7 +1787,14 @@
       "targetId": "IU-001",
       "type": "REFINES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Review an accountable history adds controlled detail to Intended use.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-013",
@@ -1718,23 +1802,44 @@
       "targetId": "UN-001",
       "type": "REFINES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Supported recording duration adds controlled detail to Upload a short ECG.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-014",
       "sourceId": "REQ-002",
-      "targetId": "UN-002",
+      "targetId": "UN-001",
       "type": "REFINES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Supported sampling rate adds controlled detail to Upload a short ECG.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-015",
       "sourceId": "REQ-003",
-      "targetId": "UN-003",
+      "targetId": "UN-002",
       "type": "REFINES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Signal quality gate adds controlled detail to Recognise unusable signals.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-016",
@@ -1742,87 +1847,164 @@
       "targetId": "UN-004",
       "type": "REFINES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Maximum analysis time adds controlled detail to Receive a timely result.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-017",
       "sourceId": "REQ-005",
-      "targetId": "UN-005",
+      "targetId": "UN-004",
       "type": "REFINES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Controlled timeout adds controlled detail to Receive a timely result.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-018",
       "sourceId": "REQ-006",
-      "targetId": "UN-006",
+      "targetId": "UN-003",
       "type": "REFINES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Permitted result classes adds controlled detail to Interpret the result correctly.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-019",
       "sourceId": "REQ-007",
-      "targetId": "UN-007",
+      "targetId": "UN-003",
       "type": "REFINES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Possible AF display copy adds controlled detail to Interpret the result correctly.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-020",
       "sourceId": "REQ-008",
-      "targetId": "UN-008",
+      "targetId": "UN-003",
       "type": "REFINES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Result acknowledgement adds controlled detail to Interpret the result correctly.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-021",
       "sourceId": "REQ-009",
-      "targetId": "UN-001",
+      "targetId": "UN-005",
       "type": "REFINES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Emergency-use warning adds controlled detail to Know the use limitations.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-022",
       "sourceId": "REQ-010",
-      "targetId": "UN-002",
+      "targetId": "UN-008",
       "type": "REFINES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Audit event capture adds controlled detail to Review an accountable history.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-023",
       "sourceId": "REQ-011",
-      "targetId": "UN-003",
+      "targetId": "UN-007",
       "type": "REFINES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Transport encryption adds controlled detail to Protect ECG data.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-024",
       "sourceId": "REQ-012",
-      "targetId": "UN-004",
+      "targetId": "UN-007",
       "type": "REFINES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Role restriction adds controlled detail to Protect ECG data.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-025",
       "sourceId": "REQ-013",
-      "targetId": "UN-005",
+      "targetId": "UN-006",
       "type": "REFINES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Locked model version adds controlled detail to Trust the analysed version.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-026",
       "sourceId": "REQ-014",
-      "targetId": "UN-006",
+      "targetId": "UN-003",
       "type": "REFINES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Internal confidence handling adds controlled detail to Interpret the result correctly.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-027",
@@ -1830,15 +2012,29 @@
       "targetId": "UN-007",
       "type": "REFINES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Recording retention adds controlled detail to Protect ECG data.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-028",
       "sourceId": "REQ-016",
-      "targetId": "UN-008",
+      "targetId": "UN-004",
       "type": "REFINES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Recoverable service failure adds controlled detail to Receive a timely result.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-029",
@@ -1846,7 +2042,14 @@
       "targetId": "IU-001",
       "type": "MAY_AFFECT",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "False negative delays care requires review together with Intended use.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-030",
@@ -1854,7 +2057,14 @@
       "targetId": "IU-001",
       "type": "MAY_AFFECT",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "False positive drives unnecessary action requires review together with Intended use.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-031",
@@ -1862,7 +2072,14 @@
       "targetId": "IU-001",
       "type": "MAY_AFFECT",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Late result disrupts review requires review together with Intended use.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-032",
@@ -1870,7 +2087,14 @@
       "targetId": "IU-001",
       "type": "MAY_AFFECT",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Poor signal produces misleading result requires review together with Intended use.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-033",
@@ -1878,7 +2102,14 @@
       "targetId": "IU-001",
       "type": "MAY_AFFECT",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Unsupported population used requires review together with Intended use.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-034",
@@ -1886,7 +2117,14 @@
       "targetId": "IU-001",
       "type": "MAY_AFFECT",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Decision-support result treated as diagnosis requires review together with Intended use.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-035",
@@ -1894,7 +2132,14 @@
       "targetId": "IU-001",
       "type": "MAY_AFFECT",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "ECG data disclosed requires review together with Intended use.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-036",
@@ -1902,7 +2147,14 @@
       "targetId": "IU-001",
       "type": "MAY_AFFECT",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Service unavailable during review requires review together with Intended use.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-037",
@@ -1910,7 +2162,14 @@
       "targetId": "HAZ-001",
       "type": "MITIGATES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Sensitivity acceptance criterion reduces the risk described by False negative delays care.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-038",
@@ -1918,7 +2177,14 @@
       "targetId": "HAZ-002",
       "type": "MITIGATES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Specificity acceptance criterion reduces the risk described by False positive drives unnecessary action.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-039",
@@ -1926,7 +2192,14 @@
       "targetId": "HAZ-003",
       "type": "MITIGATES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Visible analysis timer reduces the risk described by Late result disrupts review.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-040",
@@ -1934,7 +2207,14 @@
       "targetId": "HAZ-004",
       "type": "MITIGATES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Signal quality rejection reduces the risk described by Poor signal produces misleading result.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-041",
@@ -1942,7 +2222,14 @@
       "targetId": "HAZ-005",
       "type": "MITIGATES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Population restriction reduces the risk described by Unsupported population used.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-042",
@@ -1950,7 +2237,14 @@
       "targetId": "HAZ-006",
       "type": "MITIGATES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Decision-support disclaimer reduces the risk described by Decision-support result treated as diagnosis.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-043",
@@ -1958,7 +2252,14 @@
       "targetId": "HAZ-007",
       "type": "MITIGATES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Encryption and access control reduces the risk described by ECG data disclosed.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-044",
@@ -1966,7 +2267,14 @@
       "targetId": "HAZ-008",
       "type": "MITIGATES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Controlled retry path reduces the risk described by Service unavailable during review.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-045",
@@ -1974,7 +2282,14 @@
       "targetId": "HAZ-001",
       "type": "MITIGATES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Released-model enforcement reduces the risk described by False negative delays care.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-046",
@@ -1982,335 +2297,629 @@
       "targetId": "REQ-001",
       "type": "IMPLEMENTS",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Upload gateway implements Supported recording duration.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-047",
-      "sourceId": "DES-002",
+      "sourceId": "DES-001",
       "targetId": "REQ-002",
       "type": "IMPLEMENTS",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Upload gateway implements Supported sampling rate.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-048",
-      "sourceId": "DES-003",
-      "targetId": "REQ-003",
+      "sourceId": "DES-001",
+      "targetId": "REQ-011",
       "type": "IMPLEMENTS",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Upload gateway implements Transport encryption.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-049",
-      "sourceId": "DES-004",
-      "targetId": "REQ-004",
+      "sourceId": "DES-001",
+      "targetId": "REQ-012",
       "type": "IMPLEMENTS",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Upload gateway implements Role restriction.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-050",
-      "sourceId": "DES-005",
-      "targetId": "REQ-005",
+      "sourceId": "DES-002",
+      "targetId": "REQ-003",
       "type": "IMPLEMENTS",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Analysis orchestrator implements Signal quality gate.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-051",
-      "sourceId": "DES-006",
-      "targetId": "REQ-006",
+      "sourceId": "DES-002",
+      "targetId": "REQ-004",
       "type": "IMPLEMENTS",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Analysis orchestrator implements Maximum analysis time.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-052",
-      "sourceId": "DES-007",
-      "targetId": "REQ-007",
+      "sourceId": "DES-002",
+      "targetId": "REQ-006",
       "type": "IMPLEMENTS",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Analysis orchestrator implements Permitted result classes.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-053",
-      "sourceId": "DES-001",
-      "targetId": "REQ-008",
+      "sourceId": "DES-002",
+      "targetId": "REQ-013",
       "type": "IMPLEMENTS",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Analysis orchestrator implements Locked model version.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-054",
       "sourceId": "DES-002",
-      "targetId": "REQ-009",
+      "targetId": "REQ-015",
       "type": "IMPLEMENTS",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Analysis orchestrator implements Recording retention.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-055",
       "sourceId": "DES-003",
-      "targetId": "REQ-010",
+      "targetId": "REQ-006",
       "type": "IMPLEMENTS",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Clinician result panel implements Permitted result classes.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-056",
-      "sourceId": "DES-004",
-      "targetId": "REQ-011",
+      "sourceId": "DES-003",
+      "targetId": "REQ-007",
       "type": "IMPLEMENTS",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Clinician result panel implements Possible AF display copy.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-057",
-      "sourceId": "DES-005",
-      "targetId": "REQ-012",
+      "sourceId": "DES-003",
+      "targetId": "REQ-008",
       "type": "IMPLEMENTS",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Clinician result panel implements Result acknowledgement.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-058",
-      "sourceId": "DES-006",
-      "targetId": "REQ-013",
+      "sourceId": "DES-003",
+      "targetId": "REQ-009",
       "type": "IMPLEMENTS",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Clinician result panel implements Emergency-use warning.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-059",
-      "sourceId": "DES-007",
+      "sourceId": "DES-003",
       "targetId": "REQ-014",
       "type": "IMPLEMENTS",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Clinician result panel implements Internal confidence handling.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-060",
-      "sourceId": "DES-001",
-      "targetId": "REQ-015",
+      "sourceId": "DES-004",
+      "targetId": "REQ-005",
       "type": "IMPLEMENTS",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Timeout supervisor implements Controlled timeout.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-061",
-      "sourceId": "DES-002",
+      "sourceId": "DES-004",
       "targetId": "REQ-016",
       "type": "IMPLEMENTS",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Timeout supervisor implements Recoverable service failure.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-062",
+      "sourceId": "DES-005",
+      "targetId": "REQ-010",
+      "type": "IMPLEMENTS",
+      "baselineId": "BL-RR-1.0",
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Audit ledger implements Audit event capture.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
+    },
+    {
+      "id": "REL-063",
       "sourceId": "TEST-001",
       "targetId": "REQ-001",
       "type": "VERIFIES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Recording boundary verification directly verifies Supported recording duration.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
-      "id": "REL-063",
+      "id": "REL-064",
       "sourceId": "TEST-002",
       "targetId": "REQ-002",
       "type": "VERIFIES",
       "baselineId": "BL-RR-1.0",
-      "active": true
-    },
-    {
-      "id": "REL-064",
-      "sourceId": "TEST-003",
-      "targetId": "REQ-003",
-      "type": "VERIFIES",
-      "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Sampling-rate verification directly verifies Supported sampling rate.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-065",
-      "sourceId": "TEST-004",
-      "targetId": "REQ-004",
+      "sourceId": "TEST-006",
+      "targetId": "REQ-003",
       "type": "VERIFIES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Signal-quality challenge directly verifies Signal quality gate.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-066",
-      "sourceId": "TEST-005",
-      "targetId": "REQ-005",
+      "sourceId": "TEST-003",
+      "targetId": "REQ-004",
       "type": "VERIFIES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Analysis-time verification directly verifies Maximum analysis time.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-067",
-      "sourceId": "TEST-006",
-      "targetId": "REQ-006",
+      "sourceId": "TEST-004",
+      "targetId": "REQ-005",
       "type": "VERIFIES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Timeout verification directly verifies Controlled timeout.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-068",
-      "sourceId": "TEST-007",
-      "targetId": "REQ-007",
+      "sourceId": "TEST-005",
+      "targetId": "REQ-006",
       "type": "VERIFIES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Result-copy verification directly verifies Permitted result classes.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-069",
-      "sourceId": "TEST-008",
-      "targetId": "REQ-008",
+      "sourceId": "TEST-005",
+      "targetId": "REQ-007",
       "type": "VERIFIES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Result-copy verification directly verifies Possible AF display copy.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-070",
-      "sourceId": "TEST-009",
-      "targetId": "REQ-009",
+      "sourceId": "TEST-007",
+      "targetId": "REQ-008",
       "type": "VERIFIES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Clinical workflow validation directly verifies Result acknowledgement.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-071",
+      "sourceId": "TEST-007",
+      "targetId": "REQ-009",
+      "type": "VERIFIES",
+      "baselineId": "BL-RR-1.0",
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Clinical workflow validation directly verifies Emergency-use warning.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
+    },
+    {
+      "id": "REL-072",
       "sourceId": "TEST-010",
       "targetId": "REQ-010",
       "type": "VERIFIES",
       "baselineId": "BL-RR-1.0",
-      "active": true
-    },
-    {
-      "id": "REL-072",
-      "sourceId": "TEST-011",
-      "targetId": "REQ-011",
-      "type": "VERIFIES",
-      "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Security control verification directly verifies Audit event capture.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-073",
-      "sourceId": "TEST-012",
-      "targetId": "REQ-012",
+      "sourceId": "TEST-010",
+      "targetId": "REQ-011",
       "type": "VERIFIES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Security control verification directly verifies Transport encryption.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-074",
-      "sourceId": "TEST-001",
-      "targetId": "REQ-013",
+      "sourceId": "TEST-010",
+      "targetId": "REQ-012",
       "type": "VERIFIES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Security control verification directly verifies Role restriction.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-075",
-      "sourceId": "TEST-002",
-      "targetId": "REQ-014",
+      "sourceId": "TEST-011",
+      "targetId": "REQ-013",
       "type": "VERIFIES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Model-version enforcement directly verifies Locked model version.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-076",
-      "sourceId": "TEST-003",
-      "targetId": "REQ-015",
+      "sourceId": "TEST-007",
+      "targetId": "REQ-014",
       "type": "VERIFIES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Clinical workflow validation directly verifies Internal confidence handling.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-077",
-      "sourceId": "TEST-004",
-      "targetId": "REQ-016",
+      "sourceId": "TEST-012",
+      "targetId": "REQ-015",
       "type": "VERIFIES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Retention verification directly verifies Recording retention.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-078",
-      "sourceId": "TEST-006",
-      "targetId": "RC-001",
+      "sourceId": "TEST-008",
+      "targetId": "REQ-016",
       "type": "VERIFIES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Failure recovery verification directly verifies Recoverable service failure.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-079",
-      "sourceId": "TEST-007",
-      "targetId": "RC-002",
-      "type": "VERIFIES",
-      "baselineId": "BL-RR-1.0",
-      "active": true
-    },
-    {
-      "id": "REL-080",
-      "sourceId": "TEST-008",
+      "sourceId": "TEST-004",
       "targetId": "RC-003",
       "type": "VERIFIES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Timeout verification directly verifies Visible analysis timer.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
-      "id": "REL-081",
-      "sourceId": "TEST-009",
+      "id": "REL-080",
+      "sourceId": "TEST-006",
       "targetId": "RC-004",
       "type": "VERIFIES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Signal-quality challenge directly verifies Signal quality rejection.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
-      "id": "REL-082",
-      "sourceId": "TEST-011",
+      "id": "REL-081",
+      "sourceId": "TEST-005",
       "targetId": "RC-006",
       "type": "VERIFIES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Result-copy verification directly verifies Decision-support disclaimer.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
-      "id": "REL-083",
-      "sourceId": "TEST-012",
+      "id": "REL-082",
+      "sourceId": "TEST-010",
       "targetId": "RC-007",
       "type": "VERIFIES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Security control verification directly verifies Encryption and access control.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
-      "id": "REL-084",
-      "sourceId": "TEST-001",
+      "id": "REL-083",
+      "sourceId": "TEST-008",
       "targetId": "RC-008",
       "type": "VERIFIES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Failure recovery verification directly verifies Controlled retry path.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
-      "id": "REL-085",
-      "sourceId": "TEST-002",
+      "id": "REL-084",
+      "sourceId": "TEST-011",
       "targetId": "RC-009",
       "type": "VERIFIES",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Model-version enforcement directly verifies Released-model enforcement.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
-      "id": "REL-086",
+      "id": "REL-085",
       "sourceId": "CLM-001",
       "targetId": "CE-001",
       "type": "SUPPORTED_BY",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Possible AF indication is supported by Adult performance study.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
+    },
+    {
+      "id": "REL-086",
+      "sourceId": "CLM-001",
+      "targetId": "CE-002",
+      "type": "SUPPORTED_BY",
+      "baselineId": "BL-RR-1.0",
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Possible AF indication is supported by Subgroup analysis.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-087",
       "sourceId": "CLM-002",
-      "targetId": "CE-002",
+      "targetId": "CE-003",
       "type": "SUPPORTED_BY",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Three controlled outcomes is supported by Clinical workflow study.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-088",
@@ -2318,15 +2927,29 @@
       "targetId": "CE-003",
       "type": "SUPPORTED_BY",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Time to result is supported by Clinical workflow study.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-089",
       "sourceId": "CLM-004",
-      "targetId": "CE-001",
+      "targetId": "CE-003",
       "type": "SUPPORTED_BY",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Clinician decision support is supported by Clinical workflow study.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-090",
@@ -2334,231 +2957,494 @@
       "targetId": "LBL-001",
       "type": "DISCLOSED_IN",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Possible AF indication is disclosed in Possible AF result label.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-091",
-      "sourceId": "CLM-002",
+      "sourceId": "CLM-003",
       "targetId": "LBL-002",
       "type": "DISCLOSED_IN",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Time to result is disclosed in Time-to-result statement.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-092",
-      "sourceId": "CLM-003",
-      "targetId": "LBL-003",
-      "type": "DISCLOSED_IN",
-      "baselineId": "BL-RR-1.0",
-      "active": true
-    },
-    {
-      "id": "REL-093",
       "sourceId": "CLM-004",
       "targetId": "LBL-004",
       "type": "DISCLOSED_IN",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Clinician decision support is disclosed in Use limitation.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
+    },
+    {
+      "id": "REL-093",
+      "sourceId": "CE-001",
+      "targetId": "IU-001",
+      "type": "VALIDATES",
+      "baselineId": "BL-RR-1.0",
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Adult performance study provides validation evidence for Intended use.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-094",
+      "sourceId": "CE-002",
+      "targetId": "UN-001",
+      "type": "VALIDATES",
+      "baselineId": "BL-RR-1.0",
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Subgroup analysis provides validation evidence for Upload a short ECG.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
+    },
+    {
+      "id": "REL-095",
+      "sourceId": "CE-002",
+      "targetId": "UN-002",
+      "type": "VALIDATES",
+      "baselineId": "BL-RR-1.0",
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Subgroup analysis provides validation evidence for Recognise unusable signals.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
+    },
+    {
+      "id": "REL-096",
+      "sourceId": "CE-003",
+      "targetId": "UN-003",
+      "type": "VALIDATES",
+      "baselineId": "BL-RR-1.0",
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Clinical workflow study provides validation evidence for Interpret the result correctly.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
+    },
+    {
+      "id": "REL-097",
+      "sourceId": "CE-003",
+      "targetId": "UN-004",
+      "type": "VALIDATES",
+      "baselineId": "BL-RR-1.0",
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Clinical workflow study provides validation evidence for Receive a timely result.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
+    },
+    {
+      "id": "REL-098",
       "sourceId": "DES-001",
       "targetId": "DES-002",
       "type": "DEPENDS_ON",
       "baselineId": "BL-RR-1.0",
-      "active": true
-    },
-    {
-      "id": "REL-095",
-      "sourceId": "DES-002",
-      "targetId": "DES-003",
-      "type": "DEPENDS_ON",
-      "baselineId": "BL-RR-1.0",
-      "active": true
-    },
-    {
-      "id": "REL-096",
-      "sourceId": "DES-003",
-      "targetId": "DES-004",
-      "type": "DEPENDS_ON",
-      "baselineId": "BL-RR-1.0",
-      "active": true
-    },
-    {
-      "id": "REL-097",
-      "sourceId": "DES-004",
-      "targetId": "DES-005",
-      "type": "DEPENDS_ON",
-      "baselineId": "BL-RR-1.0",
-      "active": true
-    },
-    {
-      "id": "REL-098",
-      "sourceId": "DES-005",
-      "targetId": "DES-006",
-      "type": "DEPENDS_ON",
-      "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Upload gateway depends on Analysis orchestrator.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-099",
-      "sourceId": "DES-006",
-      "targetId": "DES-007",
+      "sourceId": "DES-002",
+      "targetId": "DES-004",
       "type": "DEPENDS_ON",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Analysis orchestrator depends on Timeout supervisor.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
       "id": "REL-100",
+      "sourceId": "DES-002",
+      "targetId": "DES-005",
+      "type": "DEPENDS_ON",
+      "baselineId": "BL-RR-1.0",
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Analysis orchestrator depends on Audit ledger.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
+    },
+    {
+      "id": "REL-101",
+      "sourceId": "DES-003",
+      "targetId": "DES-002",
+      "type": "DEPENDS_ON",
+      "baselineId": "BL-RR-1.0",
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Clinician result panel depends on Analysis orchestrator.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
+    },
+    {
+      "id": "REL-102",
+      "sourceId": "DES-003",
+      "targetId": "DES-005",
+      "type": "DEPENDS_ON",
+      "baselineId": "BL-RR-1.0",
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Clinician result panel depends on Audit ledger.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
+    },
+    {
+      "id": "REL-103",
+      "sourceId": "DES-007",
+      "targetId": "DES-002",
+      "type": "DEPENDS_ON",
+      "baselineId": "BL-RR-1.0",
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Telemetry monitor depends on Analysis orchestrator.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
+    },
+    {
+      "id": "REL-104",
       "sourceId": "REQ-004",
       "targetId": "HAZ-003",
       "type": "MAY_AFFECT",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Maximum analysis time requires review together with Late result disrupts review.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
-      "id": "REL-101",
+      "id": "REL-105",
       "sourceId": "REQ-005",
       "targetId": "HAZ-003",
       "type": "MAY_AFFECT",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Controlled timeout requires review together with Late result disrupts review.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
-      "id": "REL-102",
+      "id": "REL-106",
       "sourceId": "REQ-007",
       "targetId": "HAZ-006",
       "type": "MAY_AFFECT",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Possible AF display copy requires review together with Decision-support result treated as diagnosis.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
-      "id": "REL-103",
+      "id": "REL-107",
       "sourceId": "REQ-009",
       "targetId": "HAZ-006",
       "type": "MAY_AFFECT",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Emergency-use warning requires review together with Decision-support result treated as diagnosis.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
-      "id": "REL-104",
+      "id": "REL-108",
       "sourceId": "REQ-011",
       "targetId": "HAZ-007",
       "type": "MAY_AFFECT",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Transport encryption requires review together with ECG data disclosed.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
-      "id": "REL-105",
+      "id": "REL-109",
       "sourceId": "REQ-012",
       "targetId": "HAZ-007",
       "type": "MAY_AFFECT",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Role restriction requires review together with ECG data disclosed.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
-      "id": "REL-106",
+      "id": "REL-110",
       "sourceId": "REQ-013",
       "targetId": "HAZ-001",
       "type": "MAY_AFFECT",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Locked model version requires review together with False negative delays care.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
-      "id": "REL-107",
+      "id": "REL-111",
       "sourceId": "REQ-015",
       "targetId": "HAZ-007",
       "type": "MAY_AFFECT",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Recording retention requires review together with ECG data disclosed.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
-      "id": "REL-108",
+      "id": "REL-112",
       "sourceId": "REQ-016",
       "targetId": "HAZ-008",
       "type": "MAY_AFFECT",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Recoverable service failure requires review together with Service unavailable during review.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
-      "id": "REL-109",
+      "id": "REL-113",
       "sourceId": "LBL-001",
       "targetId": "UN-003",
       "type": "MAY_AFFECT",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Possible AF result label requires review together with Interpret the result correctly.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
-      "id": "REL-110",
+      "id": "REL-114",
       "sourceId": "LBL-002",
       "targetId": "UN-004",
       "type": "MAY_AFFECT",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Time-to-result statement requires review together with Receive a timely result.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
-      "id": "REL-111",
+      "id": "REL-115",
       "sourceId": "LBL-003",
       "targetId": "HAZ-006",
       "type": "MAY_AFFECT",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Clinical claim statement requires review together with Decision-support result treated as diagnosis.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
-      "id": "REL-112",
+      "id": "REL-116",
       "sourceId": "LBL-004",
       "targetId": "HAZ-005",
       "type": "MAY_AFFECT",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Use limitation requires review together with Unsupported population used.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
-      "id": "REL-113",
+      "id": "REL-117",
       "sourceId": "CE-001",
       "targetId": "HAZ-005",
       "type": "MAY_AFFECT",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Adult performance study requires review together with Unsupported population used.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
-      "id": "REL-114",
+      "id": "REL-118",
       "sourceId": "CE-002",
       "targetId": "HAZ-005",
       "type": "MAY_AFFECT",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Subgroup analysis requires review together with Unsupported population used.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
-      "id": "REL-115",
+      "id": "REL-119",
       "sourceId": "TEST-007",
       "targetId": "UN-003",
       "type": "MAY_AFFECT",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Clinical workflow validation requires review together with Interpret the result correctly.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
-      "id": "REL-116",
+      "id": "REL-120",
       "sourceId": "TEST-007",
       "targetId": "UN-005",
       "type": "MAY_AFFECT",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Clinical workflow validation requires review together with Know the use limitations.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
-      "id": "REL-117",
+      "id": "REL-121",
       "sourceId": "TEST-003",
       "targetId": "UN-004",
       "type": "MAY_AFFECT",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Analysis-time verification requires review together with Receive a timely result.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     },
     {
-      "id": "REL-118",
+      "id": "REL-122",
       "sourceId": "DES-007",
       "targetId": "REQ-004",
       "type": "MAY_AFFECT",
       "baselineId": "BL-RR-1.0",
-      "active": true
+      "active": true,
+      "policyId": "relationship-policy-v1.0",
+      "policyVersion": "1.0",
+      "rationale": "Telemetry monitor requires review together with Maximum analysis time.",
+      "origin": "reviewed_fixture",
+      "predecessorRelationshipId": null,
+      "approvedBy": "Jamie Chen · QA reviewer",
+      "approvedAt": "2026-08-14T10:00:00.000Z"
     }
   ],
   "documents": [
@@ -2937,7 +3823,6 @@
           "path": [
             "LBL-001",
             "UN-003",
-            "TEST-007",
             "REQ-007"
           ],
           "citations": [
@@ -2957,7 +3842,7 @@
           "path": [
             "LBL-001",
             "UN-003",
-            "REQ-003",
+            "REQ-006",
             "DES-003"
           ],
           "citations": [
@@ -3111,8 +3996,6 @@
           "rationale": "The orchestrator enforces analysis timing and must support the new 60-second result deadline.",
           "path": [
             "REQ-004",
-            "DES-004",
-            "DES-003",
             "DES-002"
           ],
           "citations": [
@@ -3131,7 +4014,6 @@
           "rationale": "Timing verification uses the old 30-second acceptance limit and must be rerun at 60 seconds.",
           "path": [
             "REQ-004",
-            "UN-004",
             "TEST-003"
           ],
           "citations": [
@@ -3150,6 +4032,8 @@
           "rationale": "The current 35-second timeout conflicts with a permitted 60-second analysis and needs a new boundary test.",
           "path": [
             "REQ-004",
+            "UN-004",
+            "REQ-005",
             "TEST-004"
           ],
           "citations": [
@@ -3185,7 +4069,7 @@
           "rationale": "The 35-second controlled timeout would stop analysis before the proposed 60-second result deadline.",
           "path": [
             "REQ-004",
-            "HAZ-003",
+            "UN-004",
             "REQ-005"
           ],
           "citations": [
@@ -3204,6 +4088,7 @@
           "rationale": "The timeout supervisor implements the current 35-second limit and must enforce the revised boundaries.",
           "path": [
             "REQ-004",
+            "DES-002",
             "DES-004"
           ],
           "citations": [
@@ -3373,7 +4258,7 @@
           "rationale": "Signal-quality thresholds may perform differently in adolescent ECG recordings and need controlled evidence.",
           "path": [
             "IU-001",
-            "UN-003",
+            "UN-002",
             "REQ-003"
           ],
           "citations": [
@@ -3392,7 +4277,7 @@
           "rationale": "The upload warning must state the revised lower age boundary with the existing emergency-use limitation.",
           "path": [
             "IU-001",
-            "UN-001",
+            "UN-005",
             "REQ-009"
           ],
           "citations": [
@@ -3522,8 +4407,8 @@
           "rationale": "Signal-quality challenge testing must include representative adolescent recordings.",
           "path": [
             "IU-001",
-            "UN-006",
-            "REQ-006",
+            "UN-002",
+            "REQ-003",
             "TEST-006"
           ],
           "citations": [

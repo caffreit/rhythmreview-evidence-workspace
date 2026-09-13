@@ -21,7 +21,8 @@
     "prove:live-source": "node --env-file=.env.local scripts/prove-live-source-workflow.mjs",
     "evaluate:live-corpus": "node --env-file=.env.local scripts/evaluate-live-corpus.mjs",
     "verify:live-contexts": "node --env-file=.env.local scripts/verify-live-context-corpus.mjs",
-    "verify:architecture": "node scripts/verify-product-architecture.mjs"
+    "verify:architecture": "node scripts/verify-product-architecture.mjs",
+    "verify:traceability": "node scripts/verify-traceability.mjs"
   },
   "dependencies": {
     "drizzle-orm": "0.45.2",

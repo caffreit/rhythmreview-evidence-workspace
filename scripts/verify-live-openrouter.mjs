@@ -39,7 +39,7 @@ try {
   const scenarios = await request('/api/scenarios');
   const scenario = scenarios.scenarios.find((entry) => entry.id === 'SCN-002');
   assert.ok(scenario);
-  const change = await request('/api/changes',{ method:'POST',body:JSON.stringify({ scenarioId:scenario.id,anchorItemId:scenario.anchorId,title:scenario.title,proposedText:scenario.proposedText,rationale:scenario.rationale,createdBy:'Alex Morgan · Author' }) });
+  const change = await request('/api/changes',{ method:'POST',body:JSON.stringify({ kind:'evidence',scenarioId:scenario.id,anchorItemId:scenario.anchorId,title:scenario.title,proposedText:scenario.proposedText,rationale:scenario.rationale,createdBy:'Alex Morgan · Author' }) });
   const analysed = await request(`/api/changes/${change.id}/analyse`,{ method:'POST',body:JSON.stringify({ mode:'live' }) });
   assertLiveRun(analysed.run,'impact-v6',{ embeddings:true });
   assert.equal(analysed.suggestions.length > 0,true);

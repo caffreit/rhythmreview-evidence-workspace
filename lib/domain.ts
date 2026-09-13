@@ -7,11 +7,14 @@ export const EvidenceTypeSchema = z.enum(['intended_use','claim','user_need','re
 export const CriticalitySchema = z.enum(['high','medium','low']);
 export const EvidenceStatusSchema = z.enum(['approved','proposed','superseded']);
 export const RelationshipTypeSchema = z.enum(['REFINES','MITIGATES','IMPLEMENTS','VERIFIES','VALIDATES','SUPPORTED_BY','DISCLOSED_IN','DEPENDS_ON','MAY_AFFECT']);
+export const RelationshipOperationSchema = z.enum(['add','retype','retire']);
+export const RelationshipProposalStatusSchema = z.enum(['proposed','discarded','superseded','applied','rejected']);
+export const RelationshipDecisionSchema = z.enum(['accepted','rejected','edited']);
 export const ImpactActionSchema = z.enum(['review','update','retest','new_link','no_change']);
 export const ImpactCategorySchema = z.enum(['hierarchy','functional_overlap','interface_or_data_flow','shared_risk_or_control','verification_coverage','conflicting_constraint','collection_membership','release_coupling']);
 export const SuggestionOriginSchema = z.enum(['linked','semantic','collection']);
 export const DecisionSchema = z.enum(['pending','accepted','rejected','edited']);
-export const ChangeStatusSchema = z.enum(['draft','analysing','ready_for_review','under_review','updates_proposed','qa_review','returned_to_author','approved']);
+export const ChangeStatusSchema = z.enum(['draft','analysing','ready_for_review','under_review','updates_proposed','qa_review','returned_to_author','approved','closed']);
 export const AnalysisRunStatusSchema = z.enum(['running','completed','failed','superseded']);
 export const ProposedUpdateStatusSchema = z.enum(['proposed','discarded','superseded','approved']);
 export const AuthorActorSchema = z.literal('Alex Morgan · Author');
@@ -42,6 +45,13 @@ export const RelationshipSchema = z.object({
   type: RelationshipTypeSchema,
   baselineId: z.string().min(1),
   active: z.boolean(),
+  policyId:z.string().min(1).default('relationship-policy-v1.0'),
+  policyVersion:z.string().min(1).default('1.0'),
+  rationale:z.string().min(1).default('Legacy prototype relationship.'),
+  origin:z.enum(['reviewed_fixture','relationship_proposal','baseline_copy','source_generation','legacy_fixture']).default('legacy_fixture'),
+  predecessorRelationshipId:z.string().nullable().default(null),
+  approvedBy:z.string().nullable().default(null),
+  approvedAt:z.string().nullable().default(null),
 });
 
 export const DocumentTemplateSchema = z.object({
@@ -73,14 +83,19 @@ export const SeedSchema = z.object({
   generatedAt:z.string().datetime(),
   product:z.object({ name:z.string(), baselineId:z.string(), baselineLabel:z.string(), description:z.string(), population:z.string(), algorithm:z.string(), evidenceCount:z.number(), relationshipCount:z.number() }),
   baseline:z.object({ id:z.string(), label:z.string(), status:z.literal('approved'), approvedBy:z.string(), approvedAt:z.string().datetime() }),
-  evidence:z.array(EvidenceItemSchema).length(72), relationships:z.array(RelationshipSchema).length(118),
+  evidence:z.array(EvidenceItemSchema).length(72), relationships:z.array(RelationshipSchema).min(1),
   documents:z.array(DocumentTemplateSchema).length(10), scenarios:z.array(ScenarioSchema).length(3), replayRuns:z.array(ReplayRunSchema).length(3),
 });
 
-export const CreateChangeInputSchema = z.object({
-  scenarioId:ScenarioIdSchema.optional(), anchorItemId:EvidenceIdSchema, title:z.string().min(3).max(120),
-  proposedText:z.string().min(8).max(4000), rationale:z.string().min(8).max(2000), createdBy:z.literal('Alex Morgan · Author'),
-});
+const RelationshipAddDraftSchema = z.object({ operation:z.literal('add'),sourceId:EvidenceIdSchema,targetId:EvidenceIdSchema,type:RelationshipTypeSchema,rationale:z.string().min(8).max(2000) });
+const RelationshipRetypeDraftSchema = z.object({ operation:z.literal('retype'),baseRelationshipId:z.string().min(1),type:RelationshipTypeSchema,rationale:z.string().min(8).max(2000) });
+const RelationshipRetireDraftSchema = z.object({ operation:z.literal('retire'),baseRelationshipId:z.string().min(1),rationale:z.string().min(8).max(2000) });
+export const RelationshipProposalDraftSchema = z.discriminatedUnion('operation',[RelationshipAddDraftSchema,RelationshipRetypeDraftSchema,RelationshipRetireDraftSchema]);
+
+export const CreateChangeInputSchema = z.discriminatedUnion('kind',[
+  z.object({ kind:z.literal('evidence'),scenarioId:ScenarioIdSchema.optional(),anchorItemId:EvidenceIdSchema,title:z.string().min(3).max(120),proposedText:z.string().min(8).max(4000),rationale:z.string().min(8).max(2000),createdBy:AuthorActorSchema }),
+  z.object({ kind:z.literal('relationship'),anchorItemId:EvidenceIdSchema,title:z.string().min(3).max(120),rationale:z.string().min(8).max(2000),createdBy:AuthorActorSchema,proposal:RelationshipProposalDraftSchema }),
+]);
 
 export const AnalyseChangeInputSchema = z.object({ mode:z.enum(['replay','live']) });
 export const ReviewDecisionInputSchema = z.object({ decision:z.enum(['accepted','rejected','edited']), reason:z.string().min(2).max(1000), editedAction:ImpactActionSchema.optional(), actor:QaActorSchema }).superRefine((value,context) => {
@@ -97,6 +112,21 @@ export const UpdateDraftInputSchema = z.discriminatedUnion('operation',[
   z.object({ operation:z.literal('discard'),actor:AuthorActorSchema,reason:z.string().min(2).max(1000) }),
   z.object({ operation:z.literal('restore'),actor:AuthorActorSchema,reason:z.string().min(2).max(1000) }),
 ]);
+
+export const CreateRelationshipProposalInputSchema = z.object({ actor:AuthorActorSchema,proposal:RelationshipProposalDraftSchema });
+export const UpdateRelationshipProposalInputSchema = z.discriminatedUnion('operation',[
+  z.object({ operation:z.literal('revise_add'),actor:AuthorActorSchema,sourceId:EvidenceIdSchema,targetId:EvidenceIdSchema,type:RelationshipTypeSchema,rationale:z.string().min(8).max(2000),reason:z.string().min(2).max(1000) }),
+  z.object({ operation:z.literal('revise_type'),actor:AuthorActorSchema,type:RelationshipTypeSchema,rationale:z.string().min(8).max(2000),reason:z.string().min(2).max(1000) }),
+  z.object({ operation:z.literal('discard'),actor:AuthorActorSchema,reason:z.string().min(2).max(1000) }),
+  z.object({ operation:z.literal('restore'),actor:AuthorActorSchema,reason:z.string().min(2).max(1000) }),
+]);
+export const RelationshipProposalDecisionInputSchema = z.object({
+  decision:RelationshipDecisionSchema,editedType:RelationshipTypeSchema.optional(),actor:QaActorSchema,reason:z.string().min(2).max(1000),
+}).strict().superRefine((value,context) => {
+  if (value.decision === 'edited' && !value.editedType) context.addIssue({ code:'custom',path:['editedType'],message:'An edited relationship decision requires a replacement type.' });
+  if (value.decision !== 'edited' && value.editedType) context.addIssue({ code:'custom',path:['editedType'],message:'A replacement type is valid only for an edited decision.' });
+});
+export const CloseChangeInputSchema = z.object({ actor:QaActorSchema,reason:z.string().min(2).max(1000),confirmation:z.literal(true) });
 
 export const CheckScopeSchema = z.discriminatedUnion('kind',[
   z.object({ kind:z.literal('baseline'),baselineId:z.string().min(1) }),
@@ -129,6 +159,9 @@ export type EvidenceId = z.infer<typeof EvidenceIdSchema>;
 export type EvidenceType = z.infer<typeof EvidenceTypeSchema>;
 export type EvidenceItem = z.infer<typeof EvidenceItemSchema>;
 export type EvidenceRelationship = z.infer<typeof RelationshipSchema>;
+export type RelationshipProposalDraft = z.infer<typeof RelationshipProposalDraftSchema>;
+export type UpdateRelationshipProposalInput = z.infer<typeof UpdateRelationshipProposalInputSchema>;
+export type RelationshipProposalDecisionInput = z.infer<typeof RelationshipProposalDecisionInputSchema>;
 export type DocumentTemplate = z.infer<typeof DocumentTemplateSchema>;
 export type Scenario = z.infer<typeof ScenarioSchema>;
 export type ImpactSuggestion = z.infer<typeof ImpactSuggestionSchema>;

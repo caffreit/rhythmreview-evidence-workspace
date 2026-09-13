@@ -25,7 +25,13 @@ export const baselineItems = sqliteTable('baseline_items', {
 export const relationships = sqliteTable('relationships', {
   id: text('id').primaryKey(), sourceId: text('source_id').notNull(), targetId: text('target_id').notNull(),
   type: text('type').notNull(), baselineId: text('baseline_id').notNull(), active: integer('active', { mode: 'boolean' }).notNull(),
-}, (table) => [index('idx_relationships_source').on(table.sourceId, table.baselineId), index('idx_relationships_target').on(table.targetId, table.baselineId)]);
+  policyId:text('policy_id').notNull().default('relationship-policy-v1.0'),policyVersion:text('policy_version').notNull().default('1.0'),
+  rationale:text('rationale').notNull().default('Legacy prototype relationship.'),origin:text('origin').notNull().default('legacy_fixture'),
+  predecessorRelationshipId:text('predecessor_relationship_id'),approvedBy:text('approved_by'),approvedAt:text('approved_at'),
+}, (table) => [
+  index('idx_relationships_source').on(table.sourceId, table.baselineId),index('idx_relationships_target').on(table.targetId, table.baselineId),
+  index('idx_relationships_baseline_type').on(table.baselineId,table.type),
+]);
 
 export const documentTemplates = sqliteTable('document_templates', {
   id: text('id').primaryKey(), code: text('code').notNull(), title: text('title').notNull(), description: text('description').notNull(),
@@ -56,11 +62,25 @@ export const replayRuns = sqliteTable('replay_runs', {
 
 export const changeRequests = sqliteTable('change_requests', {
   id: text('id').primaryKey(), scenarioId: text('scenario_id'), anchorItemId: text('anchor_item_id').notNull(),
-  title: text('title').notNull(), rationale: text('rationale').notNull(), proposedText: text('proposed_text').notNull(),
+  subjectKind:text('subject_kind').notNull().default('evidence'),baseBaselineId:text('base_baseline_id').notNull().default('BL-RR-1.0'),
+  title: text('title').notNull(), rationale: text('rationale').notNull(), proposedText: text('proposed_text'),
   status: text('status').notNull(), createdBy: text('created_by').notNull(), createdAt: text('created_at').notNull(),
   updatedAt: text('updated_at').notNull().default(''), revision: integer('revision').notNull().default(1),
   currentAnalysisRunId: text('current_analysis_run_id'),
 }, (table) => [index('idx_change_requests_status').on(table.status),index('idx_change_requests_updated_at').on(table.updatedAt)]);
+
+export const relationshipProposals = sqliteTable('relationship_proposals', {
+  id:text('id').primaryKey(),changeId:text('change_id').notNull(),analysisRunId:text('analysis_run_id'),baseBaselineId:text('base_baseline_id').notNull(),
+  operation:text('operation').notNull(),baseRelationshipId:text('base_relationship_id'),sourceId:text('source_id').notNull(),targetId:text('target_id').notNull(),
+  sourceVersionId:text('source_version_id').notNull(),targetVersionId:text('target_version_id').notNull(),baseType:text('base_type'),proposedType:text('proposed_type'),
+  revision:integer('revision').notNull().default(1),status:text('status').notNull(),createdBy:text('created_by').notNull(),rationale:text('rationale').notNull(),
+  createdAt:text('created_at').notNull(),updatedBy:text('updated_by'),updateReason:text('update_reason'),updatedAt:text('updated_at'),
+}, (table) => [index('idx_relationship_proposals_change').on(table.changeId,table.status),index('idx_relationship_proposals_base').on(table.baseRelationshipId)]);
+
+export const relationshipReviewDecisions = sqliteTable('relationship_review_decisions', {
+  id:text('id').primaryKey(),proposalId:text('proposal_id').notNull(),proposalRevision:integer('proposal_revision').notNull(),decision:text('decision').notNull(),
+  editedType:text('edited_type'),reason:text('reason').notNull(),actor:text('actor').notNull(),createdAt:text('created_at').notNull(),
+}, (table) => [index('idx_relationship_review_decisions_proposal').on(table.proposalId,table.proposalRevision,table.createdAt)]);
 
 export const analysisRuns = sqliteTable('analysis_runs', {
   id: text('id').primaryKey(), changeId: text('change_id').notNull(), mode: text('mode').notNull(), model: text('model').notNull(),

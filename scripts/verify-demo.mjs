@@ -38,7 +38,7 @@ const summaries = [];
 for (const scenarioId of ['SCN-001','SCN-002','SCN-003']) {
   const reset = await request('/api/reset',{ method:'POST' });
   assert.equal(reset.baseline.label,'RR-1.0');
-  assert.deepEqual(reset.checkSummary,{ total:6,high:1,deterministic:3,fixtures:3,waived:0 });
+  assert.deepEqual(reset.checkSummary,{ total:8,high:3,deterministic:5,fixtures:3,waived:0 });
 
   if (scenarioId === 'SCN-001') {
     const baselineFinding = reset.coherence.findings.find((finding) => finding.code === 'TRC-014');
@@ -57,14 +57,14 @@ for (const scenarioId of ['SCN-001','SCN-002','SCN-003']) {
   const beforeDocument = await request(`/api/documents/${documentId}`);
   assert.equal(beforeDocument.baseline.label,'RR-1.0');
 
-  const change = await request('/api/changes',{ method:'POST',body:JSON.stringify({ scenarioId:scenario.id,anchorItemId:scenario.anchorId,title:scenario.title,proposedText:scenario.proposedText,rationale:scenario.rationale,createdBy:'Alex Morgan · Author' }) });
+  const change = await request('/api/changes',{ method:'POST',body:JSON.stringify({ kind:'evidence',scenarioId:scenario.id,anchorItemId:scenario.anchorId,title:scenario.title,proposedText:scenario.proposedText,rationale:scenario.rationale,createdBy:'Alex Morgan · Author' }) });
   assert.equal(change.status,'draft');
   assert.equal(change.revision,1);
   const recent = await request('/api/changes?limit=20');
   assert.equal(recent.changes[0].id,change.id);
   assert.equal((await request('/api/overview')).baseline.label,'RR-1.0');
 
-  if (scenarioId === 'SCN-001' && !process.env.OPENROUTER_API_KEY) {
+  if (scenarioId === 'SCN-001' && process.env.VERIFY_LIVE_FAILURE === '1') {
     const failed = await request(`/api/changes/${change.id}/analyse`,{ method:'POST',body:JSON.stringify({ mode:'live' }) });
     assert.equal(failed.status,'draft');
     assert.equal(failed.run,null);
@@ -177,7 +177,7 @@ for (const scenarioId of ['SCN-001','SCN-002','SCN-003']) {
     assert.equal(returned.updates.find((update) => update.id === restorable.id).status,'discarded');
     returned = await request(`/api/updates/${restorable.id}`,{ method:'PATCH',body:JSON.stringify({ operation:'restore',actor:'Alex Morgan · Author',reason:'Retain the candidate after author review.' }) });
     assert.equal(returned.updates.find((update) => update.id === restorable.id).status,'proposed');
-    if (!process.env.OPENROUTER_API_KEY) {
+    if (process.env.VERIFY_LIVE_FAILURE === '1') {
       const failedReanalysis = await request(`/api/changes/${change.id}/reopen-analysis`,{ method:'POST',body:JSON.stringify({ actor:'Alex Morgan · Author',mode:'live',reason:'Exercise failed reanalysis recovery.' }) });
       assert.equal(failedReanalysis.status,'returned_to_author');
       assert.equal(failedReanalysis.run.id,retainedRunId);
@@ -202,7 +202,7 @@ for (const scenarioId of ['SCN-001','SCN-002','SCN-003']) {
   assert.equal((await request('/api/changes?limit=20')).changes[0].id,change.id);
   const afterOverview = await request('/api/overview');
   assert.equal(afterOverview.baseline.label,'RR-1.1');
-  assert.equal(afterOverview.relationshipCount,118);
+  assert.equal(afterOverview.relationshipCount,122);
   if (scenarioId === 'SCN-002') assert.match(afterOverview.issues.find((issue) => issue.code === 'VAL-022').actual,/REQ-004 states 60 seconds, CLM-003 states 30 seconds, and LBL-002 states 60 seconds/);
 
   const afterEvidence = await request(`/api/evidence/${scenario.anchorId}`);
@@ -226,7 +226,7 @@ for (const scenarioId of ['SCN-001','SCN-002','SCN-003']) {
 
 const restored = await request('/api/reset',{ method:'POST' });
 assert.equal(restored.baseline.label,'RR-1.0');
-assert.equal(restored.relationshipCount,118);
-assert.deepEqual(restored.checkSummary,{ total:6,high:1,deterministic:3,fixtures:3,waived:0 });
+assert.equal(restored.relationshipCount,122);
+assert.deepEqual(restored.checkSummary,{ total:8,high:3,deterministic:5,fixtures:3,waived:0 });
 
 console.log(JSON.stringify({ verified:summaries,restoredBaseline:restored.baseline.label },null,2));

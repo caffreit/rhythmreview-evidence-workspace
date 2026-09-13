@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { AnalysisRunStatusSchema, AuditEventDetailsSchema, ChangeStatusSchema, CheckScopeSchema, CriticalitySchema, EvidenceIdSchema, EvidenceItemSchema, EvidenceTypeSchema, ImpactSuggestionSchema, ProposedUpdateStatusSchema, RelationshipTypeSchema } from './domain';
+import { AnalysisRunStatusSchema, AuditEventDetailsSchema, ChangeStatusSchema, CheckScopeSchema, CriticalitySchema, EvidenceIdSchema, EvidenceItemSchema, EvidenceTypeSchema, ImpactSuggestionSchema, ProposedUpdateStatusSchema, RelationshipDecisionSchema, RelationshipOperationSchema, RelationshipProposalStatusSchema, RelationshipSchema, RelationshipTypeSchema } from './domain';
 
 export const FindingViewSchema = z.object({
   id:z.string(),findingId:z.string(),fingerprint:z.string(),itemId:EvidenceIdSchema,code:z.string(),severity:z.enum(['high','medium']),title:z.string(),detail:z.string(),
@@ -42,7 +42,7 @@ const TraceCoverageRuleSchema = z.object({
 });
 const TraceItemRefSchema = z.object({ id:EvidenceIdSchema,title:z.string(),type:EvidenceTypeSchema.nullable(),version:z.string().nullable() });
 export const TraceabilitySchema = z.object({
-  policy:z.object({ id:z.string(),version:z.string(),status:z.literal('draft_for_qa_ra_review'),title:z.string(),rules:z.array(TraceRelationshipRuleSchema) }),
+  policy:z.object({ id:z.string(),version:z.string(),status:z.literal('controlled_prototype'),title:z.string(),rules:z.array(TraceRelationshipRuleSchema) }),
   coveragePolicy:z.object({ id:z.string(),version:z.string(),rules:z.array(TraceCoverageRuleSchema) }),
   baseline:z.object({ id:z.string(),label:z.string(),status:z.string() }),
   summary:z.object({ evidenceItems:z.number(),activeLinks:z.number(),policyCompliantLinks:z.number(),policyViolations:z.number(),coverageGaps:z.number(),highCoverageGaps:z.number() }),
@@ -52,6 +52,7 @@ export const TraceabilitySchema = z.object({
   })),
   links:z.array(z.object({
     id:z.string(),sourceId:EvidenceIdSchema,targetId:EvidenceIdSchema,type:RelationshipTypeSchema,baselineId:z.string(),active:z.boolean(),source:TraceItemRefSchema,target:TraceItemRefSchema,
+    policyId:z.string(),policyVersion:z.string(),rationale:z.string(),origin:z.string(),predecessorRelationshipId:z.string().nullable(),approvedBy:z.string().nullable(),approvedAt:z.string().nullable(),
     policy:z.object({ id:z.string(),label:z.string(),meaning:z.string(),valid:z.boolean(),violation:z.string().nullable() }),
   })),
   gaps:z.array(z.object({
@@ -71,14 +72,25 @@ const AnalysisRunViewSchema = z.object({
   id:z.string(),mode:z.string(),model:z.string(),promptVersion:z.string(),status:AnalysisRunStatusSchema,error:z.string().nullable(),previousRunId:z.string().nullable(),priorChangeStatus:z.string().nullable(),
   providerRequestId:z.string().nullable(),durationMs:z.number().nullable(),attemptCount:z.number(),inputTokens:z.number().nullable(),outputTokens:z.number().nullable(),embeddingTokens:z.number().nullable(),createdAt:z.string(),
 });
+export const RelationshipProposalViewSchema = z.object({
+  id:z.string(),changeId:z.string(),analysisRunId:z.string().nullable(),baseBaselineId:z.string(),operation:RelationshipOperationSchema,baseRelationshipId:z.string().nullable(),
+  sourceId:EvidenceIdSchema,targetId:EvidenceIdSchema,sourceVersionId:z.string(),targetVersionId:z.string(),baseType:RelationshipTypeSchema.nullable(),proposedType:RelationshipTypeSchema.nullable(),
+  revision:z.number().int().positive(),status:RelationshipProposalStatusSchema,createdBy:z.string(),rationale:z.string(),createdAt:z.string(),updatedBy:z.string().nullable(),updateReason:z.string().nullable(),updatedAt:z.string().nullable(),
+  decision:z.object({ decision:RelationshipDecisionSchema,editedType:RelationshipTypeSchema.nullable(),reason:z.string(),actor:z.string(),createdAt:z.string(),proposalRevision:z.number() }).nullable(),
+  effectiveType:RelationshipTypeSchema.nullable(),
+});
 export const ChangeViewSchema = z.object({
-  id:z.string(),scenarioId:z.string().nullable(),anchorItemId:EvidenceIdSchema,title:z.string(),rationale:z.string(),proposedText:z.string(),status:ChangeStatusSchema,createdBy:z.string(),createdAt:z.string(),updatedAt:z.string(),revision:z.number(),
+  id:z.string(),scenarioId:z.string().nullable(),anchorItemId:EvidenceIdSchema,subjectKind:z.enum(['evidence','relationship']),baseBaselineId:z.string(),title:z.string(),rationale:z.string(),proposedText:z.string().nullable(),status:ChangeStatusSchema,createdBy:z.string(),createdAt:z.string(),updatedAt:z.string(),revision:z.number(),
   run:AnalysisRunViewSchema.nullable(),
   analysisHistory:z.array(AnalysisRunViewSchema),
   suggestions:z.array(ImpactSuggestionSchema),
   updates:z.array(z.object({ id:z.string(),analysisRunId:z.string(),itemId:EvidenceIdSchema,fromVersionId:z.string(),toVersion:z.string(),originalText:z.string(),proposedText:z.string(),draftOrigin:z.string(),createdBy:z.string(),createdAt:z.string(),editedBy:z.string().nullable(),editReason:z.string().nullable(),editedAt:z.string().nullable(),status:ProposedUpdateStatusSchema })),
+  relationshipProposals:z.array(RelationshipProposalViewSchema),
   audit:z.array(z.object({ id:z.string(),entityType:z.string(),entityId:z.string(),aggregateType:z.string(),aggregateId:z.string(),action:z.string(),actor:z.string(),detailsJson:z.string(),schemaVersion:z.number(),details:z.union([AuditEventDetailsSchema,z.unknown()]),createdAt:z.string() })),
   coherence:CoherenceCheckSchema.nullable(),analysisWarning:z.string().optional(),
+});
+export const CandidateTraceabilitySchema = z.object({
+  base:TraceabilitySchema,projected:TraceabilitySchema,deltas:z.array(z.object({ proposalId:z.string(),operation:RelationshipOperationSchema,status:z.enum(['pending','accepted','rejected','edited']),relationship:RelationshipSchema.nullable(),error:z.string().nullable() })),valid:z.boolean(),
 });
 export const ApprovalResponseSchema = z.object({ change:ChangeViewSchema,baselineId:z.string() });
 export const EvaluationSchema = z.object({
@@ -100,6 +112,8 @@ export type TraceabilityView = z.infer<typeof TraceabilitySchema>;
 export type DocumentView = z.infer<typeof DocumentViewSchema>;
 export type RenderedDocumentView = z.infer<typeof RenderedDocumentSchema>;
 export type ChangeView = z.infer<typeof ChangeViewSchema>;
+export type RelationshipProposalView = z.infer<typeof RelationshipProposalViewSchema>;
+export type CandidateTraceabilityView = z.infer<typeof CandidateTraceabilitySchema>;
 export type ChangeSummaryView = z.infer<typeof ChangeSummarySchema>;
 export type CoherenceCheckView = z.infer<typeof CoherenceCheckSchema>;
 export type ChangeSummary = ChangeSummaryView;

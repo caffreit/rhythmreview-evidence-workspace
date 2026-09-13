@@ -102,7 +102,7 @@ let totalRelevantActionable = 0;
 
 for (const scenario of scenariosResponse.scenarios) {
   const existing = existingChanges.find((change) => change.scenarioId === scenario.id);
-  const change = existing ?? await request('/api/changes',{ method:'POST',body:JSON.stringify({ scenarioId:scenario.id,anchorItemId:scenario.anchorId,title:scenario.title,proposedText:scenario.proposedText,rationale:scenario.rationale,createdBy:author }) });
+  const change = existing ?? await request('/api/changes',{ method:'POST',body:JSON.stringify({ kind:'evidence',scenarioId:scenario.id,anchorItemId:scenario.anchorId,title:scenario.title,proposedText:scenario.proposedText,rationale:scenario.rationale,createdBy:author }) });
   let analysed = existing?.currentAnalysisMode
     ? await request(`/api/changes/${change.id}`)
     : await request(`/api/changes/${change.id}/analyse`,{ method:'POST',body:JSON.stringify({ mode:'live' }) });
