@@ -10,6 +10,7 @@ import {
 import { runCoherenceChecks } from './coherence';
 import { auditDetails } from './audit';
 import { canEditDraft, nextChangeStatus } from './change-workflow';
+import { buildTraceabilityView } from './traceability';
 
 const StringArraySchema = z.array(z.string());
 const StoredMetricsSchema = z.object({
@@ -132,6 +133,17 @@ export async function listRelationships(db:D1Database) {
   return baseline ? listRelationshipsForBaseline(db,baseline.id) : [];
 }
 
+export async function getTraceability(db:D1Database) {
+  await ensureWorkspace(db);
+  const baseline = await getActiveBaseline(db);
+  if (!baseline) return null;
+  const [evidence,relationships] = await Promise.all([
+    listEvidenceForBaseline(db,baseline.id),
+    listRelationshipsForBaseline(db,baseline.id),
+  ]);
+  return buildTraceabilityView({ baseline,evidence,relationships });
+}
+
 export async function getEvidence(db:D1Database,id:string) {
   const evidence = await listEvidence(db);
   const parsedId = EvidenceIdSchema.parse(id);
@@ -222,18 +234,18 @@ export async function getChange(db:D1Database,id:string) {
   await ensureWorkspace(db);
   const change = await db.prepare('SELECT * FROM change_requests WHERE id=?').bind(id).first<ChangeRow>();
   if (!change) return null;
-  const history = await db.prepare('SELECT id,mode,model,prompt_version AS promptVersion,status,error,previous_run_id AS previousRunId,prior_change_status AS priorChangeStatus,created_at AS createdAt FROM analysis_runs WHERE change_id=? ORDER BY created_at DESC').bind(id).all<{ id:string; mode:string; model:string; promptVersion:string; status:string; error:string|null; previousRunId:string|null; priorChangeStatus:string|null; createdAt:string }>();
+  const history = await db.prepare('SELECT id,mode,model,prompt_version AS promptVersion,status,error,previous_run_id AS previousRunId,prior_change_status AS priorChangeStatus,provider_request_id AS providerRequestId,duration_ms AS durationMs,attempt_count AS attemptCount,input_tokens AS inputTokens,output_tokens AS outputTokens,embedding_tokens AS embeddingTokens,created_at AS createdAt FROM analysis_runs WHERE change_id=? ORDER BY created_at DESC').bind(id).all<{ id:string; mode:string; model:string; promptVersion:string; status:string; error:string|null; previousRunId:string|null; priorChangeStatus:string|null; providerRequestId:string|null; durationMs:number|null; attemptCount:number; inputTokens:number|null; outputTokens:number|null; embeddingTokens:number|null; createdAt:string }>();
   const run = history.results.find((entry) => entry.id === change.current_analysis_run_id) ?? null;
   let suggestions:ImpactSuggestion[] = [];
   if (run) {
-    const rows = await db.prepare('SELECT id,target_item_id AS targetId,action,origin,rationale,path_json AS pathJson,citations_json AS citationsJson,critical,decision FROM impact_suggestions WHERE run_id=? ORDER BY critical DESC,target_item_id').bind(run.id).all<{ id:string; targetId:string; action:string; origin:string; rationale:string; pathJson:string; citationsJson:string; critical:number; decision:string }>();
+    const rows = await db.prepare('SELECT id,target_item_id AS targetId,category,action,origin,rationale,path_json AS pathJson,citations_json AS citationsJson,critical,decision FROM impact_suggestions WHERE run_id=? ORDER BY critical DESC,target_item_id').bind(run.id).all<{ id:string; targetId:string; category:string; action:string; origin:string; rationale:string; pathJson:string; citationsJson:string; critical:number; decision:string }>();
     const decisions = await db.prepare('SELECT d.suggestion_id AS suggestionId,d.decision,d.edited_action AS editedAction,d.reason,d.actor,d.created_at AS createdAt FROM review_decisions d JOIN impact_suggestions s ON s.id=d.suggestion_id WHERE s.run_id=? ORDER BY d.created_at DESC').bind(run.id).all<{ suggestionId:string; decision:string; editedAction:string|null; reason:string; actor:string; createdAt:string }>();
     const latestDecision = new Map<string,typeof decisions.results[number]>();
     for (const decision of decisions.results) if (!latestDecision.has(decision.suggestionId)) latestDecision.set(decision.suggestionId,decision);
     suggestions = rows.results.map((row) => {
       const decision = latestDecision.get(row.id);
       return ImpactSuggestionSchema.parse({
-        id:row.id,targetId:row.targetId,action:row.action,origin:row.origin,rationale:row.rationale,
+        id:row.id,targetId:row.targetId,category:row.category,action:row.action,origin:row.origin,rationale:row.rationale,
         path:StringArraySchema.parse(parseJson(row.pathJson)),citations:StringArraySchema.parse(parseJson(row.citationsJson)),
         critical:row.critical === 1,decision:decision?.decision ?? 'pending',effectiveAction:decision?.editedAction ?? row.action,
         decisionReason:decision?.reason,decidedBy:decision?.actor,decidedAt:decision?.createdAt,
@@ -271,7 +283,10 @@ export async function beginAnalysis(db:D1Database,args:{ changeId:string; mode:'
   return { change,runId };
 }
 
-export async function saveAnalysis(db:D1Database,args:{ changeId:string; runId:string; mode:'replay'|'live'; model:string; promptVersion:string; suggestions:ImpactSuggestion[]; error?:string }) {
+export async function saveAnalysis(db:D1Database,args:{
+  changeId:string;runId:string;mode:'replay'|'live';model:string;promptVersion:string;suggestions:ImpactSuggestion[];error?:string;attemptCount?:number;
+  metadata?:{ providerRequestId:string|null;durationMs:number;inputTokens:number|null;outputTokens:number|null;embeddingTokens:number|null };
+}) {
   const running = await db.prepare(`SELECT r.previous_run_id AS previousRunId,r.prior_change_status AS priorChangeStatus,r.status,c.status AS changeStatus
     FROM analysis_runs r JOIN change_requests c ON c.id=r.change_id WHERE r.id=? AND r.change_id=?`).bind(args.runId,args.changeId).first<{ previousRunId:string|null; priorChangeStatus:string; status:string; changeStatus:string }>();
   if (!running || running.status !== 'running' || running.changeStatus !== 'analysing') return null;
@@ -280,7 +295,7 @@ export async function saveAnalysis(db:D1Database,args:{ changeId:string; runId:s
     const restoredStatus = ChangeStatusSchema.parse(running.priorChangeStatus);
     const details = auditDetails({ changes:[{ field:'status',oldValue:'analysing',newValue:restoredStatus }],references:{ runId:args.runId,mode:args.mode,model:args.model },reason:args.error });
     await db.batch([
-      db.prepare("UPDATE analysis_runs SET status='failed',model=?,prompt_version=?,output_json='[]',error=? WHERE id=? AND status='running'").bind(args.model,args.promptVersion,args.error,args.runId),
+      db.prepare("UPDATE analysis_runs SET status='failed',model=?,prompt_version=?,output_json='[]',error=?,attempt_count=? WHERE id=? AND status='running'").bind(args.model,args.promptVersion,args.error,args.attemptCount ?? 0,args.runId),
       db.prepare('UPDATE change_requests SET status=?,updated_at=? WHERE id=? AND status=\'analysing\'').bind(restoredStatus,createdAt,args.changeId),
       auditStatement(db,{ aggregateType:'change',aggregateId:args.changeId,entityType:'analysis_run',entityId:args.runId,action:'analysis_failed',actor:'System',createdAt,details }),
     ]);
@@ -293,8 +308,8 @@ export async function saveAnalysis(db:D1Database,args:{ changeId:string; runId:s
     statements.push(db.prepare("UPDATE analysis_runs SET status='superseded' WHERE id=? AND status='completed'").bind(running.previousRunId));
     statements.push(db.prepare("UPDATE proposed_updates SET status='superseded' WHERE change_id=? AND status IN ('proposed','discarded')").bind(args.changeId));
   }
-  statements.push(db.prepare("UPDATE analysis_runs SET status='completed',model=?,prompt_version=?,output_json=?,error=NULL WHERE id=? AND status='running'").bind(args.model,args.promptVersion,JSON.stringify(args.suggestions),args.runId));
-  for (const suggestion of args.suggestions) statements.push(db.prepare('INSERT INTO impact_suggestions (id,run_id,target_item_id,action,origin,rationale,path_json,citations_json,critical,decision) VALUES (?,?,?,?,?,?,?,?,?,?)').bind(`${args.runId}-${suggestion.id}`,args.runId,suggestion.targetId,suggestion.action,suggestion.origin,suggestion.rationale,JSON.stringify(suggestion.path),JSON.stringify(suggestion.citations),suggestion.critical ? 1 : 0,'pending'));
+  statements.push(db.prepare("UPDATE analysis_runs SET status='completed',model=?,prompt_version=?,output_json=?,error=NULL,provider_request_id=?,duration_ms=?,attempt_count=?,input_tokens=?,output_tokens=?,embedding_tokens=? WHERE id=? AND status='running'").bind(args.model,args.promptVersion,JSON.stringify(args.suggestions),args.metadata?.providerRequestId ?? null,args.metadata?.durationMs ?? null,args.attemptCount ?? 0,args.metadata?.inputTokens ?? null,args.metadata?.outputTokens ?? null,args.metadata?.embeddingTokens ?? null,args.runId));
+  for (const suggestion of args.suggestions) statements.push(db.prepare('INSERT INTO impact_suggestions (id,run_id,target_item_id,category,action,origin,rationale,path_json,citations_json,critical,decision) VALUES (?,?,?,?,?,?,?,?,?,?,?)').bind(`${args.runId}-${suggestion.id}`,args.runId,suggestion.targetId,suggestion.category,suggestion.action,suggestion.origin,suggestion.rationale,JSON.stringify(suggestion.path),JSON.stringify(suggestion.citations),suggestion.critical ? 1 : 0,'pending'));
   statements.push(db.prepare("UPDATE change_requests SET status='ready_for_review',current_analysis_run_id=?,updated_at=?,revision=revision+? WHERE id=? AND status='analysing'").bind(args.runId,createdAt,running.previousRunId ? 1 : 0,args.changeId));
   statements.push(auditStatement(db,{ aggregateType:'change',aggregateId:args.changeId,entityType:'analysis_run',entityId:args.runId,action:'analysis_completed',actor:'System',createdAt,details }));
   await runBatches(db,statements);

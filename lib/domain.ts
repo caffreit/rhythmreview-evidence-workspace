@@ -8,6 +8,7 @@ export const CriticalitySchema = z.enum(['high','medium','low']);
 export const EvidenceStatusSchema = z.enum(['approved','proposed','superseded']);
 export const RelationshipTypeSchema = z.enum(['REFINES','MITIGATES','IMPLEMENTS','VERIFIES','VALIDATES','SUPPORTED_BY','DISCLOSED_IN','DEPENDS_ON','MAY_AFFECT']);
 export const ImpactActionSchema = z.enum(['review','update','retest','new_link','no_change']);
+export const ImpactCategorySchema = z.enum(['hierarchy','functional_overlap','interface_or_data_flow','shared_risk_or_control','verification_coverage','conflicting_constraint','collection_membership','release_coupling']);
 export const SuggestionOriginSchema = z.enum(['linked','semantic','collection']);
 export const DecisionSchema = z.enum(['pending','accepted','rejected','edited']);
 export const ChangeStatusSchema = z.enum(['draft','analysing','ready_for_review','under_review','updates_proposed','qa_review','returned_to_author','approved']);
@@ -58,7 +59,7 @@ export const ScenarioSchema = z.object({
 });
 
 export const ImpactSuggestionSchema = z.object({
-  id:z.string(), targetId:EvidenceIdSchema, action:ImpactActionSchema, origin:SuggestionOriginSchema,
+  id:z.string(), targetId:EvidenceIdSchema, category:ImpactCategorySchema, action:ImpactActionSchema, origin:SuggestionOriginSchema,
   rationale:z.string().min(1), path:z.array(EvidenceIdSchema).min(1), citations:z.array(EvidenceIdSchema).min(1),
   critical:z.boolean(), decision:DecisionSchema, effectiveAction:ImpactActionSchema.optional(),
   decisionReason:z.string().optional(), decidedBy:z.string().optional(), decidedAt:z.string().optional(),
@@ -112,9 +113,17 @@ export const AuditEventDetailsSchema = z.object({
 });
 
 export const ModelSuggestionSchema = z.object({
-  targetId:EvidenceIdSchema, action:ImpactActionSchema, rationale:z.string().min(1), citations:z.array(EvidenceIdSchema).min(1),
+  targetId:EvidenceIdSchema,category:ImpactCategorySchema,action:ImpactActionSchema,rationale:z.string().min(1),citations:z.array(EvidenceIdSchema).min(1),
+}).superRefine((value,context) => {
+  if (!value.citations.includes(value.targetId)) context.addIssue({ code:'custom',path:['citations'],message:'Impact citations must include the target evidence ID.' });
 });
-export const ModelImpactOutputSchema = z.object({ suggestions:z.array(ModelSuggestionSchema) });
+export const ModelImpactOutputSchema = z.object({ suggestions:z.array(ModelSuggestionSchema) }).superRefine((value,context) => {
+  const targets = new Set<string>();
+  value.suggestions.forEach((suggestion,index) => {
+    if (targets.has(suggestion.targetId)) context.addIssue({ code:'custom',path:['suggestions',index,'targetId'],message:'Impact targets must be unique.' });
+    targets.add(suggestion.targetId);
+  });
+});
 
 export type EvidenceId = z.infer<typeof EvidenceIdSchema>;
 export type EvidenceType = z.infer<typeof EvidenceTypeSchema>;

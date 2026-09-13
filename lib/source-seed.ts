@@ -40,49 +40,61 @@ Please trace any new result wording to the intended-use statement, the relevant 
   },
 ] as const;
 
+const sourceSpan = (sourceRevisionId:string,quote:string) => ({ kind:'source_span' as const,sourceRevisionId,quote });
+type RecordedClarification = { id:string;question:string;status:string;answer:string|null };
+
+function timingAnswerCitation(clarifications:RecordedClarification[]) {
+  const timing = clarifications.find((item) => item.status === 'answered' && item.answer && /30 seconds|60 seconds/i.test(item.answer));
+  return timing?.answer ? { kind:'clarification_answer' as const,clarificationId:timing.id,quote:timing.answer } : null;
+}
+
 export const sourceContextReplay = (sourceId:string,revisionId:string) => {
   if (sourceId === 'SRC-001') return { questions:[
     { kind:'contradiction' as const,severity:'required' as const,question:'Is 30 seconds a mandatory maximum result time or a user-facing performance target that may extend to 60 seconds at peak load?',rationale:'The transcript gives two incompatible timing expectations that would produce different requirements.',citations:[
-      { sourceRevisionId:revisionId,label:'12:14',quote:'A completed analysis should normally appear within 30 seconds after the recording is submitted.' },
-      { sourceRevisionId:revisionId,label:'18:02',quote:'The latest service design allows up to 60 seconds during peak load.' },
+      sourceSpan(revisionId,'A completed analysis should normally appear within 30 seconds after the recording is submitted.'),
+      sourceSpan(revisionId,'The latest service design allows up to 60 seconds during peak load.'),
     ] },
     { kind:'missing_decision' as const,severity:'advisory' as const,question:'Who owns escalation after repeated analysis failures?',rationale:'The source identifies an unresolved operating responsibility that may affect workflow requirements.',citations:[
-      { sourceRevisionId:revisionId,label:'31:10',quote:'We still need to decide whether the user or the clinical administrator owns escalation after repeated analysis failures.' },
+      sourceSpan(revisionId,'We still need to decide whether the user or the clinical administrator owns escalation after repeated analysis failures.'),
     ] },
   ] };
   if (sourceId === 'SRC-002') return { questions:[
-    { kind:'scope' as const,severity:'advisory' as const,question:'Should offline review remain outside the current release scope?',rationale:'Offline operation was discussed but the current product requires a network connection.',citations:[{ sourceRevisionId:revisionId,label:'Follow-up note 4',quote:'Offline review was discussed but no decision was made. The current product requires a network connection.' }] },
+    { kind:'missing_decision' as const,severity:'advisory' as const,question:'What operating procedure will define the trigger, handling, and handoff for repeated failure escalation?',rationale:'The current joint ownership is explicit, but the operating procedure remains unresolved and may affect future workflow requirements.',citations:[sourceSpan(revisionId,'Repeated failure escalation is still owned jointly by Product and Clinical Operations until the operating procedure is agreed.')] },
   ] };
-  return { questions:[
-    { kind:'scope' as const,severity:'advisory' as const,question:'Should email alerts remain excluded from this release?',rationale:'The source records a suggestion and an explicit lack of approval.',citations:[{ sourceRevisionId:revisionId,label:'Product reply',quote:'Email alerts were suggested, but they are not approved for this release.' }] },
-  ] };
+  return { questions:[] };
 };
 
-export const userNeedsReplay = (sourceId:string,revisionId:string) => {
-  if (sourceId === 'SRC-001') return { candidates:[
-    { title:'Review a clearly qualified analysis result',statement:'As a qualified clinician, I need the analysis result to state that atrial fibrillation is possible rather than confirmed so that I retain responsibility for diagnosis.',rationale:'Preserves the decision-support role described by the clinical lead.',level:'product' as const,parentIds:[],citations:[{ sourceRevisionId:revisionId,label:'05:18',quote:'the output indicates possible atrial fibrillation. It cannot confirm a diagnosis and should always prompt clinical review.' }] },
-    { title:'Receive a timely result',statement:'As a reviewing clinician, I need a completed analysis within the approved response-time limit so that the result can support the active clinical review.',rationale:'Captures the timing need after the required timing question is resolved.',level:'product' as const,parentIds:[],citations:[{ sourceRevisionId:revisionId,label:'12:14 and clarification answer',quote:'A completed analysis should normally appear within 30 seconds after the recording is submitted.' }] },
-    { title:'Recover from an unsuccessful analysis',statement:'As a reviewing clinician, I need a clear failure state and access to the original recording so that I can retry or follow the approved escalation process.',rationale:'Captures the stated recovery need without choosing an escalation owner.',level:'product' as const,parentIds:[],citations:[{ sourceRevisionId:revisionId,label:'24:36',quote:'If analysis cannot complete, the clinician needs a clear failure state and the recording must remain available for another attempt.' }] },
-  ] };
+export const userNeedsReplay = (sourceId:string,revisionId:string,clarifications:RecordedClarification[] = []) => {
+  if (sourceId === 'SRC-001') {
+    const timingCitation = timingAnswerCitation(clarifications);
+    return { candidates:[
+      { title:'Review a clearly qualified analysis result',supportedUser:'qualified clinician',goalOrConstraint:'see that atrial fibrillation is possible rather than confirmed and retain responsibility for diagnosis',rationale:'Preserves the decision-support role described by the clinical lead.',citations:[sourceSpan(revisionId,'RhythmReview is used by qualified clinicians reviewing a 30-second single-lead ECG recording for adults aged 22 and over.'),sourceSpan(revisionId,'the output indicates possible atrial fibrillation. It cannot confirm a diagnosis and should always prompt clinical review.')] },
+      ...(timingCitation ? [{ title:'Receive a timely result',supportedUser:'qualified clinician',goalOrConstraint:'receive the completed analysis within 30 seconds during the active clinical review',rationale:'Captures the timing need after the required timing question is resolved.',citations:[sourceSpan(revisionId,'RhythmReview is used by qualified clinicians reviewing a 30-second single-lead ECG recording for adults aged 22 and over.'),sourceSpan(revisionId,'A completed analysis should normally appear within 30 seconds after the recording is submitted.'),timingCitation] }] : []),
+      { title:'Recover from an unsuccessful analysis',supportedUser:'qualified clinician',goalOrConstraint:'see a clear failure state and retain access to the original recording for another attempt',rationale:'Captures the stated recovery need without choosing an escalation owner.',citations:[sourceSpan(revisionId,'RhythmReview is used by qualified clinicians reviewing a 30-second single-lead ECG recording for adults aged 22 and over.'),sourceSpan(revisionId,'If analysis cannot complete, the clinician needs a clear failure state and the recording must remain available for another attempt.')] },
+    ] };
+  }
   if (sourceId === 'SRC-002') return { candidates:[
-    { title:'Identify the analyzed recording',statement:'As a reviewing clinician, I need each result to identify its recording and acquisition time so that I can confirm the result belongs to the intended ECG.',rationale:'Captures the traceability need in the follow-up notes.',level:'product' as const,parentIds:[],citations:[{ sourceRevisionId:revisionId,label:'Follow-up note 2',quote:'The analysis result must identify the recording and acquisition time used for the result.' }] },
+    { title:'Identify the analyzed recording',supportedUser:'qualified clinician',goalOrConstraint:'identify the recording and acquisition time used for each result',rationale:'Captures the traceability need in the follow-up notes.',citations:[sourceSpan(revisionId,'Intended users remain qualified clinicians. Administrators configure access but do not interpret results.'),sourceSpan(revisionId,'The analysis result must identify the recording and acquisition time used for the result.')] },
   ] };
   return { candidates:[
-    { title:'Review result accountability',statement:'As a quality reviewer, I need to see which clinician reviewed a result and when so that the clinical review is traceable.',rationale:'Captures the requested audit view.',level:'product' as const,parentIds:[],citations:[{ sourceRevisionId:revisionId,label:'Product reply',quote:'We also need an audit view showing which clinician reviewed the result and when.' }] },
+    { title:'Review result accountability',supportedUser:'Product team',goalOrConstraint:'see which clinician reviewed a result and when so that the clinical review is traceable',rationale:'Captures the requested audit view without inventing an operator for it.',citations:[sourceSpan(revisionId,'From: Product\n\nAgreed. We also need an audit view showing which clinician reviewed the result and when.')] },
   ] };
 };
 
-export const requirementsReplay = (sourceId:string,revisionId:string,approvedNeedIds:string[]) => {
+export const requirementsReplay = (sourceId:string,revisionId:string,approvedNeedIds:string[],clarifications:RecordedClarification[] = []) => {
   const parents = approvedNeedIds;
-  if (sourceId === 'SRC-001') return { candidates:[
-    { title:'Qualify the analysis result',statement:'The system shall display an atrial-fibrillation analysis result using wording that indicates possibility and shall display a prompt for clinical review.',rationale:'Implements the accepted clinical interpretation need.',level:'system' as const,parentIds:parents.slice(0,1),citations:[{ sourceRevisionId:revisionId,label:'05:18',quote:'It cannot confirm a diagnosis and should always prompt clinical review.' }] },
-    { title:'Complete analysis within the approved limit',statement:'The system shall complete analysis and display the result within the response-time limit recorded in the approved clarification.',rationale:'Keeps the requirement tied to the human-resolved timing decision.',level:'system' as const,parentIds:parents.slice(1,2),citations:[{ sourceRevisionId:revisionId,label:'12:14 and clarification answer',quote:'A completed analysis should normally appear within 30 seconds after the recording is submitted.' }] },
-    { title:'Preserve recording after failure',statement:'If analysis does not complete, the analysis service shall return a failure state without deleting or replacing the submitted ECG recording.',rationale:'Creates a verifiable subsystem behaviour for recovery.',level:'subsystem' as const,parentIds:parents.slice(2,3),citations:[{ sourceRevisionId:revisionId,label:'24:36',quote:'If analysis cannot complete, the clinician needs a clear failure state and the recording must remain available for another attempt.' }] },
-  ] };
+  if (sourceId === 'SRC-001') {
+    const timingCitation = timingAnswerCitation(clarifications);
+    return { candidates:[
+      { title:'Qualify the analysis result',statement:'The system shall display an atrial-fibrillation analysis result using wording that indicates possibility and a prompt for clinical review.',rationale:'Implements the accepted clinical interpretation need.',level:'system' as const,parentIds:parents.slice(0,1),citations:[sourceSpan(revisionId,'It cannot confirm a diagnosis and should always prompt clinical review.')] },
+      ...(timingCitation && parents[1] ? [{ title:'Complete analysis within 30 seconds',statement:'The system shall complete analysis and display the result within 30 seconds after the recording is submitted.',rationale:'Implements the recorded maximum response-time decision.',level:'system' as const,parentIds:[parents[1]],citations:[sourceSpan(revisionId,'A completed analysis should normally appear within 30 seconds after the recording is submitted.'),timingCitation] }] : []),
+      ...(parents[2] ? [{ title:'Preserve recording after failure',statement:'If analysis does not complete, the analysis service shall return a failure state without deleting or replacing the submitted ECG recording.',rationale:'Creates a verifiable subsystem behaviour for recovery.',level:'subsystem' as const,parentIds:[parents[2]],citations:[sourceSpan(revisionId,'If analysis cannot complete, the clinician needs a clear failure state and the recording must remain available for another attempt.')] }] : []),
+    ] };
+  }
   if (sourceId === 'SRC-002') return { candidates:[
-    { title:'Display source-recording identity',statement:'The result view shall display the identifier and acquisition time of the ECG recording used for analysis.',rationale:'Makes the accepted traceability need verifiable.',level:'system' as const,parentIds:parents.slice(0,1),citations:[{ sourceRevisionId:revisionId,label:'Source statement',quote:'The analysis result must identify the recording and acquisition time used for the result.' }] },
+    { title:'Display source-recording identity',statement:'The result view shall display the identifier and acquisition time of the ECG recording used for analysis.',rationale:'Makes the accepted traceability need verifiable.',level:'system' as const,parentIds:parents.slice(0,1),citations:[sourceSpan(revisionId,'The analysis result must identify the recording and acquisition time used for the result.')] },
   ] };
   return { candidates:[
-    { title:'Record clinical result review',statement:'The system shall record the clinician identity and timestamp when a clinician marks an analysis result as reviewed.',rationale:'Makes the accepted accountability need verifiable.',level:'system' as const,parentIds:parents.slice(0,1),citations:[{ sourceRevisionId:revisionId,label:'Product reply',quote:'We also need an audit view showing which clinician reviewed the result and when.' }] },
+    { title:'Record clinical result review',statement:'The system shall record the clinician identity and timestamp when a clinician marks an analysis result as reviewed.',rationale:'Makes the accepted accountability need verifiable.',level:'system' as const,parentIds:parents.slice(0,1),citations:[sourceSpan(revisionId,'We also need an audit view showing which clinician reviewed the result and when.')] },
   ] };
 };

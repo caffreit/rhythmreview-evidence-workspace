@@ -2914,6 +2914,7 @@
         {
           "id": "SUG-01-01",
           "targetId": "LBL-001",
+          "category": "hierarchy",
           "action": "update",
           "origin": "linked",
           "rationale": "The controlled result label is the wording being changed and needs a new approved version.",
@@ -2929,6 +2930,7 @@
         {
           "id": "SUG-01-02",
           "targetId": "REQ-007",
+          "category": "hierarchy",
           "action": "update",
           "origin": "linked",
           "rationale": "The display requirement contains the old “Possible AF” copy and must match the proposed wording.",
@@ -2948,6 +2950,7 @@
         {
           "id": "SUG-01-03",
           "targetId": "DES-003",
+          "category": "interface_or_data_flow",
           "action": "update",
           "origin": "linked",
           "rationale": "The result panel renders the controlled copy and clinician-review prompt, so its design description must match the revised text.",
@@ -2967,6 +2970,7 @@
         {
           "id": "SUG-01-04",
           "targetId": "TEST-005",
+          "category": "verification_coverage",
           "action": "retest",
           "origin": "semantic",
           "rationale": "Copy verification must be rerun against the newly approved result wording and clinician-review prompt.",
@@ -2983,6 +2987,7 @@
         {
           "id": "SUG-01-05",
           "targetId": "UN-003",
+          "category": "hierarchy",
           "action": "review",
           "origin": "linked",
           "rationale": "QA must confirm that the new text still makes professional review unambiguous.",
@@ -3000,6 +3005,7 @@
         {
           "id": "SUG-01-06",
           "targetId": "CLM-002",
+          "category": "hierarchy",
           "action": "review",
           "origin": "linked",
           "rationale": "QA must confirm that spelling out atrial fibrillation does not change the approved three-outcome claim.",
@@ -3028,6 +3034,7 @@
         {
           "id": "SUG-02-01",
           "targetId": "REQ-004",
+          "category": "hierarchy",
           "action": "update",
           "origin": "linked",
           "rationale": "The maximum result time is the controlled requirement being changed from 30 to 60 seconds.",
@@ -3043,6 +3050,7 @@
         {
           "id": "SUG-02-02",
           "targetId": "UN-004",
+          "category": "hierarchy",
           "action": "review",
           "origin": "linked",
           "rationale": "QA must confirm that a 60-second result still supports the active clinician review workflow.",
@@ -3060,6 +3068,7 @@
         {
           "id": "SUG-02-03",
           "targetId": "HAZ-003",
+          "category": "shared_risk_or_control",
           "action": "review",
           "origin": "linked",
           "rationale": "The longer result window may increase the chance that a clinician proceeds before reviewing the output.",
@@ -3077,6 +3086,7 @@
         {
           "id": "SUG-02-04",
           "targetId": "RC-003",
+          "category": "shared_risk_or_control",
           "action": "review",
           "origin": "linked",
           "rationale": "The progress indicator and timeout message must remain effective across the longer analysis window.",
@@ -3095,6 +3105,7 @@
         {
           "id": "SUG-02-05",
           "targetId": "DES-002",
+          "category": "interface_or_data_flow",
           "action": "update",
           "origin": "linked",
           "rationale": "The orchestrator enforces analysis timing and must support the new 60-second result deadline.",
@@ -3114,6 +3125,7 @@
         {
           "id": "SUG-02-06",
           "targetId": "TEST-003",
+          "category": "verification_coverage",
           "action": "retest",
           "origin": "linked",
           "rationale": "Timing verification uses the old 30-second acceptance limit and must be rerun at 60 seconds.",
@@ -3132,6 +3144,7 @@
         {
           "id": "SUG-02-07",
           "targetId": "TEST-004",
+          "category": "verification_coverage",
           "action": "retest",
           "origin": "linked",
           "rationale": "The current 35-second timeout conflicts with a permitted 60-second analysis and needs a new boundary test.",
@@ -3149,6 +3162,7 @@
         {
           "id": "SUG-02-08",
           "targetId": "LBL-002",
+          "category": "functional_overlap",
           "action": "update",
           "origin": "semantic",
           "rationale": "The time-to-result label says 35 seconds and must agree with the new controlled timing claim.",
@@ -3165,6 +3179,7 @@
         {
           "id": "SUG-02-09",
           "targetId": "REQ-005",
+          "category": "hierarchy",
           "action": "update",
           "origin": "linked",
           "rationale": "The 35-second controlled timeout would stop analysis before the proposed 60-second result deadline.",
@@ -3183,6 +3198,7 @@
         {
           "id": "SUG-02-10",
           "targetId": "DES-004",
+          "category": "interface_or_data_flow",
           "action": "update",
           "origin": "linked",
           "rationale": "The timeout supervisor implements the current 35-second limit and must enforce the revised boundaries.",
@@ -3200,6 +3216,7 @@
         {
           "id": "SUG-02-11",
           "targetId": "TEST-007",
+          "category": "verification_coverage",
           "action": "retest",
           "origin": "semantic",
           "rationale": "Workflow validation must confirm that clinicians can use results delivered near the new 60-second limit.",
@@ -3225,6 +3242,7 @@
         {
           "id": "SUG-03-01",
           "targetId": "IU-001",
+          "category": "hierarchy",
           "action": "update",
           "origin": "linked",
           "rationale": "The intended population is being expanded from adults aged 22 and over to patients aged 12 and over.",
@@ -3240,6 +3258,7 @@
         {
           "id": "SUG-03-02",
           "targetId": "CLM-001",
+          "category": "hierarchy",
           "action": "review",
           "origin": "linked",
           "rationale": "QA must confirm that the indication is supported for adolescents before the population claim changes.",
@@ -3257,6 +3276,7 @@
         {
           "id": "SUG-03-03",
           "targetId": "CLM-004",
+          "category": "hierarchy",
           "action": "review",
           "origin": "linked",
           "rationale": "QA must confirm that the decision-support limitation remains adequate for adolescent use.",
@@ -3274,6 +3294,7 @@
         {
           "id": "SUG-03-04",
           "targetId": "UN-001",
+          "category": "hierarchy",
           "action": "review",
           "origin": "linked",
           "rationale": "QA must confirm that adolescent recordings use the same supported format and duration.",
@@ -3291,6 +3312,7 @@
         {
           "id": "SUG-03-05",
           "targetId": "UN-003",
+          "category": "hierarchy",
           "action": "review",
           "origin": "linked",
           "rationale": "QA must review whether clinicians need different result interpretation guidance for adolescent patients.",
@@ -3308,6 +3330,7 @@
         {
           "id": "SUG-03-06",
           "targetId": "UN-005",
+          "category": "hierarchy",
           "action": "review",
           "origin": "linked",
           "rationale": "The user need for visible limitations must cover the expanded age boundary.",
@@ -3325,6 +3348,7 @@
         {
           "id": "SUG-03-07",
           "targetId": "REQ-001",
+          "category": "hierarchy",
           "action": "update",
           "origin": "linked",
           "rationale": "The recording input requirement must be reviewed for the expanded population and its validation data.",
@@ -3343,6 +3367,7 @@
         {
           "id": "SUG-03-08",
           "targetId": "REQ-003",
+          "category": "hierarchy",
           "action": "update",
           "origin": "linked",
           "rationale": "Signal-quality thresholds may perform differently in adolescent ECG recordings and need controlled evidence.",
@@ -3361,6 +3386,7 @@
         {
           "id": "SUG-03-09",
           "targetId": "REQ-009",
+          "category": "hierarchy",
           "action": "update",
           "origin": "linked",
           "rationale": "The upload warning must state the revised lower age boundary with the existing emergency-use limitation.",
@@ -3379,6 +3405,7 @@
         {
           "id": "SUG-03-10",
           "targetId": "HAZ-001",
+          "category": "shared_risk_or_control",
           "action": "review",
           "origin": "linked",
           "rationale": "False-negative risk must be reassessed for adolescents because adult performance cannot be assumed.",
@@ -3396,6 +3423,7 @@
         {
           "id": "SUG-03-11",
           "targetId": "HAZ-002",
+          "category": "shared_risk_or_control",
           "action": "review",
           "origin": "linked",
           "rationale": "False-positive risk must be reassessed for adolescents because prevalence and performance may differ.",
@@ -3413,6 +3441,7 @@
         {
           "id": "SUG-03-12",
           "targetId": "HAZ-005",
+          "category": "shared_risk_or_control",
           "action": "review",
           "origin": "linked",
           "rationale": "The unsupported-population hazard changes directly when patients aged 12 through 21 enter the intended use.",
@@ -3430,6 +3459,7 @@
         {
           "id": "SUG-03-13",
           "targetId": "RC-001",
+          "category": "shared_risk_or_control",
           "action": "review",
           "origin": "linked",
           "rationale": "The sensitivity acceptance criterion must be reviewed against evidence for the expanded population.",
@@ -3448,6 +3478,7 @@
         {
           "id": "SUG-03-14",
           "targetId": "RC-002",
+          "category": "shared_risk_or_control",
           "action": "review",
           "origin": "linked",
           "rationale": "The specificity acceptance criterion must be reviewed against evidence for the expanded population.",
@@ -3466,6 +3497,7 @@
         {
           "id": "SUG-03-15",
           "targetId": "RC-005",
+          "category": "shared_risk_or_control",
           "action": "review",
           "origin": "linked",
           "rationale": "The population restriction control must change from adults aged 22 and over and gain verification coverage.",
@@ -3484,6 +3516,7 @@
         {
           "id": "SUG-03-16",
           "targetId": "TEST-006",
+          "category": "verification_coverage",
           "action": "retest",
           "origin": "linked",
           "rationale": "Signal-quality challenge testing must include representative adolescent recordings.",
@@ -3503,6 +3536,7 @@
         {
           "id": "SUG-03-17",
           "targetId": "TEST-007",
+          "category": "verification_coverage",
           "action": "retest",
           "origin": "linked",
           "rationale": "Clinical workflow validation must cover clinicians interpreting results for adolescent patients.",
@@ -3521,6 +3555,7 @@
         {
           "id": "SUG-03-18",
           "targetId": "CE-001",
+          "category": "functional_overlap",
           "action": "review",
           "origin": "semantic",
           "rationale": "The adult performance study does not support patients aged 12 through 21 and needs a documented applicability review.",
@@ -3537,6 +3572,7 @@
         {
           "id": "SUG-03-19",
           "targetId": "CE-002",
+          "category": "functional_overlap",
           "action": "review",
           "origin": "semantic",
           "rationale": "The subgroup analysis must add and evaluate the adolescent age groups in the proposed population.",

@@ -1,14 +1,11 @@
 import type { EvidenceId, EvidenceItem, EvidenceRelationship } from './domain';
+import { relationshipSourceIsDownstream } from './traceability';
 
 export type CandidatePath = { targetId:EvidenceId; path:EvidenceId[]; origin:'linked'|'semantic'|'collection' };
 
-const sourceDependsOnTarget = new Set<EvidenceRelationship['type']>([
-  'REFINES','MITIGATES','IMPLEMENTS','VERIFIES','VALIDATES','SUPPORTED_BY','DEPENDS_ON',
-]);
-
 export function relationshipDirection(relation:EvidenceRelationship,currentId:EvidenceId): 'upstream'|'downstream' {
   const currentIsSource = relation.sourceId === currentId;
-  const sourceIsDownstream = sourceDependsOnTarget.has(relation.type);
+  const sourceIsDownstream = relationshipSourceIsDownstream(relation.type);
   return currentIsSource === sourceIsDownstream ? 'upstream' : 'downstream';
 }
 

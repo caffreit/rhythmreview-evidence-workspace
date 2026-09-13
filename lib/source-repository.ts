@@ -1,16 +1,16 @@
 import { z } from 'zod';
 import { graphCandidates,lexicalCandidates } from './analysis';
 import { analyseWithOpenRouter } from './openrouter-provider';
-import { configuredOpenRouterModel } from './openrouter-config';
+import { configuredOpenRouterModel,isTransientOpenRouterError } from './openrouter-config';
 import { ensureWorkspace,listEvidence,listRelationships } from './repository';
-import { WorkflowConflictError } from './http';
-import { analyzeSourceContext, generateSourceCandidates } from './source-ai';
-import { REQUIREMENTS_POLICY, SOURCE_CONTEXT_POLICY, USER_NEEDS_POLICY, type CandidateOutput, type ContextOutput } from './source-analysis-policies';
+import { LiveProcessingError,WorkflowConflictError } from './http';
+import { analyzeSourceContext, generateSourceCandidates, type ModelRunMetadata } from './source-ai';
+import { ContextOutputSchema,REQUIREMENTS_POLICY, RequirementsOutputSchema, SOURCE_CONTEXT_POLICY, USER_NEEDS_POLICY, UserNeedsOutputSchema, validateCandidateCitations, type CandidateOutput, type ContextOutput } from './source-analysis-policies';
 import { SOURCE_SEED, requirementsReplay, sourceContextReplay, userNeedsReplay } from './source-seed';
 import {
   ApproveSourceBaselineInputSchema,CandidateDecisionInputSchema,ClarificationDecisionInputSchema,ClarificationSchema,GenerateCandidatesInputSchema,
   ImportSourceInputSchema,ProcessingRunSchema,RunSourceAnalysisInputSchema,SourceCandidateSchema,SourceCitationSchema,SourceDetailSchema,SourceKindSchema,UpdateSourceRevisionInputSchema,
-  SourceImpactDecisionInputSchema,SourceImpactSuggestionSchema,SourceListResponseSchema,SourceStatusSchema,SourceSummarySchema,type SourceCitation,type SourceDetail,type SourceImpactSuggestion,type SourceListResponse,
+  RunSourceImpactInputSchema,SourceImpactDecisionInputSchema,SourceImpactSuggestionSchema,SourceListResponseSchema,SourceStatusSchema,SourceSummarySchema,type SourceDetail,type SourceImpactSuggestion,type SourceListResponse,
 } from './source-domain';
 
 const CitationArraySchema = z.array(SourceCitationSchema);
@@ -69,22 +69,25 @@ export async function listSourceWorkspace(db:D1Database):Promise<SourceListRespo
   const sources = await sourceSummaries(db);
   const release = await db.prepare('SELECT id,label,baseline_id AS baselineId,status,code_revision AS codeRevision,ci_status AS ciStatus,created_at AS createdAt FROM releases ORDER BY created_at DESC LIMIT 1').first<{ id:string;label:string;baselineId:string;status:string;codeRevision:string|null;ciStatus:string|null;createdAt:string }>();
   const openCandidates = await db.prepare("SELECT COUNT(*) AS count FROM source_candidates c JOIN source_processing_runs p ON p.id=c.run_id JOIN source_artifacts a ON a.id=c.source_id AND a.latest_revision_id=p.revision_id WHERE c.status IN ('pending_review','revision_requested')").first<{ count:number }>();
-  const impactRuns = await db.prepare("SELECT p.id,p.source_id AS sourceId,p.mode,p.model,p.output_json AS outputJson FROM source_processing_runs p JOIN source_artifacts a ON a.id=p.source_id AND a.latest_revision_id=p.revision_id WHERE p.kind='impact_analysis' ORDER BY p.created_at DESC,p.id DESC").all<{ id:string;sourceId:string;mode:'live'|'replay';model:string;outputJson:string }>();
+  const impactRuns = await db.prepare("SELECT p.id,p.source_id AS sourceId,p.revision_id AS revisionId,p.kind,p.mode,p.model,p.reasoning_effort AS reasoningEffort,p.policy_version AS policyVersion,p.status,p.output_json AS outputJson,p.error,p.provider_request_id AS providerRequestId,p.duration_ms AS durationMs,p.attempt_count AS attemptCount,p.input_tokens AS inputTokens,p.output_tokens AS outputTokens,p.embedding_tokens AS embeddingTokens,p.created_at AS createdAt FROM source_processing_runs p JOIN source_artifacts a ON a.id=p.source_id AND a.latest_revision_id=p.revision_id WHERE p.kind='impact_analysis' ORDER BY p.created_at DESC,p.id DESC").all<RunRow & { outputJson:string|null }>();
   const latestImpactBySource = new Map<string,typeof impactRuns.results[number]>();
   for (const run of impactRuns.results) if (!latestImpactBySource.has(run.sourceId)) latestImpactBySource.set(run.sourceId,run);
-  const impactSuggestions = [...latestImpactBySource.values()].flatMap((run) => z.object({ suggestions:z.array(SourceImpactSuggestionSchema) }).parse(parseJson(run.outputJson)).suggestions);
+  const impactSuggestions = [...latestImpactBySource.values()].flatMap((run) => run.status === 'completed' && run.outputJson ? z.object({ suggestions:z.array(SourceImpactSuggestionSchema) }).parse(parseJson(run.outputJson)).suggestions : []);
   const pendingImpacts = impactSuggestions.filter((suggestion) => suggestion.decision === 'pending').length;
   const reviewCount = sources.reduce((sum,source) => sum + source.requiredOpen + source.advisoryOpen,0) + (openCandidates?.count ?? 0) + pendingImpacts;
   const approvedCandidateCount = sources.reduce((sum,source) => sum + source.approvedCandidateCount,0);
   const candidateSources = sources.filter((source) => source.status === 'candidate_baseline');
-  const candidateBaselineReady = candidateSources.length > 0 && candidateSources.every((source) => latestImpactBySource.has(source.id)) && pendingImpacts === 0;
+  const candidateBaselineReady = candidateSources.length > 0 && candidateSources.every((source) => latestImpactBySource.get(source.id)?.status === 'completed') && pendingImpacts === 0;
   const latestImpact = impactRuns.results[0];
-  return SourceListResponseSchema.parse({ sources,reviewCount,approvedCandidateCount,candidateBaselineReady,impactSuggestions,impactMode:latestImpact?.mode ?? null,impactModel:latestImpact?.model ?? null,release:release ?? null });
+  return SourceListResponseSchema.parse({ sources,reviewCount,approvedCandidateCount,candidateBaselineReady,impactSuggestions,impactRun:latestImpact ? ProcessingRunSchema.parse(latestImpact) : null,release:release ?? null });
 }
 
-type RunRow = { id:string;sourceId:string;revisionId:string;kind:string;mode:string;model:string;reasoningEffort:string;policyVersion:string;status:string;error:string|null;createdAt:string };
+type RunRow = {
+  id:string;sourceId:string;revisionId:string;kind:string;mode:string;model:string;reasoningEffort:string;policyVersion:string;status:string;error:string|null;createdAt:string;
+  providerRequestId:string|null;durationMs:number|null;attemptCount:number;inputTokens:number|null;outputTokens:number|null;embeddingTokens:number|null;
+};
 type ClarificationRow = { id:string;runId:string;sourceId:string;kind:string;severity:string;question:string;rationale:string;citationsJson:string;status:string;answer:string|null;decisionReason:string|null;actor:string|null;updatedAt:string };
-type CandidateRow = { id:string;runId:string;sourceId:string;type:string;level:string;title:string;statement:string;rationale:string;origin:string;status:string;parentIdsJson:string;citationsJson:string;advisoryClarificationIdsJson:string;model:string;policyVersion:string;reviewedBy:string|null;reviewedAt:string|null };
+type CandidateRow = { id:string;runId:string;sourceId:string;type:string;level:string|null;supportedUser:string|null;goalOrConstraint:string|null;title:string;statement:string;rationale:string;origin:string;status:string;parentIdsJson:string;citationsJson:string;advisoryClarificationIdsJson:string;model:string;policyVersion:string;reviewedBy:string|null;reviewedAt:string|null };
 
 export async function getSourceDetail(db:D1Database,id:string):Promise<SourceDetail|null> {
   await initializeSources(db);
@@ -92,9 +95,9 @@ export async function getSourceDetail(db:D1Database,id:string):Promise<SourceDet
   if (!source) return null;
   const revision = await db.prepare('SELECT id,revision,content,content_hash AS contentHash,origin,captured_at AS capturedAt FROM source_revisions WHERE id=?').bind(source.latestRevisionId).first<{ id:string;revision:number;content:string;contentHash:string;origin:string;capturedAt:string }>();
   if (!revision) return null;
-  const runs = await db.prepare('SELECT id,source_id AS sourceId,revision_id AS revisionId,kind,mode,model,reasoning_effort AS reasoningEffort,policy_version AS policyVersion,status,error,created_at AS createdAt FROM source_processing_runs WHERE source_id=? AND revision_id=? ORDER BY created_at DESC,id DESC').bind(id,source.latestRevisionId).all<RunRow>();
+  const runs = await db.prepare('SELECT id,source_id AS sourceId,revision_id AS revisionId,kind,mode,model,reasoning_effort AS reasoningEffort,policy_version AS policyVersion,status,error,provider_request_id AS providerRequestId,duration_ms AS durationMs,attempt_count AS attemptCount,input_tokens AS inputTokens,output_tokens AS outputTokens,embedding_tokens AS embeddingTokens,created_at AS createdAt FROM source_processing_runs WHERE source_id=? AND revision_id=? ORDER BY created_at DESC,id DESC').bind(id,source.latestRevisionId).all<RunRow>();
   const clarifications = await db.prepare('SELECT c.id,c.run_id AS runId,c.source_id AS sourceId,c.kind,c.severity,c.question,c.rationale,c.citations_json AS citationsJson,c.status,c.answer,c.decision_reason AS decisionReason,c.actor,c.updated_at AS updatedAt FROM source_clarifications c JOIN source_processing_runs p ON p.id=c.run_id WHERE c.source_id=? AND p.revision_id=? ORDER BY c.updated_at,c.id').bind(id,source.latestRevisionId).all<ClarificationRow>();
-  const candidates = await db.prepare('SELECT c.id,c.run_id AS runId,c.source_id AS sourceId,c.type,c.level,c.title,c.statement,c.rationale,c.origin,c.status,c.parent_ids_json AS parentIdsJson,c.citations_json AS citationsJson,c.advisory_clarification_ids_json AS advisoryClarificationIdsJson,c.model,c.policy_version AS policyVersion,c.reviewed_by AS reviewedBy,c.reviewed_at AS reviewedAt FROM source_candidates c JOIN source_processing_runs p ON p.id=c.run_id WHERE c.source_id=? AND p.revision_id=? ORDER BY c.type,c.id').bind(id,source.latestRevisionId).all<CandidateRow>();
+  const candidates = await db.prepare('SELECT c.id,c.run_id AS runId,c.source_id AS sourceId,c.type,c.level,c.supported_user AS supportedUser,c.goal_or_constraint AS goalOrConstraint,c.title,c.statement,c.rationale,c.origin,c.status,c.parent_ids_json AS parentIdsJson,c.citations_json AS citationsJson,c.advisory_clarification_ids_json AS advisoryClarificationIdsJson,c.model,c.policy_version AS policyVersion,c.reviewed_by AS reviewedBy,c.reviewed_at AS reviewedAt FROM source_candidates c JOIN source_processing_runs p ON p.id=c.run_id WHERE c.source_id=? AND p.revision_id=? ORDER BY c.type,c.id').bind(id,source.latestRevisionId).all<CandidateRow>();
   return SourceDetailSchema.parse({
     source,revision,runs:runs.results.map((row) => ProcessingRunSchema.parse(row)),
     clarifications:clarifications.results.map((row) => ClarificationSchema.parse({ ...row,citations:CitationArraySchema.parse(parseJson(row.citationsJson)) })),
@@ -125,36 +128,67 @@ export async function updateSourceRevision(db:D1Database,id:string,raw:unknown):
   await db.batch([
     db.prepare('INSERT INTO source_revisions (id,source_id,revision,content,content_hash,origin,captured_at) VALUES (?,?,?,?,?,?,?)').bind(revisionId,id,current.revision + 1,input.content,contentHash,'human_import',capturedAt),
     db.prepare("UPDATE source_artifacts SET latest_revision_id=?,status='new' WHERE id=?").bind(revisionId,id),
-    db.prepare('INSERT INTO source_processing_runs (id,source_id,revision_id,kind,mode,model,reasoning_effort,policy_version,status,input_json,output_json,error,created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)').bind(makeId('PRC'),id,revisionId,'source_revision_impact','replay','deterministic','not-run','source-revision-diff-v1','completed',JSON.stringify({ previousRevisionId:current.revisionId,currentRevisionId:revisionId }),JSON.stringify({ category:'source_drift',action:'review',affectedEvidenceIds:affected.results.map((row) => row.itemId),message:'A new source revision requires context analysis and impact review; approved evidence is unchanged.' }),null,capturedAt),
+    db.prepare('INSERT INTO source_processing_runs (id,source_id,revision_id,kind,mode,model,reasoning_effort,policy_version,status,input_json,output_json,error,created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)').bind(makeId('PRC'),id,revisionId,'source_revision_impact','replay','deterministic','not_run','source-revision-diff-v1','completed',JSON.stringify({ previousRevisionId:current.revisionId,currentRevisionId:revisionId }),JSON.stringify({ category:'source_drift',action:'review',affectedEvidenceIds:affected.results.map((row) => row.itemId),message:'A new source revision requires context analysis and impact review; approved evidence is unchanged.' }),null,capturedAt),
   ]);
   return getSourceDetail(db,id);
 }
 
-function citationsBelongToRevision(citations:SourceCitation[],revisionId:string,content:string):boolean {
-  return citations.every((citation) => citation.sourceRevisionId === revisionId && content.includes(citation.quote));
+type ProcessingKind = 'source_context'|'user_needs'|'requirements'|'impact_analysis';
+type LiveResult<T> = { value:T;attemptCount:number };
+
+class LiveAttemptFailure extends Error {
+  constructor(public readonly causeValue:unknown,public readonly attemptCount:number,public readonly retryable:boolean) {
+    super(causeValue instanceof Error ? causeValue.message : 'Live processing failed.');
+  }
 }
 
-async function saveProcessingRun(db:D1Database,args:{ id?:string;sourceId:string;revisionId:string;kind:'source_context'|'user_needs'|'requirements'|'impact_analysis';mode:'live'|'replay';model:string;reasoningEffort:string;policyVersion:string;input:unknown;output:unknown;error?:string }):Promise<string> {
+function safeLiveFailureMessage(activity:string,failure:LiveAttemptFailure):string {
+  if (failure.message.includes('OPENROUTER_API_KEY is not configured')) return `OpenRouter is not configured, so live ${activity} did not run.`;
+  if (failure.retryable) return `OpenRouter was temporarily unavailable during ${activity}. No generated records were saved.`;
+  return `Live ${activity} did not pass the configured output and provenance checks. No generated records were saved.`;
+}
+
+async function runLive<T>(operation:()=>Promise<T>):Promise<LiveResult<T>> {
+  for (let attempt = 1; attempt <= 2; attempt += 1) {
+    try { return { value:await operation(),attemptCount:attempt }; }
+    catch (error:unknown) {
+      const transient = isTransientOpenRouterError(error);
+      if (!transient || attempt === 2) throw new LiveAttemptFailure(error,attempt,transient);
+    }
+  }
+  throw new LiveAttemptFailure(new Error('Live processing did not run.'),0,false);
+}
+
+async function saveProcessingRun(db:D1Database,args:{
+  id?:string;sourceId:string;revisionId:string;kind:ProcessingKind;mode:'live'|'replay';model:string;reasoningEffort:'low'|'medium'|'high'|'not_run';policyVersion:string;
+  status:'completed'|'failed';input:unknown;output:unknown|null;error?:string;attemptCount:number;metadata?:ModelRunMetadata;
+}):Promise<string> {
   const id = args.id ?? makeId('PRC');
-  await db.prepare('INSERT INTO source_processing_runs (id,source_id,revision_id,kind,mode,model,reasoning_effort,policy_version,status,input_json,output_json,error,created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)')
-    .bind(id,args.sourceId,args.revisionId,args.kind,args.mode,args.model,args.reasoningEffort,args.policyVersion,'completed',JSON.stringify(args.input),JSON.stringify(args.output),args.error ?? null,now()).run();
+  await db.prepare('INSERT INTO source_processing_runs (id,source_id,revision_id,kind,mode,model,reasoning_effort,policy_version,status,input_json,output_json,error,provider_request_id,duration_ms,attempt_count,input_tokens,output_tokens,embedding_tokens,created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)')
+    .bind(id,args.sourceId,args.revisionId,args.kind,args.mode,args.model,args.reasoningEffort,args.policyVersion,args.status,JSON.stringify(args.input),args.output === null ? null : JSON.stringify(args.output),args.error ?? null,args.metadata?.providerRequestId ?? null,args.metadata?.durationMs ?? null,args.attemptCount,args.metadata?.inputTokens ?? null,args.metadata?.outputTokens ?? null,args.metadata?.embeddingTokens ?? null,now()).run();
   return id;
 }
 
 export async function analyzeSource(db:D1Database,id:string,raw:unknown):Promise<SourceDetail|null> {
   const input = RunSourceAnalysisInputSchema.parse(raw); const detail = await getSourceDetail(db,id);
   if (!detail) return null;
-  let output:ContextOutput; let model:string; let reasoningEffort:string; let mode = input.mode; let warning:string|undefined;
-  if (mode === 'live') {
+  let output:ContextOutput; let model:string; let reasoningEffort:'low'|'medium'|'high'|'not_run'; let metadata:ModelRunMetadata|undefined; let attemptCount = 0;
+  if (input.mode === 'live') {
     try {
-      const live = await analyzeSourceContext({ revisionId:detail.revision.id,title:detail.source.title,content:detail.revision.content });
-      if (!live.output.questions.every((question) => citationsBelongToRevision(question.citations,detail.revision.id,detail.revision.content))) throw new Error('The live analysis returned a citation that does not exactly match the source revision.');
-      output = live.output; model = live.model; reasoningEffort = live.reasoningEffort;
+      const result = await runLive(() => analyzeSourceContext({ revisionId:detail.revision.id,title:detail.source.title,content:detail.revision.content }));
+      const live = result.value; attemptCount = result.attemptCount;
+      const citationsValid = live.output.questions.every((question) => question.citations.every((citation) => citation.sourceRevisionId === detail.revision.id && detail.revision.content.includes(citation.quote)));
+      if (!citationsValid) throw new LiveAttemptFailure(new Error('The live analysis returned a citation that does not exactly match the source revision.'),attemptCount,false);
+      output = live.output; model = live.model; reasoningEffort = live.reasoningEffort; metadata = live.metadata;
     } catch (error:unknown) {
-      mode = 'replay'; output = sourceContextReplay(id,detail.revision.id); model = 'saved-demo-output'; reasoningEffort = 'not-run'; warning = error instanceof Error ? error.message : 'Live source analysis failed.';
+      const failure = error instanceof LiveAttemptFailure ? error : new LiveAttemptFailure(error,attemptCount,false);
+      const config = configuredOpenRouterModel();
+      const message = safeLiveFailureMessage('source analysis',failure);
+      const runId = await saveProcessingRun(db,{ sourceId:id,revisionId:detail.revision.id,kind:'source_context',mode:'live',model:config.model,reasoningEffort:config.reasoningEffort,policyVersion:SOURCE_CONTEXT_POLICY.name,status:'failed',input:{ revisionId:detail.revision.id },output:null,error:message,attemptCount:failure.attemptCount });
+      throw new LiveProcessingError(message,runId,failure.retryable);
     }
-  } else { output = sourceContextReplay(id,detail.revision.id); model = 'saved-demo-output'; reasoningEffort = 'not-run'; }
-  const runId = await saveProcessingRun(db,{ sourceId:id,revisionId:detail.revision.id,kind:'source_context',mode,model,reasoningEffort,policyVersion:SOURCE_CONTEXT_POLICY.name,input:{ revisionId:detail.revision.id },output,error:warning });
+  } else { output = ContextOutputSchema.parse(sourceContextReplay(id,detail.revision.id)); model = 'saved-demo-output'; reasoningEffort = 'not_run'; }
+  const runId = await saveProcessingRun(db,{ sourceId:id,revisionId:detail.revision.id,kind:'source_context',mode:input.mode,model,reasoningEffort,policyVersion:SOURCE_CONTEXT_POLICY.name,input:{ revisionId:detail.revision.id },output,status:'completed',attemptCount,metadata });
   const createdAt = now();
   const statements = output.questions.map((question) => db.prepare('INSERT INTO source_clarifications (id,run_id,source_id,kind,severity,question,rationale,citations_json,status,answer,decision_reason,actor,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)')
     .bind(makeId('CLR'),runId,id,question.kind,question.severity,question.question,question.rationale,JSON.stringify(question.citations),'open',null,null,null,createdAt));
@@ -178,10 +212,18 @@ async function refreshSourceStatus(db:D1Database,sourceId:string):Promise<void> 
   await db.prepare('UPDATE source_artifacts SET status=? WHERE id=?').bind(status,sourceId).run();
 }
 
-async function createSourceImpactAnalysis(db:D1Database,sourceId:string):Promise<void> {
+function impactCategoryFor(itemType:string|undefined,origin:'linked'|'semantic'|'collection'):SourceImpactSuggestion['category'] {
+  if (origin === 'collection') return 'collection_membership';
+  if (itemType === 'test') return 'verification_coverage';
+  if (itemType === 'hazard' || itemType === 'risk_control') return 'shared_risk_or_control';
+  if (itemType === 'component') return 'interface_or_data_flow';
+  return origin === 'linked' ? 'hierarchy' : 'functional_overlap';
+}
+
+async function createSourceImpactAnalysis(db:D1Database,sourceId:string,mode:'live'|'replay',throwOnFailure:boolean):Promise<void> {
   const detail = await getSourceDetail(db,sourceId);
   if (!detail || detail.source.status !== 'candidate_baseline') return;
-  const existing = detail.runs.some((run) => run.kind === 'impact_analysis');
+  const existing = detail.runs.some((run) => run.kind === 'impact_analysis' && run.status === 'completed');
   if (existing) return;
   const approved = detail.candidates.filter((candidate) => candidate.status === 'approved_for_baseline');
   const [evidence,relationships] = await Promise.all([listEvidence(db),listRelationships(db)]);
@@ -193,30 +235,46 @@ async function createSourceImpactAnalysis(db:D1Database,sourceId:string):Promise
   }
   const runId = makeId('PRC');
   const liveConfig = configuredOpenRouterModel();
-  let mode:'live'|'replay' = 'live'; let model = liveConfig.model; let reasoningEffort = liveConfig.reasoningEffort; let warning:string|undefined;
-  let rawSuggestions:Array<{ targetId:string;origin:'linked'|'semantic';action:'review'|'update'|'retest'|'new_link'|'no_change';rationale:string;citations:string[] }> = [];
-  try {
-    const anchor = semantic[0];
-    if (!anchor) throw new Error('No bounded impact candidates were available.');
-    const live = await analyseWithOpenRouter({ db,anchorId:anchor.targetId,title:'Source-derived candidate batch',rationale:'New reviewed user needs and requirements are proposed for the product baseline.',proposedText:query,evidence,relationships });
-    model = live.model; reasoningEffort = liveConfig.reasoningEffort;
-    rawSuggestions = live.suggestions.map((suggestion) => ({ targetId:suggestion.targetId,origin:suggestion.origin === 'linked' ? 'linked' : 'semantic',action:suggestion.action,rationale:suggestion.rationale,citations:suggestion.citations }));
-  } catch (error:unknown) {
-    mode = 'replay'; model = 'saved-demo-output'; reasoningEffort = 'not-run'; warning = error instanceof Error ? error.message : 'Live impact analysis failed.';
+  let model:string; let reasoningEffort:'low'|'medium'|'high'|'not_run'; let metadata:ModelRunMetadata|undefined; let attemptCount = 0;
+  let rawSuggestions:Array<{ targetId:string;origin:'linked'|'semantic';category:SourceImpactSuggestion['category'];action:'review'|'update'|'retest'|'new_link'|'no_change';rationale:string;citations:string[] }>;
+  if (mode === 'live') {
+    try {
+      const anchor = semantic[0];
+      if (!anchor) throw new LiveAttemptFailure(new Error('No bounded impact candidates were available.'),0,false);
+      const result = await runLive(() => analyseWithOpenRouter({ db,anchorId:anchor.targetId,title:'Source-derived candidate batch',rationale:'New reviewed user needs and requirements are proposed for the product baseline.',proposedText:query,evidence,relationships }));
+      const live = result.value; attemptCount = result.attemptCount; model = live.model; reasoningEffort = liveConfig.reasoningEffort; metadata = live.metadata;
+      rawSuggestions = live.suggestions.map((suggestion) => ({ targetId:suggestion.targetId,origin:suggestion.origin === 'linked' ? 'linked' : 'semantic',category:suggestion.category,action:suggestion.action,rationale:suggestion.rationale,citations:suggestion.citations }));
+    } catch (error:unknown) {
+      const failure = error instanceof LiveAttemptFailure ? error : new LiveAttemptFailure(error,attemptCount,false);
+      const message = safeLiveFailureMessage('source impact analysis',failure);
+      await saveProcessingRun(db,{ id:runId,sourceId,revisionId:detail.revision.id,kind:'impact_analysis',mode:'live',model:liveConfig.model,reasoningEffort:liveConfig.reasoningEffort,policyVersion:'impact-v6',status:'failed',input:{ sourceRevisionId:detail.revision.id,candidateIds:approved.map((candidate) => candidate.id),boundedEvidenceIds:semantic.map((candidate) => candidate.targetId) },output:null,error:message,attemptCount:failure.attemptCount });
+      if (throwOnFailure) throw new LiveProcessingError(message,runId,failure.retryable);
+      return;
+    }
+  } else {
+    model = 'saved-demo-output'; reasoningEffort = 'not_run';
     const semanticIds = new Set(semantic.map((candidate) => candidate.targetId));
     const linked = semantic.slice(0,2).flatMap((candidate) => graphCandidates(candidate.targetId,relationships,1)).filter((candidate) => !semanticIds.has(candidate.targetId)).slice(0,6);
     rawSuggestions = [
-      ...linked.map((candidate) => ({ targetId:candidate.targetId,origin:'linked' as const,action:(evidence.find((item) => item.id === candidate.targetId)?.type === 'test' ? 'retest' : 'review') as 'review'|'retest',rationale:`A stored relationship path from ${candidate.path[0]} reaches ${candidate.targetId}; review the controlled dependency for the new source-derived evidence.`,citations:candidate.path })),
-      ...semantic.map((candidate) => ({ targetId:candidate.targetId,origin:'semantic' as const,action:'review' as const,rationale:`The content of ${candidate.targetId} overlaps the new source-derived needs and requirements even though no new direct relationship has been asserted.`,citations:[candidate.targetId] })),
+      ...linked.map((candidate) => { const item = evidence.find((entry) => entry.id === candidate.targetId); return { targetId:candidate.targetId,origin:'linked' as const,category:impactCategoryFor(item?.type,'linked'),action:item?.type === 'test' ? 'retest' as const : 'review' as const,rationale:`A stored relationship path from ${candidate.path[0]} reaches ${candidate.targetId}; review the controlled dependency for the new source-derived evidence.`,citations:candidate.path }; }),
+      ...semantic.map((candidate) => { const item = evidence.find((entry) => entry.id === candidate.targetId); return { targetId:candidate.targetId,origin:'semantic' as const,category:impactCategoryFor(item?.type,'semantic'),action:'review' as const,rationale:`The content of ${candidate.targetId} overlaps the new source-derived needs and requirements even though no new direct relationship has been asserted.`,citations:[candidate.targetId] }; }),
     ];
   }
   const seen = new Set(rawSuggestions.map((suggestion) => suggestion.targetId));
   const collection = await getCollectionsForEvidence(db,semantic.map((candidate) => candidate.targetId));
-  const collectionSuggestions = collection.filter((candidate) => !seen.has(candidate.targetId)).slice(0,6).map((candidate) => ({ targetId:candidate.targetId,origin:'collection' as const,action:'review' as const,rationale:`${candidate.targetId} shares a controlled collection with a semantic impact candidate; review it without claiming a direct trace link.`,citations:candidate.path }));
+  const collectionSuggestions = collection.filter((candidate) => !seen.has(candidate.targetId)).slice(0,6).map((candidate) => ({ targetId:candidate.targetId,origin:'collection' as const,category:'collection_membership' as const,action:'review' as const,rationale:`${candidate.targetId} shares a controlled collection with a semantic impact candidate; review it without claiming a direct trace link.`,citations:candidate.path }));
   const suggestions:SourceImpactSuggestion[] = [...rawSuggestions,...collectionSuggestions].slice(0,16).map((suggestion) => SourceImpactSuggestionSchema.parse({
-    id:makeId('SUG'),sourceId,runId,targetId:suggestion.targetId,origin:suggestion.origin,category:suggestion.origin === 'linked' ? 'direct_dependency' : suggestion.origin === 'collection' ? 'shared_collection' : 'semantic_overlap',proposedAction:suggestion.action,rationale:suggestion.rationale,citations:suggestion.citations,decision:'pending',decisionReason:null,decidedBy:null,
+    id:makeId('SUG'),sourceId,runId,targetId:suggestion.targetId,origin:suggestion.origin,category:suggestion.category,proposedAction:suggestion.action,rationale:suggestion.rationale,citations:suggestion.citations,decision:'pending',decisionReason:null,decidedBy:null,
   }));
-  await saveProcessingRun(db,{ id:runId,sourceId,revisionId:detail.revision.id,kind:'impact_analysis',mode,model,reasoningEffort,policyVersion:'impact-v2',input:{ sourceRevisionId:detail.revision.id,candidateIds:approved.map((candidate) => candidate.id),boundedEvidenceIds:semantic.map((candidate) => candidate.targetId) },output:{ suggestions },error:warning });
+  await saveProcessingRun(db,{ id:runId,sourceId,revisionId:detail.revision.id,kind:'impact_analysis',mode,model,reasoningEffort,policyVersion:mode === 'live' ? 'impact-v6' : 'impact-replay-v2',status:'completed',input:{ sourceRevisionId:detail.revision.id,candidateIds:approved.map((candidate) => candidate.id),boundedEvidenceIds:semantic.map((candidate) => candidate.targetId) },output:{ suggestions },attemptCount,metadata });
+}
+
+export async function runSourceImpactAnalysis(db:D1Database,id:string,raw:unknown):Promise<SourceListResponse|null> {
+  const input = RunSourceImpactInputSchema.parse(raw); const detail = await getSourceDetail(db,id);
+  if (!detail) return null;
+  if (detail.source.status !== 'candidate_baseline') throw new WorkflowConflictError('Complete candidate review before running source impact analysis.');
+  await createSourceImpactAnalysis(db,id,input.mode,true);
+  return listSourceWorkspace(db);
 }
 
 export async function decideClarification(db:D1Database,id:string,raw:unknown):Promise<SourceDetail|null> {
@@ -232,6 +290,12 @@ export async function decideClarification(db:D1Database,id:string,raw:unknown):P
 }
 
 function policyFor(kind:'user_needs'|'requirements') { return kind === 'user_needs' ? USER_NEEDS_POLICY : REQUIREMENTS_POLICY; }
+function withoutTerminalPunctuation(value:string):string { return value.trim().replace(/[.!?]+$/u,''); }
+function userNeedStatement(supportedUser:string,goalOrConstraint:string):string {
+  const user = withoutTerminalPunctuation(supportedUser).replace(/^(?:a|an|the)\s+/i,'');
+  const goal = withoutTerminalPunctuation(goalOrConstraint).replace(/^to\s+/i,'');
+  return `For ${user}, the need is that ${goal.charAt(0).toLowerCase()}${goal.slice(1)}.`;
+}
 
 export async function generateCandidates(db:D1Database,id:string,raw:unknown):Promise<SourceDetail|null> {
   const input = GenerateCandidatesInputSchema.parse(raw); const detail = await getSourceDetail(db,id);
@@ -244,30 +308,42 @@ export async function generateCandidates(db:D1Database,id:string,raw:unknown):Pr
     if (approvedNeeds.length === 0 || undecidedNeeds) throw new WorkflowConflictError('Complete user-need review and approve at least one user need before deriving requirements.');
   }
   const clarificationInput = detail.clarifications.filter((entry) => entry.status !== 'open').map((entry) => ({ id:entry.id,question:entry.question,status:entry.status,answer:entry.answer,reason:entry.decisionReason }));
-  let output:CandidateOutput; let model:string; let reasoningEffort:string; let mode = input.mode; let warning:string|undefined;
-  if (mode === 'live') {
+  let output:CandidateOutput; let model:string; let reasoningEffort:'low'|'medium'|'high'|'not_run'; let metadata:ModelRunMetadata|undefined; let attemptCount = 0;
+  if (input.mode === 'live') {
     try {
-      const live = await generateSourceCandidates({ kind:input.kind,revisionId:detail.revision.id,title:detail.source.title,content:detail.revision.content,clarifications:clarificationInput,approvedNeeds });
-      if (!live.output.candidates.every((candidate) => citationsBelongToRevision(candidate.citations,detail.revision.id,detail.revision.content))) throw new Error('The live generation returned a citation that does not exactly match the source revision.');
+      const result = input.kind === 'user_needs'
+        ? await runLive(() => generateSourceCandidates({ kind:'user_needs',revisionId:detail.revision.id,title:detail.source.title,content:detail.revision.content,clarifications:clarificationInput,approvedNeeds }))
+        : await runLive(() => generateSourceCandidates({ kind:'requirements',revisionId:detail.revision.id,title:detail.source.title,content:detail.revision.content,clarifications:clarificationInput,approvedNeeds }));
+      const live = result.value; attemptCount = result.attemptCount;
+      if (!live.output.candidates.every((candidate) => validateCandidateCitations({ citations:candidate.citations,revisionId:detail.revision.id,content:detail.revision.content,clarifications:clarificationInput }))) throw new LiveAttemptFailure(new Error('The live generation returned invalid source or clarification provenance.'),attemptCount,false);
       if (input.kind === 'requirements') {
         const approvedIds = new Set(approvedNeeds.map((candidate) => candidate.id));
-        if (!live.output.candidates.every((candidate) => candidate.parentIds.length > 0 && candidate.parentIds.every((parentId) => approvedIds.has(parentId)))) throw new Error('The live requirements did not refine approved user needs.');
+        const parsed = RequirementsOutputSchema.parse(live.output);
+        if (!parsed.candidates.every((candidate) => candidate.parentIds.every((parentId) => approvedIds.has(parentId)))) throw new LiveAttemptFailure(new Error('The live requirements did not refine supplied approved user needs.'),attemptCount,false);
       }
-      output = live.output; model = live.model; reasoningEffort = live.reasoningEffort;
+      output = live.output; model = live.model; reasoningEffort = live.reasoningEffort; metadata = live.metadata;
     } catch (error:unknown) {
-      mode = 'replay'; model = 'saved-demo-output'; reasoningEffort = 'not-run'; warning = error instanceof Error ? error.message : 'Live candidate generation failed.';
-      output = input.kind === 'user_needs' ? userNeedsReplay(id,detail.revision.id) : requirementsReplay(id,detail.revision.id,approvedNeeds.map((candidate) => candidate.id));
+      const failure = error instanceof LiveAttemptFailure ? error : new LiveAttemptFailure(error,attemptCount,false);
+      const config = configuredOpenRouterModel(); const policy = policyFor(input.kind);
+      const message = safeLiveFailureMessage(`${input.kind.replace('_',' ')} generation`,failure);
+      const runId = await saveProcessingRun(db,{ sourceId:id,revisionId:detail.revision.id,kind:input.kind,mode:'live',model:config.model,reasoningEffort:config.reasoningEffort,policyVersion:policy.name,status:'failed',input:{ revisionId:detail.revision.id,clarifications:clarificationInput,approvedNeedIds:approvedNeeds.map((candidate) => candidate.id) },output:null,error:message,attemptCount:failure.attemptCount });
+      throw new LiveProcessingError(message,runId,failure.retryable);
     }
   } else {
-    model = 'saved-demo-output'; reasoningEffort = 'not-run';
-    output = input.kind === 'user_needs' ? userNeedsReplay(id,detail.revision.id) : requirementsReplay(id,detail.revision.id,approvedNeeds.map((candidate) => candidate.id));
+    model = 'saved-demo-output'; reasoningEffort = 'not_run';
+    output = input.kind === 'user_needs'
+      ? UserNeedsOutputSchema.parse(userNeedsReplay(id,detail.revision.id,clarificationInput))
+      : RequirementsOutputSchema.parse(requirementsReplay(id,detail.revision.id,approvedNeeds.map((candidate) => candidate.id),clarificationInput));
   }
   const policy = policyFor(input.kind);
-  const runId = await saveProcessingRun(db,{ sourceId:id,revisionId:detail.revision.id,kind:input.kind,mode,model,reasoningEffort,policyVersion:policy.name,input:{ revisionId:detail.revision.id,clarifications:clarificationInput,approvedNeedIds:approvedNeeds.map((candidate) => candidate.id) },output,error:warning });
+  const runId = await saveProcessingRun(db,{ sourceId:id,revisionId:detail.revision.id,kind:input.kind,mode:input.mode,model,reasoningEffort,policyVersion:policy.name,status:'completed',input:{ revisionId:detail.revision.id,clarifications:clarificationInput,approvedNeedIds:approvedNeeds.map((candidate) => candidate.id) },output,attemptCount,metadata });
   const advisoryIds = detail.clarifications.filter((entry) => entry.severity === 'advisory' && entry.status === 'open').map((entry) => entry.id);
-  const candidateType = input.kind === 'user_needs' ? 'user_need' : 'requirement';
-  await db.batch(output.candidates.map((candidate) => db.prepare('INSERT INTO source_candidates (id,run_id,source_id,type,level,title,statement,rationale,origin,status,parent_ids_json,citations_json,advisory_clarification_ids_json,model,policy_version,reviewed_by,reviewed_at,review_reason) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)')
-    .bind(makeId('CAN'),runId,id,candidateType,candidate.level,candidate.title,candidate.statement,candidate.rationale,'ai','pending_review',JSON.stringify(candidate.parentIds),JSON.stringify(candidate.citations),JSON.stringify(advisoryIds),model,policy.name,null,null,null)));
+  const statements = input.kind === 'requirements'
+    ? RequirementsOutputSchema.parse(output).candidates.map((candidate) => db.prepare('INSERT INTO source_candidates (id,run_id,source_id,type,level,supported_user,goal_or_constraint,title,statement,rationale,origin,status,parent_ids_json,citations_json,advisory_clarification_ids_json,model,policy_version,reviewed_by,reviewed_at,review_reason) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)')
+      .bind(makeId('CAN'),runId,id,'requirement',candidate.level,null,null,candidate.title,candidate.statement,candidate.rationale,'ai','pending_review',JSON.stringify(candidate.parentIds),JSON.stringify(candidate.citations),JSON.stringify(advisoryIds),model,policy.name,null,null,null))
+    : UserNeedsOutputSchema.parse(output).candidates.map((candidate) => db.prepare('INSERT INTO source_candidates (id,run_id,source_id,type,level,supported_user,goal_or_constraint,title,statement,rationale,origin,status,parent_ids_json,citations_json,advisory_clarification_ids_json,model,policy_version,reviewed_by,reviewed_at,review_reason) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)')
+      .bind(makeId('CAN'),runId,id,'user_need',null,candidate.supportedUser,candidate.goalOrConstraint,candidate.title,userNeedStatement(candidate.supportedUser,candidate.goalOrConstraint),candidate.rationale,'ai','pending_review','[]',JSON.stringify(candidate.citations),JSON.stringify(advisoryIds),model,policy.name,null,null,null));
+  await db.batch(statements);
   await refreshSourceStatus(db,id);
   return getSourceDetail(db,id);
 }
@@ -278,13 +354,13 @@ export async function decideCandidate(db:D1Database,id:string,raw:unknown):Promi
   if (!candidate || candidate.status !== 'pending_review') return null;
   await db.prepare("UPDATE source_candidates SET status=?,reviewed_by=?,reviewed_at=?,review_reason=? WHERE id=? AND status='pending_review'").bind(input.decision,input.actor,now(),input.reason,id).run();
   await refreshSourceStatus(db,candidate.sourceId);
-  await createSourceImpactAnalysis(db,candidate.sourceId);
+  await createSourceImpactAnalysis(db,candidate.sourceId,'live',false);
   return getSourceDetail(db,candidate.sourceId);
 }
 
 export async function decideSourceImpactSuggestion(db:D1Database,id:string,raw:unknown):Promise<SourceListResponse|null> {
   const input = SourceImpactDecisionInputSchema.parse(raw); await initializeSources(db);
-  const runs = await db.prepare("SELECT p.id,p.output_json AS outputJson FROM source_processing_runs p JOIN source_artifacts a ON a.id=p.source_id AND a.latest_revision_id=p.revision_id WHERE p.kind='impact_analysis' ORDER BY p.created_at DESC,p.id DESC").all<{ id:string;outputJson:string }>();
+  const runs = await db.prepare("SELECT p.id,p.output_json AS outputJson FROM source_processing_runs p JOIN source_artifacts a ON a.id=p.source_id AND a.latest_revision_id=p.revision_id WHERE p.kind='impact_analysis' AND p.status='completed' AND p.output_json IS NOT NULL ORDER BY p.created_at DESC,p.id DESC").all<{ id:string;outputJson:string }>();
   for (const run of runs.results) {
     const output = z.object({ suggestions:z.array(SourceImpactSuggestionSchema) }).parse(parseJson(run.outputJson));
     const suggestion = output.suggestions.find((entry) => entry.id === id);
@@ -310,7 +386,7 @@ export async function approveSourceBaseline(db:D1Database,raw:unknown):Promise<S
   const input = ApproveSourceBaselineInputSchema.parse(raw); await initializeSources(db);
   const readiness = await listSourceWorkspace(db);
   if (!readiness.candidateBaselineReady) throw new WorkflowConflictError('Complete impact review, candidate review, and required clarifications before approving the baseline.');
-  const candidates = await db.prepare("SELECT c.id,c.source_id AS sourceId,c.type,c.level,c.title,c.statement,c.rationale,c.parent_ids_json AS parentIdsJson,c.citations_json AS citationsJson FROM source_candidates c JOIN source_processing_runs p ON p.id=c.run_id JOIN source_artifacts a ON a.id=c.source_id AND a.latest_revision_id=p.revision_id WHERE c.status='approved_for_baseline' AND a.status='candidate_baseline' ORDER BY c.type,c.id").all<{ id:string;sourceId:string;type:'user_need'|'requirement';level:string;title:string;statement:string;rationale:string;parentIdsJson:string;citationsJson:string }>();
+  const candidates = await db.prepare("SELECT c.id,c.source_id AS sourceId,c.type,c.level,c.title,c.statement,c.rationale,c.parent_ids_json AS parentIdsJson,c.citations_json AS citationsJson FROM source_candidates c JOIN source_processing_runs p ON p.id=c.run_id JOIN source_artifacts a ON a.id=c.source_id AND a.latest_revision_id=p.revision_id WHERE c.status='approved_for_baseline' AND a.status='candidate_baseline' ORDER BY c.type,c.id").all<{ id:string;sourceId:string;type:'user_need'|'requirement';level:string|null;title:string;statement:string;rationale:string;parentIdsJson:string;citationsJson:string }>();
   const pending = await db.prepare("SELECT COUNT(*) AS count FROM source_candidates c JOIN source_processing_runs p ON p.id=c.run_id JOIN source_artifacts a ON a.id=c.source_id AND a.latest_revision_id=p.revision_id WHERE c.status IN ('pending_review','revision_requested')").first<{ count:number }>();
   const required = await db.prepare("SELECT COUNT(*) AS count FROM source_clarifications c JOIN source_processing_runs p ON p.id=c.run_id JOIN source_artifacts a ON a.id=c.source_id AND a.latest_revision_id=p.revision_id WHERE c.severity='required' AND c.status='open'").first<{ count:number }>();
   if ((pending?.count ?? 0) > 0 || (required?.count ?? 0) > 0 || !candidates.results.some((candidate) => candidate.type === 'requirement')) throw new WorkflowConflictError('Complete candidate review and required clarifications before approving the baseline.');
@@ -330,7 +406,7 @@ export async function approveSourceBaseline(db:D1Database,raw:unknown):Promise<S
     const versionId = `${evidenceId}-v1.0`; const citations = CitationArraySchema.parse(parseJson(candidate.citationsJson));
     statements.push(
       db.prepare('INSERT INTO evidence_items (id,type,owner,criticality,jurisdictions_json,current_version_id) VALUES (?,?,?,?,?,?)').bind(evidenceId,candidate.type,candidate.type === 'user_need' ? 'Product' : 'Engineering','medium',JSON.stringify(['US','EU']),versionId),
-      db.prepare('INSERT INTO evidence_versions (id,item_id,version,title,statement,rationale,status,sources_json,flags_json,approved_by,approved_at) VALUES (?,?,?,?,?,?,?,?,?,?,?)').bind(versionId,evidenceId,'1.0',candidate.title,candidate.statement,candidate.rationale,'approved',JSON.stringify(citations.map((citation) => `${citation.sourceRevisionId} · ${citation.label}`)),JSON.stringify([`origin_ai`,candidate.level]),input.actor,approvedAt),
+      db.prepare('INSERT INTO evidence_versions (id,item_id,version,title,statement,rationale,status,sources_json,flags_json,approved_by,approved_at) VALUES (?,?,?,?,?,?,?,?,?,?,?)').bind(versionId,evidenceId,'1.0',candidate.title,candidate.statement,candidate.rationale,'approved',JSON.stringify(citations.map((citation) => citation.kind === 'source_span' ? citation.sourceRevisionId : `Clarification ${citation.clarificationId}`)),JSON.stringify(candidate.level ? ['origin_ai',candidate.level] : ['origin_ai']),input.actor,approvedAt),
       db.prepare('INSERT INTO baseline_items (baseline_id,item_id,version_id) VALUES (?,?,?)').bind(baselineId,evidenceId,versionId),
     );
   }

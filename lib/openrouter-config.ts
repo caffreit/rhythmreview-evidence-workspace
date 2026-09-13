@@ -6,7 +6,7 @@ const DEFAULT_MODEL = 'openai/gpt-5.6-luna';
 const DEFAULT_EMBEDDING_MODEL = 'openai/text-embedding-3-small';
 const DEFAULT_SITE_URL = 'https://rhythmreview-evidence-workspace.ivan-caffrey.chatgpt.site';
 
-const ReasoningEffortSchema = z.enum(['low','medium','high']);
+export const ReasoningEffortSchema = z.enum(['low','medium','high']);
 
 const ModelConfigSchema = z.object({
   baseURL:z.url(),
@@ -33,6 +33,7 @@ export function configuredOpenRouterModel(environment:Environment = process.env)
 }
 
 export function readOpenRouterConfig(environment:Environment = process.env):OpenRouterConfig {
+  if (environment.OPENROUTER_LIVE_DISABLED === '1') throw new Error('OPENROUTER_API_KEY is not configured for this run.');
   const apiKey = environment.OPENROUTER_API_KEY?.trim();
   if (!apiKey) throw new Error('OPENROUTER_API_KEY is not configured. Choose replay mode or add it as a hosted secret.');
   return { ...configuredOpenRouterModel(environment),apiKey };
@@ -47,4 +48,8 @@ export function createOpenRouterClient(config:OpenRouterConfig):OpenAI {
       'X-OpenRouter-Title':config.appName,
     },
   });
+}
+
+export function isTransientOpenRouterError(error:unknown):boolean {
+  return error instanceof OpenAI.APIError && (error.status === 408 || error.status === 409 || error.status === 429 || error.status >= 500);
 }

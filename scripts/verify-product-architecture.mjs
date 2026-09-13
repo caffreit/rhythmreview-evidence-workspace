@@ -21,7 +21,7 @@ for (const section of requiredArchitectureSections) {
 for (const view of requiredViews) {
   if (!workspace.includes(view)) throw new Error(`Application map is missing ${view}.`);
 }
-for (const policy of ['source-context-v1','user-needs-v1','requirements-v1']) {
+for (const policy of ['source-context-v3','user-needs-v2','requirements-v2']) {
   if (!policies.includes(policy)) throw new Error(`Analysis policy is missing ${policy}.`);
 }
 if (!wireframes.includes('Conceptual — not implemented')) throw new Error('Wireframes do not mark conceptual capability boundaries.');

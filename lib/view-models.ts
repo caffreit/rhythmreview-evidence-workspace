@@ -33,6 +33,32 @@ export const EvidenceDetailSchema = z.object({
   relationships:z.array(z.object({ id:z.string(),sourceId:EvidenceIdSchema,targetId:EvidenceIdSchema,type:RelationshipTypeSchema,baselineId:z.string(),active:z.boolean() })),
   versions:z.array(z.object({ versionId:z.string(),version:z.string(),title:z.string(),statement:z.string(),status:z.string(),approvedBy:z.string().nullable(),approvedAt:z.string().nullable() })),
 });
+const TraceRelationshipRuleSchema = z.object({
+  type:RelationshipTypeSchema,label:z.string(),meaning:z.string(),sourceIsDownstream:z.boolean(),sourceTypes:z.array(EvidenceTypeSchema),targetTypes:z.array(EvidenceTypeSchema),
+});
+const TraceCoverageRuleSchema = z.object({
+  id:z.string(),version:z.string(),title:z.string(),subjectType:EvidenceTypeSchema,relationshipType:RelationshipTypeSchema,
+  direction:z.enum(['incoming','outgoing']),peerTypes:z.array(EvidenceTypeSchema),severity:z.enum(['high','medium']),requirement:z.string(),
+});
+const TraceItemRefSchema = z.object({ id:EvidenceIdSchema,title:z.string(),type:EvidenceTypeSchema.nullable(),version:z.string().nullable() });
+export const TraceabilitySchema = z.object({
+  policy:z.object({ id:z.string(),version:z.string(),status:z.literal('draft_for_qa_ra_review'),title:z.string(),rules:z.array(TraceRelationshipRuleSchema) }),
+  coveragePolicy:z.object({ id:z.string(),version:z.string(),rules:z.array(TraceCoverageRuleSchema) }),
+  baseline:z.object({ id:z.string(),label:z.string(),status:z.string() }),
+  summary:z.object({ evidenceItems:z.number(),activeLinks:z.number(),policyCompliantLinks:z.number(),policyViolations:z.number(),coverageGaps:z.number(),highCoverageGaps:z.number() }),
+  rows:z.array(z.object({
+    item:z.object({ id:EvidenceIdSchema,title:z.string(),type:EvidenceTypeSchema,version:z.string(),criticality:CriticalitySchema,status:z.string() }),
+    incomingLinkIds:z.array(z.string()),outgoingLinkIds:z.array(z.string()),gapIds:z.array(z.string()),
+  })),
+  links:z.array(z.object({
+    id:z.string(),sourceId:EvidenceIdSchema,targetId:EvidenceIdSchema,type:RelationshipTypeSchema,baselineId:z.string(),active:z.boolean(),source:TraceItemRefSchema,target:TraceItemRefSchema,
+    policy:z.object({ id:z.string(),label:z.string(),meaning:z.string(),valid:z.boolean(),violation:z.string().nullable() }),
+  })),
+  gaps:z.array(z.object({
+    id:z.string(),ruleId:z.string(),ruleVersion:z.string(),severity:z.enum(['high','medium']),itemId:EvidenceIdSchema,itemTitle:z.string(),itemType:EvidenceTypeSchema,
+    title:z.string(),requirement:z.string(),actual:z.string(),
+  })),
+});
 export const DocumentViewSchema = z.object({ id:z.string(),code:z.string(),title:z.string(),description:z.string(),types:z.array(EvidenceTypeSchema),excludeFlags:z.array(z.string()) });
 export const DocumentListResponseSchema = z.object({ documents:z.array(DocumentViewSchema) });
 const BaselineViewSchema = z.object({ id:z.string(),label:z.string(),status:z.string(),approvedBy:z.string().nullable(),approvedAt:z.string().nullable() });
@@ -41,10 +67,14 @@ export const ChangeSummarySchema = z.object({
   id:z.string(),scenarioId:z.string().nullable(),anchorItemId:EvidenceIdSchema,title:z.string(),status:ChangeStatusSchema,createdBy:z.string(),createdAt:z.string(),updatedAt:z.string(),revision:z.number(),currentAnalysisMode:z.string().nullable(),
 });
 export const ChangeListResponseSchema = z.object({ changes:z.array(ChangeSummarySchema) });
+const AnalysisRunViewSchema = z.object({
+  id:z.string(),mode:z.string(),model:z.string(),promptVersion:z.string(),status:AnalysisRunStatusSchema,error:z.string().nullable(),previousRunId:z.string().nullable(),priorChangeStatus:z.string().nullable(),
+  providerRequestId:z.string().nullable(),durationMs:z.number().nullable(),attemptCount:z.number(),inputTokens:z.number().nullable(),outputTokens:z.number().nullable(),embeddingTokens:z.number().nullable(),createdAt:z.string(),
+});
 export const ChangeViewSchema = z.object({
   id:z.string(),scenarioId:z.string().nullable(),anchorItemId:EvidenceIdSchema,title:z.string(),rationale:z.string(),proposedText:z.string(),status:ChangeStatusSchema,createdBy:z.string(),createdAt:z.string(),updatedAt:z.string(),revision:z.number(),
-  run:z.object({ id:z.string(),mode:z.string(),model:z.string(),promptVersion:z.string(),status:AnalysisRunStatusSchema,error:z.string().nullable(),previousRunId:z.string().nullable(),priorChangeStatus:z.string().nullable(),createdAt:z.string() }).nullable(),
-  analysisHistory:z.array(z.object({ id:z.string(),mode:z.string(),model:z.string(),promptVersion:z.string(),status:AnalysisRunStatusSchema,error:z.string().nullable(),previousRunId:z.string().nullable(),priorChangeStatus:z.string().nullable(),createdAt:z.string() })),
+  run:AnalysisRunViewSchema.nullable(),
+  analysisHistory:z.array(AnalysisRunViewSchema),
   suggestions:z.array(ImpactSuggestionSchema),
   updates:z.array(z.object({ id:z.string(),analysisRunId:z.string(),itemId:EvidenceIdSchema,fromVersionId:z.string(),toVersion:z.string(),originalText:z.string(),proposedText:z.string(),draftOrigin:z.string(),createdBy:z.string(),createdAt:z.string(),editedBy:z.string().nullable(),editReason:z.string().nullable(),editedAt:z.string().nullable(),status:ProposedUpdateStatusSchema })),
   audit:z.array(z.object({ id:z.string(),entityType:z.string(),entityId:z.string(),aggregateType:z.string(),aggregateId:z.string(),action:z.string(),actor:z.string(),detailsJson:z.string(),schemaVersion:z.number(),details:z.union([AuditEventDetailsSchema,z.unknown()]),createdAt:z.string() })),
@@ -66,6 +96,7 @@ export const EvidenceFilterSchema = z.object({ query:z.string(),type:z.union([Ev
 export type OverviewView = z.infer<typeof OverviewSchema>;
 export type ScenarioView = z.infer<typeof ScenarioViewSchema>;
 export type EvidenceDetailView = z.infer<typeof EvidenceDetailSchema>;
+export type TraceabilityView = z.infer<typeof TraceabilitySchema>;
 export type DocumentView = z.infer<typeof DocumentViewSchema>;
 export type RenderedDocumentView = z.infer<typeof RenderedDocumentSchema>;
 export type ChangeView = z.infer<typeof ChangeViewSchema>;

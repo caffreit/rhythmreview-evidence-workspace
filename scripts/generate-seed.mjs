@@ -304,6 +304,12 @@ function shortestPath(start,target,maxDepth = 3) {
   }
   return null;
 }
+function impactCategory(item,semantic) {
+  if (item.type === 'test') return 'verification_coverage';
+  if (item.type === 'hazard' || item.type === 'risk_control') return 'shared_risk_or_control';
+  if (item.type === 'component') return 'interface_or_data_flow';
+  return semantic ? 'functional_overlap' : 'hierarchy';
+}
 const replayRuns = scenarioDefinitions.map((scenario) => ({
   id:`RUN-${scenario.number}-REPLAY`, scenarioId:scenario.id, name:'Locked replay fixture', model:'saved-output-no-api', promptVersion:'impact-replay-v2',
   suggestions:scenario.expected.map((targetId,index) => {
@@ -313,6 +319,7 @@ const replayRuns = scenarioDefinitions.map((scenario) => ({
     return {
       id:`SUG-${scenario.number}-${String(index + 1).padStart(2,'0')}`,
       targetId,
+      category:impactCategory(item,semantic),
       action:actionFor(item.type),
       origin:semantic || !linkedPath ? 'semantic' : 'linked',
       rationale:rationaleByScenario[scenario.id][targetId],
