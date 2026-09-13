@@ -81,7 +81,7 @@ Close with this statement: the prototype tests whether structured evidence and A
 
 ## Disclosures for questions
 
-- Live OpenRouter impact analysis requires a hosted `OPENROUTER_API_KEY`. This cleanup tested the no-key failure and replay recovery path, not a successful live call.
+- Live OpenRouter analysis requires an `OPENROUTER_API_KEY`. WP-00 verified the no-key failure path, explicit replay recovery, a current-policy live smoke test, all fictional source and impact cases, and a complete live `SRC-001` source-to-baseline workflow.
 - The draft endpoint does not call an external model. Guided replay drafts are curated fixtures, and custom or live workflows receive an author drafting template.
 - The provisional answer keys need QA and RA review. Scenario 2 omits the 30-second claim in `CLM-003`. Scenario 3 omits the adult age limit in `LBL-004` and may assign the wrong action to `REQ-001`.
 - The simulated roles demonstrate separation of duties but do not authenticate identity or provide electronic signatures.

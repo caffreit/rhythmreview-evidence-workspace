@@ -2,117 +2,40 @@
 
 ## Purpose
 
-Build an internal medtech compliance workspace that combines the strongest ideas from Ketryx and Infera without pretending to be a production eQMS. The first product question is narrower: can structured evidence, deterministic traceability, and AI-assisted review help a QA or regulatory reviewer find the full impact of a SaMD change and approve a coherent new baseline?
+BlueBridge is an internal medtech evidence workspace. It tests whether structured evidence, deterministic traceability, and AI-assisted review help a QA or regulatory reviewer find the full impact of a SaMD change and approve a coherent new baseline. It is not a production eQMS.
 
-The current RhythmReview prototype already demonstrates this core loop with fictional data. It contains 72 evidence items, 118 typed relationships, 10 generated document views, three change scenarios, immutable baseline snapshots, QA decisions, and an audit history.
+## Current state
 
-## Product principles
+The RhythmReview prototype uses fictional data. It has 72 evidence items, 118 typed relationships, 10 generated document views, three change scenarios, immutable baseline snapshots, separate author and QA decisions, and an audit history.
 
-- Keep a person responsible for every controlled decision.
-- Preserve AI output and human corrections as separate records.
-- Distinguish confirmed graph relationships from semantic suggestions.
-- Cite the evidence behind every AI recommendation.
-- Keep approved baselines immutable.
-- Label fixtures, simulated roles, and mock integrations honestly.
-- Measure critical-impact recall before adding more AI automation.
+The implemented workflows are:
 
-## Capability priorities
+- A controlled change loop with bounded impact suggestions, candidate revisions, coherence checks, return to author, reanalysis, QA approval, immutable baselines, and retained history.
+- A guided 10 to 12 minute demonstration with saved replay fixtures.
+- A source-first path for text and Markdown revisions, required and advisory context questions, reviewed user needs, reviewed requirements, source-derived impact work, baseline approval, and a release record.
+- Live analysis through OpenRouter and an explicitly selected replay mode.
+- A baseline-aware traceability matrix and deterministic gap view backed by versioned draft relationship and coverage policies.
 
-The estimates below apply to a polished internal prototype that continues to use fictional data. They do not estimate the work required for a validated commercial system.
+The foundation package is complete. Its versioned prompt contracts, explicit live-failure behavior, model-run metadata, offline regression, live source-to-baseline proof, and prompt evaluation are recorded in the delivery plan.
 
-| Capability | User value | Prototype lift | Delivery risk | Decision |
-| --- | ---: | --- | --- | --- |
-| Traceability coverage matrix and gap drill-down | 5 | Medium | Low | Build now |
-| Return-to-author and reopen-analysis workflow | 5 | Small | Medium | Phase 1 complete |
-| Relationship editor with controlled link semantics | 5 | Medium | Medium | Build now |
-| Risk workspace for hazards, scores, controls, and residual risk | 5 | Medium | Medium | Build now |
-| Verification plan, protocol, execution, and coverage views | 5 | Medium | Medium | Build now |
-| Release-readiness gates across requirements, risks, tests, and approvals | 5 | Medium | Medium | Build now |
-| Expandable audit history with old and new values | 4 | Small | Low | Phase 1 complete |
-| Recent-change list and completed-change reopening | 4 | Small | Low | Phase 1 complete |
-| Resolve findings and rerun deterministic checks | 5 | Medium | Medium | Phase 1 complete |
-| Controlled document redlines and package-completeness view | 4 | Medium | Medium | Build next |
-| Source-document import and AI requirement extraction | 5 | Medium to large | Medium | Build next |
-| AI-assisted candidate drafting with explicit provenance | 4 | Medium | High | Build next after evaluation controls |
-| Fixture-backed Jira import and export adapter | 4 | Medium | Medium | Build next |
-| Search, filters, saved views, and evidence ownership queues | 3 | Small to medium | Low | Build when needed |
-| SBOM and vulnerability review workspace | 3 | Large | Medium | Later |
-| Real Jira synchronization | 5 | Large | High | Later, after the internal model stabilizes |
-| Git and CI test-result synchronization | 5 | Large | High | Later |
-| Real authentication and role-based access | 5 | Large | High | Required before real users or data |
-| Electronic signatures and Part 11 controls | 5 | Extra large | High | Do not simulate as production capability |
-| Submission-ready Word and technical-document generation | 4 | Extra large | High | Later |
-| Full eQMS, CAPA, training, complaints, and supplier controls | 3 | Extra large | High | Out of scope for this product phase |
-| Multi-product, multi-tenant enterprise administration | 4 | Extra large | High | Later |
-| Post-market surveillance | 3 | Large | High | Later |
+The controlled traceability package is in progress. The current draft policy recognizes all 118 seeded links and reports the missing verification relationship for `RC-005` through rule `TRC-RC-002` version 1. QA and regulatory ratification, controlled relationship editing, and the graph remain open.
 
-## Recommended build sequence
+## Delivery plan
 
-### Phase 1.5: Prepare the internal QA and regulatory demonstration
+The active work packages, dependencies, completion gates, and deferred production controls are maintained in [the BlueBridge delivery plan](docs/delivery-plan.md).
 
-1. Add a 10 to 12 minute hands-on walkthrough around the timing-change scenario.
-2. Require the presenter to demonstrate accept, reject and revise, and edit-action decisions before using a labelled fixture helper for the remaining review.
-3. Produce an annotated PDF handoff guide with the same step numbers and boundaries.
-4. Use factual incoming and outgoing relationship labels until QA and regulatory reviewers ratify dependency semantics.
-5. Display sub-minute review times and loading feedback for document baseline changes.
-6. Keep provisional evaluation results outside the main walkthrough.
+The product model and authority boundaries are maintained separately in [the product architecture](docs/product-architecture.md).
 
-Implemented in the phase 1.5 guided demonstration. The answer keys remain provisional and unchanged pending independent QA and regulatory review.
+## Product rules
 
-### Phase 1: Complete the controlled change loop
+- A person remains responsible for every controlled decision.
+- AI output and human corrections are separate records.
+- Confirmed graph relationships remain distinct from semantic suggestions.
+- Every AI-derived candidate carries exact source or clarification provenance.
+- Approved baselines are immutable.
+- Fixtures, simulated roles, and mock integrations are labelled.
+- Critical-impact recall must be measured before more AI automation is added.
 
-1. Add recent-change navigation.
-2. Add audited return-to-author and reopen-analysis transitions.
-3. Show full audit-event details, including old and new values.
-4. Let reviewers resolve coherence findings and rerun deterministic checks.
+## Prototype boundary
 
-Implemented. Stored changes reopen at their current stage, QA can return candidates with reasons, authors can reopen analysis without deleting history, audit events expose old/new values, and persisted baseline or candidate checks support exact-fingerprint waivers and deterministic resolution on rerun.
-
-### Phase 2: Resemble a lifecycle-management product
-
-1. Add a traceability coverage matrix with drill-down into missing links.
-2. Add controlled relationship editing and validate allowed source, relationship, and target combinations.
-3. Add a risk workspace for hazard analysis, controls, verification, and residual-risk review.
-4. Add verification planning, protocol generation, execution status, and coverage.
-5. Add a release-readiness page that blocks the candidate baseline when required evidence is incomplete.
-
-This phase creates the clearest Ketryx and Infera comparison. All five capabilities can work against the existing fictional evidence graph.
-
-### Phase 2.5: Demonstrate Jira-shaped connected work
-
-1. Import a small fixture set of Jira-shaped records.
-2. Show explicit field mapping and typed links to requirements, risks, and tests.
-3. Demonstrate a simulated round-trip status change.
-
-Use a fixture-backed adapter to test the internal evidence model and mapping rules. Do not depend on Jira administration, credentials, or a live customer project at this stage.
-
-### Phase 3: Demonstrate ingestion and connected work
-
-1. Import a small set of fictional PDFs and product requirements.
-2. Show extracted requirement candidates before a person accepts them.
-3. Add controlled document redlines and a package-completeness view.
-
-Keep every extracted requirement as a candidate until a person accepts it into controlled scope.
-
-### Phase 4: Connect real systems
-
-Add real Jira, Git, and CI integrations only after the evidence types, relationship policy, approval states, and release gates are stable. Add real authentication before any non-fictional data or additional users enter the system.
-
-## First milestone
-
-The first milestone should be an end-to-end fictional release in which a reviewer can:
-
-1. Open a proposed change.
-2. Review cited graph and semantic impacts.
-3. Correct the proposed scope.
-4. Return the change to the author if needed.
-5. Review updated hazards and controls.
-6. inspect requirement and risk-control test coverage.
-7. Resolve or waive deterministic findings with reasons.
-8. Pass explicit release-readiness gates.
-9. Approve a new immutable baseline.
-10. Inspect the full audit history and the prior baseline.
-
-## Important boundary
-
-This remains an internal prototype until the team implements and validates identity, access control, electronic signatures, records retention, integration reliability, model controls, and the applicable quality-system procedures. The interface must not describe simulated approval as a compliant electronic signature or generated document views as submission-ready records.
+Do not use real patient or client data. The prototype has no verified identity, electronic signatures, production integration controls, records-retention policy, or validated quality-system procedures. Its approvals and generated document views must not be presented as compliant signatures or submission-ready records.

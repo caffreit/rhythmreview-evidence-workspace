@@ -18,7 +18,7 @@ This local prototype tests whether linked evidence plus AI can help a QA or regu
 
 3. Open the local address shown in the terminal. The default is `http://localhost:3000`.
 
-Replay mode works without an API key. To run live analysis, copy `.env.example` to `.env.local` and set `OPENROUTER_API_KEY`. The server uses OpenRouter's OpenAI-compatible API and sends only the fictional candidate evidence. The default models are `openai/gpt-5.6-luna` for analysis and `openai/text-embedding-3-small` for semantic retrieval.
+Replay mode works without an API key. To run live analysis, copy `.env.example` to `.env.local` and set `OPENROUTER_API_KEY`. The server uses OpenRouter's OpenAI-compatible API and sends only fictional source or candidate evidence. The default models are `openai/gpt-5.6-luna` for analysis and `openai/text-embedding-3-small` for semantic retrieval. A failed live run creates no AI-derived work. Retry live processing or choose saved replay explicitly.
 
 ## Run a demonstration
 
@@ -51,10 +51,15 @@ npm test
 npx tsc --noEmit
 npm run lint
 npm run verify:demo
+npm run verify:source
 npm run build
 ```
 
 `verify:demo` walks all three scenarios. For the timing scenario it follows the exact guided path, including the three required manual examples, pending-only guided completion, fixture provenance, retained rejection history, separate approval, RR-1.0/RR-1.1 comparison, and reset. It also checks recent-change ordering, replay paths, live no-key failure recovery, return/edit/restore/resubmit, successful reanalysis, immutable superseded history, detailed audit values, baseline and candidate checks, exact-fingerprint waiver carry-forward, stale candidate results, and selected-run evaluation.
+
+`verify:source` checks the source-to-baseline workflow against a server started without an available OpenRouter key. It proves that a failed live run creates no replay records, then completes the same path through explicitly selected replay output. Keep the key unavailable to that server process for this check; local environment files may otherwise take precedence over a shell override.
+
+With the local server running and `.env.local` configured, run `npm run verify:live` for the opt-in OpenRouter smoke test. This command makes paid external calls with fictional data and is never part of the ordinary test suite.
 
 ## Regenerate controlled data
 
@@ -74,3 +79,7 @@ The second command embeds the generated migration in the local runtime initializ
 Version one has one fictional product, immutable approved baselines, separately stored candidate work, and simulated author and QA identities. The simulated roles provide no identity assurance. It has no eQMS, Jira, Git, Word, or submission integration. Replay output is a saved fixture, not a live model call. The internal evaluation page calculates structured-run results against a locked provisional answer key. Manual and document-chat values remain illustrative fixtures.
 
 See [the demo charter](docs/demo-charter.md), [the evaluation protocol](docs/evaluation-protocol.md), and [the presenter script](docs/presenter-script.md).
+
+Current delivery status and completion gates are in [the delivery plan](docs/delivery-plan.md).
+
+Controlled traceability work is in progress. The Matrix and Coverage and gaps pages apply a baseline-scoped draft relationship policy to exact evidence versions. The current `RR-1.0` fixture has 118 policy-conforming links and one versioned coverage gap. See [the draft relationship and coverage policy](docs/relationship-policy.md).

@@ -82,7 +82,7 @@ These low-fidelity wireframes define layout and behaviour before visual implemen
 ```text
 ┌──────────────────┬───────────────────────────────────────────────────────────┐
 │ My review work   │ UN-C03 · Clinician sees time-critical alert              │
-│ User needs  4    │ AI-derived · source-context-v1 / user-needs-v1            │ [1]
+│ User needs  4    │ AI-derived · source-context-v3 / user-needs-v2            │ [1]
 │ Requirements 0   │ Statement                                                 │
 │ Impacts     7    │ As a reviewing clinician, I need...                       │
 │ Baselines   1    │                                                           │
@@ -154,4 +154,3 @@ These low-fidelity wireframes define layout and behaviour before visual implemen
 
 1. Baseline approval remains a separate authorized decision after item review.
 2. Empty integration fields make the prototype boundary visible instead of fabricating records.
-

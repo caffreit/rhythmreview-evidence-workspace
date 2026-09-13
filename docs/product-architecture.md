@@ -161,14 +161,14 @@ Collect approved changes, run coherence and readiness checks, freeze a baseline,
 
 BlueBridge calls OpenRouter through its OpenAI-compatible API, without a provider-neutral application layer. `OPENROUTER_API_KEY` is an environment secret. The default analysis model is `openai/gpt-5.6-luna` with medium reasoning, and semantic retrieval uses `openai/text-embedding-3-small`. The model remains configurable for testing. Each policy has a stable name, explicit version and strict structured-output schema.
 
-1. `source-context-v1` extracts facts and cited contradictions, ambiguities, missing decisions and scope questions.
-2. `user-needs-v1` generates cited user-need candidates after the context gate passes.
-3. `requirements-v1` derives product, system and subsystem requirements from accepted user needs, source content and recorded answers.
-4. `impact-v2` classifies bounded candidates across hierarchy, functional overlap, interfaces and data flow, shared risk or controls, verification coverage, conflicting constraints, collection membership and release coupling.
+1. `source-context-v3` records cited contradictions, ambiguities, missing decisions and scope questions while suppressing choices already resolved for the current release. Required questions block generation; advisory questions remain visible downstream.
+2. `user-needs-v2` generates solution-independent candidates with typed source-span or clarification-answer provenance after the context gate passes.
+3. `requirements-v2` derives atomic product, system and subsystem requirements from accepted user needs. Resolved values and limits appear directly in each requirement.
+4. `impact-v6` classifies every bounded candidate with controlled categories and type-appropriate actions across hierarchy, functional overlap, interfaces and data flow, shared risk or controls, verification coverage, conflicting constraints, collection membership and release coupling.
 
 The impact engine combines deterministic graph traversal, hierarchy and coverage rules, collection membership, baseline and release usage, and semantic retrieval. The model evaluates the bounded set. Every suggestion includes target, category, action, rationale and citations. Accepting a suggestion creates controlled work; it never changes evidence or a trace link silently.
 
-Analysis runs start when a candidate enters review and restart after material content, relationship or collection changes. They do not run after every keystroke. A failed live run preserves the prior controlled state. The last successful structured run may be replayed only when the interface labels it as saved output.
+Analysis runs start when a candidate enters review and restart after material content, relationship or collection changes. They do not run after every keystroke. A failed live run preserves the prior controlled state and creates no AI-derived work. Replay requires a separate user action and the interface labels it as saved output.
 
 ## Capability boundaries
 
