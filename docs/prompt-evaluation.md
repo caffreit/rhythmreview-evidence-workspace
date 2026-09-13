@@ -2,12 +2,17 @@
 
 Evaluation date: 2026-09-12  
 Configuration: `openai/gpt-5.6-luna`, medium reasoning, `openai/text-embedding-3-small`  
-Scope: fictional seed data only  
-Decision: approved for this prototype
+Scope: fictional seed data only, before the WP-10A curated relationship graph
+
+Historical decision: approved for the pre-WP-10A prototype
+
+Current WP-10A decision: pending a newly authorized paid corpus run
 
 This is a prototype prompt evaluation. It is not regulatory validation, production model approval, or evidence of compliance.
 
-## Decision against the gates
+The results below are historical and do not support a live-quality claim for the curated 122-link graph. WP-10A acceptance requires a fresh three-scenario run against that graph. Until it is explicitly authorized and passes every locked threshold, the current quality claim remains withdrawn.
+
+## Historical decision against the gates
 
 | Gate | Result | Decision |
 | --- | ---: | --- |
@@ -79,7 +84,7 @@ All three fictional sources completed context, user-need, and requirement genera
 
 `SRC-002` did not reopen the explicit network requirement or current joint ownership. `SRC-003` did not reopen the explicit email-alert exclusion. Human review found no unsupported generated need or requirement in the accepted corpus.
 
-## Live impact corpus
+## Historical live impact corpus
 
 The final `impact-v6` evaluation classified every bounded candidate for each fictional change scenario. Recall and precision below are measured on the model output before human decisions.
 
@@ -99,4 +104,4 @@ Zero embedding tokens on the last run are valid: all required evidence-version a
 - `impact-v3` through `impact-v5` exposed incomplete classification and low precision. `impact-v6` requires one controlled classification for every bounded candidate and restricts actions by candidate type.
 - Two `impact-v6` attempts failed explicitly when the provider returned an action that was invalid for the selected candidate type. They created no suggestions and did not load replay data. A per-candidate structured schema corrected the failure; the next explicit retry completed.
 
-The final completed runs had no structural failures, invented identifiers, unsupported accepted claims, vague unresolved thresholds, or invalid citations. The recorded results therefore approve this prompt set for the prototype only.
+Those completed runs had no structural failures, invented identifiers, unsupported accepted claims, vague unresolved thresholds, or invalid citations. They approved the pre-WP-10A prompt set for the prototype only; they do not approve the current curated graph.

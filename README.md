@@ -52,6 +52,7 @@ npx tsc --noEmit
 npm run lint
 npm run verify:demo
 npm run verify:source
+npm run verify:traceability
 npm run build
 ```
 
@@ -59,11 +60,13 @@ npm run build
 
 `verify:source` checks the source-to-baseline workflow against a server started without an available OpenRouter key. It proves that a failed live run creates no replay records, then completes the same path through explicitly selected replay output. Keep the key unavailable to that server process for this check; local environment files may otherwise take precedence over a shell override.
 
+`verify:traceability` exercises the controlled relationship lifecycle. It proves deterministic projection, revision-bound QA authority, close-without-baseline, stale-baseline conflict handling, and byte-for-byte preservation of the prior relationship rows, then resets the workspace.
+
 With the local server running and `.env.local` configured, run `npm run verify:live` for the opt-in OpenRouter smoke test. This command makes paid external calls with fictional data and is never part of the ordinary test suite.
 
 ## Regenerate controlled data
 
-Run `npm run seed:generate` after you edit `scripts/generate-seed.mjs`. The generator must report 72 evidence items, 118 relationships, 10 documents, and 3 scenarios.
+Run `npm run seed:generate` after you edit `scripts/generate-seed.mjs`. The generator must report 72 evidence items, 122 relationships, 10 documents, and 3 scenarios.
 
 After you change `db/schema.ts`, run both commands:
 
@@ -82,4 +85,4 @@ See [the demo charter](docs/demo-charter.md), [the evaluation protocol](docs/eva
 
 Current delivery status and completion gates are in [the delivery plan](docs/delivery-plan.md).
 
-Controlled traceability work is in progress. The Matrix and Coverage and gaps pages apply a baseline-scoped draft relationship policy to exact evidence versions. The current `RR-1.0` fixture has 118 policy-conforming links and one versioned coverage gap. See [the draft relationship and coverage policy](docs/relationship-policy.md).
+Controlled traceability authoring is implemented under `relationship-policy-v1.0`. Matrix, Coverage, candidate validation, and approval share one deterministic projection. The curated `RR-1.0` fixture has 122 policy-conforming links and four honest versioned coverage gaps, including the intentionally open `RC-005` verification gap. The interactive graph remains WP-10B. See [the controlled prototype relationship and coverage policy](docs/relationship-policy.md).

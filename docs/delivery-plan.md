@@ -10,7 +10,8 @@ Work packages have stable IDs. A package is complete only when its completion ga
 | Work package | Status | Depends on | Outcome | Completion gate |
 | --- | --- | --- | --- | --- |
 | WP-00 Foundation and live proof | Complete | None | Versioned prompt contracts, explicit live failures, reproducible regression checks, OpenRouter smoke test, and a recorded fictional source-to-baseline run | Passed: offline checks and seed-corpus review passed; `SRC-001` reached `RR-1.1` using live runs only |
-| WP-10 Controlled traceability | In progress | WP-00 | Ratified relationship policy, controlled relationship editor, baseline-aware matrix, graph, and gap analysis | Invalid link combinations are blocked and every reported gap is traceable to a versioned rule |
+| WP-10A Controlled relationship lifecycle | Acceptance in progress | WP-00 | Ratified prototype policy, curated relationship fixture, controlled proposals, baseline-aware matrix, and gap analysis | Invalid link combinations are blocked; revision-bound QA decisions and immutable baseline outcomes pass the traceability workflow |
+| WP-10B Interactive traceability graph | Planned | WP-10A | Explorable graph with controlled, proposed, rejected, and review-only links | Graph state matches the Matrix projection for every supported change state |
 | WP-20 Risk, verification, and release readiness | Planned | WP-10 | Structured hazards, controls, residual risk, verification plans and executions, and release gates | A candidate release cannot proceed with unresolved required risk, verification, traceability, or review work |
 | WP-30 Document inputs and outputs | Planned | WP-20 | PDF and DOCX ingestion, source and controlled-document redlines, versioned templates, and package completeness | An imported document can produce reviewed evidence and a baseline-linked output package |
 | WP-40 Connected-work fixtures | Planned | WP-10 | Fixture-backed Jira mapping plus repository and CI observations | Repeated imports converge without overwriting controlled evidence or claiming external facts as BlueBridge approvals |
@@ -19,14 +20,16 @@ Work packages have stable IDs. A package is complete only when its completion ga
 
 ## Current package
 
-WP-10 now has its first reviewable slice:
+WP-10A has its implementation slice:
 
-1. `relationship-policy-v0.1` defines draft meanings and allowed endpoint types for all nine relationship types.
-2. The baseline-aware Matrix displays exact evidence versions, incoming and outgoing stored links, and rule gaps.
-3. `trace-coverage-v1` reports deterministic coverage gaps with stable rule IDs and versions.
-4. The current seed has 118 policy-conforming links and one high-severity coverage gap: `RC-005` lacks verification under `TRC-RC-002` version 1.
+1. `relationship-policy-v1.0` has `controlled_prototype` status and defines meanings and endpoint types for all nine relationship types.
+2. The numeric seed loops were replaced by 122 explicit, statement-rationalized, policy-conforming relationships.
+3. Authors can create add, retype, and retire proposals from Matrix, Coverage, or an open evidence change. QA decisions are immutable and bound to the current proposal revision.
+4. Matrix, Coverage, validation, and approval share one deterministic candidate projection. Approval preserves the prior baseline and relationship rows.
+5. `trace-coverage-v1` reports four honest gaps: `CLM-002`, `RC-001`, `RC-002`, and `RC-005`. Coverage gaps do not gate WP-10A approval; WP-20 owns that release gate.
+6. `verify:traceability` exercises the five-minute guided flow, revision invalidation, all-rejected closure, stale-baseline conflict, and workspace reset.
 
-The policy remains draft. WP-10 is not complete until QA and regulatory reviewers ratify it, link authoring rejects invalid combinations, relationship changes have a controlled review history, and the graph view is implemented. See [Draft relationship and coverage policy](relationship-policy.md).
+WP-10A has passed the full offline regression suite and desktop and 390 px browser acceptance. It remains in acceptance until the paid three-scenario corpus is explicitly authorized and rerun against the curated graph. The interactive graph is deliberately deferred to WP-10B. See [Controlled prototype relationship and coverage policy](relationship-policy.md).
 
 ## Completed foundation package
 

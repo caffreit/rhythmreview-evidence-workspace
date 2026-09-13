@@ -15,11 +15,11 @@ Open **Overview**. Say that RhythmReview is fictional and the workspace contains
 Explain the counts:
 
 - 72 evidence items belong to the active approved baseline.
-- 118 direct relationships connect those items.
+- 122 curated direct relationships connect those items.
 - 10 abbreviated document views group controlled evidence versions.
-- Six open coherence findings include three deterministic structural checks and three seeded evaluation fixtures.
+- Eight open coherence findings include five deterministic structural checks and three seeded evaluation fixtures.
 
-Do not call the six findings automated detections. Open `TRC-014` to show the calculated rule, expected state, actual state, and affected item. Select **Open RC-005 in evidence**.
+Do not call all eight findings automated detections. Open `TRC-014` to show the calculated rule, expected state, actual state, and affected item. Select **Open RC-005 in evidence**.
 
 ## Show stored relationship direction
 

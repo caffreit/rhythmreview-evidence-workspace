@@ -8,7 +8,7 @@ Test whether a structured evidence model helps a QA or regulatory reviewer ident
 
 RhythmReview is a fictional clinician-facing application. It analyses a 30-second single-lead ECG and returns Possible AF, No AF detected, or Unreadable recording. Its approved population is adults aged 22 and over. A clinician reviews every result.
 
-The baseline contains 72 evidence items, 118 relationships, and 10 generated document views. The overview reports six deliberate coherence findings. Three come from deterministic structural checks. Three remain labelled evaluation fixtures.
+The baseline contains 72 evidence items, 122 curated relationships, and 10 generated document views. The overview reports eight deliberate coherence findings. Five come from deterministic structural checks. Three remain labelled evaluation fixtures.
 
 ## Human authority
 
