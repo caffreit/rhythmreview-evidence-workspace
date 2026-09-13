@@ -2,6 +2,8 @@ import { describe,expect,it } from 'vitest';
 import { seed } from '../lib/data';
 import { EvidenceIdSchema,type EvidenceRelationship } from '../lib/domain';
 import { buildTraceabilityView,projectRelationships,validateRelationship } from '../lib/traceability';
+import { buildTraceGraphModel,traceGraphNeighborhood } from '../lib/traceability-graph';
+import type { CandidateTraceabilityView,RelationshipProposalView } from '../lib/view-models';
 
 const baseline = { id:seed.baseline.id,label:seed.baseline.label,status:seed.baseline.status };
 const evidenceId = EvidenceIdSchema.parse;
@@ -65,5 +67,47 @@ describe('baseline traceability policy',() => {
     ]});
     expect(projection.valid).toBe(false);
     expect(projection.deltas).toEqual([expect.objectContaining({ proposalId:'P-NOOP',error:'A retype must change the relationship type.' })]);
+  });
+
+  it('keeps approved and candidate graph links in exact parity with their Matrix projections',() => {
+    const base = buildTraceabilityView({ baseline,evidence:seed.evidence,relationships:seed.relationships });
+    const source = seed.evidence.find((item) => item.id === 'IU-001');
+    const target = seed.evidence.find((item) => item.id === 'LBL-004');
+    const rejectedSource = seed.evidence.find((item) => item.id === 'CLM-002');
+    const retired = seed.relationships.find((relationship) => relationship.sourceId === 'CLM-001' && relationship.type === 'DISCLOSED_IN');
+    const retyped = seed.relationships.find((relationship) => relationship.sourceId === 'DES-007' && relationship.targetId === 'REQ-004' && relationship.type === 'MAY_AFFECT');
+    expect(source).toBeDefined(); expect(target).toBeDefined(); expect(rejectedSource).toBeDefined(); expect(retired).toBeDefined(); expect(retyped).toBeDefined();
+    if (!source || !target || !rejectedSource || !retired || !retyped) return;
+    const retiredSource = seed.evidence.find((item) => item.id === retired.sourceId);
+    const retiredTarget = seed.evidence.find((item) => item.id === retired.targetId);
+    const retypedSource = seed.evidence.find((item) => item.id === retyped.sourceId);
+    const retypedTarget = seed.evidence.find((item) => item.id === retyped.targetId);
+    expect(retiredSource).toBeDefined(); expect(retiredTarget).toBeDefined(); expect(retypedSource).toBeDefined(); expect(retypedTarget).toBeDefined();
+    if (!retiredSource || !retiredTarget || !retypedSource || !retypedTarget) return;
+
+    const proposals:RelationshipProposalView[] = [
+      { id:'P-GRAPH-ADD',changeId:'CHG-GRAPH',analysisRunId:null,baseBaselineId:baseline.id,operation:'add',baseRelationshipId:null,sourceId:source.id,targetId:target.id,sourceVersionId:source.versionId,targetVersionId:target.versionId,baseType:null,proposedType:'DISCLOSED_IN',revision:1,status:'proposed',createdBy:'Alex Morgan · Author',rationale:'The intended use limitation must be disclosed in the controlled use-limitation label.',createdAt:'2026-09-13T12:00:00.000Z',updatedBy:null,updateReason:null,updatedAt:null,decision:null,effectiveType:'DISCLOSED_IN' },
+      { id:'P-GRAPH-RETYPE',changeId:'CHG-GRAPH',analysisRunId:null,baseBaselineId:baseline.id,operation:'retype',baseRelationshipId:retyped.id,sourceId:retypedSource.id,targetId:retypedTarget.id,sourceVersionId:retypedSource.versionId,targetVersionId:retypedTarget.versionId,baseType:retyped.type,proposedType:'MAY_AFFECT',revision:1,status:'proposed',createdBy:'Alex Morgan · Author',rationale:'QA selected the direct component-to-requirement meaning.',createdAt:'2026-09-13T12:00:30.000Z',updatedBy:null,updateReason:null,updatedAt:null,decision:{ decision:'edited',editedType:'IMPLEMENTS',reason:'The statements support a direct implementation link.',actor:'Jamie Chen · QA reviewer',createdAt:'2026-09-13T12:00:45.000Z',proposalRevision:1 },effectiveType:'IMPLEMENTS' },
+      { id:'P-GRAPH-REJECTED',changeId:'CHG-GRAPH',analysisRunId:null,baseBaselineId:baseline.id,operation:'add',baseRelationshipId:null,sourceId:rejectedSource.id,targetId:target.id,sourceVersionId:rejectedSource.versionId,targetVersionId:target.versionId,baseType:null,proposedType:'DISCLOSED_IN',revision:1,status:'proposed',createdBy:'Alex Morgan · Author',rationale:'This proposed disclosure was rejected during QA review.',createdAt:'2026-09-13T12:01:00.000Z',updatedBy:null,updateReason:null,updatedAt:null,decision:{ decision:'rejected',editedType:null,reason:'The label does not contain this claim.',actor:'Jamie Chen · QA reviewer',createdAt:'2026-09-13T12:02:00.000Z',proposalRevision:1 },effectiveType:'DISCLOSED_IN' },
+      { id:'P-GRAPH-RETIRE',changeId:'CHG-GRAPH',analysisRunId:null,baseBaselineId:baseline.id,operation:'retire',baseRelationshipId:retired.id,sourceId:retiredSource.id,targetId:retiredTarget.id,sourceVersionId:retiredSource.versionId,targetVersionId:retiredTarget.versionId,baseType:retired.type,proposedType:null,revision:1,status:'proposed',createdBy:'Alex Morgan · Author',rationale:'The controlled disclosure moved to another label.',createdAt:'2026-09-13T12:03:00.000Z',updatedBy:null,updateReason:null,updatedAt:null,decision:{ decision:'accepted',editedType:null,reason:'The prior disclosure is obsolete.',actor:'Jamie Chen · QA reviewer',createdAt:'2026-09-13T12:04:00.000Z',proposalRevision:1 },effectiveType:retired.type },
+    ];
+    const projectedRelationships = projectRelationships({ baselineId:'CAND-CHG-GRAPH-1',evidence:seed.evidence,relationships:seed.relationships,proposals:proposals.map((proposal) => ({ id:proposal.id,operation:proposal.operation,baseRelationshipId:proposal.baseRelationshipId,sourceId:proposal.sourceId,targetId:proposal.targetId,proposedType:proposal.proposedType,decision:proposal.decision?.decision ?? 'pending',editedType:proposal.decision?.editedType ?? null,status:proposal.status,rationale:proposal.rationale })) });
+    const projected = buildTraceabilityView({ baseline:{ id:'CAND-CHG-GRAPH-1',label:'Candidate revision 1',status:'candidate' },evidence:seed.evidence,relationships:projectedRelationships.relationships });
+    const candidate:CandidateTraceabilityView = { base,projected,deltas:projectedRelationships.deltas,valid:projectedRelationships.valid };
+
+    const approvedGraph = buildTraceGraphModel({ approved:base,candidate,proposals,projection:'approved' });
+    expect(approvedGraph.projectedLinkIds).toEqual(base.links.map((link) => link.id).sort());
+    expect(approvedGraph.edges.every((edge) => edge.kind === 'projection' && edge.countedInProjection)).toBe(true);
+
+    const candidateGraph = buildTraceGraphModel({ approved:base,candidate,proposals,projection:'candidate' });
+    expect(candidateGraph.projectedLinkIds).toEqual(projected.links.map((link) => link.id).sort());
+    expect([...candidateGraph.gapIdsByItem]).toEqual(projected.rows.map((row) => [row.item.id,row.gapIds]));
+    expect(candidateGraph.edges.filter((edge) => edge.countedInProjection).map((edge) => edge.id).sort()).toEqual(candidateGraph.projectedLinkIds);
+    expect(candidateGraph.edges).toContainEqual(expect.objectContaining({ proposalId:'P-GRAPH-ADD',workflowState:'proposed',countedInProjection:true }));
+    expect(candidateGraph.edges).toContainEqual(expect.objectContaining({ proposalId:'P-GRAPH-RETYPE',operation:'retype',type:'IMPLEMENTS',workflowState:'proposed',countedInProjection:true }));
+    expect(candidateGraph.edges).toContainEqual(expect.objectContaining({ proposalId:'P-GRAPH-REJECTED',workflowState:'rejected',countedInProjection:false }));
+    expect(candidateGraph.edges).toContainEqual(expect.objectContaining({ proposalId:'P-GRAPH-RETIRE',operation:'retire',countedInProjection:false }));
+    expect(candidateGraph.edges.some((edge) => edge.meaning === 'review_only')).toBe(true);
+    expect(traceGraphNeighborhood(candidateGraph,rejectedSource.id).outgoing.some((edge) => edge.workflowState === 'rejected')).toBe(true);
   });
 });

@@ -16,6 +16,7 @@ import { CoherenceWorkspace } from './coherence-workspace';
 import { GuidedWalkthrough, type WalkthroughStep, type WalkthroughView } from './guided-walkthrough';
 import { RecentChanges } from './recent-changes';
 import { ConceptualPanel, ConnectedSystemsPanel, ReleaseWorkspace, SourceWorkspace } from './source-workspace';
+import { TraceabilityGraph } from './traceability-graph';
 import { TraceabilityWorkspace } from './traceability-workspace';
 
 type View = WalkthroughView;
@@ -329,9 +330,19 @@ function EvaluationPanel({ scenarios }:{ scenarios:ScenarioView[] }) {
 }
 
 export default function Workspace() {
-  const [view,setView] = useState<View>('overview'); const [actor,setActor] = useState<Actor>('author'); const [overview,setOverview] = useState<OverviewView|null>(null); const [sources,setSources] = useState<SourceListResponse|null>(null); const [evidence,setEvidence] = useState<EvidenceItem[]>([]); const [documents,setDocuments] = useState<DocumentView[]>([]); const [traceability,setTraceability] = useState<TraceabilityView|null>(null); const [recentChanges,setRecentChanges] = useState<ChangeSummaryView[]>([]); const [selectedEvidence,setSelectedEvidence] = useState<string|null>(null); const [selectedScenario,setSelectedScenario] = useState<ScenarioView|null>(null); const [selectedChangeId,setSelectedChangeId] = useState<string|null>(null); const [walkthroughChange,setWalkthroughChange] = useState<ChangeView|null>(null); const [auditInspected,setAuditInspected] = useState(false); const [baselineCompared,setBaselineCompared] = useState(false); const [coherenceBusy,setCoherenceBusy] = useState(false); const [error,setError] = useState<string|null>(null); const [refreshToken,setRefreshToken] = useState('initial');
+  const [view,setView] = useState<View>('overview'); const [actor,setActor] = useState<Actor>('author'); const [overview,setOverview] = useState<OverviewView|null>(null); const [sources,setSources] = useState<SourceListResponse|null>(null); const [evidence,setEvidence] = useState<EvidenceItem[]>([]); const [documents,setDocuments] = useState<DocumentView[]>([]); const [traceability,setTraceability] = useState<TraceabilityView|null>(null); const [recentChanges,setRecentChanges] = useState<ChangeSummaryView[]>([]); const [selectedEvidence,setSelectedEvidence] = useState<string|null>(null); const [selectedScenario,setSelectedScenario] = useState<ScenarioView|null>(null); const [selectedChangeId,setSelectedChangeId] = useState<string|null>(null); const [walkthroughChange,setWalkthroughChange] = useState<ChangeView|null>(null); const [graphCandidate,setGraphCandidate] = useState<{ key:string;value:CandidateTraceabilityView }|null>(null); const [auditInspected,setAuditInspected] = useState(false); const [baselineCompared,setBaselineCompared] = useState(false); const [coherenceBusy,setCoherenceBusy] = useState(false); const [error,setError] = useState<string|null>(null); const [refreshToken,setRefreshToken] = useState('initial');
   const load = useCallback(async () => { try { const [overviewResult,sourceResult,evidenceResult,documentResult,traceabilityResult,changeResult] = await Promise.all([api('/api/overview',OverviewSchema),api('/api/sources',SourceListResponseSchema),api('/api/evidence',EvidenceListResponseSchema),api('/api/documents',DocumentListResponseSchema),api('/api/traceability',TraceabilitySchema),api('/api/changes?limit=20',ChangeListResponseSchema)]);setOverview(overviewResult);setSources(sourceResult);setEvidence(evidenceResult.evidence);setDocuments(documentResult.documents);setTraceability(traceabilityResult);setRecentChanges(changeResult.changes);setRefreshToken(crypto.randomUUID());setError(null); } catch (reason:unknown) { setError(reason instanceof Error ? reason.message : 'Could not load the workspace.'); } },[]);
   useEffect(() => { const timer = window.setTimeout(() => { void load(); },0); return () => window.clearTimeout(timer); },[load]);
+  const graphProjectionKey = walkthroughChange && walkthroughChange.relationshipProposals.length > 0 ? `${walkthroughChange.id}:${walkthroughChange.revision}` : null;
+  useEffect(() => {
+    if (!graphProjectionKey || !walkthroughChange) return;
+    let current = true;
+    void api(`/api/changes/${walkthroughChange.id}/traceability`,CandidateTraceabilitySchema)
+      .then((value) => { if (current) setGraphCandidate({ key:graphProjectionKey,value }); })
+      .catch(() => { if (current) setGraphCandidate(null); });
+    return () => { current = false; };
+  },[graphProjectionKey,walkthroughChange]);
+  const currentGraphCandidate = graphCandidate?.key === graphProjectionKey ? graphCandidate.value : null;
   const navigate = useCallback((next:View) => { setView(next);window.scrollTo({ top:0,behavior:'smooth' }); },[]);
   const openIssue = useCallback((itemId:string) => { setSelectedEvidence(itemId);navigate('evidence'); },[navigate]);
   const openChange = useCallback((summary:ChangeSummaryView|null) => { setSelectedChangeId(summary?.id ?? null);setSelectedScenario(summary?.scenarioId ? overview?.scenarios.find((scenario) => scenario.id === summary.scenarioId) ?? null : null); },[overview]);
@@ -356,7 +367,7 @@ export default function Workspace() {
     { label:'Inputs',items:[{ id:'sources',label:'Source inbox' },{ id:'connected',label:'Connected systems' }] },
     { label:'Work',items:[{ id:'review',label:'Review centre' },{ id:'changes',label:'Changes' }] },
     { label:'Design controls',items:[{ id:'product-definition',label:'Product definition' },{ id:'requirements',label:'Requirements' },{ id:'components',label:'Components' },{ id:'risk',label:'Risk' },{ id:'verification',label:'Verification' },{ id:'clinical',label:'Clinical & usability' }] },
-    { label:'Traceability',items:[{ id:'evidence',label:'Evidence browser' },{ id:'trace-matrix',label:'Matrix' },{ id:'trace-graph',label:'Graph',conceptual:true },{ id:'coverage',label:'Coverage & gaps' }] },
+    { label:'Traceability',items:[{ id:'evidence',label:'Evidence browser' },{ id:'trace-matrix',label:'Matrix' },{ id:'trace-graph',label:'Graph' },{ id:'coverage',label:'Coverage & gaps' }] },
     { label:'Controlled outputs',items:[{ id:'baselines',label:'Baselines' },{ id:'releases',label:'Releases' },{ id:'documents',label:'Documents' },{ id:'design-reviews',label:'Design reviews',conceptual:true }] },
     { label:'Administration',items:[{ id:'integration-setup',label:'Integration setup',conceptual:true },{ id:'analysis-policies',label:'Analysis policies' },{ id:'templates',label:'Templates',conceptual:true },{ id:'people',label:'People & roles',conceptual:true },{ id:'evaluation',label:'Internal evaluation' }] },
   ];
@@ -430,7 +441,7 @@ export default function Workspace() {
       {view === 'changes' && <ChangePanel overview={overview} evidence={evidence} recentChanges={recentChanges} openChangeId={selectedChangeId} actor={actor} selectedScenario={selectedScenario} setSelectedScenario={setSelectedScenario} onOpenChange={openChange} onWorkspaceRefresh={load} onOpenEvidence={openIssue} onChangeState={onChangeState} onResetWorkspace={resetWorkspace} onAuditInspect={onAuditInspect} />}
       {view === 'analysis-policies' && <ConceptualPanel title="Analysis policies" description="The implemented policies and contracts used by each recorded processing run." items={['source-context-v3: required and advisory questions with exact source spans and explicit-decision suppression','user-needs-v2: solution-independent needs with typed provenance','requirements-v2: atomic shall statements with explicit values and accepted parent needs','impact-v6: exhaustive bounded semantic classification with controlled categories and enforceable type-appropriate actions']} />}
       {view === 'trace-matrix' && traceability && <TraceabilityWorkspace mode="matrix" traceability={traceability} evidence={evidence} actor={actor} onOpenEvidence={openIssue} onCreateRelationship={createRelationshipChange} />}
-      {view === 'trace-graph' && <ConceptualPanel title="Traceability graph" description="An explorable relationship graph belongs here." items={['Typed direct links','Semantic candidates kept visually distinct','Collection overlays']} />}
+      {view === 'trace-graph' && traceability && <TraceabilityGraph traceability={traceability} candidate={currentGraphCandidate} change={walkthroughChange} selectedId={selectedEvidence} onSelect={setSelectedEvidence} onOpenEvidence={openIssue} />}
       {view === 'coverage' && traceability && <TraceabilityWorkspace mode="coverage" traceability={traceability} evidence={evidence} actor={actor} onOpenEvidence={openIssue} onCreateRelationship={createRelationshipChange} />}
       {view === 'design-reviews' && <ConceptualPanel title="Design reviews" description="Formal review records and deliverable gates are planned here." items={['Review scope and participants','Findings and dispositions','Immutable review record']} />}
       {view === 'integration-setup' && <ConceptualPanel title="Integration setup" description="Credentials and external-field mappings are deliberately separate from operational connection status." items={['Repository credentials and mappings','Jira project and hierarchy mapping','CI observation configuration']} />}
