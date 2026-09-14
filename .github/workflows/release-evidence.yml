@@ -32,9 +32,13 @@ jobs:
             npx tsc --noEmit
             npm run lint
             npm run build
-            npm run dev &
+            setsid npm run dev > reports/dev-server.txt 2>&1 &
             server_pid=$!
-            trap 'kill "$server_pid"' EXIT
+            cleanup_server() {
+              kill -- "-$server_pid" 2>/dev/null || true
+              wait "$server_pid" 2>/dev/null || true
+            }
+            trap cleanup_server EXIT
             for attempt in $(seq 1 60); do
               curl --fail --silent http://localhost:3000/ >/dev/null && break
               sleep 1
@@ -46,6 +50,8 @@ jobs:
             npm run verify:traceability
             npm run verify:readiness
             npm run verify:final-release
+            cleanup_server
+            trap - EXIT
           } 2>&1 | tee reports/offline-suite.txt
           CI_STARTED_AT="$CI_STARTED_AT" npm run ci:evidence -- reports/offline-suite.txt
       - name: Upload release evidence
