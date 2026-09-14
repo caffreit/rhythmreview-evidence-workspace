@@ -85,7 +85,7 @@ addGroup('RC', 'risk_control', 'Risk management', [
   { title: 'Specificity acceptance criterion', statement: 'Release testing shall demonstrate specificity at or above the approved threshold for the intended population.', criticality: 'high' },
   { title: 'Visible analysis timer', statement: 'The interface shall show analysis progress and a controlled timeout message before the workflow deadline.', criticality: 'high' },
   { title: 'Signal quality rejection', statement: 'The quality gate shall route low-quality recordings to Unreadable before rhythm classification.', criticality: 'high' },
-  { title: 'Population restriction', statement: 'Labelling and interface controls shall restrict use to adults aged 22 and over.', criticality: 'high', flags: ['missing_verification_link'] },
+  { title: 'Population restriction', statement: 'Labelling and interface controls shall restrict use to adults aged 22 and over.', criticality: 'high' },
   { title: 'Decision-support disclaimer', statement: 'Every result view shall state that the output requires clinician interpretation and is not a diagnosis.', criticality: 'high' },
   { title: 'Encryption and access control', statement: 'The service shall combine encrypted transport, least-privilege roles, and access logging.', criticality: 'high' },
   { title: 'Controlled retry path', statement: 'Service failures shall produce a safe state with no clinical classification and an explicit retry option.', criticality: 'medium' },

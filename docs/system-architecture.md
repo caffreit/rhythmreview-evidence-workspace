@@ -78,13 +78,13 @@ flowchart TB
 
 ### Client
 
-`app/page.tsx` mounts one client-side workspace. `components/workspace.tsx` owns navigation, evidence and change views, API calls, role simulation, and the guided demonstration. `components/source-workspace.tsx` owns source intake, candidate review, impact review, baseline approval, and release views.
+`app/page.tsx` mounts one client-side workspace. `components/workspace.tsx` owns navigation, evidence and change views, API calls, role simulation, and the guided demonstration. `components/source-workspace.tsx` owns source intake, candidate review, impact review, and baseline approval. Dedicated verification and release components own plan coverage, executions, readiness results, and the explicit release transition.
 
 The client validates every successful response with Zod before rendering it. The role selector changes the actor value sent to the server. It does not authenticate a person.
 
 ### Server
 
-The 30 route handlers translate HTTP requests into repository calls. Zod schemas validate request bodies at the server boundary. `lib/repository.ts` implements the baseline, change, document, evaluation, audit, and coherence workflows. `lib/source-repository.ts` implements source revisions, clarification, candidate generation, source impact, and source-derived baseline approval.
+The route handlers translate HTTP requests into repository calls. Zod schemas validate request bodies at the server boundary. `lib/repository.ts` implements baseline, change, document, evaluation, audit, coherence, and verification-package workflows. `lib/source-repository.ts` implements source revisions, clarification, candidate generation, source impact, and source-derived baseline approval. `lib/verification-repository.ts` implements explicit releases, executions, QA decisions, readiness runs, and the frozen readiness transition.
 
 The repository modules contain SQL and workflow rules together. There is no separate service layer for most commands. This keeps the prototype direct, but it will become hard to test and evolve when integrations and permissions expand.
 
@@ -128,7 +128,8 @@ sequenceDiagram
     Q->>B: Decide each impact suggestion
     Q->>B: Approve candidate baseline
     B->>D: Copy baseline, add approved versions and links
-    B->>D: Supersede old baseline and create planned release
+    B->>D: Supersede old baseline
+    A->>D: Explicitly create planned release for approved baseline
 ```
 
 Required questions block generation only while they remain open. The author can defer one with a reason. Advisory questions do not block generation and remain attached to downstream candidates.

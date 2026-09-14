@@ -172,7 +172,7 @@ Analysis runs start when a candidate enters review and restart after material co
 
 ## Capability boundaries
 
-The first functional slice implements fictional source ingestion, text and Markdown import, clarification, sequential user-need and requirement review, source provenance, impact analysis, candidate-baseline approval and a release record.
+The first functional slice implements fictional source ingestion, text and Markdown import, clarification, sequential user-need and requirement review, source provenance, impact analysis, and candidate-baseline approval. Release creation is explicit and separate. WP-20A adds controlled verification packages, immutable manual execution records, QA execution review, and `release-readiness-v1` evaluation.
 
 The interface may show conceptual pages for repository observations, risk, verification, clinical and usability, design reviews, integration setup, policy management and role administration. Each conceptual page must say "Conceptual — not implemented".
 

@@ -76,9 +76,10 @@ try {
   assert.equal(workspace.candidateBaselineReady,true);
 
   workspace = await request('/api/source-baselines/approve',{ method:'POST',body:JSON.stringify({ actor:'Jamie Chen · QA reviewer',confirmation:true }) });
-  assert.equal(workspace.release.status,'planned');
+  assert.equal(Object.hasOwn(workspace,'release'),false);
+  assert.equal((await request('/api/releases')).releases.length,0,'Baseline approval must not create a release implicitly.');
   assert.equal((await request('/api/overview')).baseline.label,'RR-1.1');
-  console.log(JSON.stringify({ verified:true,sourceId:'SRC-001',baseline:'RR-1.1',releaseId:workspace.release.id },null,2));
+  console.log(JSON.stringify({ verified:true,sourceId:'SRC-001',baseline:'RR-1.1',releaseCreation:'explicit_on_releases_page' },null,2));
 } finally {
   await request('/api/reset',{ method:'POST' });
 }

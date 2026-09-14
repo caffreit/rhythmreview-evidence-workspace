@@ -7,7 +7,7 @@ import {
   RelationshipDecisionSchema as RelationshipDecisionValueSchema, RelationshipOperationSchema as RelationshipProposalOperationSchema,
   RelationshipProposalDecisionInputSchema, RelationshipProposalStatusSchema as RelationshipProposalLifecycleSchema, RelationshipSchema,
   RelationshipTypeSchema as RelationshipTypeValueSchema, ReviewDecisionInputSchema, UpdateRelationshipProposalInputSchema,
-  RunCoherenceCheckInputSchema, ScenarioIdSchema, type CreateChangeInput, type EvidenceId,
+  RunCoherenceCheckInputSchema, ScenarioIdSchema, UpdateVerificationPlanCandidateInputSchema, type CreateChangeInput, type EvidenceId,
   type EvidenceItem, type EvidenceRelationship, type GuidedReviewCompletionInput, type ImpactSuggestion, type RelationshipProposalDraft, type ReviewDecisionInput, type UpdateDraftInput,
 } from './domain';
 import { runCoherenceChecks } from './coherence';
@@ -15,6 +15,7 @@ import { auditDetails } from './audit';
 import { WorkflowConflictError } from './http';
 import { canEditDraft, nextChangeStatus } from './change-workflow';
 import { buildTraceabilityView, projectRelationships, RELATIONSHIP_POLICY, validateRelationship, type ProjectedRelationshipProposal } from './traceability';
+import { VerificationPlanCandidateSchema, type VerificationPlanCandidate } from './verification';
 
 const StringArraySchema = z.array(z.string());
 const StoredMetricsSchema = z.object({
@@ -28,7 +29,7 @@ function now(): string { return new Date().toISOString(); }
 function makeId(prefix:string): string { return `${prefix}-${crypto.randomUUID().slice(0,8).toUpperCase()}`; }
 
 type AuditStatementArgs = {
-  aggregateType:'change'|'baseline'; aggregateId:string; entityType:string; entityId:string; action:string; actor:string;
+  aggregateType:'change'|'baseline'|'release'; aggregateId:string; entityType:string; entityId:string; action:string; actor:string;
   details:ReturnType<typeof auditDetails>; createdAt:string;
 };
 
@@ -264,12 +265,74 @@ function relationshipProposalInsert(db:D1Database,proposal:ResolvedRelationshipP
     .bind(proposal.id,proposal.changeId,proposal.analysisRunId,proposal.baseBaselineId,proposal.operation,proposal.baseRelationshipId,proposal.sourceId,proposal.targetId,proposal.sourceVersionId,proposal.targetVersionId,proposal.baseType,proposal.proposedType,proposal.revision,proposal.status,proposal.createdBy,proposal.rationale,proposal.createdAt);
 }
 
+function candidatePlanStatement(plan:Pick<VerificationPlanCandidate,'objective'|'acceptanceCriteria'>):string {
+  return `${plan.objective} Acceptance criteria: ${plan.acceptanceCriteria}`;
+}
+
+function verificationCandidateEvidence(change:{ verificationPlans:VerificationPlanCandidate[];relationshipProposals:Array<{ id:string;status:string;decision:{ decision:string }|null }> },baseEvidence:EvidenceItem[]):EvidenceItem[] {
+  const proposalById = new Map(change.relationshipProposals.map((proposal) => [proposal.id,proposal]));
+  const controlById = new Map(baseEvidence.map((item) => [item.id,item]));
+  return change.verificationPlans.flatMap((plan) => {
+    const proposal = proposalById.get(plan.relationshipProposalId);
+    if (plan.status !== 'proposed' || proposal?.status !== 'proposed' || proposal.decision?.decision === 'rejected') return [];
+    const control = controlById.get(plan.targetRiskControlId);
+    if (!control) return [];
+    return [EvidenceItemSchema.parse({
+      id:plan.proposedItemId,versionId:`${plan.proposedItemId}-candidate-r${plan.revision}`,version:'1.0',type:'test',title:plan.title,
+      statement:candidatePlanStatement(plan),rationale:plan.rationale,owner:'Verification',criticality:control.criticality,jurisdictions:control.jurisdictions,
+      status:'proposed',sources:[`Verification package ${plan.changeId}`],flags:['fictional_manual_plan'],approvedBy:null,approvedAt:null,
+    })];
+  });
+}
+
+async function createVerificationPackage(db:D1Database,input:Extract<CreateChangeInput,{ kind:'verification_package' }>,activeBaseline:{ id:string },baseEvidence:EvidenceItem[]) {
+  const existing = await db.prepare("SELECT id FROM change_requests WHERE subject_kind='verification_package' AND status NOT IN ('approved','closed') LIMIT 1").first<{ id:string }>();
+  if (existing) throw new WorkflowConflictError(`Verification package ${existing.id} is already open.`);
+  const byId = new Map(baseEvidence.map((item) => [item.id,item]));
+  const controls = ['RC-001','RC-002','RC-005'].map((id) => byId.get(EvidenceIdSchema.parse(id)));
+  if (controls.some((item) => item?.type !== 'risk_control')) throw new WorkflowConflictError('The guided risk controls are not available in the active baseline.');
+  const relationships = await listRelationshipsForBaseline(db,activeBaseline.id);
+  if (controls.some((control) => control && relationships.some((relation) => relation.type === 'VERIFIES' && relation.targetId === control.id))) throw new WorkflowConflictError('One or more guided risk-control verification gaps are already closed.');
+
+  const reserved = await db.prepare("SELECT id FROM evidence_items WHERE id LIKE 'TEST-%' UNION SELECT proposed_item_id AS id FROM verification_plan_candidates WHERE proposed_item_id LIKE 'TEST-%'").all<{ id:string }>();
+  const maximum = reserved.results.map((row) => Number(row.id.slice(5))).filter(Number.isFinite).reduce((value,current) => Math.max(value,current),0);
+  const orderedPlans = [...input.plans].sort((left,right) => left.targetRiskControlId.localeCompare(right.targetRiskControlId));
+  const id = makeId('CHG'); const createdAt = now();
+  const statements:D1PreparedStatement[] = [
+    db.prepare('INSERT INTO change_requests (id,scenario_id,anchor_item_id,subject_kind,base_baseline_id,title,rationale,proposed_text,status,created_by,created_at,updated_at,revision,current_analysis_run_id) VALUES (?,NULL,?,?,?,?,?,NULL,?,?,?,?,1,NULL)')
+      .bind(id,'RC-001','verification_package',activeBaseline.id,input.title,input.rationale,'updates_proposed',input.createdBy,createdAt,createdAt),
+    auditStatement(db,{ aggregateType:'change',aggregateId:id,entityType:'change',entityId:id,action:'verification_package_created',actor:input.createdBy,createdAt,details:auditDetails({ changes:[{ field:'status',oldValue:null,newValue:'updates_proposed' }],references:{ baseBaselineId:activeBaseline.id,policyId:'release-readiness-v1' } }) }),
+  ];
+  for (const update of input.controlUpdates) {
+    const item = byId.get(update.itemId);
+    if (!item) throw new WorkflowConflictError(`${update.itemId} is not in the active baseline.`);
+    const updateId = makeId('UPD');
+    statements.push(db.prepare('INSERT INTO proposed_updates (id,change_id,item_id,analysis_run_id,from_version_id,to_version,original_text,proposed_text,draft_origin,created_by,created_at,status) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)')
+      .bind(updateId,id,item.id,'',item.versionId,'1.1',item.statement,update.proposedText,'author_fixture',input.createdBy,createdAt,'proposed'));
+    statements.push(auditStatement(db,{ aggregateType:'change',aggregateId:id,entityType:'proposed_update',entityId:updateId,action:'verification_control_amendment_proposed',actor:input.createdBy,createdAt,details:auditDetails({ reason:update.reason,changes:[{ field:'statement',oldValue:item.statement,newValue:update.proposedText }],references:{ itemId:item.id,baseVersionId:item.versionId } }) }));
+  }
+  for (const [index,draft] of orderedPlans.entries()) {
+    const control = byId.get(draft.targetRiskControlId);
+    if (!control) throw new WorkflowConflictError(`${draft.targetRiskControlId} is not in the active baseline.`);
+    const proposedItemId = EvidenceIdSchema.parse(`TEST-${String(maximum + index + 1).padStart(3,'0')}`);
+    const candidateId = makeId('VPC'); const proposalId = makeId('RLP');
+    statements.push(db.prepare('INSERT INTO verification_plan_candidates (id,change_id,proposed_item_id,target_risk_control_id,relationship_proposal_id,title,objective,method,acceptance_criteria,rationale,revision,status,created_by,created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)')
+      .bind(candidateId,id,proposedItemId,control.id,proposalId,draft.title,draft.objective,draft.method,draft.acceptanceCriteria,draft.rationale,1,'proposed',input.createdBy,createdAt));
+    statements.push(db.prepare('INSERT INTO relationship_proposals (id,change_id,analysis_run_id,base_baseline_id,operation,base_relationship_id,source_id,target_id,source_version_id,target_version_id,base_type,proposed_type,revision,status,created_by,rationale,created_at) VALUES (?,?,NULL,? ,\'add\',NULL,?,?,?,?,NULL,\'VERIFIES\',1,\'proposed\',?,?,?)')
+      .bind(proposalId,id,activeBaseline.id,proposedItemId,control.id,`${proposedItemId}-candidate-r1`,control.versionId,input.createdBy,draft.rationale,createdAt));
+    statements.push(auditStatement(db,{ aggregateType:'change',aggregateId:id,entityType:'verification_plan_candidate',entityId:candidateId,action:'verification_plan_proposed',actor:input.createdBy,createdAt,details:auditDetails({ reason:draft.rationale,changes:[{ field:'plan',oldValue:null,newValue:{ proposedItemId,targetRiskControlId:control.id,title:draft.title,objective:draft.objective,method:draft.method,acceptanceCriteria:draft.acceptanceCriteria } }],references:{ relationshipProposalId:proposalId,baseBaselineId:activeBaseline.id } }) }));
+  }
+  await runBatches(db,statements);
+  return getChange(db,id);
+}
+
 export async function createChange(db:D1Database,raw:unknown) {
   await ensureWorkspace(db);
   const input:CreateChangeInput = CreateChangeInputSchema.parse(raw);
   const activeBaseline = await getActiveBaseline(db);
   if (!activeBaseline) throw new Error('No approved baseline is available for this change.');
   const baseEvidence = await listEvidenceForBaseline(db,activeBaseline.id);
+  if (input.kind === 'verification_package') return createVerificationPackage(db,input,activeBaseline,baseEvidence);
   if (!baseEvidence.some((item) => item.id === input.anchorItemId)) throw new Error('The change anchor is not in the active baseline.');
   const id = makeId('CHG'); const createdAt = now();
   const status = input.kind === 'relationship' ? 'updates_proposed' : 'draft';
@@ -291,6 +354,7 @@ export async function createChange(db:D1Database,raw:unknown) {
 interface ChangeRow { id:string; scenario_id:string|null; anchor_item_id:string; subject_kind:string;base_baseline_id:string;title:string; rationale:string; proposed_text:string|null; status:string; created_by:string; created_at:string; updated_at:string; revision:number; current_analysis_run_id:string|null }
 type RelationshipProposalRow = { id:string;changeId:string;analysisRunId:string|null;baseBaselineId:string;operation:string;baseRelationshipId:string|null;sourceId:string;targetId:string;sourceVersionId:string;targetVersionId:string;baseType:string|null;proposedType:string|null;revision:number;status:string;createdBy:string;rationale:string;createdAt:string;updatedBy:string|null;updateReason:string|null;updatedAt:string|null };
 type RelationshipDecisionRow = { proposalId:string;proposalRevision:number;decision:string;editedType:string|null;reason:string;actor:string;createdAt:string };
+type VerificationPlanCandidateRow = { id:string;changeId:string;proposedItemId:string;targetRiskControlId:string;relationshipProposalId:string;title:string;objective:string;method:string;acceptanceCriteria:string;rationale:string;revision:number;status:string;createdBy:string;createdAt:string;updatedBy:string|null;updateReason:string|null;updatedAt:string|null };
 export async function getChange(db:D1Database,id:string) {
   await ensureWorkspace(db);
   const change = await db.prepare('SELECT * FROM change_requests WHERE id=?').bind(id).first<ChangeRow>();
@@ -318,6 +382,9 @@ export async function getChange(db:D1Database,id:string) {
     source_id AS sourceId,target_id AS targetId,source_version_id AS sourceVersionId,target_version_id AS targetVersionId,base_type AS baseType,proposed_type AS proposedType,
     revision,status,created_by AS createdBy,rationale,created_at AS createdAt,updated_by AS updatedBy,update_reason AS updateReason,updated_at AS updatedAt
     FROM relationship_proposals WHERE change_id=? ORDER BY created_at,id`).bind(id).all<RelationshipProposalRow>();
+  const planCandidates = await db.prepare(`SELECT id,change_id AS changeId,proposed_item_id AS proposedItemId,target_risk_control_id AS targetRiskControlId,relationship_proposal_id AS relationshipProposalId,
+    title,objective,method,acceptance_criteria AS acceptanceCriteria,rationale,revision,status,created_by AS createdBy,created_at AS createdAt,updated_by AS updatedBy,update_reason AS updateReason,updated_at AS updatedAt
+    FROM verification_plan_candidates WHERE change_id=? ORDER BY proposed_item_id`).bind(id).all<VerificationPlanCandidateRow>();
   const decisions = await db.prepare(`SELECT d.proposal_id AS proposalId,d.proposal_revision AS proposalRevision,d.decision,d.edited_type AS editedType,d.reason,d.actor,d.created_at AS createdAt
     FROM relationship_review_decisions d JOIN relationship_proposals p ON p.id=d.proposal_id WHERE p.change_id=? ORDER BY d.created_at DESC,d.id DESC`).bind(id).all<RelationshipDecisionRow>();
   const currentDecision = new Map<string,RelationshipDecisionRow>();
@@ -339,8 +406,8 @@ export async function getChange(db:D1Database,id:string) {
   const audit = await db.prepare("SELECT id,entity_type AS entityType,entity_id AS entityId,aggregate_type AS aggregateType,aggregate_id AS aggregateId,action,actor,details_json AS detailsJson,schema_version AS schemaVersion,created_at AS createdAt FROM audit_events WHERE aggregate_type='change' AND aggregate_id=? ORDER BY created_at,id").bind(id).all<{ id:string; entityType:string; entityId:string; aggregateType:string; aggregateId:string; action:string; actor:string; detailsJson:string; schemaVersion:number; createdAt:string }>();
   const coherence = await getLatestCoherenceCheck(db,{ kind:'candidate',changeId:ChangeIdSchema.parse(change.id) });
   return {
-    id:change.id,scenarioId:change.scenario_id,anchorItemId:EvidenceIdSchema.parse(change.anchor_item_id),subjectKind:z.enum(['evidence','relationship']).parse(change.subject_kind),baseBaselineId:change.base_baseline_id,title:change.title,rationale:change.rationale,proposedText:change.proposed_text,status:ChangeStatusSchema.parse(change.status),createdBy:change.created_by,createdAt:change.created_at,updatedAt:change.updated_at,revision:change.revision,
-    run,analysisHistory:history.results,suggestions,updates:updates.results,relationshipProposals,
+    id:change.id,scenarioId:change.scenario_id,anchorItemId:EvidenceIdSchema.parse(change.anchor_item_id),subjectKind:z.enum(['evidence','relationship','verification_package']).parse(change.subject_kind),baseBaselineId:change.base_baseline_id,title:change.title,rationale:change.rationale,proposedText:change.proposed_text,status:ChangeStatusSchema.parse(change.status),createdBy:change.created_by,createdAt:change.created_at,updatedAt:change.updated_at,revision:change.revision,
+    run,analysisHistory:history.results,suggestions,updates:updates.results,relationshipProposals,verificationPlans:planCandidates.results.map((plan) => VerificationPlanCandidateSchema.parse(plan)),
     audit:audit.results.map((event) => ({ ...event,details:parseJson(event.detailsJson) })),coherence,
   };
 }
@@ -597,6 +664,27 @@ export async function updateRelationshipProposal(db:D1Database,proposalId:string
   return getChange(db,row.changeId);
 }
 
+export async function updateVerificationPlanCandidate(db:D1Database,candidateId:string,raw:unknown) {
+  const input = UpdateVerificationPlanCandidateInputSchema.parse(raw);
+  const row = await db.prepare(`SELECT p.id,p.change_id AS changeId,p.proposed_item_id AS proposedItemId,p.relationship_proposal_id AS relationshipProposalId,p.title,p.objective,p.method,p.acceptance_criteria AS acceptanceCriteria,p.rationale,p.revision,p.status,
+    c.status AS changeStatus,c.revision AS changeRevision FROM verification_plan_candidates p JOIN change_requests c ON c.id=p.change_id WHERE p.id=?`).bind(candidateId)
+    .first<{ id:string;changeId:string;proposedItemId:string;relationshipProposalId:string;title:string;objective:string;method:string;acceptanceCriteria:string;rationale:string;revision:number;status:string;changeStatus:string;changeRevision:number }>();
+  if (!row || row.status !== 'proposed' || !canEditDraft(ChangeStatusSchema.parse(row.changeStatus))) return null;
+  const updatedAt = now();
+  await db.batch([
+    db.prepare('UPDATE verification_plan_candidates SET title=?,objective=?,method=?,acceptance_criteria=?,rationale=?,revision=revision+1,updated_by=?,update_reason=?,updated_at=? WHERE id=? AND status=\'proposed\'')
+      .bind(input.title,input.objective,input.method,input.acceptanceCriteria,input.rationale,input.actor,input.reason,updatedAt,candidateId),
+    db.prepare('UPDATE relationship_proposals SET source_version_id=?,rationale=?,revision=revision+1,updated_by=?,update_reason=?,updated_at=? WHERE id=? AND status=\'proposed\'')
+      .bind(`${row.proposedItemId}-candidate-r${row.revision + 1}`,input.rationale,input.actor,input.reason,updatedAt,row.relationshipProposalId),
+    db.prepare('UPDATE change_requests SET revision=revision+1,updated_at=? WHERE id=? AND status=?').bind(updatedAt,row.changeId,row.changeStatus),
+    auditStatement(db,{ aggregateType:'change',aggregateId:row.changeId,entityType:'verification_plan_candidate',entityId:candidateId,action:'verification_plan_revised',actor:input.actor,createdAt:updatedAt,details:auditDetails({ reason:input.reason,changes:[
+      { field:'planRevision',oldValue:row.revision,newValue:row.revision + 1 },
+      { field:'plan',oldValue:{ title:row.title,objective:row.objective,method:row.method,acceptanceCriteria:row.acceptanceCriteria,rationale:row.rationale },newValue:{ title:input.title,objective:input.objective,method:input.method,acceptanceCriteria:input.acceptanceCriteria,rationale:input.rationale } },
+    ],references:{ relationshipProposalId:row.relationshipProposalId } }) }),
+  ]);
+  return getChange(db,row.changeId);
+}
+
 export async function decideRelationshipProposal(db:D1Database,proposalId:string,raw:unknown) {
   const input = RelationshipProposalDecisionInputSchema.parse(raw);
   const row = await db.prepare(`SELECT p.change_id AS changeId,p.revision,p.operation,p.status,c.status AS changeStatus FROM relationship_proposals p JOIN change_requests c ON c.id=p.change_id WHERE p.id=?`).bind(proposalId).first<{ changeId:string;revision:number;operation:string;status:string;changeStatus:string }>();
@@ -608,7 +696,8 @@ export async function decideRelationshipProposal(db:D1Database,proposalId:string
     if (!activeBaseline) return null;
     const [evidence,relationships] = await Promise.all([listEvidenceForBaseline(db,change.baseBaselineId),listRelationshipsForBaseline(db,change.baseBaselineId)]);
     const proposals = projectionProposals(change).map((proposal) => proposal.id === proposalId ? { ...proposal,decision:input.decision,editedType:input.editedType ?? null } : proposal);
-    const projection = projectRelationships({ baselineId:change.baseBaselineId,evidence,relationships,proposals });
+    const projectedEvidence = [...evidence,...verificationCandidateEvidence(change,evidence)];
+    const projection = projectRelationships({ baselineId:change.baseBaselineId,evidence:projectedEvidence,relationships,proposals });
     const delta = projection.deltas.find((entry) => entry.proposalId === proposalId);
     if (!delta || delta.error) throw new Error(delta?.error ?? 'The relationship decision does not produce an effective change.');
   }
@@ -626,10 +715,11 @@ export async function getCandidateTraceability(db:D1Database,changeId:string) {
   const baseline = await db.prepare('SELECT id,label,status,approved_by AS approvedBy,approved_at AS approvedAt FROM baselines WHERE id=?').bind(change.baseBaselineId).first<{ id:string;label:string;status:string;approvedBy:string;approvedAt:string }>();
   if (!baseline) return null;
   const [evidence,relationships] = await Promise.all([listEvidenceForBaseline(db,baseline.id),listRelationshipsForBaseline(db,baseline.id)]);
-  const projection = projectRelationships({ baselineId:`CAND-${change.id}-${change.revision}`,evidence,relationships,proposals:projectionProposals(change) });
+  const projectedEvidence = [...evidence,...verificationCandidateEvidence(change,evidence)];
+  const projection = projectRelationships({ baselineId:`CAND-${change.id}-${change.revision}`,evidence:projectedEvidence,relationships,proposals:projectionProposals(change) });
   return {
     base:buildTraceabilityView({ baseline,evidence,relationships }),
-    projected:buildTraceabilityView({ baseline:{ id:`CAND-${change.id}-${change.revision}`,label:`Candidate revision ${change.revision}`,status:'candidate' },evidence,relationships:projection.relationships }),
+    projected:buildTraceabilityView({ baseline:{ id:`CAND-${change.id}-${change.revision}`,label:`Candidate revision ${change.revision}`,status:'candidate' },evidence:projectedEvidence,relationships:projection.relationships }),
     deltas:projection.deltas,valid:projection.valid,
   };
 }
@@ -670,13 +760,18 @@ export async function approveChange(db:D1Database,changeId:string,actor:string) 
   const approvedAt = now(); const baselineLabel = nextBaselineLabel(activeBaseline.label); const changeSuffix = changeId.replace(/^CHG-/,'').toUpperCase(); const baselineId = `BL-${baselineLabel}-${changeSuffix}`;
   const [evidence,relationships] = await Promise.all([listEvidenceForBaseline(db,activeBaseline.id),listRelationshipsForBaseline(db,activeBaseline.id)]);
   const updateByItem = new Map(change.updates.filter((update) => update.status === 'proposed').map((update) => [update.itemId,update]));
-  const projection = projectRelationships({ baselineId,evidence,relationships,proposals:projectionProposals(change) });
+  const candidatePlans = verificationCandidateEvidence(change,evidence);
+  const projection = projectRelationships({ baselineId,evidence:[...evidence,...candidatePlans],relationships,proposals:projectionProposals(change) });
   if (!projection.valid) throw new WorkflowConflictError(projection.deltas.find((delta) => delta.error)?.error ?? 'The projected relationship set is invalid.');
   const acceptedProposalIds = new Set(activeProposals.filter((proposal) => proposal.decision?.decision === 'accepted' || proposal.decision?.decision === 'edited').map((proposal) => proposal.id));
+  const acceptedPlans = change.verificationPlans.filter((plan) => plan.status === 'proposed' && acceptedProposalIds.has(plan.relationshipProposalId));
   const effectiveRelationshipChanges = projection.deltas.filter((delta) => acceptedProposalIds.has(delta.proposalId) && !delta.error);
   if (updateByItem.size === 0 && effectiveRelationshipChanges.length === 0) return null;
   const oldMembership = evidence.map((item) => ({ itemId:item.id,versionId:item.versionId }));
-  const newMembership = evidence.map((item) => ({ itemId:item.id,versionId:updateByItem.has(item.id) ? `${item.id}-v1.1-${changeSuffix}` : item.versionId }));
+  const newMembership = [
+    ...evidence.map((item) => ({ itemId:item.id,versionId:updateByItem.has(item.id) ? `${item.id}-v1.1-${changeSuffix}` : item.versionId })),
+    ...acceptedPlans.map((plan) => ({ itemId:plan.proposedItemId,versionId:`${plan.proposedItemId}-v1.0-${changeSuffix}` })),
+  ];
   const staged:D1PreparedStatement[] = [db.prepare("INSERT OR IGNORE INTO baselines (id,label,status,approved_by,approved_at) VALUES (?,?,?,?,?)").bind(baselineId,baselineLabel,'candidate',null,null)];
   for (const item of evidence) {
     const update = updateByItem.get(item.id);
@@ -684,6 +779,19 @@ export async function approveChange(db:D1Database,changeId:string,actor:string) 
     const versionId = `${item.id}-v1.1-${changeSuffix}`;
     staged.push(db.prepare('INSERT OR IGNORE INTO evidence_versions (id,item_id,version,title,statement,rationale,status,sources_json,flags_json,approved_by,approved_at) VALUES (?,?,?,?,?,?,?,?,?,?,?)').bind(versionId,item.id,'1.1',item.title,update.proposedText,`Candidate from ${changeId}; QA approval pending.`,'proposed',JSON.stringify(item.sources),JSON.stringify(item.flags),null,null));
     staged.push(db.prepare('INSERT OR IGNORE INTO baseline_items (baseline_id,item_id,version_id) VALUES (?,?,?)').bind(baselineId,item.id,versionId));
+  }
+  for (const plan of acceptedPlans) {
+    const control = evidence.find((item) => item.id === plan.targetRiskControlId);
+    if (!control) throw new WorkflowConflictError(`Risk control ${plan.targetRiskControlId} is no longer in the base baseline.`);
+    const versionId = `${plan.proposedItemId}-v1.0-${changeSuffix}`;
+    staged.push(
+      db.prepare('INSERT INTO evidence_items (id,type,owner,criticality,jurisdictions_json,current_version_id) VALUES (?,\'test\',\'Verification\',?,?,?)').bind(plan.proposedItemId,control.criticality,JSON.stringify(control.jurisdictions),versionId),
+      db.prepare('INSERT INTO evidence_versions (id,item_id,version,title,statement,rationale,status,sources_json,flags_json,approved_by,approved_at) VALUES (?,?,?,?,?,?,\'approved\',?,?,?,?)')
+        .bind(versionId,plan.proposedItemId,'1.0',plan.title,candidatePlanStatement(plan),plan.rationale,JSON.stringify([`Verification package ${changeId}`]),JSON.stringify(['fictional_manual_plan']),actor,approvedAt),
+      db.prepare('INSERT INTO baseline_items (baseline_id,item_id,version_id) VALUES (?,?,?)').bind(baselineId,plan.proposedItemId,versionId),
+      db.prepare('INSERT INTO verification_plan_versions (evidence_version_id,test_item_id,objective,method,acceptance_criteria,target_risk_control_id,approved_by,approved_at) VALUES (?,?,?,?,?,?,?,?)')
+        .bind(versionId,plan.proposedItemId,plan.objective,plan.method,plan.acceptanceCriteria,plan.targetRiskControlId,actor,approvedAt),
+    );
   }
   const baseIds = new Set(relationships.map((relationship) => relationship.id));
   projection.relationships.forEach((relation,index) => {
@@ -702,6 +810,8 @@ export async function approveChange(db:D1Database,changeId:string,actor:string) 
     finalize.push(db.prepare("UPDATE proposed_updates SET status='approved' WHERE id=?").bind(update.id));
   }
   for (const proposal of activeProposals) finalize.push(db.prepare("UPDATE relationship_proposals SET status=?,updated_by=?,update_reason=?,updated_at=? WHERE id=? AND revision=? AND status='proposed'").bind(acceptedProposalIds.has(proposal.id) ? 'applied' : 'rejected',actor,proposal.decision?.reason ?? 'Finalized during baseline approval.',approvedAt,proposal.id,proposal.revision));
+  for (const plan of change.verificationPlans.filter((entry) => entry.status === 'proposed')) finalize.push(db.prepare("UPDATE verification_plan_candidates SET status=?,updated_by=?,update_reason=?,updated_at=? WHERE id=? AND status='proposed'")
+    .bind(acceptedProposalIds.has(plan.relationshipProposalId) ? 'approved' : 'rejected',actor,change.relationshipProposals.find((proposal) => proposal.id === plan.relationshipProposalId)?.decision?.reason ?? 'Finalized during baseline approval.',approvedAt,plan.id));
   finalize.push(db.prepare("UPDATE baselines SET status='superseded' WHERE status='approved'"));
   finalize.push(db.prepare("UPDATE baselines SET status='approved',approved_by=?,approved_at=? WHERE id=?").bind(actor,approvedAt,baselineId));
   finalize.push(db.prepare("UPDATE change_requests SET status='approved',updated_at=? WHERE id=? AND status='qa_review'").bind(approvedAt,changeId));
@@ -712,6 +822,7 @@ export async function approveChange(db:D1Database,changeId:string,actor:string) 
     { field:'relationships',oldValue:relationships.map((relationship) => ({ id:relationship.id,sourceId:relationship.sourceId,targetId:relationship.targetId,type:relationship.type })),newValue:projection.relationships.map((relationship) => ({ sourceId:relationship.sourceId,targetId:relationship.targetId,type:relationship.type,predecessorRelationshipId:relationship.predecessorRelationshipId })) },
     { field:'proposedUpdateStatuses',oldValue:[...updateByItem.values()].map((update) => ({ id:update.id,status:'proposed' })),newValue:[...updateByItem.values()].map((update) => ({ id:update.id,status:'approved' })) },
     { field:'relationshipProposalOutcomes',oldValue:activeProposals.map((proposal) => ({ id:proposal.id,status:'proposed',revision:proposal.revision })),newValue:activeProposals.map((proposal) => ({ id:proposal.id,status:acceptedProposalIds.has(proposal.id) ? 'applied' : 'rejected',revision:proposal.revision })) },
+    { field:'verificationPlanOutcomes',oldValue:change.verificationPlans.map((plan) => ({ id:plan.id,status:plan.status })),newValue:change.verificationPlans.map((plan) => ({ id:plan.id,status:acceptedProposalIds.has(plan.relationshipProposalId) ? 'approved' : 'rejected',proposedItemId:plan.proposedItemId })) },
   ],references:{ baselineId,baselineLabel,baseBaselineId:activeBaseline.id,policyId:RELATIONSHIP_POLICY.id,policyVersion:RELATIONSHIP_POLICY.version } }) }));
   await db.batch(finalize);
   return { change:await getChange(db,changeId),baselineId };
@@ -736,7 +847,7 @@ export async function closeChange(db:D1Database,changeId:string,raw:unknown) {
 export async function resetWorkspace(db:D1Database) {
   await ensureWorkspace(db);
   const statements = [
-    "DELETE FROM finding_dispositions","DELETE FROM coherence_check_results","DELETE FROM coherence_check_runs","DELETE FROM relationship_review_decisions","DELETE FROM relationship_proposals","DELETE FROM review_decisions","DELETE FROM impact_suggestions","DELETE FROM analysis_runs","DELETE FROM proposed_updates","DELETE FROM change_requests","DELETE FROM audit_events","DELETE FROM embeddings","DELETE FROM document_snapshots",
+    "DELETE FROM release_readiness_results","DELETE FROM release_readiness_runs","DELETE FROM verification_execution_decisions","DELETE FROM verification_executions","DELETE FROM verification_plan_versions","DELETE FROM verification_plan_candidates","DELETE FROM finding_dispositions","DELETE FROM coherence_check_results","DELETE FROM coherence_check_runs","DELETE FROM relationship_review_decisions","DELETE FROM relationship_proposals","DELETE FROM review_decisions","DELETE FROM impact_suggestions","DELETE FROM analysis_runs","DELETE FROM proposed_updates","DELETE FROM change_requests","DELETE FROM audit_events","DELETE FROM embeddings","DELETE FROM document_snapshots",
     "DELETE FROM releases","DELETE FROM source_clarifications","DELETE FROM source_candidates","DELETE FROM source_processing_runs","DELETE FROM source_revisions","DELETE FROM source_artifacts","DELETE FROM collection_members","DELETE FROM collections",
     "DELETE FROM relationships","DELETE FROM baseline_items WHERE baseline_id != 'BL-RR-1.0'","DELETE FROM baselines WHERE id != 'BL-RR-1.0'","DELETE FROM evidence_versions WHERE item_id NOT IN (SELECT item_id FROM baseline_items WHERE baseline_id='BL-RR-1.0')","DELETE FROM evidence_items WHERE id NOT IN (SELECT item_id FROM baseline_items WHERE baseline_id='BL-RR-1.0')","DELETE FROM evidence_versions WHERE version != '1.0'",
     "UPDATE evidence_items SET current_version_id = id || '-v1.0'","UPDATE baselines SET status='approved',approved_by='Jamie Chen · QA reviewer',approved_at='2026-08-14T10:00:00.000Z' WHERE id='BL-RR-1.0'",
@@ -793,15 +904,22 @@ export async function getLatestCoherenceCheck(db:D1Database,rawScope:unknown) {
 }
 
 async function projectedCandidateEvidence(db:D1Database,changeId:string) {
-  const change = await db.prepare('SELECT anchor_item_id AS anchorItemId,subject_kind AS subjectKind,proposed_text AS proposedText,revision FROM change_requests WHERE id=?').bind(changeId).first<{ anchorItemId:string; subjectKind:string;proposedText:string|null; revision:number }>();
-  const baseline = await getActiveBaseline(db);
-  if (!change || !baseline) return null;
+  const change = await getChange(db,changeId);
+  if (!change) return null;
+  const baseline = await db.prepare('SELECT id,label,status,approved_by AS approvedBy,approved_at AS approvedAt FROM baselines WHERE id=?').bind(change.baseBaselineId).first<{ id:string;label:string;status:string;approvedBy:string|null;approvedAt:string|null }>();
+  if (!baseline) return null;
   const evidence = await listEvidenceForBaseline(db,baseline.id);
   const updates = await db.prepare("SELECT item_id AS itemId,proposed_text AS proposedText FROM proposed_updates WHERE change_id=? AND status='proposed'").bind(changeId).all<{ itemId:string; proposedText:string }>();
   const overlay = new Map<string,string>([...(change.subjectKind === 'evidence' && change.proposedText ? [[change.anchorItemId,change.proposedText] as [string,string]] : []),...updates.results.map((entry) => [entry.itemId,entry.proposedText] as [string,string])]);
+  const projectedEvidence = [
+    ...evidence.map((item) => overlay.has(item.id) ? { ...item,versionId:`CAND-${changeId}-${change.revision}-${item.id}`,statement:overlay.get(item.id) ?? item.statement,status:'proposed' as const,approvedBy:null,approvedAt:null } : item),
+    ...verificationCandidateEvidence(change,evidence),
+  ];
+  const relationships = await listRelationshipsForBaseline(db,baseline.id);
+  const projection = projectRelationships({ baselineId:`CAND-${changeId}-${change.revision}`,evidence:projectedEvidence,relationships,proposals:projectionProposals(change) });
   return {
     baseline,revision:change.revision,
-    evidence:evidence.map((item) => overlay.has(item.id) ? { ...item,versionId:`CAND-${changeId}-${change.revision}-${item.id}`,statement:overlay.get(item.id) ?? item.statement,status:'proposed' as const,approvedBy:null,approvedAt:null } : item),
+    evidence:projectedEvidence,relationships:projection.relationships,
   };
 }
 
@@ -809,17 +927,16 @@ export async function runCoherenceCheck(db:D1Database,raw:unknown) {
   await ensureWorkspace(db);
   const input = RunCoherenceCheckInputSchema.parse(raw);
   const documents = await listDocuments(db);
-  let baselineId:string; let changeId:string|null; let candidateRevision:number|null; let evidence:EvidenceItem[];
+  let baselineId:string; let changeId:string|null; let candidateRevision:number|null; let evidence:EvidenceItem[]; let relationships:EvidenceRelationship[];
   if (input.scope.kind === 'baseline') {
     const baseline = await db.prepare('SELECT id FROM baselines WHERE id=?').bind(input.scope.baselineId).first<{ id:string }>();
     if (!baseline) return null;
-    baselineId = baseline.id; changeId = null; candidateRevision = null; evidence = await listEvidenceForBaseline(db,baseline.id);
+    baselineId = baseline.id; changeId = null; candidateRevision = null; evidence = await listEvidenceForBaseline(db,baseline.id); relationships = await listRelationshipsForBaseline(db,baseline.id);
   } else {
     const projected = await projectedCandidateEvidence(db,input.scope.changeId);
     if (!projected) return null;
-    baselineId = projected.baseline.id; changeId = input.scope.changeId; candidateRevision = projected.revision; evidence = projected.evidence;
+    baselineId = projected.baseline.id; changeId = input.scope.changeId; candidateRevision = projected.revision; evidence = projected.evidence; relationships = projected.relationships;
   }
-  const relationships = await listRelationshipsForBaseline(db,baselineId);
   const findings = runCoherenceChecks({ evidence,relationships,documents });
   const scopeId = input.scope.kind === 'baseline' ? input.scope.baselineId : input.scope.changeId;
   const previous = await getLatestCoherenceCheck(db,input.scope);

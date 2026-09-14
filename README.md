@@ -53,6 +53,7 @@ npm run lint
 npm run verify:demo
 npm run verify:source
 npm run verify:traceability
+npm run verify:readiness
 npm run build
 ```
 
@@ -61,6 +62,8 @@ npm run build
 `verify:source` checks the source-to-baseline workflow against a server started without an available OpenRouter key. It proves that a failed live run creates no replay records, then completes the same path through explicitly selected replay output. Keep the key unavailable to that server process for this check; local environment files may otherwise take precedence over a shell override.
 
 `verify:traceability` exercises the controlled relationship lifecycle. It proves deterministic projection, revision-bound QA authority, close-without-baseline, stale-baseline conflict handling, and byte-for-byte preservation of the prior relationship rows, then resets the workspace.
+
+`verify:readiness` exercises WP-20A from reset through an editable three-plan package, revision-bound QA review, a 75-item/125-link baseline, explicit planned-release creation, nine fictional executions and QA decisions, failed and rejected reruns, stale-run protection, the QA-only `verification_ready` transition, frozen records, historical inspection, and final reset.
 
 With the local server running and `.env.local` configured, run `npm run verify:live` for the opt-in OpenRouter smoke test. This command makes paid external calls with fictional data and is never part of the ordinary test suite.
 
@@ -79,7 +82,7 @@ The second command embeds the generated migration in the local runtime initializ
 
 ## Project boundary
 
-Version one has one fictional product, immutable approved baselines, separately stored candidate work, and simulated author and QA identities. The simulated roles provide no identity assurance. It has no eQMS, Jira, Git, Word, or submission integration. Replay output is a saved fixture, not a live model call. The internal evaluation page calculates structured-run results against a locked provisional answer key. Manual and document-chat values remain illustrative fixtures.
+Version one has one fictional product, immutable approved baselines, separately stored candidate work, explicit releases, and simulated author and QA identities. The simulated roles provide no identity assurance. WP-20A execution records, build references, evidence references, identities, and timestamps are fictional manual data. It has no eQMS, Jira, Git, Word, real CI, file attachments, electronic signatures, residual-risk acceptance, final release approval, or submission integration. `verification_ready` means only “Verification ready under release-readiness-v1.” Replay output is a saved fixture, not a live model call. The internal evaluation page calculates structured-run results against a locked provisional answer key. Manual and document-chat values remain illustrative fixtures.
 
 See [the demo charter](docs/demo-charter.md), [the evaluation protocol](docs/evaluation-protocol.md), and [the presenter script](docs/presenter-script.md).
 

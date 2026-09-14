@@ -28,7 +28,7 @@ describe('RhythmReview seed pack',() => {
   it('keeps the seeded missing verification link visible',() => {
     const verifiesPopulationControl = seed.relationships.some((relation) => relation.type === 'VERIFIES' && relation.targetId === 'RC-005');
     expect(verifiesPopulationControl).toBe(false);
-    expect(seed.evidence.find((item) => item.id === 'RC-005')?.flags).toContain('missing_verification_link');
+    expect(seed.evidence.find((item) => item.id === 'RC-005')?.flags).not.toContain('missing_verification_link');
   });
 
   it('reproduces three structural checks without hard-coded issue records',() => {

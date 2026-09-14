@@ -75,7 +75,7 @@ Suppose a repository changes an alert threshold from 30 seconds to 60 seconds.
 4. QA decides which proposed impacts are real. The author changes the controlled candidates.
 5. Coherence checks compare the projected candidate state.
 6. QA approves a new baseline after the required review work is complete.
-7. A release references that baseline, the Git commit, and CI executions. The current prototype creates the release record but does not connect Git or CI.
+7. An author explicitly creates a planned release referencing that baseline and a fictional code revision. WP-20A records manual fictional executions and QA decisions; it does not connect Git or CI.
 
 At no point does the commit silently rewrite a requirement. At no point does a requirement claim that code shipped.
 

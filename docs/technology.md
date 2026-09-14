@@ -36,7 +36,8 @@ The application stores several structured fields as JSON text in D1. Examples in
 | `lib/domain.ts` | Change-first domain values and HTTP command schemas |
 | `lib/source-domain.ts` | Source-first domain values and command schemas |
 | `lib/repository.ts` | Evidence, change, baseline, document, audit, evaluation, and coherence persistence |
-| `lib/source-repository.ts` | Source import, processing, review, impact, baseline, and release persistence |
+| `lib/source-repository.ts` | Source import, processing, review, impact, and baseline persistence |
+| `lib/verification-repository.ts` | Verification plans, release executions, QA decisions, and readiness persistence |
 | `lib/analysis.ts` | Graph traversal, lexical retrieval, cosine similarity, and candidate merging |
 | `lib/openrouter-provider.ts` | Semantic retrieval and bounded impact classification |
 | `lib/source-ai.ts` | Context, user-need, and requirement model calls |

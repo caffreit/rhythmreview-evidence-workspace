@@ -96,13 +96,14 @@ workspace = await request('/api/source-baselines/approve',{ method:'POST',body:J
 const finalDetail = await request('/api/sources/SRC-001');
 assert.equal(finalDetail.source.status,'baselined');
 assert.equal(finalDetail.runs.every((run) => run.mode === 'live'),true);
-assert.equal(workspace.release.status,'planned');
+assert.equal(Object.hasOwn(workspace,'release'),false);
+assert.equal((await request('/api/releases')).releases.length,0);
 
 console.log(JSON.stringify({
   verified:true,
   sourceId:'SRC-001',
   baseline:(await request('/api/overview')).baseline.label,
-  releaseId:workspace.release.id,
+  releaseCreation:'explicit_on_releases_page',
   openAdvisoryClarificationId:advisory.find((item) => /escalation/i.test(item.question))?.id,
   runs:[contextRun,needsRun,requirementsRun,workspace.impactRun].map((run) => ({ id:run.id,kind:run.kind ?? 'impact_analysis',policyVersion:run.policyVersion ?? run.promptVersion,model:run.model,durationMs:run.durationMs,attemptCount:run.attemptCount,inputTokens:run.inputTokens,outputTokens:run.outputTokens,embeddingTokens:run.embeddingTokens })),
   needReviews,

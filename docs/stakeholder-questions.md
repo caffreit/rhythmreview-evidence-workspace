@@ -98,7 +98,7 @@ The primary reviewer is QA or RA. Product and engineering authors supply source 
 
 ### What is the smallest complete product loop?
 
-Import one source revision, resolve material questions, review generated user needs, derive and review requirements, assess impact on the existing baseline, and approve a new immutable baseline. The source-first prototype completes that loop and creates a planned release record.
+Import one source revision, resolve material questions, review generated user needs, derive and review requirements, assess impact on the existing baseline, and approve a new immutable baseline. The source-first prototype completes that loop; an author creates a planned release explicitly and separately on the Releases page.
 
 ### What does the product automate?
 

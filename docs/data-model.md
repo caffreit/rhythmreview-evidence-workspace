@@ -48,12 +48,17 @@ erDiagram
 | `evidence_versions` | Immutable wording and approval state | `id` is the primary key. `item_id` groups versions. `version`, `title`, `statement`, `rationale`, `status`, `sources_json`, `flags_json`, `approved_by`, and `approved_at` describe one version. |
 | `baselines` | Named controlled product states | `id` is the primary key. `status` is normally `candidate`, `approved`, or `superseded`. Approval actor and time live on the row. |
 | `baseline_items` | Version membership of a baseline | Composite primary key on `baseline_id` and `item_id`. `version_id` selects the exact immutable version. |
-| `relationships` | Typed evidence links for one baseline | Stores `source_id`, `target_id`, `type`, `baseline_id`, and `active`. Direction is stored, but the regulatory meaning of several relationship types still needs a ratified policy. |
+| `relationships` | Typed evidence links for one baseline | Stores `source_id`, `target_id`, `type`, `baseline_id`, and `active` under `relationship-policy-v1.0`. |
 | `collections` | Versioned groups such as test suites, requirement families, and source processing batches | Stores `kind`, `title`, `version`, and `status`. |
 | `collection_members` | Explicit collection membership | Composite primary key on `collection_id` and `item_id`. `member_kind` is `evidence` in the current data. Membership creates context, not a direct trace link. |
 | `document_templates` | Rules for abbreviated document views | Stores a stable `code`, title, description, included evidence types, and excluded flags. Type and flag lists are JSON text. |
 | `document_snapshots` | Frozen record of a rendered template against a baseline | Stores `document_id`, `baseline_id`, exact source version IDs as JSON, and `rendered_at`. Rendering uses `INSERT OR IGNORE`, so one template and baseline pair keeps its first snapshot time. |
-| `releases` | Release record linked to a baseline | Stores `baseline_id`, label, status, optional code revision, optional CI status, approval actor, and creation time. Current source approval creates a `planned` release with no code or CI facts. |
+| `verification_plan_candidates` | Editable structured TEST plans inside a controlled package | Stores the reserved TEST ID, target risk control, paired relationship proposal, plan content, revision, status, and author provenance. |
+| `verification_plan_versions` | Approved structured details for TEST evidence | Keyed by immutable `evidence_version_id`; stores objective, method, acceptance criteria, target control, and approval provenance without creating another plan identity. |
+| `releases` | Explicit release record linked to an approved baseline | Stores required fictional code revision and creator fields plus `planned` or `verification_ready` state and the accepted readiness run. One release is permitted per baseline in this prototype. |
+| `verification_executions` | Immutable release-scoped TEST execution | Stores baseline and TEST version, outcome, environment, build, observed result, execution time, evidence reference, and author provenance. |
+| `verification_execution_decisions` | Append-only QA execution review | Stores accepted or rejected decisions with a required reason. The latest decision for the latest execution controls readiness. |
+| `release_readiness_runs` and `release_readiness_results` | Versioned release-readiness evaluation | Store the canonical input fingerprint, `release-readiness-v1` version, actor, outcome, and individual blocker, warning, or pass rows. |
 
 The current evidence types are intended use, claim, user need, requirement, hazard, risk control, component, test, clinical evidence, and label. The database stores the type as text. `lib/domain.ts` defines and validates the allowed values.
 
@@ -140,7 +145,9 @@ Change-first approval performs these steps:
 6. Supersede the previous baseline and approve the candidate.
 7. Mark the change approved and append an audit event with old and new membership.
 
-Source-first approval copies the active baseline, inserts approved source candidates as new evidence items and versions, adds `REFINES` links from requirements to generated needs, creates a processing-batch collection, approves the new baseline, and creates a planned release.
+Source-first approval copies the active baseline, inserts approved source candidates as new evidence items and versions, adds `REFINES` links from requirements to generated needs, creates a processing-batch collection, and approves the new baseline. Release creation is a separate explicit command.
+
+WP-20A adds structured verification-plan candidates tied to proposed TEST evidence, approved plan-version details keyed by the immutable TEST evidence version, release-scoped verification executions, append-only QA execution decisions, and versioned readiness runs with individual results. Releases transition only from `planned` to `verification_ready`; this state is narrower than final release approval.
 
 ## Schema change process
 

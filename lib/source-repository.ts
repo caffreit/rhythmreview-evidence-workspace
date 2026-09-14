@@ -68,7 +68,6 @@ async function sourceSummaries(db:D1Database):Promise<z.infer<typeof SourceSumma
 export async function listSourceWorkspace(db:D1Database):Promise<SourceListResponse> {
   await initializeSources(db);
   const sources = await sourceSummaries(db);
-  const release = await db.prepare('SELECT id,label,baseline_id AS baselineId,status,code_revision AS codeRevision,ci_status AS ciStatus,created_at AS createdAt FROM releases ORDER BY created_at DESC LIMIT 1').first<{ id:string;label:string;baselineId:string;status:string;codeRevision:string|null;ciStatus:string|null;createdAt:string }>();
   const openCandidates = await db.prepare("SELECT COUNT(*) AS count FROM source_candidates c JOIN source_processing_runs p ON p.id=c.run_id JOIN source_artifacts a ON a.id=c.source_id AND a.latest_revision_id=p.revision_id WHERE c.status IN ('pending_review','revision_requested')").first<{ count:number }>();
   const impactRuns = await db.prepare("SELECT p.id,p.source_id AS sourceId,p.revision_id AS revisionId,p.kind,p.mode,p.model,p.reasoning_effort AS reasoningEffort,p.policy_version AS policyVersion,p.status,p.output_json AS outputJson,p.error,p.provider_request_id AS providerRequestId,p.duration_ms AS durationMs,p.attempt_count AS attemptCount,p.input_tokens AS inputTokens,p.output_tokens AS outputTokens,p.embedding_tokens AS embeddingTokens,p.created_at AS createdAt FROM source_processing_runs p JOIN source_artifacts a ON a.id=p.source_id AND a.latest_revision_id=p.revision_id WHERE p.kind='impact_analysis' ORDER BY p.created_at DESC,p.id DESC").all<RunRow & { outputJson:string|null }>();
   const latestImpactBySource = new Map<string,typeof impactRuns.results[number]>();
@@ -80,7 +79,7 @@ export async function listSourceWorkspace(db:D1Database):Promise<SourceListRespo
   const candidateSources = sources.filter((source) => source.status === 'candidate_baseline');
   const candidateBaselineReady = candidateSources.length > 0 && candidateSources.every((source) => latestImpactBySource.get(source.id)?.status === 'completed') && pendingImpacts === 0;
   const latestImpact = impactRuns.results[0];
-  return SourceListResponseSchema.parse({ sources,reviewCount,approvedCandidateCount,candidateBaselineReady,impactSuggestions,impactRun:latestImpact ? ProcessingRunSchema.parse(latestImpact) : null,release:release ?? null });
+  return SourceListResponseSchema.parse({ sources,reviewCount,approvedCandidateCount,candidateBaselineReady,impactSuggestions,impactRun:latestImpact ? ProcessingRunSchema.parse(latestImpact) : null });
 }
 
 type RunRow = {
@@ -420,13 +419,11 @@ export async function approveSourceBaseline(db:D1Database,raw:unknown):Promise<S
   const collectionId = makeId('COL');
   statements.push(db.prepare('INSERT INTO collections (id,kind,title,version,status) VALUES (?,?,?,?,?)').bind(collectionId,'processing_batch',`Source-derived evidence for ${baselineLabel}`,'1.0','approved'));
   for (const evidenceId of candidateToEvidence.values()) statements.push(db.prepare('INSERT INTO collection_members (collection_id,item_id,member_kind) VALUES (?,?,?)').bind(collectionId,evidenceId,'evidence'));
-  const releaseId = makeId('RELSE');
   statements.push(
     db.prepare("UPDATE baselines SET status='superseded' WHERE status='approved'"),
     db.prepare("UPDATE baselines SET status='approved' WHERE id=?").bind(baselineId),
-    db.prepare('INSERT INTO releases (id,label,baseline_id,status,code_revision,ci_status,approved_by,created_at) VALUES (?,?,?,?,?,?,?,?)').bind(releaseId,`Release ${baselineLabel.replace('RR-','')}`,baselineId,'planned',null,null,input.actor,approvedAt),
     db.prepare("UPDATE source_artifacts SET status='baselined' WHERE id IN (SELECT DISTINCT source_id FROM source_candidates WHERE status='approved_for_baseline')"),
-    db.prepare('INSERT INTO audit_events (id,entity_type,entity_id,aggregate_type,aggregate_id,action,actor,details_json,schema_version,created_at) VALUES (?,?,?,?,?,?,?,?,?,?)').bind(makeId('AUD'),'baseline',baselineId,'baseline',baselineId,'source_baseline_approved',input.actor,JSON.stringify({ schemaVersion:1,changes:[{ field:'activeBaselineId',oldValue:active.id,newValue:baselineId }],references:{ releaseId,collectionId } }),1,approvedAt),
+    db.prepare('INSERT INTO audit_events (id,entity_type,entity_id,aggregate_type,aggregate_id,action,actor,details_json,schema_version,created_at) VALUES (?,?,?,?,?,?,?,?,?,?)').bind(makeId('AUD'),'baseline',baselineId,'baseline',baselineId,'source_baseline_approved',input.actor,JSON.stringify({ schemaVersion:1,changes:[{ field:'activeBaselineId',oldValue:active.id,newValue:baselineId }],references:{ collectionId } }),1,approvedAt),
   );
   await db.batch(statements);
   return listSourceWorkspace(db);

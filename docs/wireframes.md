@@ -135,7 +135,7 @@ These low-fidelity wireframes define layout and behaviour before visual implemen
 
 1. Origin stays visible throughout review. Model output never masquerades as a confirmed trace link.
 
-## 7. Candidate baseline and release record
+## 7. Separate baseline and release workspaces
 
 ```text
 ┌──────────────────┬───────────────────────────────────────────────────────────┐
@@ -144,13 +144,12 @@ These low-fidelity wireframes define layout and behaviour before visual implemen
 │ Documents        │ Coherence: 0 blockers   Reviews: complete                 │
 │ Design reviews   │ [Approve immutable baseline]                              │ [1]
 │                  │                                                           │
-│                  │ Release R-2.5                                             │
-│                  │ Baseline RR-2.5                                            │
-│                  │ Code revision     Not connected                            │
-│                  │ CI verification   Not connected                            │ [2]
-│                  │ Output package    Conceptual — not implemented             │
+│                  │ [Open separate Releases workspace]                        │
+│                  │ Planned release -> release-readiness-v1                    │
+│                  │ Nine fictional execution records and QA decisions          │ [2]
+│                  │ Verification ready (not Released or Production ready)       │
 └──────────────────┴───────────────────────────────────────────────────────────┘
 ```
 
 1. Baseline approval remains a separate authorized decision after item review.
-2. Empty integration fields make the prototype boundary visible instead of fabricating records.
+2. Release creation is explicit. Manual execution, build, and evidence references are labelled fictional; real CI and final release approval remain outside WP-20A.

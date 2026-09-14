@@ -92,9 +92,28 @@ const RelationshipRetypeDraftSchema = z.object({ operation:z.literal('retype'),b
 const RelationshipRetireDraftSchema = z.object({ operation:z.literal('retire'),baseRelationshipId:z.string().min(1),rationale:z.string().min(8).max(2000) });
 export const RelationshipProposalDraftSchema = z.discriminatedUnion('operation',[RelationshipAddDraftSchema,RelationshipRetypeDraftSchema,RelationshipRetireDraftSchema]);
 
+export const VerificationPlanDraftSchema = z.object({
+  targetRiskControlId:z.enum(['RC-001','RC-002','RC-005']).transform((value) => EvidenceIdSchema.parse(value)),
+  title:z.string().min(3).max(140),objective:z.string().min(8).max(2000),method:z.string().min(8).max(4000),
+  acceptanceCriteria:z.string().min(8).max(2000),rationale:z.string().min(8).max(2000),
+});
+
+const VerificationControlUpdateSchema = z.object({
+  itemId:z.enum(['RC-001','RC-002']).transform((value) => EvidenceIdSchema.parse(value)),proposedText:z.string().min(8).max(4000),reason:z.string().min(8).max(1000),
+});
+
+export const CreateVerificationPackageInputSchema = z.object({
+  kind:z.literal('verification_package'),title:z.string().min(3).max(120),rationale:z.string().min(8).max(2000),createdBy:AuthorActorSchema,
+  controlUpdates:z.array(VerificationControlUpdateSchema).length(2),plans:z.array(VerificationPlanDraftSchema).length(3),
+}).superRefine((value,context) => {
+  if (new Set(value.controlUpdates.map((entry) => entry.itemId)).size !== 2) context.addIssue({ code:'custom',path:['controlUpdates'],message:'The package requires one update for RC-001 and one for RC-002.' });
+  if (new Set(value.plans.map((entry) => entry.targetRiskControlId)).size !== 3) context.addIssue({ code:'custom',path:['plans'],message:'The package requires one plan for RC-001, RC-002, and RC-005.' });
+});
+
 export const CreateChangeInputSchema = z.discriminatedUnion('kind',[
   z.object({ kind:z.literal('evidence'),scenarioId:ScenarioIdSchema.optional(),anchorItemId:EvidenceIdSchema,title:z.string().min(3).max(120),proposedText:z.string().min(8).max(4000),rationale:z.string().min(8).max(2000),createdBy:AuthorActorSchema }),
   z.object({ kind:z.literal('relationship'),anchorItemId:EvidenceIdSchema,title:z.string().min(3).max(120),rationale:z.string().min(8).max(2000),createdBy:AuthorActorSchema,proposal:RelationshipProposalDraftSchema }),
+  CreateVerificationPackageInputSchema,
 ]);
 
 export const AnalyseChangeInputSchema = z.object({ mode:z.enum(['replay','live']) });
@@ -127,6 +146,10 @@ export const RelationshipProposalDecisionInputSchema = z.object({
   if (value.decision !== 'edited' && value.editedType) context.addIssue({ code:'custom',path:['editedType'],message:'A replacement type is valid only for an edited decision.' });
 });
 export const CloseChangeInputSchema = z.object({ actor:QaActorSchema,reason:z.string().min(2).max(1000),confirmation:z.literal(true) });
+export const UpdateVerificationPlanCandidateInputSchema = z.object({
+  actor:AuthorActorSchema,title:z.string().min(3).max(140),objective:z.string().min(8).max(2000),method:z.string().min(8).max(4000),
+  acceptanceCriteria:z.string().min(8).max(2000),rationale:z.string().min(8).max(2000),reason:z.string().min(2).max(1000),
+});
 
 export const CheckScopeSchema = z.discriminatedUnion('kind',[
   z.object({ kind:z.literal('baseline'),baselineId:z.string().min(1) }),
@@ -162,6 +185,8 @@ export type EvidenceRelationship = z.infer<typeof RelationshipSchema>;
 export type RelationshipProposalDraft = z.infer<typeof RelationshipProposalDraftSchema>;
 export type UpdateRelationshipProposalInput = z.infer<typeof UpdateRelationshipProposalInputSchema>;
 export type RelationshipProposalDecisionInput = z.infer<typeof RelationshipProposalDecisionInputSchema>;
+export type VerificationPlanDraft = z.infer<typeof VerificationPlanDraftSchema>;
+export type UpdateVerificationPlanCandidateInput = z.infer<typeof UpdateVerificationPlanCandidateInputSchema>;
 export type DocumentTemplate = z.infer<typeof DocumentTemplateSchema>;
 export type Scenario = z.infer<typeof ScenarioSchema>;
 export type ImpactSuggestion = z.infer<typeof ImpactSuggestionSchema>;

@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { AnalysisRunStatusSchema, AuditEventDetailsSchema, ChangeStatusSchema, CheckScopeSchema, CriticalitySchema, EvidenceIdSchema, EvidenceItemSchema, EvidenceTypeSchema, ImpactSuggestionSchema, ProposedUpdateStatusSchema, RelationshipDecisionSchema, RelationshipOperationSchema, RelationshipProposalStatusSchema, RelationshipSchema, RelationshipTypeSchema } from './domain';
+import { VerificationPlanCandidateSchema } from './verification';
 
 export const FindingViewSchema = z.object({
   id:z.string(),findingId:z.string(),fingerprint:z.string(),itemId:EvidenceIdSchema,code:z.string(),severity:z.enum(['high','medium']),title:z.string(),detail:z.string(),
@@ -80,12 +81,12 @@ export const RelationshipProposalViewSchema = z.object({
   effectiveType:RelationshipTypeSchema.nullable(),
 });
 export const ChangeViewSchema = z.object({
-  id:z.string(),scenarioId:z.string().nullable(),anchorItemId:EvidenceIdSchema,subjectKind:z.enum(['evidence','relationship']),baseBaselineId:z.string(),title:z.string(),rationale:z.string(),proposedText:z.string().nullable(),status:ChangeStatusSchema,createdBy:z.string(),createdAt:z.string(),updatedAt:z.string(),revision:z.number(),
+  id:z.string(),scenarioId:z.string().nullable(),anchorItemId:EvidenceIdSchema,subjectKind:z.enum(['evidence','relationship','verification_package']),baseBaselineId:z.string(),title:z.string(),rationale:z.string(),proposedText:z.string().nullable(),status:ChangeStatusSchema,createdBy:z.string(),createdAt:z.string(),updatedAt:z.string(),revision:z.number(),
   run:AnalysisRunViewSchema.nullable(),
   analysisHistory:z.array(AnalysisRunViewSchema),
   suggestions:z.array(ImpactSuggestionSchema),
   updates:z.array(z.object({ id:z.string(),analysisRunId:z.string(),itemId:EvidenceIdSchema,fromVersionId:z.string(),toVersion:z.string(),originalText:z.string(),proposedText:z.string(),draftOrigin:z.string(),createdBy:z.string(),createdAt:z.string(),editedBy:z.string().nullable(),editReason:z.string().nullable(),editedAt:z.string().nullable(),status:ProposedUpdateStatusSchema })),
-  relationshipProposals:z.array(RelationshipProposalViewSchema),
+  relationshipProposals:z.array(RelationshipProposalViewSchema),verificationPlans:z.array(VerificationPlanCandidateSchema),
   audit:z.array(z.object({ id:z.string(),entityType:z.string(),entityId:z.string(),aggregateType:z.string(),aggregateId:z.string(),action:z.string(),actor:z.string(),detailsJson:z.string(),schemaVersion:z.number(),details:z.union([AuditEventDetailsSchema,z.unknown()]),createdAt:z.string() })),
   coherence:CoherenceCheckSchema.nullable(),analysisWarning:z.string().optional(),
 });

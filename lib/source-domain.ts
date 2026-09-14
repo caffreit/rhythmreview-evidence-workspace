@@ -64,7 +64,6 @@ export const SourceDetailSchema = z.object({
 export const SourceListResponseSchema = z.object({
   sources:z.array(SourceSummarySchema),reviewCount:z.number(),approvedCandidateCount:z.number(),candidateBaselineReady:z.boolean(),
   impactSuggestions:z.array(SourceImpactSuggestionSchema),impactRun:ProcessingRunSchema.nullable(),
-  release:z.object({ id:z.string(),label:z.string(),baselineId:z.string(),status:z.string(),codeRevision:z.string().nullable(),ciStatus:z.string().nullable(),createdAt:z.string() }).nullable(),
 });
 
 export const ImportSourceInputSchema = z.object({

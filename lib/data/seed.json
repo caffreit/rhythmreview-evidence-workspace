@@ -938,9 +938,7 @@
       "sources": [
         "RhythmReview fictional design baseline RR-1.0"
       ],
-      "flags": [
-        "missing_verification_link"
-      ],
+      "flags": [],
       "approvedBy": "Jamie Chen · QA reviewer",
       "approvedAt": "2026-08-14T10:00:00.000Z"
     },
