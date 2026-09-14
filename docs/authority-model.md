@@ -2,7 +2,7 @@
 
 Status: product explanation
 
-Snapshot: 13 September 2026
+Snapshot: 14 September 2026
 
 ## The central decision
 
@@ -113,12 +113,12 @@ These constraints cost clicks and data modeling. They also make a later audit qu
 
 The repository demonstrates the record separation, but it does not yet prove production authority controls.
 
-- The author and QA names are simulated values, not authenticated identities.
+- The author, QA, and release-approver names are simulated values, not authenticated identities.
 - The database has no foreign keys and baseline writes are not one explicit transaction.
-- Relationship semantics are not yet governed by a ratified, versioned policy.
+- Relationship semantics are governed for prototype use by `relationship-policy-v1.0`, which has `controlled_prototype` status; production policy approval remains outstanding.
 - Source candidate decisions update candidate rows in place, and source impact decisions rewrite JSON instead of adding decision rows.
-- Git, Jira, CI, document-system, and cloud observations are conceptual.
-- Release records do not contain verified code, test execution, or output-package facts.
+- Jira, document-system, and live cloud observations remain conceptual. A CI bundle can be imported and byte-verified, but no connector independently authenticates GitHub.
+- Release records contain fictional verification and residual-risk decisions plus hashed attachments; they do not prove deployment, production readiness, or regulatory compliance.
 - The prototype has no electronic signature, retention, legal hold, permission administration, or validation package.
 
 The philosophy becomes credible only when those controls exist. Until then, BlueBridge is an evaluation workspace, not a quality-system claim.

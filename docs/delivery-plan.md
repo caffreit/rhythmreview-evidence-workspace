@@ -1,6 +1,6 @@
 # BlueBridge delivery plan
 
-Status: WP-00, WP-10, and WP-20A complete; remaining WP-20 scope planned
+Status: WP-00, WP-10, and WP-20A accepted; WP-20B implemented with external acceptance proof pending
 Last updated: 14 September 2026
 
 ## How to use this plan
@@ -13,7 +13,7 @@ Work packages have stable IDs. A package is complete only when its completion ga
 | WP-10A Controlled relationship lifecycle | Accepted | WP-00 | Ratified prototype policy, curated relationship fixture, controlled proposals, baseline-aware matrix, and gap analysis | Invalid link combinations are blocked; revision-bound QA decisions, immutable baseline outcomes, browser checks, and live corpus gates pass |
 | WP-10B Interactive traceability graph | Accepted | WP-10A | Explorable graph with controlled, proposed, rejected, and review-only links | Passed: graph link IDs match the Matrix projection for approved and candidate states; desktop and 390 px browser checks pass |
 | WP-20A Risk-control verification readiness | Accepted | WP-10 | Controlled verification package, TEST plan versions, manual fictional executions, QA execution review, and `release-readiness-v1` | Passed: 75 items, 125 links, zero high coverage gaps, nine current passed and QA-accepted executions, fresh fingerprint, and QA-only `verification_ready` transition |
-| WP-20B Remaining risk and final release controls | Planned | WP-20A | Residual-risk acceptance, final release approval, signatures, attachments, and real CI evidence | A release decision cannot proceed with unresolved required risk, verification, traceability, or review work |
+| WP-20B Residual risk and final release controls | Implemented; acceptance pending | WP-20A | Revisioned residual-risk review, durable hashed attachments, verified CI-bundle import, two simulated attestations, and `final-release-v1` | Local suite passed; acceptance requires one real GitHub Actions artifact imported into the deployed workspace and completed through the QA and release-approver path |
 | WP-30 Document inputs and outputs | Planned | WP-20 | PDF and DOCX ingestion, source and controlled-document redlines, versioned templates, and package completeness | An imported document can produce reviewed evidence and a baseline-linked output package |
 | WP-40 Connected-work fixtures | Planned | WP-10 | Fixture-backed Jira mapping plus repository and CI observations | Repeated imports converge without overwriting controlled evidence or claiming external facts as BlueBridge approvals |
 | WP-50 Production foundations | Deferred | WP-20, WP-30, WP-40 | Identity, permissions, durable jobs, concurrency controls, migration discipline, retention, monitoring, and cost controls | A limited internal pilot can use controlled non-patient data with verified identity and recoverable operations |
@@ -49,6 +49,18 @@ WP-20A delivered one controlled path from the three risk-control coverage gaps t
 7. A fresh ready run permits only QA to mark the release “Verification ready under release-readiness-v1.” Executions and decisions then freeze.
 
 Residual-risk acceptance, real CI, file attachments, electronic signatures, and final release approval remain outside WP-20A.
+
+## Implemented final-release package
+
+WP-20B extends `verification_ready` without broadening its claim:
+
+1. Every baseline hazard gets an append-only residual-risk assessment. Replacement revisions invalidate prior QA decisions and the aggregate QA attestation. QA cannot accept `unacceptable` risk.
+2. R2 stores immutable bytes while D1 stores normalized filenames, media type, size, SHA-256, category, uploader, CI ownership, and supersession history. Final approval freezes uploads; reset deletes records and objects.
+3. `ci-evidence-v1` records GitHub repository, workflow, run identity, full commit SHA, timestamps, required checks, and report hashes. Semantic failures remain in history. Only the current valid import can receive QA acceptance.
+4. `final-release-v1` rechecks the accepted WP-20A fingerprint, traceability, high coherence findings, current risk and attachment records, current CI decision, and the residual-risk attestation. Medium findings remain warnings; every controlling record contributes to staleness.
+5. Jamie Chen records the simulated residual-risk attestation. Priya Shah is the only simulated final approver. Approval records statement version, role, reason, time, and exact policy fingerprint, then freezes the release as `release_approved`.
+
+The offline acceptance lever passes. WP-20B remains “acceptance pending” until the repository workflow has produced one real artifact, that artifact has been imported into the deployed workspace for the matching commit, and both simulated approval steps have completed there.
 
 ## Completed foundation package
 

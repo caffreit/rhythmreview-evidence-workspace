@@ -1,6 +1,7 @@
 declare namespace Cloudflare {
   interface Env {
     DB: D1Database;
+    RELEASE_FILES: R2Bucket;
     OPENROUTER_API_KEY?: string;
     OPENROUTER_MODEL?: string;
     OPENROUTER_REASONING_EFFORT?: string;

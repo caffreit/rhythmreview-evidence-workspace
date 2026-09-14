@@ -54,6 +54,7 @@ npm run verify:demo
 npm run verify:source
 npm run verify:traceability
 npm run verify:readiness
+npm run verify:final-release
 npm run build
 ```
 
@@ -64,6 +65,8 @@ npm run build
 `verify:traceability` exercises the controlled relationship lifecycle. It proves deterministic projection, revision-bound QA authority, close-without-baseline, stale-baseline conflict handling, and byte-for-byte preservation of the prior relationship rows, then resets the workspace.
 
 `verify:readiness` exercises WP-20A from reset through an editable three-plan package, revision-bound QA review, a 75-item/125-link baseline, explicit planned-release creation, nine fictional executions and QA decisions, failed and rejected reruns, stale-run protection, the QA-only `verification_ready` transition, frozen records, historical inspection, and final reset.
+
+`verify:final-release` carries that fixture through WP-20B. It covers eight release-scoped residual-risk records, rejected and replacement revisions, benefit-risk support, immutable R2 attachments, invalid and replaced CI imports, QA decisions, both simulated attestations, final-policy staleness, release-approver authority, the immutable `release_approved` transition, attachment download, audit history, and D1/R2 reset cleanup.
 
 With the local server running and `.env.local` configured, run `npm run verify:live` for the opt-in OpenRouter smoke test. This command makes paid external calls with fictional data and is never part of the ordinary test suite.
 
@@ -82,7 +85,7 @@ The second command embeds the generated migration in the local runtime initializ
 
 ## Project boundary
 
-Version one has one fictional product, immutable approved baselines, separately stored candidate work, explicit releases, and simulated author and QA identities. The simulated roles provide no identity assurance. WP-20A execution records, build references, evidence references, identities, and timestamps are fictional manual data. It has no eQMS, Jira, Git, Word, real CI, file attachments, electronic signatures, residual-risk acceptance, final release approval, or submission integration. `verification_ready` means only “Verification ready under release-readiness-v1.” Replay output is a saved fixture, not a live model call. The internal evaluation page calculates structured-run results against a locked provisional answer key. Manual and document-chat values remain illustrative fixtures.
+Version one has one fictional product, immutable approved baselines, separately stored candidate work, explicit releases, and three simulated actors. The roles provide no identity assurance. WP-20B stores hashed attachments and can verify a manually imported `ci-evidence-v1` bundle emitted by a real GitHub Actions run, but BlueBridge has no live GitHub connector and does not independently authenticate that run. Product content, verification records, attestations, and approval remain fictional. `verification_ready` means only “Verification ready under release-readiness-v1”; `release_approved` is displayed as “Fictional release approved.” Neither state claims deployment, production readiness, a compliant electronic signature, or regulatory compliance. The prototype still has no eQMS, Jira, Word, patient data, submission integration, authenticated identity, or production validation.
 
 See [the demo charter](docs/demo-charter.md), [the evaluation protocol](docs/evaluation-protocol.md), and [the presenter script](docs/presenter-script.md).
 

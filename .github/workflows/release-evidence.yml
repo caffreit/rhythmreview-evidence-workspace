@@ -1,0 +1,57 @@
+name: WP-20B release evidence
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+      - 'codex/**'
+
+permissions:
+  contents: read
+
+jobs:
+  offline-suite:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Run complete offline suite
+        env:
+          OPENROUTER_LIVE_DISABLED: '1'
+        run: |
+          mkdir -p reports
+          export CI_STARTED_AT="$(date -u +%Y-%m-%dT%H:%M:%S.000Z)"
+          {
+            npm test
+            npx tsc --noEmit
+            npm run lint
+            npm run build
+            npm run dev &
+            server_pid=$!
+            trap 'kill "$server_pid"' EXIT
+            for attempt in $(seq 1 60); do
+              curl --fail --silent http://localhost:3000/ >/dev/null && break
+              sleep 1
+            done
+            curl --fail --silent http://localhost:3000/ >/dev/null
+            npm run verify:demo
+            npm run verify:source
+            npm run verify:architecture
+            npm run verify:traceability
+            npm run verify:readiness
+            npm run verify:final-release
+          } 2>&1 | tee reports/offline-suite.txt
+          CI_STARTED_AT="$CI_STARTED_AT" npm run ci:evidence -- reports/offline-suite.txt
+      - name: Upload release evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: wp-20b-ci-evidence-${{ github.sha }}
+          path: reports/
+          if-no-files-found: error
+          retention-days: 30

@@ -55,10 +55,15 @@ erDiagram
 | `document_snapshots` | Frozen record of a rendered template against a baseline | Stores `document_id`, `baseline_id`, exact source version IDs as JSON, and `rendered_at`. Rendering uses `INSERT OR IGNORE`, so one template and baseline pair keeps its first snapshot time. |
 | `verification_plan_candidates` | Editable structured TEST plans inside a controlled package | Stores the reserved TEST ID, target risk control, paired relationship proposal, plan content, revision, status, and author provenance. |
 | `verification_plan_versions` | Approved structured details for TEST evidence | Keyed by immutable `evidence_version_id`; stores objective, method, acceptance criteria, target control, and approval provenance without creating another plan identity. |
-| `releases` | Explicit release record linked to an approved baseline | Stores required fictional code revision and creator fields plus `planned` or `verification_ready` state and the accepted readiness run. One release is permitted per baseline in this prototype. |
+| `releases` | Explicit release record linked to an approved baseline | Discriminates `planned`, `verification_ready`, and immutable `release_approved` states; stores the accepted WP-20A and final-policy run references and decision provenance. One release is permitted per baseline in this prototype. |
 | `verification_executions` | Immutable release-scoped TEST execution | Stores baseline and TEST version, outcome, environment, build, observed result, execution time, evidence reference, and author provenance. |
 | `verification_execution_decisions` | Append-only QA execution review | Stores accepted or rejected decisions with a required reason. The latest decision for the latest execution controls readiness. |
 | `release_readiness_runs` and `release_readiness_results` | Versioned release-readiness evaluation | Store the canonical input fingerprint, `release-readiness-v1` version, actor, outcome, and individual blocker, warning, or pass rows. |
+| `residual_risk_assessments` and `residual_risk_decisions` | Release-scoped hazard assessment and QA review | Assessment revisions and decisions are append-only. A new revision becomes current and leaves prior decisions as history. |
+| `release_attachments` | Durable release-file metadata | Stores category, normalized filename, media type, size, SHA-256, generated R2 object key, uploader, supersession link, and optional CI-import ownership. |
+| `ci_evidence_records` and `ci_evidence_decisions` | Imported GitHub Actions evidence and QA review | Retains valid, invalid, rejected, and replaced manifests. The current import controls the final gate. |
+| `prototype_attestations` | Simulated QA and release-approver statements | Stores exact statement version and text, actor, role, reason, timestamp, and controlling fingerprint. These are not compliant electronic signatures. |
+| `final_readiness_runs` and `final_readiness_results` | Versioned final-release policy evidence | Stores the `final-release-v1` fingerprint and each blocker, warning, or pass result. A controlling-record replacement makes an older run stale. |
 
 The current evidence types are intended use, claim, user need, requirement, hazard, risk control, component, test, clinical evidence, and label. The database stores the type as text. `lib/domain.ts` defines and validates the allowed values.
 
@@ -148,6 +153,8 @@ Change-first approval performs these steps:
 Source-first approval copies the active baseline, inserts approved source candidates as new evidence items and versions, adds `REFINES` links from requirements to generated needs, creates a processing-batch collection, and approves the new baseline. Release creation is a separate explicit command.
 
 WP-20A adds structured verification-plan candidates tied to proposed TEST evidence, approved plan-version details keyed by the immutable TEST evidence version, release-scoped verification executions, append-only QA execution decisions, and versioned readiness runs with individual results. Releases transition only from `planned` to `verification_ready`; this state is narrower than final release approval.
+
+WP-20B adds the second transition from `verification_ready` to immutable `release_approved`. Release files are split deliberately: D1 is authoritative for metadata and control history; the `RELEASE_FILES` R2 bucket holds immutable bytes addressed by generated object keys. The reset path reads every stored key, deletes the R2 objects, and then clears dependent D1 rows.
 
 ## Schema change process
 

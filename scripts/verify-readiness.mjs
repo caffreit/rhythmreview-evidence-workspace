@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 const baseUrl = process.env.DEMO_URL ?? 'http://localhost:3000';
 const author = 'Alex Morgan · Author';
 const qa = 'Jamie Chen · QA reviewer';
+const releaseSha = process.env.RELEASE_SHA ?? 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
 async function response(path,init) { const result=await fetch(`${baseUrl}${path}`,{ ...init,headers:{ 'content-type':'application/json',...(init?.headers ?? {}) } });const body=await result.json();return { status:result.status,body }; }
 async function request(path,init) { const result=await response(path,init);if (result.status < 200 || result.status >= 300) throw new Error(`${path} returned ${result.status}: ${JSON.stringify(result.body)}`);return result.body; }
 async function expectStatus(path,status,init) { const result=await response(path,init);assert.equal(result.status,status,`${path} should return ${status}; received ${JSON.stringify(result.body)}`);return result.body; }
@@ -77,7 +78,7 @@ try {
   assert.deepEqual(historical.rows,before.rows,'Prior baseline evidence projection changed.');
   assert.match((await request('/api/evidence/RC-001')).item.statement,/at least 90%/);assert.match((await request('/api/evidence/RC-002')).item.statement,/at least 85%/);
 
-  const releases=await request('/api/releases',{ method:'POST',body:JSON.stringify({ actor:author,baselineId:active.baseline.id,label:'WP-20A fictional verification release',codeRevision:'fictional-8fdff6d-wp20a' }) });
+  const releases=await request('/api/releases',{ method:'POST',body:JSON.stringify({ actor:author,baselineId:active.baseline.id,label:'WP-20A fictional verification release',codeRevision:releaseSha }) });
   const release=releases.releases.find((item) => item.baselineId === active.baseline.id);assert.ok(release);assert.equal(release.status,'planned');
   await expectStatus('/api/releases',409,{ method:'POST',body:JSON.stringify({ actor:author,baselineId:active.baseline.id,label:'Duplicate release',codeRevision:'duplicate' }) });
   let verification=await request('/api/verification');assert.equal(verification.plans.length,9);

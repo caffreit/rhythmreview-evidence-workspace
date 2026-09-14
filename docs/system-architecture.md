@@ -78,19 +78,19 @@ flowchart TB
 
 ### Client
 
-`app/page.tsx` mounts one client-side workspace. `components/workspace.tsx` owns navigation, evidence and change views, API calls, role simulation, and the guided demonstration. `components/source-workspace.tsx` owns source intake, candidate review, impact review, and baseline approval. Dedicated verification and release components own plan coverage, executions, readiness results, and the explicit release transition.
+`app/page.tsx` mounts one client-side workspace. `components/workspace.tsx` owns navigation and the guided demonstration. Central actor definitions provide Author, QA reviewer, and Release approver identities to every workspace. Dedicated release UI separates prerequisites, residual risk, evidence, QA attestation, and the final decision.
 
 The client validates every successful response with Zod before rendering it. The role selector changes the actor value sent to the server. It does not authenticate a person.
 
 ### Server
 
-The route handlers translate HTTP requests into repository calls. Zod schemas validate request bodies at the server boundary. `lib/repository.ts` implements baseline, change, document, evaluation, audit, coherence, and verification-package workflows. `lib/source-repository.ts` implements source revisions, clarification, candidate generation, source impact, and source-derived baseline approval. `lib/verification-repository.ts` implements explicit releases, executions, QA decisions, readiness runs, and the frozen readiness transition.
+The route handlers translate HTTP requests into repository calls. Zod schemas validate JSON and multipart input at the server boundary. `lib/final-release-repository.ts` owns residual-risk revisions and decisions, attachment persistence, CI import verification, attestations, final-readiness runs, approval, and reset cleanup. Server checks repeat every UI role restriction.
 
 The repository modules contain SQL and workflow rules together. There is no separate service layer for most commands. This keeps the prototype direct, but it will become hard to test and evolve when integrations and permissions expand.
 
 ### Storage
 
-Cloudflare D1 is the only application database. Drizzle defines the schema, but runtime code uses prepared D1 SQL for reads and writes. On first access, `ensureWorkspace` applies embedded migration statements and seeds the fictional baseline if no baseline exists.
+Cloudflare D1 stores controlled records and R2 stores release-file bytes. Drizzle defines D1; runtime code uses prepared SQL. R2 object keys are generated and never use uploaded filenames. Metadata and SHA-256 remain in D1, and downloads force attachment disposition.
 
 `db/runtime-schema.ts` is generated from the Drizzle migrations. Do not edit it by hand. See [Data model and database](data-model.md) for the tables and integrity limits.
 
@@ -169,7 +169,7 @@ The prototype runs repeatable checks for missing verification links, superseded 
 
 Candidate checks use an in-memory overlay of proposed statements on the active baseline. Editing a candidate increments the change revision and makes an older check stale. A waiver applies only to the exact finding fingerprint. If the rule inputs change, the waiver does not carry forward.
 
-The current approval endpoints do not require a current coherence run or require every finding to be cleared or waived. The checks support review, but they are not yet release gates. Adding enforced gates is planned work.
+Baseline approval remains narrower than release approval. `final-release-v1` enforces the accepted WP-20A readiness fingerprint, relationship policy, high traceability gaps, high coherence findings, current accepted residual risks, risk-support attachment, current valid QA-accepted CI evidence, and a current QA risk attestation. Medium coherence findings remain visible warnings.
 
 ## Failure behavior
 
@@ -185,8 +185,8 @@ Replay is a separate user choice. The server never changes a failed live request
 | Server to model | Bounded input, strict structured output, exact citation checks, `store: false` | No data classification, DLP, provider contract control, or key rotation workflow |
 | Server to database | Prepared statements and domain parsing on reads | No declared foreign keys and no transaction spanning multi-batch baseline writes |
 | AI to controlled evidence | AI records stay pending until a QA decision | Simulated identities do not prove who decided |
-| External systems to BlueBridge | Planned observations do not overwrite evidence | Connectors, idempotency, drift reconciliation, and external version contracts are not implemented |
-| Baseline to release | Release references an immutable baseline | Code revision, CI evidence, output package, and formal release gates are not implemented |
+| External systems to BlueBridge | Imported CI manifests and report bytes are schema-, commit-, conclusion-, and hash-checked | No live GitHub connector or independent run authentication |
+| Baseline to release | Two versioned policies, current-record fingerprints, separate simulated QA and release-approver decisions, and immutable final state | No authenticated identity, compliant e-signature, deployment evidence, or production validation |
 
 ## Planned expansion
 

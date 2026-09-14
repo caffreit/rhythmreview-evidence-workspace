@@ -57,6 +57,13 @@
       "when": 1789338991465,
       "tag": "0007_quiet_millenium_guard",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "6",
+      "when": 1789405953411,
+      "tag": "0008_lazy_agent_brand",
+      "breakpoints": true
     }
   ]
 }

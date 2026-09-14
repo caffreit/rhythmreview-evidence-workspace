@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import { z } from 'zod';
+import { demoActor, type DemoRole } from '@/lib/actors';
 import { SourceDetailSchema, SourceListResponseSchema, type Clarification, type SourceCandidate, type SourceCitation, type SourceDetail, type SourceListResponse } from '@/lib/source-domain';
 
-type Actor = 'author'|'qa';
+type Actor = DemoRole;
 type SourceMode = 'inbox'|'review';
 const ErrorSchema = z.object({ error:z.string(),runId:z.string().optional(),retryable:z.boolean().optional() });
 
@@ -20,7 +21,7 @@ async function sourceApi<T>(url:string,schema:z.ZodType<T>,init?:RequestInit):Pr
 }
 
 function displayStatus(value:string):string { return value.replaceAll('_',' '); }
-function actorName(actor:Actor):string { return actor === 'qa' ? 'Jamie Chen · QA reviewer' : 'Alex Morgan · Author'; }
+function actorName(actor:Actor):string { return demoActor(actor); }
 function citationLabel(citation:SourceCitation):string { return citation.kind === 'source_span' ? citation.sourceRevisionId : `Clarification ${citation.clarificationId}`; }
 
 function ClarificationCard({ item,actor,busy,onComplete }:{ item:Clarification;actor:Actor;busy:boolean;onComplete:(id:string,body:unknown)=>Promise<void> }) {

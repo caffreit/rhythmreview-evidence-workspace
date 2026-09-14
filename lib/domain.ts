@@ -1,4 +1,7 @@
 import { z } from 'zod';
+import { AuthorActorSchema, QaActorSchema } from './actors';
+
+export { AuthorActorSchema, QaActorSchema } from './actors';
 
 export const EvidenceIdSchema = z.string().regex(/^(IU|CLM|UN|REQ|HAZ|RC|DES|TEST|CE|LBL)-\d{3}$/).brand<'EvidenceId'>();
 export const ScenarioIdSchema = z.string().regex(/^SCN-\d{3}$/).brand<'ScenarioId'>();
@@ -17,8 +20,6 @@ export const DecisionSchema = z.enum(['pending','accepted','rejected','edited'])
 export const ChangeStatusSchema = z.enum(['draft','analysing','ready_for_review','under_review','updates_proposed','qa_review','returned_to_author','approved','closed']);
 export const AnalysisRunStatusSchema = z.enum(['running','completed','failed','superseded']);
 export const ProposedUpdateStatusSchema = z.enum(['proposed','discarded','superseded','approved']);
-export const AuthorActorSchema = z.literal('Alex Morgan · Author');
-export const QaActorSchema = z.literal('Jamie Chen · QA reviewer');
 
 export const EvidenceItemSchema = z.object({
   id: EvidenceIdSchema,

@@ -147,9 +147,11 @@ These low-fidelity wireframes define layout and behaviour before visual implemen
 │                  │ [Open separate Releases workspace]                        │
 │                  │ Planned release -> release-readiness-v1                    │
 │                  │ Nine fictional execution records and QA decisions          │ [2]
-│                  │ Verification ready (not Released or Production ready)       │
+│                  │ Verification ready -> risk -> evidence -> attestations       │
+│                  │ final-release-v1 -> Fictional release approved              │ [3]
 └──────────────────┴───────────────────────────────────────────────────────────┘
 ```
 
 1. Baseline approval remains a separate authorized decision after item review.
-2. Release creation is explicit. Manual execution, build, and evidence references are labelled fictional; real CI and final release approval remain outside WP-20A.
+2. Release creation is explicit. Manual execution, build, and evidence references remain labelled fictional.
+3. WP-20B adds eight residual-risk cards, durable attachment and CI-import panes, a QA attestation, final-policy results, and a separate Priya Shah decision. The approved label never says deployed or production ready.

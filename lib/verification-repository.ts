@@ -17,15 +17,15 @@ async function appendReleaseAudit(db:D1Database,args:{ releaseId:string;entityTy
     .bind(makeId('AUD'),args.entityType,args.entityId,'release',args.releaseId,args.action,args.actor,JSON.stringify(auditDetails({ reason:args.reason,changes:args.changes,references:args.references })),1,args.createdAt).run();
 }
 
-type ReleaseRow = { id:string;label:string;baselineId:string;status:string;codeRevision:string;createdBy:string;createdAt:string;readinessRunId:string|null;verificationReadyBy:string|null;verificationReadyAt:string|null };
+type ReleaseRow = { id:string;label:string;baselineId:string;status:string;codeRevision:string;createdBy:string;createdAt:string;readinessRunId:string|null;verificationReadyBy:string|null;verificationReadyAt:string|null;finalReadinessRunId:string|null;releaseApprovedBy:string|null;releaseApprovedAt:string|null };
 function releaseFromRow(row:ReleaseRow):ReleaseRecord { return ReleaseRecordSchema.parse(row); }
 
-async function releaseById(db:D1Database,id:string):Promise<ReleaseRecord|null> {
-  const row = await db.prepare('SELECT id,label,baseline_id AS baselineId,status,code_revision AS codeRevision,created_by AS createdBy,created_at AS createdAt,readiness_run_id AS readinessRunId,verification_ready_by AS verificationReadyBy,verification_ready_at AS verificationReadyAt FROM releases WHERE id=?').bind(id).first<ReleaseRow>();
+export async function getReleaseById(db:D1Database,id:string):Promise<ReleaseRecord|null> {
+  const row = await db.prepare('SELECT id,label,baseline_id AS baselineId,status,code_revision AS codeRevision,created_by AS createdBy,created_at AS createdAt,readiness_run_id AS readinessRunId,verification_ready_by AS verificationReadyBy,verification_ready_at AS verificationReadyAt,final_readiness_run_id AS finalReadinessRunId,release_approved_by AS releaseApprovedBy,release_approved_at AS releaseApprovedAt FROM releases WHERE id=?').bind(id).first<ReleaseRow>();
   return row ? releaseFromRow(row) : null;
 }
 
-async function executionList(db:D1Database,releaseId:string):Promise<VerificationExecution[]> {
+export async function listReleaseExecutions(db:D1Database,releaseId:string):Promise<VerificationExecution[]> {
   const executions = await db.prepare(`SELECT id,release_id AS releaseId,baseline_id AS baselineId,test_item_id AS testItemId,test_version_id AS testVersionId,outcome,environment,build_id AS buildId,observed_result AS observedResult,executed_at AS executedAt,evidence_reference AS evidenceReference,created_by AS createdBy,created_at AS createdAt
     FROM verification_executions WHERE release_id=? ORDER BY executed_at,id`).bind(releaseId).all<{ id:string;releaseId:string;baselineId:string;testItemId:string;testVersionId:string;outcome:string;environment:string;buildId:string;observedResult:string;executedAt:string;evidenceReference:string;createdBy:string;createdAt:string }>();
   const decisions = await db.prepare(`SELECT d.execution_id AS executionId,d.decision,d.reason,d.actor,d.created_at AS createdAt FROM verification_execution_decisions d JOIN verification_executions e ON e.id=d.execution_id WHERE e.release_id=? ORDER BY d.created_at DESC,d.id DESC`).bind(releaseId).all<{ executionId:string;decision:string;reason:string;actor:string;createdAt:string }>();
@@ -46,15 +46,15 @@ async function readinessInput(db:D1Database,release:ReleaseRecord):Promise<Readi
     relationships:traceability.links.map((link) => ({ id:link.id,sourceId:link.sourceId,targetId:link.targetId,type:link.type })),
     policyViolations:traceability.links.filter((link) => !link.policy.valid).map((link) => ({ id:link.id,detail:link.policy.violation ?? 'The relationship is invalid.' })),
     coverageGaps:traceability.gaps.map((gap) => ({ id:gap.id,severity:gap.severity,itemId:gap.itemId,title:gap.title,actual:gap.actual })),
-    planLinks,executions:await executionList(db,release.id),
+    planLinks,executions:await listReleaseExecutions(db,release.id),
   };
 }
 
-async function readinessRunById(db:D1Database,id:string,currentRelease?:ReleaseRecord|null):Promise<ReadinessRun|null> {
+export async function getReleaseReadinessRun(db:D1Database,id:string,currentRelease?:ReleaseRecord|null):Promise<ReadinessRun|null> {
   const run = await db.prepare('SELECT id,release_id AS releaseId,baseline_id AS baselineId,policy_id AS policyId,policy_version AS policyVersion,input_fingerprint AS inputFingerprint,status,actor,created_at AS createdAt FROM release_readiness_runs WHERE id=?').bind(id).first<{ id:string;releaseId:string;baselineId:string;policyId:string;policyVersion:string;inputFingerprint:string;status:string;actor:string;createdAt:string }>();
   if (!run) return null;
   const results = await db.prepare('SELECT result_id AS id,code,severity,status,subject_id AS subjectId,title,detail FROM release_readiness_results WHERE run_id=? ORDER BY code,result_id').bind(id).all<{ id:string;code:string;severity:string;status:string;subjectId:string;title:string;detail:string }>();
-  const release = currentRelease ?? await releaseById(db,run.releaseId);
+  const release = currentRelease ?? await getReleaseById(db,run.releaseId);
   const currentFingerprint = release ? evaluateReleaseReadiness(await readinessInput(db,release)).inputFingerprint : null;
   return {
     ...run,policyId:RELEASE_READINESS_POLICY.id,policyVersion:RELEASE_READINESS_POLICY.version,
@@ -64,11 +64,11 @@ async function readinessRunById(db:D1Database,id:string,currentRelease?:ReleaseR
 
 export async function listReleaseWorkspace(db:D1Database) {
   await ensureWorkspace(db);
-  const rows = await db.prepare('SELECT id,label,baseline_id AS baselineId,status,code_revision AS codeRevision,created_by AS createdBy,created_at AS createdAt,readiness_run_id AS readinessRunId,verification_ready_by AS verificationReadyBy,verification_ready_at AS verificationReadyAt FROM releases ORDER BY created_at DESC,id DESC').all<ReleaseRow>();
+  const rows = await db.prepare('SELECT id,label,baseline_id AS baselineId,status,code_revision AS codeRevision,created_by AS createdBy,created_at AS createdAt,readiness_run_id AS readinessRunId,verification_ready_by AS verificationReadyBy,verification_ready_at AS verificationReadyAt,final_readiness_run_id AS finalReadinessRunId,release_approved_by AS releaseApprovedBy,release_approved_at AS releaseApprovedAt FROM releases ORDER BY created_at DESC,id DESC').all<ReleaseRow>();
   const releases = rows.results.map(releaseFromRow);
   const latestRelease = releases[0] ?? null;
   const latestRun = latestRelease ? await db.prepare('SELECT id FROM release_readiness_runs WHERE release_id=? ORDER BY created_at DESC,id DESC LIMIT 1').bind(latestRelease.id).first<{ id:string }>() : null;
-  return ReleaseWorkspaceSchema.parse({ releases,latestReadiness:latestRun ? await readinessRunById(db,latestRun.id,latestRelease) : null });
+  return ReleaseWorkspaceSchema.parse({ releases,latestReadiness:latestRun ? await getReleaseReadinessRun(db,latestRun.id,latestRelease) : null });
 }
 
 export async function createRelease(db:D1Database,raw:unknown) {
@@ -78,14 +78,14 @@ export async function createRelease(db:D1Database,raw:unknown) {
   const duplicate = await db.prepare('SELECT id FROM releases WHERE baseline_id=?').bind(input.baselineId).first<{ id:string }>();
   if (duplicate) throw new WorkflowConflictError(`Release ${duplicate.id} already references this baseline.`);
   const id = makeId('RELSE'); const createdAt = now();
-  await db.prepare("INSERT INTO releases (id,label,baseline_id,status,code_revision,created_by,created_at,readiness_run_id,verification_ready_by,verification_ready_at) VALUES (?,?,?,'planned',?,?,?,NULL,NULL,NULL)")
+  await db.prepare("INSERT INTO releases (id,label,baseline_id,status,code_revision,created_by,created_at,readiness_run_id,verification_ready_by,verification_ready_at,final_readiness_run_id,release_approved_by,release_approved_at) VALUES (?,?,?,'planned',?,?,?,NULL,NULL,NULL,NULL,NULL,NULL)")
     .bind(id,input.label,input.baselineId,input.codeRevision,input.actor,createdAt).run();
   await appendReleaseAudit(db,{ releaseId:id,entityType:'release',entityId:id,action:'release_planned',actor:input.actor,createdAt,changes:[{ field:'status',oldValue:null,newValue:'planned' }],references:{ baselineId:input.baselineId,codeRevision:input.codeRevision } });
   return listReleaseWorkspace(db);
 }
 
 export async function createVerificationExecution(db:D1Database,raw:unknown) {
-  await ensureWorkspace(db); const input = CreateVerificationExecutionInputSchema.parse(raw); const release = await releaseById(db,input.releaseId);
+  await ensureWorkspace(db); const input = CreateVerificationExecutionInputSchema.parse(raw); const release = await getReleaseById(db,input.releaseId);
   if (!release || release.status !== 'planned') throw new WorkflowConflictError('Executions can be recorded only for a planned release.');
   const test = await db.prepare(`SELECT b.version_id AS versionId FROM baseline_items b JOIN evidence_items i ON i.id=b.item_id WHERE b.baseline_id=? AND b.item_id=? AND i.type='test'`).bind(release.baselineId,input.testItemId).first<{ versionId:string }>();
   if (!test) throw new WorkflowConflictError('The selected TEST plan is not in the release baseline.');
@@ -109,7 +109,7 @@ export async function reviewVerificationExecution(db:D1Database,id:string,raw:un
 }
 
 export async function runReleaseReadiness(db:D1Database,id:string,raw:unknown) {
-  await ensureWorkspace(db); const input = RunReleaseReadinessInputSchema.parse(raw); const release = await releaseById(db,id);
+  await ensureWorkspace(db); const input = RunReleaseReadinessInputSchema.parse(raw); const release = await getReleaseById(db,id);
   if (!release || release.status !== 'planned') throw new WorkflowConflictError('Readiness can run only for a planned release.');
   const evaluation = evaluateReleaseReadiness(await readinessInput(db,release)); const runId = makeId('RRN'); const createdAt = now();
   const statements:D1PreparedStatement[] = [db.prepare('INSERT INTO release_readiness_runs (id,release_id,baseline_id,policy_id,policy_version,input_fingerprint,status,actor,created_at) VALUES (?,?,?,?,?,?,?,?,?)')
@@ -117,13 +117,13 @@ export async function runReleaseReadiness(db:D1Database,id:string,raw:unknown) {
   for (const result of evaluation.results) statements.push(db.prepare('INSERT INTO release_readiness_results (run_id,result_id,code,severity,status,subject_id,title,detail) VALUES (?,?,?,?,?,?,?,?)').bind(runId,result.id,result.code,result.severity,result.status,result.subjectId,result.title,result.detail));
   await db.batch(statements);
   await appendReleaseAudit(db,{ releaseId:release.id,entityType:'release_readiness_run',entityId:runId,action:'release_readiness_evaluated',actor:input.actor,createdAt,changes:[{ field:'status',oldValue:null,newValue:evaluation.status }],references:{ policyId:RELEASE_READINESS_POLICY.id,policyVersion:RELEASE_READINESS_POLICY.version,inputFingerprint:evaluation.inputFingerprint } });
-  return readinessRunById(db,runId,release);
+  return getReleaseReadinessRun(db,runId,release);
 }
 
 export async function markVerificationReady(db:D1Database,id:string,raw:unknown) {
-  await ensureWorkspace(db); const input = MarkVerificationReadyInputSchema.parse(raw); const release = await releaseById(db,id);
+  await ensureWorkspace(db); const input = MarkVerificationReadyInputSchema.parse(raw); const release = await getReleaseById(db,id);
   if (!release || release.status !== 'planned') throw new WorkflowConflictError('Only a planned release can become verification ready.');
-  const run = await readinessRunById(db,input.readinessRunId,release);
+  const run = await getReleaseReadinessRun(db,input.readinessRunId,release);
   if (!run || run.releaseId !== release.id || run.status !== 'ready' || run.stale || run.results.some((result) => result.status === 'block')) throw new WorkflowConflictError('Run a fresh passing readiness check before marking this release verification ready.');
   const readyAt = now();
   const result = await db.prepare("UPDATE releases SET status='verification_ready',readiness_run_id=?,verification_ready_by=?,verification_ready_at=? WHERE id=? AND status='planned'").bind(run.id,input.actor,readyAt,release.id).run();
@@ -138,9 +138,9 @@ export async function getVerificationWorkspace(db:D1Database) {
   const byId = new Map(evidence.map((item) => [item.id,item]));
   const details = await db.prepare('SELECT evidence_version_id AS evidenceVersionId,test_item_id AS testItemId,objective,method,acceptance_criteria AS acceptanceCriteria,target_risk_control_id AS targetRiskControlId FROM verification_plan_versions').all<{ evidenceVersionId:string;testItemId:string;objective:string;method:string;acceptanceCriteria:string;targetRiskControlId:string }>();
   const detailByVersion = new Map(details.results.map((detail) => [detail.evidenceVersionId,detail]));
-  const latestReleaseRow = await db.prepare('SELECT id,label,baseline_id AS baselineId,status,code_revision AS codeRevision,created_by AS createdBy,created_at AS createdAt,readiness_run_id AS readinessRunId,verification_ready_by AS verificationReadyBy,verification_ready_at AS verificationReadyAt FROM releases WHERE baseline_id=? ORDER BY created_at DESC,id DESC LIMIT 1').bind(traceability.baseline.id).first<ReleaseRow>();
+  const latestReleaseRow = await db.prepare('SELECT id,label,baseline_id AS baselineId,status,code_revision AS codeRevision,created_by AS createdBy,created_at AS createdAt,readiness_run_id AS readinessRunId,verification_ready_by AS verificationReadyBy,verification_ready_at AS verificationReadyAt,final_readiness_run_id AS finalReadinessRunId,release_approved_by AS releaseApprovedBy,release_approved_at AS releaseApprovedAt FROM releases WHERE baseline_id=? ORDER BY created_at DESC,id DESC LIMIT 1').bind(traceability.baseline.id).first<ReleaseRow>();
   const activeRelease = latestReleaseRow ? releaseFromRow(latestReleaseRow) : null;
-  const executions = activeRelease ? await executionList(db,activeRelease.id) : [];
+  const executions = activeRelease ? await listReleaseExecutions(db,activeRelease.id) : [];
   const plans = traceability.links.flatMap((link) => {
     if (link.type !== 'VERIFIES' || link.source.type !== 'test' || link.target.type !== 'risk_control') return [];
     const test = byId.get(link.sourceId); const control = byId.get(link.targetId);

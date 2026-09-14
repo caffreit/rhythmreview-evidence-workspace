@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import type { DemoRole } from '@/lib/actors';
 import { EVIDENCE_TYPE_LABELS, EvidenceIdSchema, EvidenceTypeSchema, RelationshipTypeSchema, type EvidenceItem, type EvidenceType, type RelationshipProposalDraft } from '@/lib/domain';
 import type { TraceabilityView } from '@/lib/view-models';
 
@@ -23,7 +24,7 @@ function PolicyHeader({ traceability }:{ traceability:TraceabilityView }) {
 
 type ComposerState = { operation:'add'|'retype'|'retire';baseRelationshipId?:string;sourceId:string;targetId:string;type:string;rationale:string;lockedEndpoint?:'source'|'target';eligiblePeerTypes?:EvidenceType[] };
 
-export function TraceabilityWorkspace({ mode,traceability,evidence,actor,onOpenEvidence,onCreateRelationship }:{ mode:TraceMode;traceability:TraceabilityView;evidence:EvidenceItem[];actor:'author'|'qa';onOpenEvidence:(id:string)=>void;onCreateRelationship:(draft:RelationshipProposalDraft)=>Promise<void> }) {
+export function TraceabilityWorkspace({ mode,traceability,evidence,actor,onOpenEvidence,onCreateRelationship }:{ mode:TraceMode;traceability:TraceabilityView;evidence:EvidenceItem[];actor:DemoRole;onOpenEvidence:(id:string)=>void;onCreateRelationship:(draft:RelationshipProposalDraft)=>Promise<void> }) {
   const [query,setQuery] = useState('');
   const [type,setType] = useState<'all'|EvidenceType>(mode === 'matrix' ? 'requirement' : 'all');
   const [gapsOnly,setGapsOnly] = useState(false);

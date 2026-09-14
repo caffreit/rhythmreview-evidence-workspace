@@ -194,6 +194,7 @@ export const releases = sqliteTable('releases', {
   id:text('id').primaryKey(),label:text('label').notNull(),baselineId:text('baseline_id').notNull(),status:text('status').notNull(),
   codeRevision:text('code_revision').notNull(),createdBy:text('created_by').notNull(),createdAt:text('created_at').notNull(),
   readinessRunId:text('readiness_run_id'),verificationReadyBy:text('verification_ready_by'),verificationReadyAt:text('verification_ready_at'),
+  finalReadinessRunId:text('final_readiness_run_id'),releaseApprovedBy:text('release_approved_by'),releaseApprovedAt:text('release_approved_at'),
 }, (table) => [index('idx_releases_baseline').on(table.baselineId)]);
 
 export const verificationExecutions = sqliteTable('verification_executions', {
@@ -215,3 +216,43 @@ export const releaseReadinessResults = sqliteTable('release_readiness_results', 
   runId:text('run_id').notNull(),resultId:text('result_id').notNull(),code:text('code').notNull(),severity:text('severity').notNull(),status:text('status').notNull(),
   subjectId:text('subject_id').notNull(),title:text('title').notNull(),detail:text('detail').notNull(),
 }, (table) => [primaryKey({ columns:[table.runId,table.resultId] }),index('idx_release_readiness_results_run').on(table.runId,table.status)]);
+
+export const residualRiskAssessments = sqliteTable('residual_risk_assessments', {
+  id:text('id').primaryKey(),releaseId:text('release_id').notNull(),hazardItemId:text('hazard_item_id').notNull(),hazardVersionId:text('hazard_version_id').notNull(),
+  revision:integer('revision').notNull(),classification:text('classification').notNull(),rationale:text('rationale').notNull(),benefitRiskConclusion:text('benefit_risk_conclusion'),
+  createdBy:text('created_by').notNull(),createdAt:text('created_at').notNull(),
+}, (table) => [index('idx_residual_risks_release_hazard').on(table.releaseId,table.hazardItemId,table.revision)]);
+
+export const residualRiskDecisions = sqliteTable('residual_risk_decisions', {
+  id:text('id').primaryKey(),assessmentId:text('assessment_id').notNull(),decision:text('decision').notNull(),reason:text('reason').notNull(),actor:text('actor').notNull(),createdAt:text('created_at').notNull(),
+}, (table) => [index('idx_residual_risk_decisions_assessment').on(table.assessmentId,table.createdAt)]);
+
+export const releaseAttachments = sqliteTable('release_attachments', {
+  id:text('id').primaryKey(),releaseId:text('release_id').notNull(),category:text('category').notNull(),filename:text('filename').notNull(),contentType:text('content_type').notNull(),
+  size:integer('size').notNull(),sha256:text('sha256').notNull(),objectKey:text('object_key').notNull(),supersedesAttachmentId:text('supersedes_attachment_id'),ciEvidenceId:text('ci_evidence_id'),createdBy:text('created_by').notNull(),createdAt:text('created_at').notNull(),
+}, (table) => [index('idx_release_attachments_release').on(table.releaseId,table.category,table.createdAt)]);
+
+export const ciEvidenceRecords = sqliteTable('ci_evidence_records', {
+  id:text('id').primaryKey(),releaseId:text('release_id').notNull(),manifestAttachmentId:text('manifest_attachment_id').notNull(),manifestJson:text('manifest_json').notNull(),
+  commitSha:text('commit_sha').notNull(),conclusion:text('conclusion').notNull(),validationStatus:text('validation_status').notNull(),validationError:text('validation_error'),
+  supersedesCiEvidenceId:text('supersedes_ci_evidence_id'),createdBy:text('created_by').notNull(),createdAt:text('created_at').notNull(),
+}, (table) => [index('idx_ci_evidence_release').on(table.releaseId,table.createdAt)]);
+
+export const ciEvidenceDecisions = sqliteTable('ci_evidence_decisions', {
+  id:text('id').primaryKey(),ciEvidenceId:text('ci_evidence_id').notNull(),decision:text('decision').notNull(),reason:text('reason').notNull(),actor:text('actor').notNull(),createdAt:text('created_at').notNull(),
+}, (table) => [index('idx_ci_evidence_decisions_record').on(table.ciEvidenceId,table.createdAt)]);
+
+export const prototypeAttestations = sqliteTable('prototype_attestations', {
+  id:text('id').primaryKey(),releaseId:text('release_id').notNull(),kind:text('kind').notNull(),statementVersion:text('statement_version').notNull(),statement:text('statement').notNull(),
+  actor:text('actor').notNull(),role:text('role').notNull(),reason:text('reason').notNull(),inputFingerprint:text('input_fingerprint').notNull(),createdAt:text('created_at').notNull(),
+}, (table) => [index('idx_prototype_attestations_release').on(table.releaseId,table.kind,table.createdAt)]);
+
+export const finalReadinessRuns = sqliteTable('final_readiness_runs', {
+  id:text('id').primaryKey(),releaseId:text('release_id').notNull(),policyId:text('policy_id').notNull(),policyVersion:text('policy_version').notNull(),
+  inputFingerprint:text('input_fingerprint').notNull(),status:text('status').notNull(),actor:text('actor').notNull(),createdAt:text('created_at').notNull(),
+}, (table) => [index('idx_final_readiness_runs_release').on(table.releaseId,table.createdAt)]);
+
+export const finalReadinessResults = sqliteTable('final_readiness_results', {
+  runId:text('run_id').notNull(),resultId:text('result_id').notNull(),code:text('code').notNull(),severity:text('severity').notNull(),status:text('status').notNull(),
+  subjectId:text('subject_id').notNull(),title:text('title').notNull(),detail:text('detail').notNull(),
+}, (table) => [primaryKey({ columns:[table.runId,table.resultId] }),index('idx_final_readiness_results_run').on(table.runId,table.status)]);

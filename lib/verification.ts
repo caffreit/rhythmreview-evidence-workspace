@@ -42,8 +42,9 @@ export const VerificationExecutionSchema = z.discriminatedUnion('outcome',[
 
 const ReleaseBaseSchema = z.object({ id:z.string(),label:z.string(),baselineId:z.string(),codeRevision:z.string(),createdBy:z.string(),createdAt:z.string() });
 export const ReleaseRecordSchema = z.discriminatedUnion('status',[
-  ReleaseBaseSchema.extend({ status:z.literal('planned'),readinessRunId:z.null(),verificationReadyBy:z.null(),verificationReadyAt:z.null() }),
-  ReleaseBaseSchema.extend({ status:z.literal('verification_ready'),readinessRunId:z.string(),verificationReadyBy:z.string(),verificationReadyAt:z.string() }),
+  ReleaseBaseSchema.extend({ status:z.literal('planned'),readinessRunId:z.null(),verificationReadyBy:z.null(),verificationReadyAt:z.null(),finalReadinessRunId:z.null(),releaseApprovedBy:z.null(),releaseApprovedAt:z.null() }),
+  ReleaseBaseSchema.extend({ status:z.literal('verification_ready'),readinessRunId:z.string(),verificationReadyBy:z.string(),verificationReadyAt:z.string(),finalReadinessRunId:z.null(),releaseApprovedBy:z.null(),releaseApprovedAt:z.null() }),
+  ReleaseBaseSchema.extend({ status:z.literal('release_approved'),readinessRunId:z.string(),verificationReadyBy:z.string(),verificationReadyAt:z.string(),finalReadinessRunId:z.string(),releaseApprovedBy:z.string(),releaseApprovedAt:z.string() }),
 ]);
 
 export const ReadinessResultSchema = z.object({
