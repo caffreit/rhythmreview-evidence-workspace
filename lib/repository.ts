@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { seed } from './data';
 import { schemaStatements } from '@/db/runtime-schema';
+import { hasCurrentSchemaMarker } from './runtime-schema-bootstrap';
 import {
   ChangeIdSchema, ChangeStatusSchema, CheckScopeSchema, CreateChangeInputSchema, DocumentTemplateSchema, EvidenceIdSchema, EvidenceItemSchema,
   CloseChangeInputSchema, CreateRelationshipProposalInputSchema, FindingDispositionInputSchema, GuidedReviewCompletionInputSchema, ImpactSuggestionSchema,
@@ -53,11 +54,14 @@ export function ensureWorkspace(db:D1Database): Promise<void> {
 }
 
 async function initializeWorkspace(db:D1Database): Promise<void> {
-  for (const sql of schemaStatements) {
-    try { await db.prepare(sql).run(); }
-    catch (error:unknown) {
-      const message = error instanceof Error ? error.message : String(error);
-      if (!sql.startsWith('ALTER TABLE') || !message.toLowerCase().includes('duplicate column')) throw error;
+  const releaseColumns = await db.prepare("PRAGMA table_info('releases')").all<{ name:string }>();
+  if (!hasCurrentSchemaMarker(releaseColumns.results)) {
+    for (const sql of schemaStatements) {
+      try { await db.prepare(sql).run(); }
+      catch (error:unknown) {
+        const message = error instanceof Error ? error.message : String(error);
+        if (!sql.startsWith('ALTER TABLE') || !message.toLowerCase().includes('duplicate column')) throw error;
+      }
     }
   }
   await db.batch([

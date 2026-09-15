@@ -165,6 +165,6 @@ npm run db:generate
 npm run db:embed
 ```
 
-The first command creates a SQL migration under `drizzle/`. The second command rebuilds `db/runtime-schema.ts`. Application startup applies each embedded statement with `CREATE TABLE IF NOT EXISTS` behavior and tolerates duplicate-column errors for `ALTER TABLE` statements.
+The first command creates a SQL migration under `drizzle/`. The second command rebuilds `db/runtime-schema.ts`. Application startup checks for the current schema marker before applying the embedded bootstrap sequence. A current database is never sent through historical table-rebuild migrations again; a fresh database applies each embedded statement with `CREATE TABLE IF NOT EXISTS` behavior and tolerates duplicate-column errors for `ALTER TABLE` statements.
 
 This bootstrap model fits the demonstration. A production service needs a deployment-time migration ledger, backups, forward and backward compatibility rules, and an operator-visible failure path.
