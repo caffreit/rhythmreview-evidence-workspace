@@ -1,7 +1,7 @@
 # BlueBridge prototype alignment with the BBT SDLC charter
 
 Status: assessment for discussion  
-Assessment date: 14 September 2026  
+Assessment date: 15 September 2026
 Inputs: BBT SDLC Team Brief v1.2, BBT SDLC Charter v3.4, the current prototype, and the published BlueBridge work packages
 
 ## Executive conclusion
@@ -42,7 +42,7 @@ There are two material philosophical tensions to resolve:
 
 | Charter area | Prototype today | Work-package coverage | Assessment |
 | --- | --- | --- | --- |
-| Requirements and traceability (§6) | Versioned user needs, requirements, components, risk controls, tests, typed links, review decisions, immutable baselines, and release-linked verification and residual-risk paths | WP-10A/B and WP-20A are complete; WP-20B is implemented pending external acceptance proof; WP-40 plans repository and Jira observations | Partial. The controlled graph is real, but live requirement-to-code-to-build traceability, data/model provenance, specification governance, and continuous external synchronization are missing. |
+| Requirements and traceability (§6) | Versioned user needs, requirements, components, risk controls, tests, typed links, review decisions, immutable baselines, and release-linked verification and residual-risk paths | WP-10A/B and WP-20A/B are complete; WP-40 plans repository and Jira observations | Partial. The controlled graph is real, but live requirement-to-code-to-build traceability, data/model provenance, specification governance, and continuous external synchronization are missing. |
 | Design controls and rigor (§7) | Item review, change control, traceability checks, baseline approval, verification-readiness checks, residual-risk review, and a fictional final-release gate | WP-30 adds controlled document inputs and outputs | Gap at lifecycle entry. No entry gate, rigor band, per-work-item rigor agreement, use-specification workflow, or as-built Definition-of-Done control is planned. |
 | AI-native and agentic engineering (§8) | Versioned LLM policies support source analysis, evidence drafting, and semantic impact proposals; actions and failures are recorded | WP-50 includes cost controls; WP-60 includes model governance | Partial for AI-assisted evidence, gap for AI-generated software. The prototype does not govern coding agents, shared context, agent permissions, PR activity, or coordination at scale. |
 | Design input review, approvals, and evidence (§9) | Individual item decisions, attributable prototype audit entries, proposal/decision separation, immutable baselines, manual verification evidence, and simulated WP-20B attestations | WP-40 plans Jira and repository observations; WP-60 covers authenticated signatures | Partial. The record model fits the proposed approach, but parent-before-child enforcement, authenticated identity, electronic signatures, and measured evidence harvesting are absent. |

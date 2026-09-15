@@ -6,7 +6,7 @@ BlueBridge is an internal medtech evidence workspace. It tests whether structure
 
 ## Current state
 
-The RhythmReview prototype uses fictional data. It has 72 evidence items, 122 curated typed relationships, 10 generated document views, three change scenarios, immutable baseline snapshots, separate author and QA decisions, and an audit history.
+The RhythmReview prototype uses fictional data. Its accepted release baseline has 75 evidence items, 125 curated typed relationships, 10 generated document views, three change scenarios, immutable baseline snapshots, separate author, QA, and release-approver decisions, and an append-only audit history.
 
 The implemented workflows are:
 
@@ -16,10 +16,14 @@ The implemented workflows are:
 - Live analysis through OpenRouter and an explicitly selected replay mode.
 - A baseline-aware traceability matrix and deterministic gap view backed by a controlled prototype relationship policy.
 - Controlled add, retype, and retire proposals with revision-bound QA decisions, deterministic candidate projection, close-without-baseline, and immutable relationship history.
+- A verification-readiness path with controlled TEST plans, immutable fictional executions, append-only QA review, and `release-readiness-v1`.
+- A fictional final-release path with revisioned residual-risk assessment, hashed R2 attachments, verified GitHub Actions evidence, two simulated attestations, `final-release-v1`, and an immutable approved release.
 
 The foundation package is complete. Its versioned prompt contracts, explicit live-failure behavior, model-run metadata, offline regression, live source-to-baseline proof, and prompt evaluation are recorded in the delivery plan.
 
-WP-10 controlled traceability is implemented and accepted. `relationship-policy-v1.0` recognizes all 122 curated links. Matrix, Coverage, and the interactive neighborhood graph share the same deterministic approved and candidate projections. The graph keeps controlled, proposed, rejected, and review-only states distinct. Coverage reports honest gaps for `CLM-002`, `RC-001`, `RC-002`, and `RC-005`; the `RC-005` verification gap remains intentionally open for WP-20.
+WP-10 controlled traceability is implemented and accepted. `relationship-policy-v1.0` recognizes the curated relationship graph. Matrix, Coverage, and the interactive neighborhood graph share the same deterministic approved and candidate projections. The graph keeps controlled, proposed, rejected, and review-only states distinct.
+
+WP-20 verification and final-release controls are implemented and accepted. The accepted `RR-1.1` release has zero high coverage gaps, nine current passed and QA-accepted verification executions, eight current QA-accepted residual-risk assessments, hash-verified support evidence, an accepted real Actions bundle tied to the deployed commit, and a frozen fictional final approval. The acceptance record and its scope limits are in the delivery plan. WP-30 document inputs and outputs is next.
 
 ## Delivery plan
 
