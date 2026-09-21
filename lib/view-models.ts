@@ -61,10 +61,10 @@ export const TraceabilitySchema = z.object({
     title:z.string(),requirement:z.string(),actual:z.string(),
   })),
 });
-export const DocumentViewSchema = z.object({ id:z.string(),code:z.string(),title:z.string(),description:z.string(),types:z.array(EvidenceTypeSchema),excludeFlags:z.array(z.string()) });
+export const DocumentViewSchema = z.object({ id:z.string(),code:z.string(),title:z.string(),description:z.string(),versionId:z.string(),version:z.number().int().positive(),status:z.enum(['draft','approved','retired']),types:z.array(EvidenceTypeSchema),excludeFlags:z.array(z.string()) });
 export const DocumentListResponseSchema = z.object({ documents:z.array(DocumentViewSchema) });
 const BaselineViewSchema = z.object({ id:z.string(),label:z.string(),status:z.string(),approvedBy:z.string().nullable(),approvedAt:z.string().nullable() });
-export const RenderedDocumentSchema = z.object({ document:DocumentViewSchema,baseline:BaselineViewSchema,items:z.array(EvidenceItemSchema),snapshotId:z.string(),renderedAt:z.string(),sourceVersionIds:z.array(z.string()),availableBaselines:z.array(BaselineViewSchema) });
+export const RenderedDocumentSchema = z.object({ document:DocumentViewSchema,baseline:BaselineViewSchema,items:z.array(EvidenceItemSchema),snapshotId:z.string().nullable(),renderedAt:z.string(),sourceVersionIds:z.array(z.string()),availableBaselines:z.array(BaselineViewSchema),preview:z.literal(true) });
 export const ChangeSummarySchema = z.object({
   id:z.string(),scenarioId:z.string().nullable(),anchorItemId:EvidenceIdSchema,title:z.string(),status:ChangeStatusSchema,createdBy:z.string(),createdAt:z.string(),updatedAt:z.string(),revision:z.number(),currentAnalysisMode:z.string().nullable(),
 });

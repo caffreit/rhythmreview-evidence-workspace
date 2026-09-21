@@ -1,7 +1,7 @@
 # BlueBridge product architecture
 
 Status: approved prototype direction  
-Last updated: 11 September 2026
+Last updated: 18 September 2026
 
 ## Product intent
 
@@ -172,11 +172,13 @@ Analysis runs start when a candidate enters review and restart after material co
 
 ## Capability boundaries
 
-The first functional slice implements fictional source ingestion, text and Markdown import, clarification, sequential user-need and requirement review, source provenance, impact analysis, and candidate-baseline approval. Release creation is explicit and separate. WP-20A adds controlled verification packages, immutable manual execution records, QA execution review, and `release-readiness-v1` evaluation. WP-20B adds revisioned residual-risk review, hashed R2 attachments, verified `ci-evidence-v1` import, simulated QA and release-approver attestations, and immutable fictional final approval under `final-release-v1`.
+The pushed implementation covers fictional source ingestion, text and Markdown import, clarification, sequential user-need and requirement review, source provenance, impact analysis, candidate-baseline approval, controlled verification, residual-risk review, CI evidence import, and final release approval. Release creation remains explicit and separate. WP-20A adds controlled verification packages and `release-readiness-v1`. WP-20B adds residual-risk decisions, durable release files, simulated attestations, and `final-release-v1`.
 
-The interface may show conceptual pages for repository observations, risk, verification, clinical and usability, design reviews, integration setup, policy management and role administration. Each conceptual page must say "Conceptual — not implemented".
+The local WP-30 worktree adds PDF and DOCX source intake, extracted source blocks, source redlines, governed template versions, deterministic PDF and DOCX output, controlled document redlines, and QA-accepted ZIP packages. This work is not committed or pushed at the 18 September 2026 snapshot.
 
-The prototype defers real Jira, GitHub and CI synchronization, PDF and DOCX parsing, risk generation, SBOM, real authentication, electronic signatures and submission-ready DHF generation.
+The interface may show conceptual pages for repository observations, risk, verification, clinical and usability, design reviews, integration setup, policy management and role administration. Each conceptual page must say "Conceptual: not implemented".
+
+The prototype defers real Jira, GitHub, and CI synchronization, a complete risk-management lifecycle, SBOM generation, real authentication, electronic signatures, and submission-ready DHF generation. Imported CI evidence and local document packages are controlled observations and outputs. They are not live connectors or validated submission packages.
 
 ## Decision log
 

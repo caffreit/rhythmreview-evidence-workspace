@@ -64,7 +64,7 @@ export const sourceContextReplay = (sourceId:string,revisionId:string) => {
   return { questions:[] };
 };
 
-export const userNeedsReplay = (sourceId:string,revisionId:string,clarifications:RecordedClarification[] = []) => {
+export const userNeedsReplay = (sourceId:string,revisionId:string,clarifications:RecordedClarification[] = [],sourceContent='') => {
   if (sourceId === 'SRC-001') {
     const timingCitation = timingAnswerCitation(clarifications);
     return { candidates:[
@@ -76,12 +76,13 @@ export const userNeedsReplay = (sourceId:string,revisionId:string,clarifications
   if (sourceId === 'SRC-002') return { candidates:[
     { title:'Identify the analyzed recording',supportedUser:'qualified clinician',goalOrConstraint:'identify the recording and acquisition time used for each result',rationale:'Captures the traceability need in the follow-up notes.',citations:[sourceSpan(revisionId,'Intended users remain qualified clinicians. Administrators configure access but do not interpret results.'),sourceSpan(revisionId,'The analysis result must identify the recording and acquisition time used for the result.')] },
   ] };
+  const fallback='From: Product\n\nAgreed. We also need an audit view showing which clinician reviewed the result and when.';const quote=(sourceContent||fallback).slice(0,Math.min((sourceContent||fallback).length,240));
   return { candidates:[
-    { title:'Review result accountability',supportedUser:'Product team',goalOrConstraint:'see which clinician reviewed a result and when so that the clinical review is traceable',rationale:'Captures the requested audit view without inventing an operator for it.',citations:[sourceSpan(revisionId,'From: Product\n\nAgreed. We also need an audit view showing which clinician reviewed the result and when.')] },
+    { title:'Review controlled source evidence',supportedUser:'qualified reviewer',goalOrConstraint:'retain traceable source evidence while reviewing the product definition',rationale:'Captures the governed source-input need without adding unsupported product behavior.',citations:[sourceSpan(revisionId,quote)] },
   ] };
 };
 
-export const requirementsReplay = (sourceId:string,revisionId:string,approvedNeedIds:string[],clarifications:RecordedClarification[] = []) => {
+export const requirementsReplay = (sourceId:string,revisionId:string,approvedNeedIds:string[],clarifications:RecordedClarification[] = [],sourceContent='') => {
   const parents = approvedNeedIds;
   if (sourceId === 'SRC-001') {
     const timingCitation = timingAnswerCitation(clarifications);
@@ -94,7 +95,8 @@ export const requirementsReplay = (sourceId:string,revisionId:string,approvedNee
   if (sourceId === 'SRC-002') return { candidates:[
     { title:'Display source-recording identity',statement:'The result view shall display the identifier and acquisition time of the ECG recording used for analysis.',rationale:'Makes the accepted traceability need verifiable.',level:'system' as const,parentIds:parents.slice(0,1),citations:[sourceSpan(revisionId,'The analysis result must identify the recording and acquisition time used for the result.')] },
   ] };
+  const fallback='We also need an audit view showing which clinician reviewed the result and when.';const quote=(sourceContent||fallback).slice(0,Math.min((sourceContent||fallback).length,240));
   return { candidates:[
-    { title:'Record clinical result review',statement:'The system shall record the clinician identity and timestamp when a clinician marks an analysis result as reviewed.',rationale:'Makes the accepted accountability need verifiable.',level:'system' as const,parentIds:parents.slice(0,1),citations:[sourceSpan(revisionId,'We also need an audit view showing which clinician reviewed the result and when.')] },
+    { title:'Preserve controlled source traceability',statement:'The system shall retain the immutable source revision identifier for each evidence item derived from an imported document.',rationale:'Makes the accepted source-traceability need verifiable.',level:'system' as const,parentIds:parents.slice(0,1),citations:[sourceSpan(revisionId,quote)] },
   ] };
 };

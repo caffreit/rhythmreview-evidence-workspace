@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { ImpactCategorySchema } from './domain';
 
-export const SourceKindSchema = z.enum(['transcript','meeting_notes','email_thread','text','markdown']);
+export const SourceKindSchema = z.enum(['transcript','meeting_notes','email_thread','text','markdown','pdf','docx']);
 export const SourceStatusSchema = z.enum(['new','needs_context','ready_for_needs','needs_review','ready_for_requirements','candidate_baseline','baselined']);
 export const ProcessingModeSchema = z.enum(['live','replay']);
 export const ProcessingStatusSchema = z.enum(['completed','failed']);
@@ -21,7 +21,7 @@ const AuthorActorSchema = z.string().refine((value) => value.includes('Author'),
 const QaActorSchema = z.string().refine((value) => value.includes('QA reviewer'),{ message:'QA reviewer permission is required.' });
 
 export const SourceSpanCitationSchema = z.object({
-  kind:z.literal('source_span'),sourceRevisionId:z.string().min(1),quote:z.string().min(1),
+  kind:z.literal('source_span'),sourceRevisionId:z.string().min(1),quote:z.string().min(1),sourceBlockId:z.string().optional(),locator:z.string().optional(),
 });
 export const ClarificationAnswerCitationSchema = z.object({
   kind:z.literal('clarification_answer'),clarificationId:z.string().min(1),quote:z.string().min(1),
@@ -57,7 +57,13 @@ export const ProcessingRunSchema = z.object({
 
 export const SourceDetailSchema = z.object({
   source:SourceSummarySchema,
-  revision:z.object({ id:z.string(),revision:z.number(),content:z.string(),contentHash:z.string(),origin:z.string(),capturedAt:z.string() }),
+  revision:z.object({
+    id:z.string(),revision:z.number(),content:z.string(),contentHash:z.string(),origin:z.string(),capturedAt:z.string(),
+    file:z.object({ filename:z.string(),contentType:z.string(),size:z.number(),sha256:z.string(),extractorId:z.string(),extractorVersion:z.string(),warnings:z.array(z.string()) }).nullable(),
+  }),
+  revisions:z.array(z.object({ id:z.string(),revision:z.number(),capturedAt:z.string(),filename:z.string().nullable(),contentType:z.string().nullable(),size:z.number().nullable(),sha256:z.string().nullable() })),
+  blocks:z.array(z.object({ id:z.string(),revisionId:z.string(),ordinal:z.number(),locator:z.string(),text:z.string(),textHash:z.string() })),
+  redlines:z.array(z.object({ id:z.string(),sourceId:z.string(),fromRevisionId:z.string(),toRevisionId:z.string(),algorithmVersion:z.string(),fingerprint:z.string(),changes:z.array(z.unknown()),createdBy:z.string(),createdAt:z.string() })),
   runs:z.array(ProcessingRunSchema),clarifications:z.array(ClarificationSchema),candidates:z.array(SourceCandidateSchema),
 });
 

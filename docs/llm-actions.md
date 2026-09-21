@@ -2,7 +2,7 @@
 
 Status: implementation reference
 
-Snapshot: 13 September 2026
+Snapshot: 18 September 2026
 
 ## Control model
 
@@ -106,7 +106,7 @@ The server rejects the response unless every target is in the bounded set, every
 Review fictional source material for a regulated medical-software product. Return only material contradictions, ambiguities, missing decisions, and scope questions that affect intended use, user needs, or product requirements. A required question blocks generation only when proceeding would encode an unsupported product choice. An advisory question records useful unresolved context but does not block generation. Treat organizational ownership, operating-procedure responsibility, and future workflow ideas as advisory when a downstream candidate can remain role-neutral without making that choice. A statement of what the current product requires, excludes, or assigns is an explicit current-release decision even when a future alternative or later procedure is mentioned; do not reopen it as a question. Do not ask about any other choice the source already resolves. Quote every conflicting or incomplete source span exactly. Do not answer questions, infer regulatory conclusions, or invent facts. Return an empty questions array when no material question exists.
 ```
 
-The input contains the source revision ID, title, full content, and a citation contract. Each output question has a kind, required or advisory severity, question, rationale, and one or more source-span citations.
+The input contains the source revision ID, title, full extracted content, and a citation contract. Each output question has a kind, required or advisory severity, question, rationale, and one or more source-span citations. For PDF and DOCX inputs, BlueBridge resolves each exact quote to an extracted block ID and a page or paragraph locator before it stores the citation.
 
 The server checks that every citation names the analyzed revision and that every quote occurs exactly in that revision. Duplicate questions and duplicate citations fail schema validation.
 
@@ -153,6 +153,13 @@ The distinction matters in demonstrations and product claims.
 | Candidate draft creation | Saved scenario fixtures or an author template; no model call |
 | Replay | Saved structured fixture output; no model call |
 | Evaluation metrics | Database comparison against a locked provisional answer key |
+| PDF and DOCX extraction | File signature and package checks, then `unpdf` or Mammoth text extraction |
+| Source redline | Deterministic block matching plus word-level comparison |
+| Template lifecycle | Role-checked state transitions and append-only QA decisions |
+| Controlled output rendering | Deterministic PDF and DOCX rendering from one stored baseline and template version |
+| Controlled document redline | Deterministic comparison of rendered models and evidence version IDs |
+| Document package | Deterministic completeness, fingerprint, R2 metadata, manifest, and staleness checks under `document-package-v1` |
+| Final release | Deterministic `release-readiness-v1` and `final-release-v1` policies over reviewed records |
 
 ## Prompt change discipline
 

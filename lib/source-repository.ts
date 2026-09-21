@@ -26,6 +26,13 @@ function stableHash(value:string):string {
   return (hash >>> 0).toString(16).padStart(8,'0');
 }
 
+function quoteExists(detail:SourceDetail,quote:string):boolean { return detail.blocks.length>0 ? detail.blocks.some((block)=>block.text.includes(quote)) : detail.revision.content.includes(quote); }
+function anchoredCitations(detail:SourceDetail,citations:unknown) {
+  return CitationArraySchema.parse(citations).map((citation)=>{
+    if(citation.kind!=='source_span')return citation;const block=detail.blocks.find((entry)=>entry.text.includes(citation.quote));return block?{...citation,sourceBlockId:block.id,locator:block.locator}:citation;
+  });
+}
+
 async function initializeSources(db:D1Database):Promise<void> {
   await ensureWorkspace(db);
   const row = await db.prepare('SELECT COUNT(*) AS count FROM source_artifacts').first<{ count:number }>();
@@ -93,15 +100,23 @@ export async function getSourceDetail(db:D1Database,id:string):Promise<SourceDet
   await initializeSources(db);
   const source = (await sourceSummaries(db)).find((entry) => entry.id === id);
   if (!source) return null;
-  const revision = await db.prepare('SELECT id,revision,content,content_hash AS contentHash,origin,captured_at AS capturedAt FROM source_revisions WHERE id=?').bind(source.latestRevisionId).first<{ id:string;revision:number;content:string;contentHash:string;origin:string;capturedAt:string }>();
+  const revision = await db.prepare('SELECT id,revision,content,content_hash AS contentHash,origin,captured_at AS capturedAt,filename,content_type AS contentType,size,sha256,object_key AS objectKey,extractor_id AS extractorId,extractor_version AS extractorVersion,warnings_json AS warningsJson FROM source_revisions WHERE id=?').bind(source.latestRevisionId).first<{ id:string;revision:number;content:string;contentHash:string;origin:string;capturedAt:string;filename:string|null;contentType:string|null;size:number|null;sha256:string|null;objectKey:string|null;extractorId:string|null;extractorVersion:string|null;warningsJson:string }>();
   if (!revision) return null;
+  const revisions = await db.prepare('SELECT id,revision,captured_at AS capturedAt,filename,content_type AS contentType,size,sha256 FROM source_revisions WHERE source_id=? ORDER BY revision DESC').bind(id).all<{ id:string;revision:number;capturedAt:string;filename:string|null;contentType:string|null;size:number|null;sha256:string|null }>();
+  const blocks = await db.prepare('SELECT id,revision_id AS revisionId,ordinal,locator,text,text_hash AS textHash FROM source_blocks WHERE revision_id=? ORDER BY ordinal').bind(revision.id).all<{ id:string;revisionId:string;ordinal:number;locator:string;text:string;textHash:string }>();
+  const redlines = await db.prepare('SELECT id,source_id AS sourceId,from_revision_id AS fromRevisionId,to_revision_id AS toRevisionId,algorithm_version AS algorithmVersion,fingerprint,changes_json AS changesJson,created_by AS createdBy,created_at AS createdAt FROM source_redlines WHERE source_id=? ORDER BY created_at DESC,id DESC').bind(id).all<{ id:string;sourceId:string;fromRevisionId:string;toRevisionId:string;algorithmVersion:string;fingerprint:string;changesJson:string;createdBy:string;createdAt:string }>();
   const runs = await db.prepare('SELECT id,source_id AS sourceId,revision_id AS revisionId,kind,mode,model,reasoning_effort AS reasoningEffort,policy_version AS policyVersion,status,error,provider_request_id AS providerRequestId,duration_ms AS durationMs,attempt_count AS attemptCount,input_tokens AS inputTokens,output_tokens AS outputTokens,embedding_tokens AS embeddingTokens,created_at AS createdAt FROM source_processing_runs WHERE source_id=? AND revision_id=? ORDER BY created_at DESC,id DESC').bind(id,source.latestRevisionId).all<RunRow>();
   const clarifications = await db.prepare('SELECT c.id,c.run_id AS runId,c.source_id AS sourceId,c.kind,c.severity,c.question,c.rationale,c.citations_json AS citationsJson,c.status,c.answer,c.decision_reason AS decisionReason,c.actor,c.updated_at AS updatedAt FROM source_clarifications c JOIN source_processing_runs p ON p.id=c.run_id WHERE c.source_id=? AND p.revision_id=? ORDER BY c.updated_at,c.id').bind(id,source.latestRevisionId).all<ClarificationRow>();
   const candidates = await db.prepare('SELECT c.id,c.run_id AS runId,c.source_id AS sourceId,c.type,c.level,c.supported_user AS supportedUser,c.goal_or_constraint AS goalOrConstraint,c.title,c.statement,c.rationale,c.origin,c.status,c.parent_ids_json AS parentIdsJson,c.citations_json AS citationsJson,c.advisory_clarification_ids_json AS advisoryClarificationIdsJson,c.model,c.policy_version AS policyVersion,c.reviewed_by AS reviewedBy,c.reviewed_at AS reviewedAt FROM source_candidates c JOIN source_processing_runs p ON p.id=c.run_id WHERE c.source_id=? AND p.revision_id=? ORDER BY c.type,c.id').bind(id,source.latestRevisionId).all<CandidateRow>();
+  const locate=<T extends z.infer<typeof SourceCitationSchema>>(citation:T):T => {
+    if (citation.kind!=='source_span' || citation.sourceBlockId) return citation;
+    const block=blocks.results.find((entry) => entry.text.includes(citation.quote));
+    return block ? { ...citation,sourceBlockId:block.id,locator:block.locator } : citation;
+  };
   return SourceDetailSchema.parse({
-    source,revision,runs:runs.results.map((row) => ProcessingRunSchema.parse(row)),
-    clarifications:clarifications.results.map((row) => ClarificationSchema.parse({ ...row,citations:CitationArraySchema.parse(parseJson(row.citationsJson)) })),
-    candidates:candidates.results.map((row) => SourceCandidateSchema.parse({ ...row,parentIds:StringArraySchema.parse(parseJson(row.parentIdsJson)),citations:CitationArraySchema.parse(parseJson(row.citationsJson)),advisoryClarificationIds:StringArraySchema.parse(parseJson(row.advisoryClarificationIdsJson)) })),
+    source,revision:{ ...revision,file:!revision.objectKey || !revision.filename || !revision.contentType || !revision.size || !revision.sha256 || !revision.extractorId || !revision.extractorVersion ? null : { filename:revision.filename,contentType:revision.contentType,size:revision.size,sha256:revision.sha256,extractorId:revision.extractorId,extractorVersion:revision.extractorVersion,warnings:StringArraySchema.parse(parseJson(revision.warningsJson)) } },revisions:revisions.results,blocks:blocks.results,redlines:redlines.results.map((row) => ({ ...row,changes:parseJson(row.changesJson) })),runs:runs.results.map((row) => ProcessingRunSchema.parse(row)),
+    clarifications:clarifications.results.map((row) => ClarificationSchema.parse({ ...row,citations:CitationArraySchema.parse(parseJson(row.citationsJson)).map(locate) })),
+    candidates:candidates.results.map((row) => SourceCandidateSchema.parse({ ...row,parentIds:StringArraySchema.parse(parseJson(row.parentIdsJson)),citations:CitationArraySchema.parse(parseJson(row.citationsJson)).map(locate),advisoryClarificationIds:StringArraySchema.parse(parseJson(row.advisoryClarificationIdsJson)) })),
   });
 }
 
@@ -177,7 +192,7 @@ export async function analyzeSource(db:D1Database,id:string,raw:unknown):Promise
     try {
       const result = await runLive(() => analyzeSourceContext({ revisionId:detail.revision.id,title:detail.source.title,content:detail.revision.content }));
       const live = result.value; attemptCount = result.attemptCount;
-      const citationsValid = live.output.questions.every((question) => question.citations.every((citation) => citation.sourceRevisionId === detail.revision.id && detail.revision.content.includes(citation.quote)));
+      const citationsValid = live.output.questions.every((question) => question.citations.every((citation) => citation.sourceRevisionId === detail.revision.id && quoteExists(detail,citation.quote)));
       if (!citationsValid) throw new LiveAttemptFailure(new Error('The live analysis returned a citation that does not exactly match the source revision.'),attemptCount,false);
       output = live.output; model = live.model; reasoningEffort = live.reasoningEffort; metadata = live.metadata;
     } catch (error:unknown) {
@@ -188,10 +203,11 @@ export async function analyzeSource(db:D1Database,id:string,raw:unknown):Promise
       throw new LiveProcessingError(message,runId,failure.retryable);
     }
   } else { output = ContextOutputSchema.parse(sourceContextReplay(id,detail.revision.id)); model = 'saved-demo-output'; reasoningEffort = 'not_run'; }
+  if(!output.questions.every((question)=>question.citations.every((citation)=>citation.sourceRevisionId===detail.revision.id&&quoteExists(detail,citation.quote)))) throw new WorkflowConflictError('The saved analysis contains a quote that is not present in the immutable source revision.');
   const runId = await saveProcessingRun(db,{ sourceId:id,revisionId:detail.revision.id,kind:'source_context',mode:input.mode,model,reasoningEffort,policyVersion:SOURCE_CONTEXT_POLICY.name,input:{ revisionId:detail.revision.id },output,status:'completed',attemptCount,metadata });
   const createdAt = now();
   const statements = output.questions.map((question) => db.prepare('INSERT INTO source_clarifications (id,run_id,source_id,kind,severity,question,rationale,citations_json,status,answer,decision_reason,actor,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)')
-    .bind(makeId('CLR'),runId,id,question.kind,question.severity,question.question,question.rationale,JSON.stringify(question.citations),'open',null,null,null,createdAt));
+    .bind(makeId('CLR'),runId,id,question.kind,question.severity,question.question,question.rationale,JSON.stringify(anchoredCitations(detail,question.citations)),'open',null,null,null,createdAt));
   statements.push(db.prepare('UPDATE source_artifacts SET status=? WHERE id=?').bind(output.questions.some((question) => question.severity === 'required') ? 'needs_context' : 'ready_for_needs',id));
   await db.batch(statements);
   return getSourceDetail(db,id);
@@ -332,17 +348,18 @@ export async function generateCandidates(db:D1Database,id:string,raw:unknown):Pr
   } else {
     model = 'saved-demo-output'; reasoningEffort = 'not_run';
     output = input.kind === 'user_needs'
-      ? UserNeedsOutputSchema.parse(userNeedsReplay(id,detail.revision.id,clarificationInput))
-      : RequirementsOutputSchema.parse(requirementsReplay(id,detail.revision.id,approvedNeeds.map((candidate) => candidate.id),clarificationInput));
+      ? UserNeedsOutputSchema.parse(userNeedsReplay(id,detail.revision.id,clarificationInput,detail.blocks[0]?.text??detail.revision.content))
+      : RequirementsOutputSchema.parse(requirementsReplay(id,detail.revision.id,approvedNeeds.map((candidate) => candidate.id),clarificationInput,detail.blocks[0]?.text??detail.revision.content));
   }
+  if(!output.candidates.every((candidate)=>validateCandidateCitations({citations:candidate.citations,revisionId:detail.revision.id,content:detail.revision.content,clarifications:clarificationInput})&&candidate.citations.every((citation)=>citation.kind==='clarification_answer'||quoteExists(detail,citation.quote)))) throw new WorkflowConflictError('Candidate provenance does not match the immutable source revision.');
   const policy = policyFor(input.kind);
   const runId = await saveProcessingRun(db,{ sourceId:id,revisionId:detail.revision.id,kind:input.kind,mode:input.mode,model,reasoningEffort,policyVersion:policy.name,status:'completed',input:{ revisionId:detail.revision.id,clarifications:clarificationInput,approvedNeedIds:approvedNeeds.map((candidate) => candidate.id) },output,attemptCount,metadata });
   const advisoryIds = detail.clarifications.filter((entry) => entry.severity === 'advisory' && entry.status === 'open').map((entry) => entry.id);
   const statements = input.kind === 'requirements'
     ? RequirementsOutputSchema.parse(output).candidates.map((candidate) => db.prepare('INSERT INTO source_candidates (id,run_id,source_id,type,level,supported_user,goal_or_constraint,title,statement,rationale,origin,status,parent_ids_json,citations_json,advisory_clarification_ids_json,model,policy_version,reviewed_by,reviewed_at,review_reason) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)')
-      .bind(makeId('CAN'),runId,id,'requirement',candidate.level,null,null,candidate.title,candidate.statement,candidate.rationale,'ai','pending_review',JSON.stringify(candidate.parentIds),JSON.stringify(candidate.citations),JSON.stringify(advisoryIds),model,policy.name,null,null,null))
+      .bind(makeId('CAN'),runId,id,'requirement',candidate.level,null,null,candidate.title,candidate.statement,candidate.rationale,'ai','pending_review',JSON.stringify(candidate.parentIds),JSON.stringify(anchoredCitations(detail,candidate.citations)),JSON.stringify(advisoryIds),model,policy.name,null,null,null))
     : UserNeedsOutputSchema.parse(output).candidates.map((candidate) => db.prepare('INSERT INTO source_candidates (id,run_id,source_id,type,level,supported_user,goal_or_constraint,title,statement,rationale,origin,status,parent_ids_json,citations_json,advisory_clarification_ids_json,model,policy_version,reviewed_by,reviewed_at,review_reason) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)')
-      .bind(makeId('CAN'),runId,id,'user_need',null,candidate.supportedUser,candidate.goalOrConstraint,candidate.title,userNeedStatement(candidate.supportedUser,candidate.goalOrConstraint),candidate.rationale,'ai','pending_review','[]',JSON.stringify(candidate.citations),JSON.stringify(advisoryIds),model,policy.name,null,null,null));
+      .bind(makeId('CAN'),runId,id,'user_need',null,candidate.supportedUser,candidate.goalOrConstraint,candidate.title,userNeedStatement(candidate.supportedUser,candidate.goalOrConstraint),candidate.rationale,'ai','pending_review','[]',JSON.stringify(anchoredCitations(detail,candidate.citations)),JSON.stringify(advisoryIds),model,policy.name,null,null,null));
   await db.batch(statements);
   await refreshSourceStatus(db,id);
   return getSourceDetail(db,id);

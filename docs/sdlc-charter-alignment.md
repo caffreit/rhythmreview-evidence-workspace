@@ -1,7 +1,7 @@
 # BlueBridge prototype alignment with the BBT SDLC charter
 
 Status: assessment for discussion  
-Assessment date: 15 September 2026
+Assessment date: 18 September 2026
 Inputs: BBT SDLC Team Brief v1.2, BBT SDLC Charter v3.4, the current prototype, and the published BlueBridge work packages
 
 ## Executive conclusion
@@ -16,10 +16,14 @@ The prototype directly addresses several of the charter's hardest information-co
 - trace relationships are typed, reviewable, baseline-scoped, and checked by deterministic rules;
 - model output is a proposal, never an approval;
 - verification evidence and release readiness are tied to a named baseline.
+- original source documents retain their bytes, hash, extractor provenance, and anchored text;
+- baseline-derived PDF and DOCX files retain their template version, renderer version, evidence membership, fingerprint, and package manifest.
 
-The prototype only partially addresses the Tier 1 operating concerns. It does not yet provide a first-class specification model, a design-control entry gate, a rigor band, tool-native PR or pipeline enforcement, a production evidence-harvesting path, agentic software-engineering governance, or estimation and capacity planning. Most of those gaps are not covered by the current work-package plan.
+The prototype only partially addresses the Tier 1 operating concerns. It does not yet provide a first-class specification model, a design-control entry gate, a rigor band, tool-native PR or pipeline enforcement, a production evidence-harvesting path, agentic software-engineering governance, or estimation and capacity planning. The local WP-30 implementation closes much of the document-input and document-output gap. It does not close those operating-model gaps.
 
-The authority philosophy is broadly compatible with the charter's “one record, not two” principle. It is a more precise version of that principle: each fact has one authoritative home, but not every fact must live in one application. Git remains authoritative for code, Jira for work state, CI for executions, source systems for supplied content, and BlueBridge for reviewed product evidence and controlled decisions. References join those facts without copying them into a second set of books.
+GitHub `master` contains accepted WP-20B at `b302d25`. WP-30 exists only in the uncommitted local worktree at this assessment date. This document treats it as implemented locally, not accepted or pushed.
+
+The authority philosophy is broadly compatible with the charter's "one record, not two" principle. It is a more precise version of that principle: each fact has one authoritative home, but not every fact must live in one application. Git remains authoritative for code, Jira for work state, CI for executions, source systems for supplied content, and BlueBridge for reviewed product evidence and controlled decisions. References join those facts without copying them into a second set of books.
 
 There are two material philosophical tensions to resolve:
 
@@ -36,17 +40,17 @@ There are two material philosophical tensions to resolve:
 | Gap | Neither the current prototype nor a named work package covers the outcome. |
 | Tension | The current design or sequence differs from the charter and needs a decision. |
 
-“Demonstrated” is not a regulatory conformity claim. The standards references below reproduce the charter's indicative mapping; they have not been independently assessed against BlueBridge's intended use, QMS, or deployment.
+"Demonstrated" is not a regulatory conformity claim. The standards references below reproduce the charter's indicative mapping. They have not been independently assessed against BlueBridge's intended use, QMS, or deployment.
 
 ## Tier 1 scorecard
 
 | Charter area | Prototype today | Work-package coverage | Assessment |
 | --- | --- | --- | --- |
 | Requirements and traceability (§6) | Versioned user needs, requirements, components, risk controls, tests, typed links, review decisions, immutable baselines, and release-linked verification and residual-risk paths | WP-10A/B and WP-20A/B are complete; WP-40 plans repository and Jira observations | Partial. The controlled graph is real, but live requirement-to-code-to-build traceability, data/model provenance, specification governance, and continuous external synchronization are missing. |
-| Design controls and rigor (§7) | Item review, change control, traceability checks, baseline approval, verification-readiness checks, residual-risk review, and a fictional final-release gate | WP-30 adds controlled document inputs and outputs | Gap at lifecycle entry. No entry gate, rigor band, per-work-item rigor agreement, use-specification workflow, or as-built Definition-of-Done control is planned. |
+| Design controls and rigor (§7) | Item review, change control, traceability checks, baseline approval, verification-readiness checks, residual-risk review, final-release policy, and local controlled document outputs | WP-30 is implemented locally but not accepted | Gap at lifecycle entry. Document control is much stronger, but there is still no entry gate, rigor band, per-work-item rigor agreement, use-specification workflow, or as-built Definition-of-Done control. |
 | AI-native and agentic engineering (§8) | Versioned LLM policies support source analysis, evidence drafting, and semantic impact proposals; actions and failures are recorded | WP-50 includes cost controls; WP-60 includes model governance | Partial for AI-assisted evidence, gap for AI-generated software. The prototype does not govern coding agents, shared context, agent permissions, PR activity, or coordination at scale. |
-| Design input review, approvals, and evidence (§9) | Individual item decisions, attributable prototype audit entries, proposal/decision separation, immutable baselines, manual verification evidence, and simulated WP-20B attestations | WP-40 plans Jira and repository observations; WP-60 covers authenticated signatures | Partial. The record model fits the proposed approach, but parent-before-child enforcement, authenticated identity, electronic signatures, and measured evidence harvesting are absent. |
-| Estimation and capacity planning (§10) | No estimate, capacity, Definition-of-Ready, Sprint, person-output, or forecast model | No current work package owns this area | Gap. BlueBridge cannot yet answer the charter's “what would this cost us?” or two-week-output questions. |
+| Design input review, approvals, and evidence (§9) | Individual item decisions, audit entries, immutable baselines, manual verification evidence, imported CI evidence, simulated attestations, governed template decisions, and QA-reviewed document packages | WP-40 plans Jira and repository observations; WP-60 covers authenticated signatures | Partial. The record model fits the proposed approach, but parent-before-child enforcement, authenticated identity, electronic signatures, live evidence harvesting, and measured harvest coverage are absent. |
+| Estimation and capacity planning (§10) | No estimate, capacity, Definition-of-Ready, Sprint, person-output, or forecast model | No current work package owns this area | Gap. BlueBridge cannot yet answer the charter's "what would this cost us?" or two-week-output questions. |
 
 ## Standards basis used by the charter
 
@@ -60,19 +64,19 @@ This assessment uses the charter's own indicative clause mapping. It explains wh
 | Design input review, approvals, and evidence (§9) | ISO 13485:2016 7.3.5 and 4.2.5; IEC 62304 5.2.6; 21 CFR Part 11 where electronic signatures are relied on | Item-level approval can only serve as review evidence if dependencies, identity, attribution, record control, and applicable signature requirements are enforced. |
 | Estimation and capacity (§10) | ISO 13485:2016 5.4.2, 6.1, 7.1; ISO 14971:2019 4.2; IEC 62304 5.1.1, 5.1.2 | Estimates are not presented as a compliance artifact by themselves; they support adequate resourcing, planning, and maintenance of the development plan. |
 
-This basis-first treatment matters for scope. For example, an agent activity log is not required merely because “an auditor may ask for it.” Its fields should be derived from the controlled activity the agent performed, the risk of that activity, the records needed to reconstruct the decision, and any client or QMS agreement.
+This basis-first treatment matters for scope. For example, an agent activity log is not required merely because "an auditor may ask for it." Its fields should be derived from the controlled activity the agent performed, the risk of that activity, the records needed to reconstruct the decision, and any client or QMS agreement.
 
 ## Principles and constraints
 
-### Charter §§3–4: guiding principles and what is not viable
+### Charter §§3-4: guiding principles and what is not viable
 
 | Charter position | Evidence in BlueBridge | Assessment |
 | --- | --- | --- |
 | Assume heavy AI code generation | The implemented LLMs analyze sources and evidence changes; they do not generate or govern product code. | Gap for the engineering lifecycle. |
 | Controls live in the tooling, including PR and pipeline paths | Controls run inside BlueBridge. External developer tools have no working enforcement adapter. | Tension. WP-40 observes fixtures but does not promise enforcement. |
-| Evidence is harvested, not separately authored | Source provenance and model-run evidence are captured as work happens. Verification executions are entered manually and developer-tool evidence is not harvested. | Partial; WP-40 is the first connector step. |
+| Evidence is harvested, not separately authored | Source provenance, model-run evidence, release files, and a downloaded CI bundle are captured. PDF and DOCX sources are extracted into anchored records. Verification executions remain manual, and no connector harvests developer-tool evidence. | Partial. WP-20B and local WP-30 improve capture; WP-40 is the first connector step. |
 | One record, not two | External facts remain owned by their source; BlueBridge owns reviewed evidence and decisions. Sync is designed to create observations and drift, not overwrite approved records. | Strong alignment at the architecture level. |
-| Structured data over retrospective documents; diagrams are first-class | The data model is structured and the Matrix and Graph are projections of the same relationship state. Documents are planned as baseline-derived views. | Demonstrated for traceability; WP-30 covers richer document input and output. |
+| Structured data over retrospective documents; diagrams are first-class | The Matrix and Graph project one relationship state. Local WP-30 renders PDF and DOCX snapshots from exact structured baseline membership and stores them as controlled projections. | Demonstrated locally for traceability and document outputs. Diagram governance remains absent. |
 | Design for roadmap volatility | Change sets, immutable versions, impact review, preserved baselines, and explicit new releases support change without rewriting history. | Demonstrated at prototype scope. |
 | Fix the day and Sprint first | The product has item-level review flows but no Sprint, refinement, capacity, or normal developer-tool loop. | Gap. |
 | Estimable and bounded | A release and change can be bounded, but no MVP/spec estimate or delivery forecast is stored. | Gap. |
@@ -86,9 +90,9 @@ This basis-first treatment matters for scope. For example, an agent activity log
 
 | Constraint | Evidence in BlueBridge | Assessment |
 | --- | --- | --- |
-| “Zero Token”: use deterministic logic before an LLM | Graph traversal, type rules, coverage checks, release checks, and bounded retrieval reduce what the model decides. | Strong alignment. |
-| Evidence must be reproducible | Runs retain policy, model, input/output, timing, and failure data; saved replay is explicit. A future provider model may not reproduce identical semantic output. | Partial. BlueBridge supports provenance and replay, not deterministic regeneration of LLM meaning. |
-| A deterministic check admits a model-originated artifact | Structured schemas and provenance validation decide whether model output may enter a review queue; a human decides its meaning. | Aligned if “admits” means structurally admissible, not semantically correct. The charter should make that boundary explicit. |
+| "Zero Token": use deterministic logic before an LLM | Graph traversal, type rules, coverage checks, release checks, and bounded retrieval reduce what the model decides. | Strong alignment. |
+| Evidence must be reproducible | Model runs retain policy and execution metadata. Release and document policies use fingerprints. Document snapshots retain the renderer version, rendered model, evidence membership, and file hashes. A future provider model may not reproduce identical semantic output. | Strong for deterministic outputs, partial for LLM meaning. |
+| A deterministic check admits a model-originated artifact | Structured schemas and provenance validation decide whether model output may enter a review queue. A human decides its meaning. | Aligned if "admits" means structurally admissible, not semantically correct. The charter should make that boundary explicit. |
 | Record lives in the system, not an export | Evidence versions, relationships, decisions, baselines, releases, and checks are stored records. | Demonstrated. |
 | AI usage policy is a blocking dependency | No policy object or deployment gate covers permitted data, sensitive content, controlled artifacts, or prohibited model use. | Gap; not explicitly owned by WP-50 or WP-60. |
 | Data privacy and sovereignty | No production data classification, residency, retention, or provider-routing policy exists. | Gap. WP-50 mentions retention; that is not a complete answer. |
@@ -101,7 +105,7 @@ This basis-first treatment matters for scope. For example, an agent activity log
 ### What the prototype addresses now
 
 - It separates source material, immutable revisions, clarifications, generated candidates, human decisions, controlled evidence versions, relationships, baselines, and releases.
-- It supports prototype-driven elicitation from text or Markdown sources, exact citations, required clarification before generation, review of user needs before requirements, and a stable baseline that survives later source changes.
+- It supports prototype-driven elicitation from text, Markdown, PDF, and DOCX sources. File imports retain original bytes, hashes, extractor versions, and anchored citations. Required clarification precedes generation, and a stable baseline survives later source changes.
 - Requirements have product, system, and subsystem levels. Components have hierarchical allocation. Relationship semantics and allowed endpoint combinations are governed by `relationship-policy-v1.0` at controlled-prototype status.
 - The traceability Matrix, focused Graph, coverage findings, candidate relationship review, and baseline approval all use the same deterministic relationship projection.
 - WP-20A closes a fictional requirement/risk-control-to-test-plan-to-execution-to-release-readiness path. It distinguishes a controlled test plan from an execution and from QA's decision on that execution.
@@ -110,7 +114,7 @@ This basis-first treatment matters for scope. For example, an agent activity log
 
 | Charter need | Current position | Required change |
 | --- | --- | --- |
-| Written, version-controlled requirement/spec granularity convention (§6.1) | Requirements have levels, but “specification” is not a first-class controlled type and the product does not distinguish a design spec from an agent-execution spec. | Define both meanings, their schemas, allowed relationships, split/merge rules, and review policy. |
+| Written, version-controlled requirement/spec granularity convention (§6.1) | Requirements have levels, but "specification" is not a first-class controlled type and the product does not distinguish a design spec from an agent-execution spec. | Define both meanings, their schemas, allowed relationships, split/merge rules, and review policy. |
 | Standard prototype handover and costed refactor-versus-rewrite analysis (§6.2) | Source ingestion can baseline derived needs and requirements. Code and document gap analysis is not implemented. | Add a repeatable intake package combining source revisions, repository observations, coverage findings, and a human-owned cost decision. |
 | Deliberate record-of-record choice (§6.3) | The architecture makes BlueBridge authoritative for reviewed requirements and Jira authoritative for work state. | Ratify this choice. Jira tickets should reference controlled requirement/spec IDs rather than duplicate their normative text. |
 | Dedicated PO ownership (§6.4) | Evidence has owners, but there is no PO role, allocation, onboarding, or backlog authority model. | Treat this as an operating-model dependency, not merely a software feature. Store the engagement responsibility decision if BlueBridge is the control plane. |
@@ -120,9 +124,9 @@ This basis-first treatment matters for scope. For example, an agent activity log
 | Detail proportional to risk (§6.8) | The generator favors atomic requirements but has no risk-based granularity rule. | Make granularity policy depend on safety/risk classification and allow controlled diagrams to support higher-level low-risk requirements. |
 | Decision log and client calendar as standing inputs (§6.9) | Neither is represented. | Prefer linking the existing decision log and calendar over rebuilding them; create immutable observations only where they affect a controlled decision. |
 
-### Interpretation of “one record, not two”
+### Interpretation of "one record, not two"
 
-“One record” should mean one authoritative home for each fact, not one database for the whole company.
+"One record" should mean one authoritative home for each fact, not one database for the whole company.
 
 ```mermaid
 flowchart LR
@@ -141,7 +145,7 @@ That is the recommended direction because it preserves the charter's single-reco
 
 ## Design controls and rigor (§7)
 
-The prototype addresses design-control evidence after work has entered BlueBridge. It does not address when design controls engage or how much rigor applies.
+The prototype addresses design-control evidence after work has entered BlueBridge. Local WP-30 now governs template changes and produces baseline-derived document snapshots and packages. It still does not address when design controls engage or how much rigor applies.
 
 The following charter controls are absent from the current system and roadmap:
 
@@ -150,7 +154,7 @@ The following charter controls are absent from the current system and roadmap:
 - a selectively applied, recorded rigor agreement per work item;
 - a cross-functional risk-analysis workflow that precedes and shapes requirements;
 - a controlled use specification and representative-user-session evidence;
-- an as-built note—what changed, why, and the linked requirement—as a Definition-of-Done gate;
+- an as-built note that records what changed, why, and the linked requirement as a Definition-of-Done gate;
 - a required clause, risk, or client-agreement basis for each control.
 
 WP-20A supplies a useful downstream pattern: a named deterministic rule evaluates the exact baseline, verification evidence is separately reviewed, and the release state changes only through a QA action. WP-20B extends that pattern to residual-risk acceptance and fictional final release approval. It does not correct late design-control entry.
@@ -194,7 +198,7 @@ None of the current work packages owns that full outcome. WP-60's model governan
 
 ## Design input review, approvals, and evidence (§9)
 
-The prototype's record model is compatible with the charter's proposed “approval as evidence” approach:
+The prototype's record model is compatible with the charter's proposed "approval as evidence" approach:
 
 - the item and version being decided are explicit;
 - proposals remain separate from decisions;
@@ -206,10 +210,10 @@ Four limitations prevent relying on it operationally:
 
 1. Parent approval does not cascade, which is correct, but the system also does not hard-block a child from clearing its gate while its required parent is uncontrolled.
 2. Prototype actors are simulated. They are not authenticated identities or electronic signatures.
-3. Developer-tool evidence is not yet harvested. WP-40 plans observations, but no measurable QA-SRE pilot or 80% coverage calculation exists.
+3. A downloaded CI bundle can be imported and verified, but developer-tool evidence is not harvested through a live connector. WP-40 plans observations, and no measurable QA-SRE pilot or 80% coverage calculation exists.
 4. The boundary between attributable agreement and a Part 11 signature has not been enumerated by artifact and decision type.
 
-WP-20B adds simulated attestations and durable attachments. WP-50 can add identity and permissions. WP-60 can add production e-signatures and validation evidence. The item-dependency gate and evidence-harvest measurement should be delivered earlier because they determine whether the §9 model works at all.
+WP-20B adds simulated attestations and durable attachments. Local WP-30 adds append-only template and package decisions, but the actors remain simulated. WP-50 can add identity and permissions. WP-60 can add production e-signatures and validation evidence. The item-dependency gate and evidence-harvest measurement should be delivered earlier because they determine whether the §9 model works at all.
 
 ## Estimation and capacity planning (§10)
 
@@ -237,19 +241,20 @@ This capability should normally remain in the planning system, with BlueBridge o
 | WP-10A/B | Governed trace relationships, item decisions, immutable baseline state, Matrix/Graph/gap views | No first-class spec, live code/build/data/model links, or parent-before-child gate |
 | WP-20A | Risk-control-to-test readiness, immutable executions, QA decision, release-readiness rule | Manual fictional evidence; no full risk lifecycle, residual-risk acceptance, or final release approval |
 | WP-20B | Residual-risk acceptance, final release controls, simulated attestations, durable attachments, and verified import of real CI-run artifacts | Does not cover design-control entry, rigor selection, live GitHub authentication, or Part 11/identity assurance |
-| WP-30 | PDF/DOCX inputs, redlines, templates, baseline-linked output packages | Supports controlled views; must not turn exports into the authoritative record |
+| WP-30 | Implemented locally: PDF and DOCX inputs, original bytes and extraction provenance, source and output redlines, governed template versions, baseline-linked PDF and DOCX snapshots, package manifest and ZIP, and QA package decisions | Not committed, pushed, or accepted. Outputs remain projections of structured evidence. |
 | WP-40 | Jira mapping and repository/CI observations with non-overwrite behavior | Observation alone does not put controls into PRs, pipelines, and ticket transitions |
 | WP-50 | Identity, permissions, durable operations, retention, monitoring, and cost controls | Production foundation; does not define PO, rigor, estimation, or AI-use policy |
 | WP-60 | Real connections, quality procedures, model governance, validation evidence, e-signatures | Necessary for operational reliance; too late to settle Tier 1 process semantics |
 
 ### Recommended additions before treating the roadmap as a charter implementation
 
-1. **Spec and design-input governance.** Add the two spec types, granularity convention, risk-based detail policy, parent/child approval gates, design-entry package, and basis metadata.
-2. **Tool-native control adapters.** Extend WP-40 so BlueBridge can publish required status checks and transition conditions into PR, CI, and work-tracker flows, not merely observe them.
-3. **QA-SRE evidence pilot.** Select one workstream, enumerate its quality objectives, map each to a harvested or authored record, measure the harvest rate, and record why the residual cannot be harvested.
-4. **Estimation and delivery telemetry.** Add a package that configures the planning system for Definition of Ready, estimates, capacity, and two-week outputs, with BlueBridge references rather than duplicated planning data.
-5. **Agentic engineering governance.** Add controlled context packages, agent-run provenance, permission boundaries, tool/action logs, cost, and spec/review gates for AI-generated code.
-6. **Engagement authority and policy.** Record regulatory basis, applicable markets, BBT/client quality-sign-off boundaries, AI-use policy, data classification, sovereignty, and the approval-versus-signature map at engagement start.
+1. **Finish WP-30 acceptance.** Commit the implementation and pass its end-to-end, browser, migration, file-integrity, and cleanup checks before using document packages as roadmap evidence.
+2. **Spec and design-input governance.** Add the two spec types, granularity convention, risk-based detail policy, parent/child approval gates, design-entry package, and basis metadata.
+3. **Tool-native control adapters.** Extend WP-40 so BlueBridge can publish required status checks and transition conditions into PR, CI, and work-tracker flows, not merely observe them.
+4. **QA-SRE evidence pilot.** Select one workstream, enumerate its quality objectives, map each to a harvested or authored record, measure the harvest rate, and record why the residual cannot be harvested.
+5. **Estimation and delivery telemetry.** Add a package that configures the planning system for Definition of Ready, estimates, capacity, and two-week outputs, with BlueBridge references rather than duplicated planning data.
+6. **Agentic engineering governance.** Add controlled context packages, agent-run provenance, permission boundaries, tool and action logs, cost, and spec and review gates for AI-generated code.
+7. **Engagement authority and policy.** Record regulatory basis, applicable markets, BBT and client quality-sign-off boundaries, AI-use policy, data classification, sovereignty, and the approval-versus-signature map at engagement start.
 
 ## Acceptance criteria for the missing Tier 1 capabilities
 
@@ -259,7 +264,7 @@ The following criteria are testable and avoid turning the charter into another n
 - A data- or model-dependent requirement resolves to the exact dataset, product-model version, and processing provenance used by the release.
 - A required child item cannot pass its review or test gate while its parent is uncontrolled.
 - A project cannot enter implementation until its defined entry package is complete or an authorized exception is recorded against the applicable rigor band.
-- Every automated or procedural control stores one basis type—standard clause, risk rationale, or client agreement—and its reference.
+- Every automated or procedural control stores one basis type, either a standard clause, risk rationale, or client agreement, and its reference.
 - A generated artifact enters review only after deterministic structure and provenance checks; semantic acceptance remains an authorized human decision.
 - A pull request, pipeline, or ticket transition visibly fails when its applicable controlled prerequisite is unmet.
 - Reimporting Jira, Git, CI, or source data creates an immutable observation, converges on the same external revision, and never overwrites an approved BlueBridge record.
@@ -267,6 +272,7 @@ The following criteria are testable and avoid turning the charter into another n
 - A newly ready requirement or spec has an estimate, capacity impact, and planning-system reference within the agreed service time.
 - A two-week output summary is generated from normal work records without a separate evidence-authoring exercise.
 - Every AI coding action is attributable to a controlled scope, context version, model/tool configuration, repository state, produced change, check result, and human disposition.
+- Every generated document resolves to one approved template version, one exact baseline membership, one renderer version, and verified file hashes. Re-rendering the same inputs returns the same controlled snapshot identity.
 
 ## Decisions for senior developers, PMs, POs, and QA/RA
 
@@ -287,7 +293,7 @@ The following criteria are testable and avoid turning the charter into another n
 
 ### Delivery and planning
 
-- What must be true before a requirement or spec is “ready,” and where is that decision enforced?
+- What must be true before a requirement or spec is "ready," and where is that decision enforced?
 - What estimation unit works when implementation time falls sharply but review, verification, and coordination remain?
 - Which planning facts stay in Jira, and which immutable observations must BlueBridge retain for release evidence?
 - What is the promised response time for estimating a new requirement set?
@@ -320,4 +326,6 @@ That position preserves the strongest existing design choices:
 - structured records and trace links as the source, with documents as reviewed projections;
 - deterministic policy checks separated from semantic judgment.
 
-It also accepts the charter's strongest challenge: a control plane is useful only if its decisions reach the developer's normal path. The next architectural step is therefore not to copy more Jira, Git, or CI data into BlueBridge. It is to connect controlled BlueBridge state to thin, visible gates in those tools and harvest the resulting evidence back into the same baseline and release model.
+Local WP-30 now demonstrates the document half of this position. A PDF, DOCX, or ZIP can be controlled without becoming a second source of truth because its exact structured inputs remain explicit.
+
+The charter's strongest challenge remains open. A control plane is useful only if its decisions reach the developer's normal path. After WP-30 acceptance, the next architectural step is not to copy more Jira, Git, or CI data into BlueBridge. It is to connect controlled BlueBridge state to thin, visible gates in those tools and harvest the resulting evidence back into the same baseline and release model.

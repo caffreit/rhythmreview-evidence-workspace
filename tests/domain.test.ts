@@ -12,6 +12,8 @@ describe('RhythmReview seed pack',() => {
     expect(seed.evidence).toHaveLength(72);
     expect(seed.relationships).toHaveLength(122);
     expect(seed.documents).toHaveLength(10);
+    expect(new Set(seed.documents.map((document) => document.versionId)).size).toBe(10);
+    expect(seed.documents.every((document) => document.version === 1 && document.status === 'approved')).toBe(true);
     expect(seed.scenarios).toHaveLength(3);
     expect(Object.fromEntries([...new Set(seed.evidence.map((item) => item.type))].map((type) => [type,seed.evidence.filter((item) => item.type === type).length]))).toEqual({
       intended_use:1,claim:4,user_need:8,requirement:16,hazard:8,risk_control:9,component:7,test:12,clinical_evidence:3,label:4,

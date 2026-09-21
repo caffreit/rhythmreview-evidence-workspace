@@ -57,8 +57,9 @@ export const RelationshipSchema = z.object({
 
 export const DocumentTemplateSchema = z.object({
   id: z.string().regex(/^DOC-\d{3}$/), code: z.string().min(1), title: z.string().min(1), description: z.string().min(1),
+  versionId:z.string().regex(/^DTV-DOC-\d{3}-\d+$/).optional(),version:z.number().int().positive().default(1),status:z.enum(['draft','approved','retired']).default('approved'),
   types: z.array(EvidenceTypeSchema).min(1), excludeFlags: z.array(z.string()).default([]),
-});
+}).transform((value) => ({ ...value,versionId:value.versionId ?? `DTV-${value.id}-${value.version}` }));
 
 const WorkflowMetricsSchema = z.object({ recall:z.number(), precision:z.number(), minutes:z.number() });
 export const ScenarioSchema = z.object({

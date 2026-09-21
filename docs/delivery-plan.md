@@ -1,7 +1,7 @@
 # BlueBridge delivery plan
 
-Status: WP-00, WP-10, and WP-20 accepted; WP-30 is next
-Last updated: 15 September 2026
+Status: WP-00, WP-10, and WP-20 accepted; WP-30 is in progress
+Last updated: 18 September 2026
 
 ## How to use this plan
 
@@ -14,7 +14,7 @@ Work packages have stable IDs. A package is complete only when its completion ga
 | WP-10B Interactive traceability graph | Accepted | WP-10A | Explorable graph with controlled, proposed, rejected, and review-only links | Passed: graph link IDs match the Matrix projection for approved and candidate states; desktop and 390 px browser checks pass |
 | WP-20A Risk-control verification readiness | Accepted | WP-10 | Controlled verification package, TEST plan versions, manual fictional executions, QA execution review, and `release-readiness-v1` | Passed: 75 items, 125 links, zero high coverage gaps, nine current passed and QA-accepted executions, fresh fingerprint, and QA-only `verification_ready` transition |
 | WP-20B Residual risk and final release controls | Accepted | WP-20A | Revisioned residual-risk review, durable hashed attachments, verified CI-bundle import, two simulated attestations, and `final-release-v1` | Passed: [Actions run 34954979024](https://github.com/caffreit/rhythmreview-evidence-workspace/actions/runs/34954979024) for commit `9d4510f5ffd29614f7851b2277deb549be1d2ada` was hash-verified, imported into the matching public deployment, QA accepted, approved by the simulated release approver, frozen, and browser-checked at desktop and 390 px |
-| WP-30 Document inputs and outputs | Planned | WP-20 | PDF and DOCX ingestion, source and controlled-document redlines, versioned templates, and package completeness | An imported document can produce reviewed evidence and a baseline-linked output package |
+| WP-30 Document inputs and outputs | In progress | WP-20 | PDF and DOCX ingestion, source and controlled-document redlines, versioned templates, and package completeness | An imported document can produce reviewed evidence and a baseline-linked output package |
 | WP-40 Connected-work fixtures | Planned | WP-10 | Fixture-backed Jira mapping plus repository and CI observations | Repeated imports converge without overwriting controlled evidence or claiming external facts as BlueBridge approvals |
 | WP-50 Production foundations | Deferred | WP-20, WP-30, WP-40 | Identity, permissions, durable jobs, concurrency controls, migration discipline, retention, monitoring, and cost controls | A limited internal pilot can use controlled non-patient data with verified identity and recoverable operations |
 | WP-60 Real integrations and validation | Deferred | WP-50 | Real Jira, GitHub and CI connections plus applicable quality procedures, model governance, validation evidence, and electronic signatures | Production use and compliance claims have documented, approved evidence |
@@ -46,7 +46,7 @@ WP-20A delivered one controlled path from the three risk-control coverage gaps t
 4. Baseline approval and release creation are separate. An author explicitly creates one planned release per approved baseline with a fictional code revision.
 5. Authors record immutable fictional executions; QA records append-only accepted or rejected decisions. A rerun creates another record, and the latest execution governs readiness.
 6. `release-readiness-v1` blocks relationship-policy violations, high traceability gaps, and missing, failed, rejected, or pending latest executions. Medium findings remain warnings. No verification waiver command exists.
-7. A fresh ready run permits only QA to mark the release “Verification ready under release-readiness-v1.” Executions and decisions then freeze.
+7. A fresh ready run permits only QA to mark the release "Verification ready under release-readiness-v1." Executions and decisions then freeze.
 
 Residual-risk acceptance, real CI, file attachments, electronic signatures, and final release approval remain outside WP-20A.
 
@@ -60,7 +60,22 @@ WP-20B extends `verification_ready` without broadening its claim:
 4. `final-release-v1` rechecks the accepted WP-20A fingerprint, traceability, high coherence findings, current risk and attachment records, current CI decision, and the residual-risk attestation. Medium findings remain warnings; every controlling record contributes to staleness.
 5. Jamie Chen records the simulated residual-risk attestation. Priya Shah is the only simulated final approver. Approval records statement version, role, reason, time, and exact policy fingerprint, then freezes the release as `release_approved`.
 
-WP-20B was accepted on 15 September 2026. [Actions run 34954979024](https://github.com/caffreit/rhythmreview-evidence-workspace/actions/runs/34954979024) passed the complete offline workflow for commit `9d4510f5ffd29614f7851b2277deb549be1d2ada`; its downloaded `ci-evidence-v1` manifest names that run and commit, and its recorded report SHA-256 matches the downloaded report. The same commit is published as Sites version 10 at [the existing public workspace](https://rhythmreview-evidence-workspace.ivan-caffrey.chatgpt.site). The deployed acceptance left release `RELSE-25294A0E` in frozen `release_approved` state with eight current QA-accepted risks, the real CI bundle accepted by Jamie Chen, current simulated attestations from Jamie Chen and Priya Shah, and fresh `final-release-v1` fingerprint `FRF-d0716cfc`. Risk-support attachment `ATT-DD284FA8` downloaded with recorded SHA-256 `31702aaa617a495e49cb364ee8052afacea929ad4a1c6ec78abfdb30c18e18a4`. Desktop and 390 px checks confirmed the final status, run link, decisions, attachments, audit history, and scope disclaimers without resetting the workspace. The feature branch remains available as historical evidence. WP-30 is next.
+WP-20B was accepted on 15 September 2026. [Actions run 34954979024](https://github.com/caffreit/rhythmreview-evidence-workspace/actions/runs/34954979024) passed the complete offline workflow for commit `9d4510f5ffd29614f7851b2277deb549be1d2ada`; its downloaded `ci-evidence-v1` manifest names that run and commit, and its recorded report SHA-256 matches the downloaded report. The same commit is published as Sites version 10 at [the existing public workspace](https://rhythmreview-evidence-workspace.ivan-caffrey.chatgpt.site). The deployed acceptance left release `RELSE-25294A0E` in frozen `release_approved` state with eight current QA-accepted risks, the real CI bundle accepted by Jamie Chen, current simulated attestations from Jamie Chen and Priya Shah, and fresh `final-release-v1` fingerprint `FRF-d0716cfc`. Risk-support attachment `ATT-DD284FA8` downloaded with recorded SHA-256 `31702aaa617a495e49cb364ee8052afacea929ad4a1c6ec78abfdb30c18e18a4`. Desktop and 390 px checks confirmed the final status, run link, decisions, attachments, audit history, and scope disclaimers without resetting the workspace. The feature branch remains available as historical evidence. WP-30 is now in progress locally.
+
+## WP-30 progress
+
+The local WP-30 implementation now covers the planned functional path, but the work remains uncommitted and has not passed the package acceptance gate:
+
+1. PDF and DOCX intake checks the filename, media type, and file signature together. It rejects corrupt, encrypted, image-only, macro-enabled, empty, and oversized inputs.
+2. R2 stores the original bytes. D1 stores the SHA-256, extractor identity and version, warnings, normalized text, and page- or paragraph-anchored blocks.
+3. A new source revision preserves the prior file, records deterministic drift work, and supports an idempotent block and word redline.
+4. Stable template identities point to immutable versions with `draft`, `qa_review`, `approved`, or `rejected` state. QA decisions are append-only, and only an approved template version can render a controlled snapshot.
+5. A snapshot freezes the baseline, template version, exact evidence-version membership, renderer version, rendered model, fingerprint, PDF, and DOCX files.
+6. A controlled redline separates template changes from evidence-content changes and renders both PDF and DOCX reports.
+7. `document-package-v1` creates the required snapshots, verifies R2 metadata against D1, produces a manifest and ZIP, and allows QA to decide only the latest passing fingerprint. The ZIP is unavailable until QA accepts the package.
+8. Workspace reset removes the source and document R2 objects before it restores the seed data.
+
+The local test suite has 71 passing tests. `verify:documents` is the end-to-end acceptance script for the running application. WP-30 remains in progress until that script, browser checks, migration checks, and a committed acceptance record pass.
 
 ## Completed foundation package
 

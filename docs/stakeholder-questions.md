@@ -2,13 +2,13 @@
 
 Status: review reference
 
-Snapshot: 13 September 2026
+Snapshot: 18 September 2026
 
 ## Questions senior engineers and architects will ask
 
 ### What is the system of record?
 
-There is no single system of record for every fact. D1 is the system of record for BlueBridge-controlled evidence versions, review decisions, baselines, releases, and audit events. Imported source revisions remain attributed to their origin. Planned Git, Jira, and CI connectors preserve those systems' authority for code, work state, and executions.
+There is no single system of record for every fact. D1 is the system of record for BlueBridge-controlled evidence versions, review decisions, baselines, releases, file metadata, and audit events. R2 holds immutable bytes addressed by D1 records. Imported source revisions remain attributed to their origin. Planned Git and Jira connectors preserve those systems' authority for code and work state. The current CI path imports and verifies a downloaded bundle; it is not a live connector.
 
 ### What makes a baseline immutable?
 
@@ -76,11 +76,29 @@ No. Four rule families are deterministic in code. Three findings are labelled `e
 
 ### Do coherence findings block approval?
 
-No. The prototype lets a reviewer run, inspect, and waive candidate findings, but the approval endpoint does not require a current run or a clear or waived disposition. Enforced release gates are planned after the relationship policy, risk, and verification model exist.
+They do not block baseline approval. They do block later release states. `release-readiness-v1` blocks relationship-policy failures, high traceability gaps, and missing or unacceptable verification evidence. `final-release-v1` also blocks current high coherence findings and stale controlling records. Medium findings remain warnings.
 
 ### What is the API style?
 
-The application uses resource reads and command-style POST endpoints under `app/api`. Examples include `changes/{id}/analyse`, `changes/{id}/submit`, and `source-baselines/approve`. Zod validates command bodies. There is no published OpenAPI contract, pagination standard beyond recent changes, idempotency key, or external API version.
+The application uses resource reads and command-style POST endpoints under `app/api`. The local worktree has 70 route handlers. Examples include `changes/{id}/analyse`, `source-baselines/approve`, `releases/{id}/final-readiness`, `document-snapshots`, and `document-packages/{id}/decision`. Zod validates command bodies. There is no published OpenAPI contract, general pagination standard, idempotency-key contract, or external API version.
+
+### Where do imported and generated files live?
+
+D1 stores ownership, filename, media type, size, SHA-256, object key, and control history. R2 stores the bytes. Generated object keys do not contain the uploaded filename. Source files, release attachments, document snapshots, redlines, and ZIP packages share the `RELEASE_FILES` bucket but use separate key prefixes.
+
+The split is deliberate, but it is not transactional. The code removes newly written R2 objects when a later D1 batch fails and removes known objects during reset. Production still needs reconciliation, retention, backup, malware scanning, and an operator-visible recovery path.
+
+### Does PDF or DOCX extraction preserve the original document?
+
+Yes. R2 retains the original bytes and D1 retains their SHA-256. `unpdf` extracts text-native PDF pages. Mammoth extracts raw DOCX text without storing generated HTML. BlueBridge normalizes the result into page- or paragraph-anchored blocks and records the extractor version and warnings.
+
+The local implementation rejects empty, oversized, corrupt, encrypted, image-only, macro-enabled, or mismatched files. It does not perform OCR or preserve visual layout as structured evidence. Reviewers can download the original file when layout matters.
+
+### What makes a document package current?
+
+`document-package-v1` fingerprints the baseline, required approved template versions, renderer version, and package policy. The package stores exact snapshot membership and a manifest of source evidence versions and file hashes. QA can decide only the latest passing fingerprint. BlueBridge withholds the ZIP until acceptance.
+
+The package is a controlled projection. It does not become the authoritative source for requirements, risk controls, or tests.
 
 ### What should be split first?
 
@@ -98,11 +116,11 @@ The primary reviewer is QA or RA. Product and engineering authors supply source 
 
 ### What is the smallest complete product loop?
 
-Import one source revision, resolve material questions, review generated user needs, derive and review requirements, assess impact on the existing baseline, and approve a new immutable baseline. The source-first prototype completes that loop; an author creates a planned release explicitly and separately on the Releases page.
+Import one source revision, resolve material questions, review generated user needs, derive and review requirements, assess impact, and approve a new immutable baseline. From that baseline, the pushed prototype supports verification readiness, residual-risk review, imported CI evidence, and fictional final release approval. The local WP-30 path also renders controlled PDF and DOCX outputs and creates a QA-reviewed ZIP package.
 
 ### What does the product automate?
 
-It automates candidate discovery, structured drafting of needs and requirements, impact classification, provenance checks, consistency checks, and assembly of a candidate baseline. It does not automate controlled approval.
+It automates candidate discovery, structured drafting of needs and requirements, impact classification, provenance checks, consistency checks, release-policy evaluation, document extraction, deterministic redlines, output rendering, and package assembly. It does not automate controlled approval.
 
 ### What is the product bet?
 
@@ -120,7 +138,9 @@ Public marketing pages do not reveal every internal authority rule in Infera or 
 
 ### What has the prototype proved?
 
-It proves that the core record types and human review loop can work together. It also proves strict structured model output, exact citation checks, explicit live failure, replay separation, audit capture, baseline versioning, and a live fictional source-to-baseline run.
+The pushed code proves that the core record types and human review loop can work together through fictional final release approval. It includes controlled relationships, verification readiness, append-only residual-risk decisions, hashed attachments, verified CI-bundle import, two simulated attestations, and a frozen final state.
+
+The local worktree also proves unit-level PDF and DOCX extraction, anchored citations, deterministic source and output redlines, governed template versions, rendered PDF and DOCX snapshots, package fingerprints, ZIP manifests, and QA package decisions. That WP-30 path has not yet been committed, pushed, or accepted as a work package.
 
 It does not prove production compliance, customer value, operational scale, model generalization, identity assurance, or integration reliability.
 
@@ -142,18 +162,17 @@ The riskiest assumption is that a team will maintain a controlled evidence graph
 
 ### What should remain out of scope next?
 
-Do not add autonomous approvals, broad document generation, or many shallow connectors before the relationship policy and trace editor work. The next package should make link semantics, gaps, and baseline-aware traceability trustworthy. Risk, verification, and release gates depend on that base.
+Do not add autonomous approvals, OCR, broad submission publishing, or many shallow connectors while WP-30 remains unaccepted. Finish its migration, end-to-end, browser, and recovery evidence first. WP-40 should then prove convergent observations and drift handling before any production connector work.
 
 ### What is the roadmap order?
 
 The current delivery plan orders work as follows:
 
-1. Ratify relationship semantics and implement controlled traceability.
-2. Add structured risk, verification, and release readiness.
-3. Add document inputs, redlines, controlled outputs, and package checks.
-4. Add fixture-backed work and implementation observations.
-5. Add identity, permissions, durable jobs, concurrency, retention, monitoring, and cost controls.
-6. Add real integrations and complete the applicable validation and quality procedures.
+1. WP-00, WP-10, and WP-20 are accepted.
+2. Finish and accept WP-30 document inputs, redlines, controlled outputs, and package checks.
+3. Add WP-40 fixture-backed work and implementation observations.
+4. Add WP-50 identity, permissions, durable jobs, concurrency, retention, monitoring, and cost controls.
+5. Add WP-60 real integrations and complete the applicable validation and quality procedures.
 
 ### What should a customer never misunderstand?
 
@@ -163,7 +182,7 @@ They must not mistake an AI suggestion for an approved trace link, a passing che
 
 ### Who can approve what?
 
-The prototype requires the simulated QA reviewer for candidate decisions, impact decisions, finding waivers, and baseline approval. The author creates changes, processes sources, resolves clarifications, and edits candidates. The server prevents the change author from approving the same change baseline.
+The prototype requires the simulated QA reviewer for candidate decisions, impact decisions, relationship decisions, finding waivers, baseline approval, verification evidence, residual risks, CI evidence, template versions, and document packages. The author creates changes, processes sources, resolves clarifications, edits candidates, records executions, imports files, and builds packages. The simulated release approver is the only actor who can approve a fresh `final-release-v1` run. The server prevents the change author from approving the same change baseline.
 
 These are workflow checks on actor strings. They are not authenticated permissions.
 
@@ -185,4 +204,4 @@ No. It is internal prototype evidence against fictional data and a provisional a
 
 ### Which compliance capabilities are absent?
 
-The prototype has no verified identity, electronic signature, training control, records-retention policy, legal hold, supplier controls, validated infrastructure, access review, incident process, submission package, or production connector controls. It must not be presented as an eQMS or as meeting a regulation by itself.
+The prototype has no verified identity, electronic signature, training control, records-retention policy, legal hold, supplier controls, validated infrastructure, access review, incident process, live work-system connector, or validated submission package. The local document ZIP is a controlled prototype package, not a regulatory submission. BlueBridge must not be presented as an eQMS or as meeting a regulation by itself.

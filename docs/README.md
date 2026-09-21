@@ -1,6 +1,8 @@
 # BlueBridge technical documentation
 
-These pages describe the RhythmReview prototype as it exists on 14 September 2026. They separate implemented behavior from the broader product direction in [Product architecture](product-architecture.md).
+These pages describe the RhythmReview prototype as it exists in the local worktree on 18 September 2026. They separate working behavior from the broader product direction in [Product architecture](product-architecture.md).
+
+GitHub `master` contains accepted WP-20B at commit `b302d25`. The local worktree also contains the WP-30 document workflow. That work is implemented and testable locally, but it is not committed or pushed at this snapshot.
 
 ## Pick a starting point
 
@@ -14,7 +16,7 @@ These pages describe the RhythmReview prototype as it exists on 14 September 202
 ## Reference set
 
 - [System architecture](system-architecture.md) describes the deployed parts, request paths, trust boundaries, and main workflows.
-- [Data model and database](data-model.md) explains the 28-table D1 schema, logical relationships, versioning, and known integrity gaps.
+- [Data model and database](data-model.md) explains the 54-table local D1 schema, R2 file storage, logical relationships, versioning, and known integrity gaps.
 - [Technology and repository guide](technology.md) lists the languages, frameworks, runtime, and source ownership.
 - [LLM actions and prompt contracts](llm-actions.md) records each implemented model action, its exact policy text, bounded inputs, validation, and failure behavior.
 - [Authority model](authority-model.md) explains why external facts, model proposals, human decisions, baselines, and releases have different owners. It also compares the approach with the public positioning of Infera and Ketryx.
@@ -24,9 +26,10 @@ These pages describe the RhythmReview prototype as it exists on 14 September 202
 
 ## Scope labels
 
-The docs use three labels:
+The docs use four labels:
 
-- **Implemented** means the behavior exists in this repository.
+- **Pushed** means the behavior is committed on GitHub `master`.
+- **Implemented locally** means the behavior exists and passes local checks, but is not committed or pushed.
 - **Fixture** means saved fictional data demonstrates the behavior without proving live model quality.
 - **Planned** means the product architecture describes the behavior, but the repository does not implement it.
 

@@ -3,6 +3,9 @@ import { z } from 'zod';
 
 export class WorkflowConflictError extends Error {}
 export class InvalidRequestError extends Error {}
+export class UnsupportedDocumentError extends Error {
+  constructor(message:string,public readonly code='unsupported_document',public readonly status=422) { super(message); }
+}
 export class LiveProcessingError extends Error {
   constructor(message:string,public readonly runId:string,public readonly retryable:boolean) { super(message); }
 }
@@ -10,6 +13,7 @@ export class LiveProcessingError extends Error {
 export function apiError(error:unknown): NextResponse {
   if (error instanceof z.ZodError) return NextResponse.json({ error:'Invalid request',details:error.issues },{ status:400 });
   if (error instanceof InvalidRequestError) return NextResponse.json({ error:error.message },{ status:400 });
+  if (error instanceof UnsupportedDocumentError) return NextResponse.json({ error:error.message,code:error.code },{ status:422 });
   if (error instanceof WorkflowConflictError) return NextResponse.json({ error:error.message },{ status:409 });
   if (error instanceof LiveProcessingError) return NextResponse.json({ error:error.message,runId:error.runId,retryable:error.retryable },{ status:502 });
   const message = error instanceof Error ? error.message : 'Unexpected server error';

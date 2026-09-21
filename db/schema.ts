@@ -1,4 +1,4 @@
-import { index, integer, primaryKey, sqliteTable, text } from 'drizzle-orm/sqlite-core';
+import { index, integer, primaryKey, sqliteTable, text, uniqueIndex } from 'drizzle-orm/sqlite-core';
 
 export const baselines = sqliteTable('baselines', {
   id: text('id').primaryKey(), label: text('label').notNull(), status: text('status').notNull(),
@@ -34,13 +34,53 @@ export const relationships = sqliteTable('relationships', {
 ]);
 
 export const documentTemplates = sqliteTable('document_templates', {
-  id: text('id').primaryKey(), code: text('code').notNull(), title: text('title').notNull(), description: text('description').notNull(),
-  typesJson: text('types_json').notNull(), excludeFlagsJson: text('exclude_flags_json').notNull(),
-});
+  id:text('id').primaryKey(),code:text('code').notNull(),currentVersionId:text('current_version_id').notNull(),status:text('status').notNull().default('active'),
+  retiredBy:text('retired_by'),retiredAt:text('retired_at'),retirementReason:text('retirement_reason'),
+}, (table) => [uniqueIndex('idx_document_templates_code').on(table.code)]);
+
+export const documentTemplateVersions = sqliteTable('document_template_versions', {
+  id:text('id').primaryKey(),templateId:text('template_id').notNull(),version:integer('version').notNull(),title:text('title').notNull(),description:text('description').notNull(),
+  typesJson:text('types_json').notNull(),excludeFlagsJson:text('exclude_flags_json').notNull(),sectionOrderJson:text('section_order_json').notNull(),requiredInPackage:integer('required_in_package',{ mode:'boolean' }).notNull(),
+  status:text('status').notNull(),createdBy:text('created_by').notNull(),createdAt:text('created_at').notNull(),submittedAt:text('submitted_at'),
+}, (table) => [uniqueIndex('idx_document_template_versions_number').on(table.templateId,table.version),index('idx_document_template_versions_status').on(table.templateId,table.status)]);
+
+export const documentTemplateDecisions = sqliteTable('document_template_decisions', {
+  id:text('id').primaryKey(),templateVersionId:text('template_version_id').notNull(),decision:text('decision').notNull(),reason:text('reason').notNull(),actor:text('actor').notNull(),createdAt:text('created_at').notNull(),
+}, (table) => [index('idx_document_template_decisions_version').on(table.templateVersionId,table.createdAt)]);
+
+export const documentFiles = sqliteTable('document_files', {
+  id:text('id').primaryKey(),ownerKind:text('owner_kind').notNull(),ownerId:text('owner_id').notNull(),format:text('format').notNull(),filename:text('filename').notNull(),
+  contentType:text('content_type').notNull(),size:integer('size').notNull(),sha256:text('sha256').notNull(),objectKey:text('object_key').notNull(),createdAt:text('created_at').notNull(),
+}, (table) => [uniqueIndex('idx_document_files_owner_format').on(table.ownerKind,table.ownerId,table.format),index('idx_document_files_owner').on(table.ownerId)]);
+
+export const documentRedlines = sqliteTable('document_redlines', {
+  id:text('id').primaryKey(),templateId:text('template_id').notNull(),fromSnapshotId:text('from_snapshot_id').notNull(),toSnapshotId:text('to_snapshot_id').notNull(),
+  algorithmVersion:text('algorithm_version').notNull(),fingerprint:text('fingerprint').notNull(),changesJson:text('changes_json').notNull(),createdBy:text('created_by').notNull(),createdAt:text('created_at').notNull(),
+}, (table) => [uniqueIndex('idx_document_redlines_pair').on(table.fromSnapshotId,table.toSnapshotId,table.algorithmVersion)]);
+
+export const documentPackages = sqliteTable('document_packages', {
+  id:text('id').primaryKey(),baselineId:text('baseline_id').notNull(),policyId:text('policy_id').notNull(),policyVersion:text('policy_version').notNull(),
+  rendererVersion:text('renderer_version').notNull(),inputFingerprint:text('input_fingerprint').notNull(),status:text('status').notNull(),manifestJson:text('manifest_json'),
+  zipFileId:text('zip_file_id'),createdBy:text('created_by').notNull(),createdAt:text('created_at').notNull(),
+}, (table) => [uniqueIndex('idx_document_packages_fingerprint').on(table.inputFingerprint),index('idx_document_packages_baseline').on(table.baselineId,table.createdAt)]);
+
+export const documentPackageEntries = sqliteTable('document_package_entries', {
+  packageId:text('package_id').notNull(),templateId:text('template_id').notNull(),templateVersionId:text('template_version_id').notNull(),snapshotId:text('snapshot_id').notNull(),
+}, (table) => [primaryKey({ columns:[table.packageId,table.templateId] }),index('idx_document_package_entries_snapshot').on(table.snapshotId)]);
+
+export const documentPackageResults = sqliteTable('document_package_results', {
+  packageId:text('package_id').notNull(),resultId:text('result_id').notNull(),code:text('code').notNull(),status:text('status').notNull(),subjectId:text('subject_id').notNull(),title:text('title').notNull(),detail:text('detail').notNull(),
+}, (table) => [primaryKey({ columns:[table.packageId,table.resultId] }),index('idx_document_package_results_status').on(table.packageId,table.status)]);
+
+export const documentPackageDecisions = sqliteTable('document_package_decisions', {
+  id:text('id').primaryKey(),packageId:text('package_id').notNull(),inputFingerprint:text('input_fingerprint').notNull(),decision:text('decision').notNull(),reason:text('reason').notNull(),actor:text('actor').notNull(),createdAt:text('created_at').notNull(),
+}, (table) => [index('idx_document_package_decisions_package').on(table.packageId,table.createdAt)]);
 
 export const documentSnapshots = sqliteTable('document_snapshots', {
   id: text('id').primaryKey(), documentId: text('document_id').notNull(), baselineId: text('baseline_id').notNull(),
-  sourceVersionsJson: text('source_versions_json').notNull(), renderedAt: text('rendered_at').notNull(),
+  templateVersionId:text('template_version_id').notNull().default(''),
+  sourceVersionsJson:text('source_versions_json').notNull(),rendererVersion:text('renderer_version').notNull().default('document-renderer-v1'),
+  fingerprint:text('fingerprint').notNull().default(''),renderedModelJson:text('rendered_model_json').notNull().default('{}'),renderedAt:text('rendered_at').notNull(),
 }, (table) => [index('idx_document_snapshots_document').on(table.documentId)]);
 
 export const scenarios = sqliteTable('scenarios', {
@@ -159,8 +199,18 @@ export const sourceArtifacts = sqliteTable('source_artifacts', {
 
 export const sourceRevisions = sqliteTable('source_revisions', {
   id:text('id').primaryKey(),sourceId:text('source_id').notNull(),revision:integer('revision').notNull(),content:text('content').notNull(),
-  contentHash:text('content_hash').notNull(),origin:text('origin').notNull(),capturedAt:text('captured_at').notNull(),
+  contentHash:text('content_hash').notNull(),origin:text('origin').notNull(),capturedAt:text('captured_at').notNull(),filename:text('filename'),contentType:text('content_type'),
+  size:integer('size'),sha256:text('sha256'),objectKey:text('object_key'),extractorId:text('extractor_id'),extractorVersion:text('extractor_version'),warningsJson:text('warnings_json').notNull().default('[]'),
 }, (table) => [index('idx_source_revisions_source').on(table.sourceId,table.revision)]);
+
+export const sourceBlocks = sqliteTable('source_blocks', {
+  id:text('id').primaryKey(),revisionId:text('revision_id').notNull(),ordinal:integer('ordinal').notNull(),locator:text('locator').notNull(),text:text('text').notNull(),textHash:text('text_hash').notNull(),
+}, (table) => [uniqueIndex('idx_source_blocks_revision_ordinal').on(table.revisionId,table.ordinal)]);
+
+export const sourceRedlines = sqliteTable('source_redlines', {
+  id:text('id').primaryKey(),sourceId:text('source_id').notNull(),fromRevisionId:text('from_revision_id').notNull(),toRevisionId:text('to_revision_id').notNull(),
+  algorithmVersion:text('algorithm_version').notNull(),fingerprint:text('fingerprint').notNull(),changesJson:text('changes_json').notNull(),createdBy:text('created_by').notNull(),createdAt:text('created_at').notNull(),
+}, (table) => [uniqueIndex('idx_source_redlines_pair').on(table.fromRevisionId,table.toRevisionId,table.algorithmVersion),index('idx_source_redlines_source').on(table.sourceId,table.createdAt)]);
 
 export const sourceProcessingRuns = sqliteTable('source_processing_runs', {
   id:text('id').primaryKey(),sourceId:text('source_id').notNull(),revisionId:text('revision_id').notNull(),kind:text('kind').notNull(),

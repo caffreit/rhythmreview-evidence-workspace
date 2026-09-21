@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { seed } from './data';
 import { schemaStatements } from '@/db/runtime-schema';
-import { hasCurrentSchemaMarker } from './runtime-schema-bootstrap';
+import { hasWp30SchemaMarkers } from './runtime-schema-bootstrap';
 import {
   ChangeIdSchema, ChangeStatusSchema, CheckScopeSchema, CreateChangeInputSchema, DocumentTemplateSchema, EvidenceIdSchema, EvidenceItemSchema,
   CloseChangeInputSchema, CreateRelationshipProposalInputSchema, FindingDispositionInputSchema, GuidedReviewCompletionInputSchema, ImpactSuggestionSchema,
@@ -54,8 +54,8 @@ export function ensureWorkspace(db:D1Database): Promise<void> {
 }
 
 async function initializeWorkspace(db:D1Database): Promise<void> {
-  const releaseColumns = await db.prepare("PRAGMA table_info('releases')").all<{ name:string }>();
-  if (!hasCurrentSchemaMarker(releaseColumns.results)) {
+  const [releaseColumns,sourceRevisionColumns,templateColumns]=await Promise.all([db.prepare("PRAGMA table_info('releases')").all<{ name:string }>(),db.prepare("PRAGMA table_info('source_revisions')").all<{ name:string }>(),db.prepare("PRAGMA table_info('document_templates')").all<{ name:string }>()]);
+  if (!hasWp30SchemaMarkers({releaseColumns:releaseColumns.results,sourceRevisionColumns:sourceRevisionColumns.results,templateColumns:templateColumns.results})) {
     for (const sql of schemaStatements) {
       try { await db.prepare(sql).run(); }
       catch (error:unknown) {
@@ -71,7 +71,7 @@ async function initializeWorkspace(db:D1Database): Promise<void> {
     db.prepare("UPDATE audit_events SET aggregate_type='change',aggregate_id=(SELECT r.change_id FROM impact_suggestions s JOIN analysis_runs r ON r.id=s.run_id WHERE s.id=audit_events.entity_id) WHERE aggregate_id='' AND entity_type='suggestion'"),
     db.prepare("UPDATE audit_events SET aggregate_type='change',aggregate_id=(SELECT change_id FROM proposed_updates WHERE id=audit_events.entity_id) WHERE aggregate_id='' AND entity_type='proposed_update'"),
     db.prepare("UPDATE evidence_items SET type='component' WHERE type='design'"),
-    db.prepare("UPDATE document_templates SET types_json=replace(types_json,'\"design\"','\"component\"') WHERE types_json LIKE '%\"design\"%'"),
+    db.prepare("UPDATE document_template_versions SET types_json=replace(types_json,'\"design\"','\"component\"'),section_order_json=replace(section_order_json,'\"design\"','\"component\"') WHERE types_json LIKE '%\"design\"%' OR section_order_json LIKE '%\"design\"%'"),
   ]);
   const existing = await db.prepare('SELECT COUNT(*) AS count FROM baselines').first<{ count:number }>();
   if ((existing?.count ?? 0) > 0) {
@@ -92,7 +92,10 @@ async function initializeWorkspace(db:D1Database): Promise<void> {
     statements.push(db.prepare('INSERT OR IGNORE INTO baseline_items (baseline_id,item_id,version_id) VALUES (?,?,?)').bind(seed.baseline.id,item.id,item.versionId));
   }
   for (const relation of seed.relationships) statements.push(db.prepare('INSERT OR IGNORE INTO relationships (id,source_id,target_id,type,baseline_id,active,policy_id,policy_version,rationale,origin,predecessor_relationship_id,approved_by,approved_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)').bind(relation.id,relation.sourceId,relation.targetId,relation.type,relation.baselineId,relation.active ? 1 : 0,relation.policyId,relation.policyVersion,relation.rationale,relation.origin,relation.predecessorRelationshipId,relation.approvedBy,relation.approvedAt));
-  for (const document of seed.documents) statements.push(db.prepare('INSERT OR IGNORE INTO document_templates (id,code,title,description,types_json,exclude_flags_json) VALUES (?,?,?,?,?,?)').bind(document.id,document.code,document.title,document.description,JSON.stringify(document.types),JSON.stringify(document.excludeFlags ?? [])));
+  for (const document of seed.documents) statements.push(
+    db.prepare('INSERT OR IGNORE INTO document_templates (id,code,current_version_id,status) VALUES (?,?,?,?)').bind(document.id,document.code,document.versionId,'active'),
+    db.prepare('INSERT OR IGNORE INTO document_template_versions (id,template_id,version,title,description,types_json,exclude_flags_json,section_order_json,required_in_package,status,created_by,created_at,submitted_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)').bind(document.versionId,document.id,document.version,document.title,document.description,JSON.stringify(document.types),JSON.stringify(document.excludeFlags ?? []),JSON.stringify(document.types),1,'approved',seed.baseline.approvedBy,seed.baseline.approvedAt,seed.baseline.approvedAt),
+  );
   for (const scenario of seed.scenarios) {
     statements.push(db.prepare('INSERT OR IGNORE INTO scenarios (id,number,slug,title,scale,anchor_id,proposed_text,rationale,presenter,non_impacts_json,drafts_json,metrics_json) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)').bind(scenario.id,scenario.number,scenario.slug,scenario.title,scenario.scale,scenario.anchorId,scenario.proposedText,scenario.rationale,scenario.presenter,JSON.stringify(scenario.nonImpacts),JSON.stringify(scenario.drafts),JSON.stringify(scenario.metrics)));
     for (const itemId of scenario.expected) {
@@ -127,7 +130,7 @@ function nextBaselineLabel(current:string):string {
   return `${match[1]}${match[2]}.${Number(match[3]) + 1}`;
 }
 
-async function listEvidenceForBaseline(db:D1Database,baselineId:string): Promise<EvidenceItem[]> {
+export async function listEvidenceForBaseline(db:D1Database,baselineId:string): Promise<EvidenceItem[]> {
   await ensureWorkspace(db);
   const result = await db.prepare(`SELECT i.id,v.id AS version_id,v.version,i.type,v.title,v.statement,v.rationale,i.owner,i.criticality,i.jurisdictions_json,v.status,v.sources_json,v.flags_json,v.approved_by,v.approved_at FROM baseline_items b JOIN evidence_items i ON i.id=b.item_id JOIN evidence_versions v ON v.id=b.version_id WHERE b.baseline_id=? ORDER BY i.id`).bind(baselineId).all<EvidenceRow>();
   return result.results.map(evidenceFromRow);
@@ -188,11 +191,11 @@ export async function getOverview(db:D1Database) {
   };
 }
 
-interface DocumentRow { id:string; code:string; title:string; description:string; types_json:string; exclude_flags_json:string }
+interface DocumentRow { id:string; code:string; title:string; description:string; version_id:string; version:number; template_status:string; version_status:string; types_json:string; exclude_flags_json:string }
 export async function listDocuments(db:D1Database) {
   await ensureWorkspace(db);
-  const result = await db.prepare('SELECT id,code,title,description,types_json,exclude_flags_json FROM document_templates ORDER BY id').all<DocumentRow>();
-  return result.results.map((row) => DocumentTemplateSchema.parse({ id:row.id,code:row.code,title:row.title,description:row.description,types:StringArraySchema.parse(parseJson(row.types_json)),excludeFlags:StringArraySchema.parse(parseJson(row.exclude_flags_json)) }));
+  const result = await db.prepare('SELECT t.id,t.code,v.title,v.description,v.id AS version_id,v.version,t.status AS template_status,v.status AS version_status,v.types_json,v.exclude_flags_json FROM document_templates t JOIN document_template_versions v ON v.id=t.current_version_id ORDER BY t.id').all<DocumentRow>();
+  return result.results.map((row) => DocumentTemplateSchema.parse({ id:row.id,code:row.code,title:row.title,description:row.description,versionId:row.version_id,version:row.version,status:row.template_status === 'retired' ? 'retired' : row.version_status,types:StringArraySchema.parse(parseJson(row.types_json)),excludeFlags:StringArraySchema.parse(parseJson(row.exclude_flags_json)) }));
 }
 
 export async function renderDocument(db:D1Database,id:string,requestedBaselineId?:string) {
@@ -203,11 +206,7 @@ export async function renderDocument(db:D1Database,id:string,requestedBaselineId
   const document = documents.find((entry) => entry.id === id);
   if (!document || !baseline) return null;
   const items = evidence.filter((item) => document.types.includes(item.type) && !item.flags.some((flag) => document.excludeFlags.includes(flag)));
-  const snapshotId = `SNAP-${document.id}-${baseline.id}`;
-  const renderedAt = now();
-  await db.prepare('INSERT OR IGNORE INTO document_snapshots (id,document_id,baseline_id,source_versions_json,rendered_at) VALUES (?,?,?,?,?)').bind(snapshotId,document.id,baseline.id,JSON.stringify(items.map((item) => item.versionId)),renderedAt).run();
-  const snapshot = await db.prepare('SELECT rendered_at AS renderedAt,source_versions_json AS sourceVersionsJson FROM document_snapshots WHERE id=?').bind(snapshotId).first<{ renderedAt:string; sourceVersionsJson:string }>();
-  return { document,baseline,items,snapshotId,renderedAt:snapshot?.renderedAt ?? renderedAt,sourceVersionIds:StringArraySchema.parse(parseJson(snapshot?.sourceVersionsJson ?? '[]')),availableBaselines:baselines.results };
+  return { document,baseline,items,snapshotId:null,renderedAt:new Date().toISOString(),sourceVersionIds:items.map((item) => item.versionId),availableBaselines:baselines.results,preview:true };
 }
 
 interface ScenarioRow { id:string; number:string; slug:string; title:string; scale:string; anchor_id:string; proposed_text:string; rationale:string; presenter:string; non_impacts_json:string; drafts_json:string; metrics_json:string }
@@ -851,13 +850,18 @@ export async function closeChange(db:D1Database,changeId:string,raw:unknown) {
 export async function resetWorkspace(db:D1Database) {
   await ensureWorkspace(db);
   const statements = [
-    "DELETE FROM final_readiness_results","DELETE FROM final_readiness_runs","DELETE FROM prototype_attestations","DELETE FROM ci_evidence_decisions","DELETE FROM ci_evidence_records","DELETE FROM release_attachments","DELETE FROM residual_risk_decisions","DELETE FROM residual_risk_assessments","DELETE FROM release_readiness_results","DELETE FROM release_readiness_runs","DELETE FROM verification_execution_decisions","DELETE FROM verification_executions","DELETE FROM verification_plan_versions","DELETE FROM verification_plan_candidates","DELETE FROM finding_dispositions","DELETE FROM coherence_check_results","DELETE FROM coherence_check_runs","DELETE FROM relationship_review_decisions","DELETE FROM relationship_proposals","DELETE FROM review_decisions","DELETE FROM impact_suggestions","DELETE FROM analysis_runs","DELETE FROM proposed_updates","DELETE FROM change_requests","DELETE FROM audit_events","DELETE FROM embeddings","DELETE FROM document_snapshots",
-    "DELETE FROM releases","DELETE FROM source_clarifications","DELETE FROM source_candidates","DELETE FROM source_processing_runs","DELETE FROM source_revisions","DELETE FROM source_artifacts","DELETE FROM collection_members","DELETE FROM collections",
+    "DELETE FROM document_package_decisions","DELETE FROM document_package_results","DELETE FROM document_package_entries","DELETE FROM document_packages","DELETE FROM document_redlines","DELETE FROM document_files","DELETE FROM document_snapshots","DELETE FROM document_template_decisions","DELETE FROM document_template_versions","DELETE FROM document_templates",
+    "DELETE FROM final_readiness_results","DELETE FROM final_readiness_runs","DELETE FROM prototype_attestations","DELETE FROM ci_evidence_decisions","DELETE FROM ci_evidence_records","DELETE FROM release_attachments","DELETE FROM residual_risk_decisions","DELETE FROM residual_risk_assessments","DELETE FROM release_readiness_results","DELETE FROM release_readiness_runs","DELETE FROM verification_execution_decisions","DELETE FROM verification_executions","DELETE FROM verification_plan_versions","DELETE FROM verification_plan_candidates","DELETE FROM finding_dispositions","DELETE FROM coherence_check_results","DELETE FROM coherence_check_runs","DELETE FROM relationship_review_decisions","DELETE FROM relationship_proposals","DELETE FROM review_decisions","DELETE FROM impact_suggestions","DELETE FROM analysis_runs","DELETE FROM proposed_updates","DELETE FROM change_requests","DELETE FROM audit_events","DELETE FROM embeddings",
+    "DELETE FROM releases","DELETE FROM source_redlines","DELETE FROM source_blocks","DELETE FROM source_clarifications","DELETE FROM source_candidates","DELETE FROM source_processing_runs","DELETE FROM source_revisions","DELETE FROM source_artifacts","DELETE FROM collection_members","DELETE FROM collections",
     "DELETE FROM relationships","DELETE FROM baseline_items WHERE baseline_id != 'BL-RR-1.0'","DELETE FROM baselines WHERE id != 'BL-RR-1.0'","DELETE FROM evidence_versions WHERE item_id NOT IN (SELECT item_id FROM baseline_items WHERE baseline_id='BL-RR-1.0')","DELETE FROM evidence_items WHERE id NOT IN (SELECT item_id FROM baseline_items WHERE baseline_id='BL-RR-1.0')","DELETE FROM evidence_versions WHERE version != '1.0'",
     "UPDATE evidence_items SET current_version_id = id || '-v1.0'","UPDATE baselines SET status='approved',approved_by='Jamie Chen · QA reviewer',approved_at='2026-08-14T10:00:00.000Z' WHERE id='BL-RR-1.0'",
   ];
   await runBatches(db,statements.map((sql) => db.prepare(sql)),20);
   const fixtureUpdates:D1PreparedStatement[] = [];
+  for (const document of seed.documents) fixtureUpdates.push(
+    db.prepare('INSERT INTO document_templates (id,code,current_version_id,status) VALUES (?,?,?,?)').bind(document.id,document.code,document.versionId,'active'),
+    db.prepare('INSERT INTO document_template_versions (id,template_id,version,title,description,types_json,exclude_flags_json,section_order_json,required_in_package,status,created_by,created_at,submitted_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)').bind(document.versionId,document.id,document.version,document.title,document.description,JSON.stringify(document.types),JSON.stringify(document.excludeFlags ?? []),JSON.stringify(document.types),1,'approved',seed.baseline.approvedBy,seed.baseline.approvedAt,seed.baseline.approvedAt),
+  );
   for (const relation of seed.relationships) fixtureUpdates.push(db.prepare('INSERT INTO relationships (id,source_id,target_id,type,baseline_id,active,policy_id,policy_version,rationale,origin,predecessor_relationship_id,approved_by,approved_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)').bind(relation.id,relation.sourceId,relation.targetId,relation.type,relation.baselineId,relation.active ? 1 : 0,relation.policyId,relation.policyVersion,relation.rationale,relation.origin,relation.predecessorRelationshipId,relation.approvedBy,relation.approvedAt));
   for (const scenario of seed.scenarios) fixtureUpdates.push(db.prepare('UPDATE scenarios SET proposed_text=?,rationale=?,presenter=?,non_impacts_json=?,drafts_json=?,metrics_json=? WHERE id=?').bind(scenario.proposedText,scenario.rationale,scenario.presenter,JSON.stringify(scenario.nonImpacts),JSON.stringify(scenario.drafts),JSON.stringify(scenario.metrics),scenario.id));
   for (const run of seed.replayRuns) fixtureUpdates.push(db.prepare('UPDATE replay_runs SET name=?,model=?,prompt_version=?,output_json=? WHERE id=?').bind(run.name,run.model,run.promptVersion,JSON.stringify(run.suggestions),run.id));
