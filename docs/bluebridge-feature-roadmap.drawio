@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net" pages="1">
+  <diagram id="feature-roadmap" name="Capability availability and useful delivery packages">
+    <mxGraphModel dx="1800" dy="1120" grid="1" gridSize="10" page="1" pageScale="1" pageWidth="1800" pageHeight="1120" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Capability availability and useful delivery packages" style="text;html=0;fontSize=25;fontStyle=1;align=left;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="15" width="1730" height="40" />
+        </mxCell>
+        <mxCell id="subtitle" value="A prerequisite can come from internal work, a bought tool, or a manual process · package numbers do not impose one serial build" style="text;html=0;fontSize=16;align=left;fontColor=#52616b;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="55" width="1730" height="35" />
+        </mxCell>
+        <mxCell id="p0" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;P0 · Agree conventions and exchange&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;IDs / versions / link meanings / human decisions&lt;br&gt;Processing contracts and accepted target references&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#faf3e6;strokeColor=#977642;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="130" width="475" height="115" />
+        </mxCell>
+        <mxCell id="p1" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;P1 · Source → reviewed evidence&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;Capture → clarify → draft → check → independent review&lt;br&gt;Human decision, accepted records/links, feedback&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#eff5f9;strokeColor=#41637c;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="355" width="475" height="125" />
+        </mxCell>
+        <mxCell id="p2" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;P2 · Trace and significant-change review&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;Existing records and links can provide the starting point&lt;br&gt;Known impacts, independent findings, owned follow-up&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#eff5f9;strokeColor=#41637c;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="655" y="355" width="490" height="125" />
+        </mxCell>
+        <mxCell id="p3" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;P3 · Implementation and verification&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;Exact design / task / commit / build / test references&lt;br&gt;Manual associations first; PR-path checks as an increment&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#eff5f9;strokeColor=#41637c;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1265" y="355" width="500" height="125" />
+        </mxCell>
+        <mxCell id="p4" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;P4 · Baseline → selected outputs&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;Exact reviewed state, identifiable documents/packages&lt;br&gt;Release support adds scope-specific prerequisites&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#faf3e6;strokeColor=#977642;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1265" y="680" width="500" height="125" />
+        </mxCell>
+        <mxCell id="pin" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;P-IN · Independent adapter increments&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;Slack · meeting platform · tracker · repository · CI&lt;br&gt;Each adapter has its own source and downstream prerequisites&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#f4f4f2;strokeColor=#71776f;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="680" width="630" height="115" />
+        </mxCell>
+        <mxCell id="domains" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;Domain branches · provide evidence where&lt;br&gt;applicable&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;P-R risk · P-U usability · P-V validation · P-M model/data&lt;br&gt;Evidence can be supplied externally before native modules&lt;br&gt;exist&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#f4f4f2;strokeColor=#71776f;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="715" y="680" width="480" height="145" />
+        </mxCell>
+        <mxCell id="learn" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;P-L · Feedback and method improvement begin with the first workflow&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;Capture human corrections and failures → investigate causes → evaluate and adopt method versions&lt;br&gt;Manual review/evaluation can start immediately. Broader automated pattern analysis can follow.&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#eff5f9;strokeColor=#41637c;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="930" width="1730" height="105" />
+        </mxCell>
+        <mxCell id="edge-p0-p1" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=0;exitX=0.49473684210526314;exitY=1.0;entryX=0.49473684210526314;entryY=0.0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="p0" target="p1">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="label-p0-p1" value="minimum contracts available" style="text;html=0;fontSize=14;align=center;fillColor=#ffffff;fontColor=#465966;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="168.15" y="283" width="203.7" height="24" />
+        </mxCell>
+        <mxCell id="edge-p0-p2" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=1;exitX=1.0;exitY=0.4782608695652174;entryX=0.5;entryY=0.0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="p0" target="p2">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="900" y="185" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-p0-p2" value="minimum contracts + existing records / links" style="text;html=0;fontSize=14;align=center;fillColor=#ffffff;fontColor=#465966;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="747.8" y="193" width="324.4" height="24" />
+        </mxCell>
+        <mxCell id="edge-p0-p3" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=1;exitX=1.0;exitY=0.21739130434782608;entryX=0.51;entryY=0.0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="p0" target="p3">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1520" y="155" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-p0-p3" value="minimum contracts + implementation / test evidence" style="text;html=0;fontSize=14;align=center;fillColor=#ffffff;fontColor=#465966;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1071.5" y="125" width="367.0" height="24" />
+        </mxCell>
+        <mxCell id="edge-trace-dev" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=1;exitX=1.0;exitY=0.2;entryX=0.27;entryY=0.0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="p2" target="p3">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1205" y="380" />
+              <mxPoint x="1205" y="285" />
+              <mxPoint x="1400" y="285" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-trace-dev" value="for developer-path checks" style="text;html=0;fontSize=14;align=center;fillColor=#ffffff;fontColor=#465966;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1215.25" y="256" width="189.5" height="24" />
+        </mxCell>
+        <mxCell id="edge-dev-release" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=1;exitX=0.51;exitY=1.0;entryX=0.51;entryY=0.0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="p3" target="p4">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="label-dev-release" value="implementation / tests for release increment" style="text;html=0;fontSize=14;align=center;fillColor=#ffffff;fontColor=#465966;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1357.8" y="571" width="324.4" height="24" />
+        </mxCell>
+        <mxCell id="note-0" value="Baseline-to-document work can start from an external baseline&#10;P4's document minimum does not require P1, P2, or automated P3 integrations. The release increment needs the applicable current implementation, verification, validation, risk, labels, and decisions." style="text;whiteSpace=wrap;html=0;align=left;fontSize=15;fontColor=#52616b;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="527" width="1100" height="85" />
+        </mxCell>
+        <mxCell id="note-1" value="Meaning of connections&#10;Solid = minimum prerequisite for the named workflow. Dashed = another available input path or an increment-specific prerequisite. Domain evidence and feedback apply across packages; boxes do not establish supplier coverage or implementation status." style="text;whiteSpace=wrap;html=0;align=left;fontSize=15;fontColor=#52616b;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="1047" width="1730" height="85" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

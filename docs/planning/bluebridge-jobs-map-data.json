@@ -1,0 +1,1543 @@
+{
+  "date": "9 October 2026",
+  "status": "proposed operating model; record homes provisional",
+  "context": [
+    "Confirmed by the user: the previous arrangement used Jira, GitHub, and substantial manual document-based processes. The organisation is in transition; future authoritative homes for requirements, risk, and test evidence have not been decided.",
+    "The purpose of the new toolset and process redesign is to keep pace with AI-powered software development. Frequent capture and independent checking should fit normal work rather than depend on retrospective document assembly.",
+    "The internal compliance demo is one candidate. It uses Cloudflare D1 with the SQLite dialect for structured records and R2 for file bytes. This describes the demo, not an agreed future tool allocation.",
+    "The user has reviewed the job families and regards them as a reasonable working basis. Roles, exact triggers, granularity, review authority, applicable evidence scope, pain points, and measures remain proposed for validation. No supplier coverage, delivery date, or current connector capability is assumed."
+  ],
+  "records": [
+    {
+      "id": "SRC",
+      "title": "Source revisions",
+      "home": "Originating source system; captured revision in the chosen evidence store.",
+      "unit": "Slack thread, transcript, authored note, document, or external observation with origin, revision, date, and exact locator."
+    },
+    {
+      "id": "SCOPE",
+      "title": "Product scope and planning basis",
+      "home": "Chosen controlled evidence store, provisional.",
+      "unit": "Intended use, population, scope, owners, criteria, methods, and applicable project agreements."
+    },
+    {
+      "id": "CLAR",
+      "title": "Clarification and decision",
+      "home": "Chosen controlled evidence store, provisional.",
+      "unit": "Question, response, responsible person, rationale, and source or candidate revision."
+    },
+    {
+      "id": "NEED",
+      "title": "User need",
+      "home": "Chosen controlled evidence store, provisional.",
+      "unit": "Stable item ID; individual version with statement, basis, owner, and decision state."
+    },
+    {
+      "id": "SYS",
+      "title": "Product / system requirement",
+      "home": "Chosen controlled evidence store, provisional.",
+      "unit": "Individual requirement with parent need, acceptance criteria, version, and review state."
+    },
+    {
+      "id": "SUB",
+      "title": "Software / hardware / UI / labelling requirement",
+      "home": "Chosen controlled evidence store, provisional.",
+      "unit": "Individual requirement with level, allocation, acceptance criteria, version, and review state."
+    },
+    {
+      "id": "ARCH",
+      "title": "Architecture and components",
+      "home": "Chosen design evidence store, provisional; repository references where relevant.",
+      "unit": "Versioned component/interface identity and requirement allocation, distinguishing intended and observed design."
+    },
+    {
+      "id": "DESIGN",
+      "title": "Detailed design",
+      "home": "Chosen design evidence store or repository, provisional.",
+      "unit": "Unit or design element, rationale, interfaces, and links to requirements and components."
+    },
+    {
+      "id": "WORK",
+      "title": "Implementation work item",
+      "home": "Chosen work tracker, provisional; Jira is part of the previous arrangement.",
+      "unit": "Task identity, scope, owner, status, and controlled-record references."
+    },
+    {
+      "id": "CODE",
+      "title": "Implementation and build",
+      "home": "Chosen repository and build system, provisional; GitHub is part of the previous arrangement.",
+      "unit": "Repository, path, exact commit, PR review, build identity, and relevant artifacts."
+    },
+    {
+      "id": "HAZ",
+      "title": "Hazard and risk analysis",
+      "home": "Chosen risk evidence store, provisional.",
+      "unit": "Hazard, hazardous situation, causes, initial assessment, assumptions, and analysis revision."
+    },
+    {
+      "id": "CTRL",
+      "title": "Risk control",
+      "home": "Chosen risk evidence store, provisional.",
+      "unit": "Individual control with rationale, implementation reference, and effectiveness criteria."
+    },
+    {
+      "id": "RISK",
+      "title": "Residual-risk decision",
+      "home": "Chosen controlled evidence store, provisional.",
+      "unit": "Risk evaluation and acceptance decision tied to control, test, validation, and product versions; overall evaluation where applicable."
+    },
+    {
+      "id": "USE",
+      "title": "Use and usability evidence",
+      "home": "Chosen usability evidence store, provisional.",
+      "unit": "User profile, use environment, task, critical task, use-related risk, and formative-study records."
+    },
+    {
+      "id": "TEST",
+      "title": "Verification plan / test case",
+      "home": "Chosen test or evidence system, provisional.",
+      "unit": "Stable test ID and exact plan version, level, acceptance criteria, required configuration, and traced item."
+    },
+    {
+      "id": "RUN",
+      "title": "Verification execution and results",
+      "home": "Execution system owns raw result; reviewed reference and disposition in the chosen evidence store.",
+      "unit": "Test-plan version, code/build version, environment, result, attachments, and execution-review decision. A new run is a new record."
+    },
+    {
+      "id": "DEFECT",
+      "title": "Anomaly / defect",
+      "home": "Chosen issue tracker owns work state; risk and evidence dispositions retain their own owners.",
+      "unit": "Failed expectation, affected version, risk assessment, remediation, retest, and release disposition."
+    },
+    {
+      "id": "VP",
+      "title": "Validation plan / protocol",
+      "home": "Chosen validation evidence store, provisional.",
+      "unit": "Need or claim, population, intended use, scenarios, acceptance criteria, and evaluation configuration."
+    },
+    {
+      "id": "VR",
+      "title": "Validation and clinical results",
+      "home": "Study system owns original results; reviewed evidence and interpretation in the chosen evidence store.",
+      "unit": "Protocol version, product version, per-need or per-claim result, critical-task outcomes, and limitations."
+    },
+    {
+      "id": "ML",
+      "title": "Dataset and model evidence, if applicable",
+      "home": "Chosen dataset/model systems own artifacts; controlled references retain exact versions.",
+      "unit": "Provenance, train/tune/test splits, test-set lock, model/training version, performance, subgroup results, and change scope."
+    },
+    {
+      "id": "CLAIM",
+      "title": "Product / clinical claim",
+      "home": "Chosen controlled evidence store, provisional.",
+      "unit": "Claim wording, intended population, supporting evidence, limitations, and approved version."
+    },
+    {
+      "id": "LABEL",
+      "title": "Labelling and instructions for use",
+      "home": "Chosen controlled evidence store, provisional.",
+      "unit": "Versioned label content, claims, risk disclosure, and associated product/release scope."
+    },
+    {
+      "id": "LINK",
+      "title": "Trace relationship",
+      "home": "Chosen controlled relationship store, provisional.",
+      "unit": "Link identity, endpoint IDs and reviewed version/baseline context, defined meaning, rationale, proposal/change state, and review history. A similarity suggestion is distinct from a confirmed trace."
+    },
+    {
+      "id": "REVIEW",
+      "title": "Check, finding, and human decision",
+      "home": "Chosen review/evidence system, provisional.",
+      "unit": "Keep automated finding and human disposition distinct. Record object/version, context, checker or reviewer, method, reason, and outcome."
+    },
+    {
+      "id": "CHANGE",
+      "title": "Change and impact work",
+      "home": "Chosen change/evidence system, provisional.",
+      "unit": "Trigger, old and proposed versions, impacted records, links, follow-up owners, review decisions, and unresolved work."
+    },
+    {
+      "id": "BASE",
+      "title": "Reviewed baseline",
+      "home": "Chosen controlled evidence store, provisional.",
+      "unit": "Exact reviewed evidence versions, relationship set, relevant decisions, and unresolved dispositions."
+    },
+    {
+      "id": "DOC",
+      "title": "Document snapshot / package",
+      "home": "Chosen document/evidence store, provisional.",
+      "unit": "Exact baseline, template/renderer versions, evidence membership, rendered files, and package-review state."
+    },
+    {
+      "id": "REL",
+      "title": "Release / transfer record",
+      "home": "Chosen release/evidence system, provisional.",
+      "unit": "Baseline, build, applicable verification/validation, risk decisions, labels, open anomalies, package, and separate release decision."
+    },
+    {
+      "id": "FB",
+      "title": "Correction and failure feedback",
+      "home": "Chosen feedback/evaluation store, provisional; preserve links to project records.",
+      "unit": "Before/after, reason, source and output revisions, prompt/rule/tool versions, checker finding, human disposition, and outcome."
+    },
+    {
+      "id": "METHOD",
+      "title": "Working methods and evaluation evidence",
+      "home": "Versioned configuration/evaluation store, provisional.",
+      "unit": "Prompt, schema, rule, context-selection method, tool configuration, representative examples, evaluation result, and adoption decision."
+    }
+  ],
+  "jobs": [
+    {
+      "id": "J01",
+      "title": "Capture information with a usable source reference",
+      "actor": "Meeting participant, product lead, engineer, or source owner",
+      "trigger": "A discussion, document, note, or new source revision contains product information.",
+      "inputs": [
+        "SRC"
+      ],
+      "outputs": [
+        "SRC",
+        "CLAR"
+      ],
+      "steps": [
+        "Capture the relevant thread, transcript, note, or document revision.",
+        "Record origin, author/date where available, revision, and exact locators.",
+        "Identify missing context, ambiguity, and candidate decisions for follow-up."
+      ],
+      "decision": "A source owner confirms usable capture; candidate statements still need their own review.",
+      "handoff": "J02, J03, J05, J06, or J09 receives the relevant source and questions.",
+      "change": "A new source revision raises J13 drift review; earlier interpretations retain their original citation.",
+      "inner": "Check extraction completeness, locators, duplicates, and structured output.",
+      "outer": "Inspect the original source for omitted qualifiers, disagreements, or unsupported interpretation.",
+      "feedback": "Capture extraction errors, missed decisions, and manual redirection.",
+      "friction": "Decisions may be reconstructed later from scattered conversations.",
+      "measure": "Capture effort and the proportion of outputs with usable exact source references."
+    },
+    {
+      "id": "J02",
+      "title": "Agree the user need and its intended-use context",
+      "actor": "Product owner with user, clinical, or domain reviewers",
+      "trigger": "New evidence, an unresolved clarification, or a change affects what users need.",
+      "inputs": [
+        "SRC",
+        "SCOPE",
+        "CLAR",
+        "USE"
+      ],
+      "outputs": [
+        "NEED",
+        "CLAIM",
+        "CLAR",
+        "REVIEW"
+      ],
+      "steps": [
+        "Identify the user, problem, use environment, and desired outcome.",
+        "Resolve ambiguity with the responsible person.",
+        "Record proposed product claims separately from user needs; supporting evidence is reviewed in J08.",
+        "Review each need and retain its source and rationale."
+      ],
+      "decision": "The designated need owner/reviewer accepts, revises, rejects, or defers the specific version.",
+      "handoff": "J03 derives requirements; J08 defines validation against the need.",
+      "change": "A changed need prompts review of derived requirements, use-related risks, validation, and claims through J09.",
+      "inner": "Check clear actor/outcome, source support, duplicates, and unresolved scope.",
+      "outer": "Challenge interpretation against underlying sources, intended use, and existing needs.",
+      "feedback": "Capture reviewer rewrites and rejected or unsupported needs.",
+      "friction": "People may confuse a discussion suggestion with an agreed need.",
+      "measure": "Time to an accepted need and reviewer correction effort."
+    },
+    {
+      "id": "J03",
+      "title": "Translate needs and controls into testable requirements",
+      "actor": "Systems, software, hardware, or product engineer",
+      "trigger": "A reviewed need, control, constraint, or parent requirement needs implementation detail.",
+      "inputs": [
+        "NEED",
+        "SCOPE",
+        "CLAR",
+        "CTRL",
+        "USE",
+        "SYS",
+        "LINK"
+      ],
+      "outputs": [
+        "SYS",
+        "SUB",
+        "LINK",
+        "REVIEW"
+      ],
+      "steps": [
+        "Derive product/system requirements and decompose them into software, hardware, UI, and labelling requirements.",
+        "Specify measurable acceptance criteria, allocation, and source/parent links.",
+        "Review requirement versions and proposed links separately."
+      ],
+      "decision": "The assigned discipline reviewer accepts the requirement and its links. Parent acceptance does not accept children.",
+      "handoff": "J04 uses approved design inputs; J07 plans verification; J12 uses the exact versions in specifications.",
+      "change": "A changed criterion or allocation prompts design, control, test, and label review through J09.",
+      "inner": "Check measurability, schema, units, source support, and allowed link types; revise within a bounded loop.",
+      "outer": "Independently inspect consistency with needs, risk controls, related requirements, and testability.",
+      "feedback": "Capture rejected requirements, ambiguous criteria, missing links, and recurring reviewer edits.",
+      "friction": "Requirements may be duplicated in tickets or rewritten retrospectively.",
+      "measure": "First-pass acceptance, correction effort, and unresolved source/trace gaps."
+    },
+    {
+      "id": "J04",
+      "title": "Connect intended design, implementation work, and what was built",
+      "actor": "Architect and developer, including coding agents under an assigned owner",
+      "trigger": "A requirement is allocated, a design changes, or implementation/PR evidence becomes available.",
+      "inputs": [
+        "SYS",
+        "SUB",
+        "CTRL",
+        "ARCH",
+        "DESIGN",
+        "WORK",
+        "CODE",
+        "LINK"
+      ],
+      "outputs": [
+        "ARCH",
+        "DESIGN",
+        "WORK",
+        "CODE",
+        "LINK",
+        "REVIEW"
+      ],
+      "steps": [
+        "Allocate requirements to components, interfaces, and detailed design.",
+        "Create implementation tasks that reference controlled IDs.",
+        "Capture authored design rationale and as-built observations tied to exact commits and PRs.",
+        "Review mismatches between intended design and implementation."
+      ],
+      "decision": "Design reviewer owns design acceptance; repository reviewers own PR decisions. Neither decision automatically approves the other record.",
+      "handoff": "J07 consumes exact design and build references; J09 receives design/implementation mismatches.",
+      "change": "Code, interface, dependency, or task changes prompt review of the associated design, requirements, risk, and tests.",
+      "inner": "Check local design/code constraints, referenced IDs, and local tests.",
+      "outer": "Inspect requirement and control coverage, component boundaries, and configuration consistency beyond the local change.",
+      "feedback": "Capture missed allocations, design/code divergence, PR corrections, and agent redirection.",
+      "friction": "The reason for a code change may remain in a PR while design evidence becomes stale.",
+      "measure": "Effort to reconstruct requirement-to-build evidence and unresolved design/implementation mismatches."
+    },
+    {
+      "id": "J05",
+      "title": "Analyse risk, define controls, and assess residual risk",
+      "actor": "Risk owner with engineering, clinical, security, usability, and QA reviewers",
+      "trigger": "Scope/design changes, a hazard is identified, or control/test evidence changes.",
+      "inputs": [
+        "SCOPE",
+        "NEED",
+        "ARCH",
+        "CODE",
+        "USE",
+        "ML",
+        "HAZ",
+        "RUN",
+        "VR",
+        "LINK"
+      ],
+      "outputs": [
+        "HAZ",
+        "CTRL",
+        "RISK",
+        "LINK",
+        "REVIEW"
+      ],
+      "steps": [
+        "Record hazards, causes, assumptions, and the relevant risk analyses, including security and dependencies where applicable.",
+        "Define controls and translate them into requirement/design inputs.",
+        "Define how implementation and effectiveness will be checked.",
+        "Evaluate residual risk against current evidence and record the responsible decision."
+      ],
+      "decision": "The named risk authority records acceptance or further work for the relevant product state.",
+      "handoff": "J03/J04 implement controls; J07 verifies them; J08 contributes use/clinical evidence; J11/J12 use risk decisions and disclosures.",
+      "change": "Changed assumptions, controls, failures, or use conditions trigger risk reassessment and linked follow-up.",
+      "inner": "Check required fields, criteria, control references, and evidence versions.",
+      "outer": "Challenge missing hazards, ineffective controls, conflicting requirements, and unsupported residual-risk conclusions.",
+      "feedback": "Capture risk-review changes, missing hazards, and recurring control-evidence gaps.",
+      "friction": "Risk records may lag behind implementation and test changes.",
+      "measure": "Time to assess a change and the number/type of unresolved control-evidence gaps."
+    },
+    {
+      "id": "J06",
+      "title": "Connect user tasks, interface design, and usability evidence",
+      "actor": "Designer and usability lead with product and risk reviewers",
+      "trigger": "A task, user profile, interface, or use-related risk changes.",
+      "inputs": [
+        "SRC",
+        "SCOPE",
+        "NEED",
+        "USE",
+        "HAZ",
+        "SUB",
+        "CODE"
+      ],
+      "outputs": [
+        "USE",
+        "SUB",
+        "VP",
+        "VR",
+        "REVIEW"
+      ],
+      "steps": [
+        "Describe user profiles, environment, tasks, and critical tasks.",
+        "Use task/risk evidence to define UI requirements.",
+        "Record formative evaluations and resulting changes.",
+        "Connect summative evaluation plans/results to critical tasks and needs."
+      ],
+      "decision": "Assigned design/usability reviewers accept interpretations and required changes; risk acceptance has its own owner.",
+      "handoff": "J02/J03 receive task evidence; J05 receives use-related risk; J08 receives summative validation evidence.",
+      "change": "Changed users, tasks, interface, or use errors trigger requirement, risk, and evaluation review.",
+      "inner": "Check task IDs, design versions, critical-task links, and study/result structure.",
+      "outer": "Inspect whether tasks and use-related controls are covered by the UI design and evaluation scope.",
+      "feedback": "Capture missing tasks, repeated use errors, and study/document rework.",
+      "friction": "Task analyses, UI designs, and evaluation results may be maintained separately.",
+      "measure": "Effort to trace a critical task through UI requirements to evaluated outcomes."
+    },
+    {
+      "id": "J07",
+      "title": "Plan verification and preserve results at every V-model level",
+      "actor": "Test engineer or developer with assigned verification reviewer",
+      "trigger": "Requirements/design need tests, a build is ready, or a change requires regression.",
+      "inputs": [
+        "SYS",
+        "SUB",
+        "ARCH",
+        "DESIGN",
+        "CTRL",
+        "CODE",
+        "TEST",
+        "CHANGE",
+        "LINK"
+      ],
+      "outputs": [
+        "TEST",
+        "RUN",
+        "DEFECT",
+        "LINK",
+        "REVIEW"
+      ],
+      "steps": [
+        "Plan unit tests against detailed design, integration tests against components/interfaces, subsystem tests against allocated requirements, and system tests against system requirements.",
+        "Record test identity, plan version, acceptance criteria, configuration, and traced items.",
+        "Execute against an exact build and retain raw results and attachments.",
+        "Review results, record anomalies, and determine relevant regression work."
+      ],
+      "decision": "The assigned reviewer disposes of each execution and its applicability. A passing run alone does not approve a release.",
+      "handoff": "J05 reviews control evidence; J08 references the verified configuration; J11 consumes applicable results and dispositions.",
+      "change": "A changed test, requirement, build, environment, or failed execution prompts freshness, regression, and impact review.",
+      "inner": "Check test schema, criteria, configuration, raw-result integrity, and local failures.",
+      "outer": "Independently inspect requirement/control coverage, missing tests, stale runs, and consistency across levels.",
+      "feedback": "Capture verification failures, missing coverage, unreliable checks, and incorrect execution associations.",
+      "friction": "A test result may be available without a reliable link to the requirement and release version.",
+      "measure": "Coverage gaps, stale evidence, result-review effort, and missed required regression."
+    },
+    {
+      "id": "J08",
+      "title": "Validate user needs and support applicable product claims",
+      "actor": "Validation, usability, or clinical lead with assigned reviewers",
+      "trigger": "A product version is evaluated, a need/claim changes, or new study evidence arrives.",
+      "inputs": [
+        "NEED",
+        "SCOPE",
+        "USE",
+        "CLAIM",
+        "VP",
+        "CODE",
+        "RUN",
+        "ML",
+        "LINK"
+      ],
+      "outputs": [
+        "VP",
+        "VR",
+        "CLAIM",
+        "LINK",
+        "REVIEW"
+      ],
+      "steps": [
+        "Define representative needs, populations, scenarios, critical tasks, and applicable claims.",
+        "Specify criteria and the exact evaluation configuration.",
+        "Record results per need/claim, limitations, and unresolved gaps.",
+        "Review conclusions and route failures back to needs, design, risk, or evidence collection."
+      ],
+      "decision": "Assigned reviewers assess whether the evidence supports the specific need or claim. Verification success does not establish validation.",
+      "handoff": "J05 uses relevant results for risk decisions; J11/J12 use reviewed conclusions and limitations.",
+      "change": "A changed need, claim, population, interface, model, or evaluated configuration prompts validation-scope review.",
+      "inner": "Check protocol/result association, criteria, population, and configuration references.",
+      "outer": "Challenge representativeness, uncovered needs/critical tasks, claim support, and interpretation of failures.",
+      "feedback": "Capture validation failures, unsupported claims, study corrections, and repeated evidence gaps.",
+      "friction": "Validation conclusions may be stored as reports with weak links to individual needs.",
+      "measure": "Effort to establish per-need/claim support and unresolved validation gaps."
+    },
+    {
+      "id": "J09",
+      "title": "Determine and resolve the consequences of a change",
+      "actor": "Change author and reviewers from affected disciplines",
+      "trigger": "A significant source, requirement, design, code, risk, test, label, or relationship changes.",
+      "inputs": [
+        "SRC",
+        "CHANGE",
+        "BASE",
+        "NEED",
+        "SYS",
+        "SUB",
+        "ARCH",
+        "CODE",
+        "HAZ",
+        "CTRL",
+        "TEST",
+        "RUN",
+        "VR",
+        "LABEL",
+        "LINK"
+      ],
+      "outputs": [
+        "CHANGE",
+        "LINK",
+        "REVIEW",
+        "WORK"
+      ],
+      "steps": [
+        "Identify the old state, proposed state, reason, and change scope.",
+        "Inspect known links and independently look for missing relationships or consequences.",
+        "Assign updates, relinking, retesting, and reviews to owners.",
+        "Resolve or explicitly disposition findings before advancing the changed records."
+      ],
+      "decision": "Affected reviewers decide which impacts are real and what follow-up is required; the author does not approve the agent's conclusions by default.",
+      "handoff": "J02 through J08 and J12 receive named follow-up work; J10 receives the reviewed candidate state.",
+      "change": "A candidate edit or new external revision makes version-bound checks and decisions subject to freshness review.",
+      "inner": "Check the proposed change and its known direct relationships.",
+      "outer": "Independently interrogate impacted requirements, hazards, controls, tests, labels, configuration, and potentially absent links.",
+      "feedback": "Capture missed impacts, false alarms, reviewer additions, and manually redirected analysis.",
+      "friction": "People may rely on memory to identify impacts across disconnected records.",
+      "measure": "Impact-review effort, missed consequential impacts, and unhelpful findings."
+    },
+    {
+      "id": "J10",
+      "title": "Establish a coherent reviewed baseline",
+      "actor": "Design reviewers and designated baseline authority",
+      "trigger": "A change or review package has a candidate evidence state ready for a decision.",
+      "inputs": [
+        "CHANGE",
+        "REVIEW",
+        "NEED",
+        "SYS",
+        "SUB",
+        "ARCH",
+        "DESIGN",
+        "HAZ",
+        "CTRL",
+        "USE",
+        "TEST",
+        "ML",
+        "CLAIM",
+        "LABEL",
+        "LINK"
+      ],
+      "outputs": [
+        "BASE",
+        "REVIEW"
+      ],
+      "steps": [
+        "Select exact evidence and relationship versions for the proposed scope.",
+        "Check consistency, completeness, current review decisions, and unresolved issues.",
+        "Return work for revision or explicitly disposition it.",
+        "Record the baseline decision and retain the previous baseline."
+      ],
+      "decision": "The designated authority accepts the named evidence state. Baseline acceptance and release approval remain separate.",
+      "handoff": "J12 renders controlled views; J11 references the baseline in release/transfer work; J09 uses it as the comparison state.",
+      "change": "New candidate versions require relevant checks and reviews to run again against that state.",
+      "inner": "Check membership, IDs, version freshness, and known consistency rules.",
+      "outer": "Independently inspect package-wide consistency and whether unresolved work changes the decision.",
+      "feedback": "Capture returned packages, stale decisions, and repeated coherence findings.",
+      "friction": "Different documents may describe different versions of the product.",
+      "measure": "Baseline-review effort and unresolved or recurring configuration inconsistencies."
+    },
+    {
+      "id": "J11",
+      "title": "Establish release or transfer readiness and record the decision",
+      "actor": "QA and designated release/transfer owner",
+      "trigger": "A named baseline and implementation version are proposed for release or transfer.",
+      "inputs": [
+        "BASE",
+        "CODE",
+        "RUN",
+        "VR",
+        "RISK",
+        "LABEL",
+        "DEFECT",
+        "DOC",
+        "REVIEW"
+      ],
+      "outputs": [
+        "REL",
+        "REVIEW"
+      ],
+      "steps": [
+        "Assemble applicable current verification, validation, risk, labels, anomalies, and output evidence.",
+        "Check that the evidence applies to the same proposed product/build state.",
+        "Resolve readiness findings and obtain the required distinct decisions.",
+        "Record release/transfer scope and retain the exact evidence references."
+      ],
+      "decision": "The designated release/transfer authority records the final decision according to the chosen process.",
+      "handoff": "Operations or the receiving team uses the release record; J13 monitors later changes and feedback.",
+      "change": "Changed supporting evidence requires readiness and decision freshness review; historical release evidence stays identifiable.",
+      "inner": "Check required records, file integrity, configuration, and decision freshness.",
+      "outer": "Inspect cross-package coverage, residual risks, validation limitations, open anomalies, and configuration consistency.",
+      "feedback": "Capture readiness blockers, missing support, and recurring release-package rework.",
+      "friction": "People may manually reconcile test reports, code versions, labels, and approval documents.",
+      "measure": "Assembly/review effort and late discoveries of missing or mismatched evidence."
+    },
+    {
+      "id": "J12",
+      "title": "Maintain labelling, produce document views, and answer evidence questions",
+      "actor": "Evidence or labelling author, reviewer, or QA/RA reader",
+      "trigger": "A label, specification, report, trace matrix, design-review package, or evidence answer is needed.",
+      "inputs": [
+        "BASE",
+        "NEED",
+        "SYS",
+        "SUB",
+        "ARCH",
+        "HAZ",
+        "CTRL",
+        "RUN",
+        "VR",
+        "RISK",
+        "CLAIM",
+        "LABEL",
+        "LINK",
+        "REVIEW"
+      ],
+      "outputs": [
+        "LABEL",
+        "DOC",
+        "REVIEW"
+      ],
+      "steps": [
+        "Author or revise controlled labelling and instructions for use from requirements, supported claims, limitations, and risk disclosures.",
+        "Select the relevant baseline and evidence scope.",
+        "Render or assemble a specification, report, matrix, or package using a named template.",
+        "Preserve exact source membership and review the output.",
+        "Answer a traceability question with references to the underlying records."
+      ],
+      "decision": "The assigned document/package reviewer accepts the projection and completeness; rendering does not create new product truth.",
+      "handoff": "Reviewers, release owners, clients, or other readers receive a version-identifiable output.",
+      "change": "Changed baseline or template creates a new output and an explainable difference; edits to exported content return through controlled review.",
+      "inner": "Check membership, layout, references, template version, and required sections.",
+      "outer": "Inspect completeness and consistency with the underlying evidence, including meaningful omissions.",
+      "feedback": "Capture recurring document edits, template omissions, and misleading evidence presentation.",
+      "friction": "Manual copying and reconciliation may consume time and introduce divergence.",
+      "measure": "Output-preparation effort, repeated edits, and time to answer a cited evidence question."
+    },
+    {
+      "id": "J13",
+      "title": "Detect drift and route ongoing observations into review",
+      "actor": "Source and record owners with affected reviewers",
+      "trigger": "A source revision, ticket, commit, test run, defect, or post-release observation arrives.",
+      "inputs": [
+        "SRC",
+        "WORK",
+        "CODE",
+        "RUN",
+        "DEFECT",
+        "REL",
+        "BASE"
+      ],
+      "outputs": [
+        "SRC",
+        "CHANGE",
+        "REVIEW"
+      ],
+      "steps": [
+        "Capture the observation at an exact external revision.",
+        "Compare it with the version previously used by evidence.",
+        "Distinguish duplicates, irrelevant updates, and meaningful changes.",
+        "Route meaningful drift into J09 with the relevant records and owners."
+      ],
+      "decision": "The responsible person dispositions drift; external activity does not automatically rewrite controlled evidence.",
+      "handoff": "J09 handles product consequences; J15 receives capture and routing failures.",
+      "change": "Repeated capture of the same revision should converge; lost or failed capture remains visible for recovery.",
+      "inner": "Check source identity, revision ordering, duplicates, and capture completeness.",
+      "outer": "Inspect whether material changes were missed or incorrectly associated with controlled records.",
+      "feedback": "Capture missed/stale observations, duplicate work, routing errors, and recurring drift.",
+      "friction": "Evidence may fall behind work in developer tools, particularly as AI accelerates changes.",
+      "measure": "Time from observation to disposition, missed material drift, and duplicate review work."
+    },
+    {
+      "id": "J14",
+      "title": "Maintain dataset and model evidence where product scope requires it",
+      "actor": "ML lead with test, risk, and domain reviewers",
+      "trigger": "A dataset, model, training process, performance criterion, or permitted change scope changes.",
+      "inputs": [
+        "SCOPE",
+        "SRC",
+        "SYS",
+        "SUB",
+        "HAZ",
+        "ML",
+        "TEST",
+        "RUN",
+        "VR"
+      ],
+      "outputs": [
+        "ML",
+        "REVIEW"
+      ],
+      "steps": [
+        "Record dataset origins, versions, partitions, and test-set independence/lock.",
+        "Record model/training configuration and the exact artifact used in a build.",
+        "Associate performance and subgroup evidence with the intended use and predefined criteria.",
+        "Review model/data changes alongside requirements, risk, verification, and validation."
+      ],
+      "decision": "Named ML/domain reviewers decide the evidence interpretation; risk and release decisions retain their own owners.",
+      "handoff": "J04 uses the model artifact; J05, J07, and J08 use its risk and performance evidence; J11 uses the exact released configuration.",
+      "change": "Changed model/data versions or distributions trigger performance, risk, traceability, and evaluation-scope review.",
+      "inner": "Check version identity, split integrity, criteria, and result associations.",
+      "outer": "Inspect population coverage, leakage/independence assumptions, subgroup limitations, and model/build consistency.",
+      "feedback": "Capture provenance gaps, incorrect version associations, performance failures, and review corrections.",
+      "friction": "Model, dataset, build, and performance records may be maintained separately.",
+      "measure": "Effort to reconstruct the released model/data evidence and unresolved version/provenance gaps."
+    },
+    {
+      "id": "J15",
+      "title": "Improve the working system from corrections and failures",
+      "actor": "BBT process owner with project engineers and reviewers",
+      "trigger": "Feedback accumulates or an important failure warrants immediate investigation.",
+      "inputs": [
+        "FB",
+        "REVIEW",
+        "RUN",
+        "DEFECT",
+        "CHANGE",
+        "METHOD"
+      ],
+      "outputs": [
+        "FB",
+        "METHOD",
+        "REVIEW"
+      ],
+      "steps": [
+        "Retain human edits, rejections, QA/risk comments, missing traces, failures, audit observations, document rework, and agent redirection.",
+        "Investigate why patterns recur and distinguish product issues from method or checking failures.",
+        "Propose a versioned change to prompts, rules, context selection, tools, or workflows.",
+        "Evaluate against relevant failure examples and correct cases, review adoption, and monitor subsequent outcomes."
+      ],
+      "decision": "The method/process owner adopts a reviewed method version. This does not retrospectively approve product evidence.",
+      "handoff": "J01 through J14 use the adopted methods; new project feedback returns to this job.",
+      "change": "Method changes retain before/after versions and evaluation outcomes; regression or new failures prompt another meta-loop review.",
+      "inner": "Check feedback identity, source versions, proposed configuration, and evaluation execution.",
+      "outer": "Independently review whether the proposed method change addresses the cause and introduces new omissions or false alarms.",
+      "feedback": "This is the meta-loop. Regulatory/FDA feedback is one external input; internal project corrections can supply signals from week one.",
+      "friction": "Repeated corrections may stay in individual reviewers' heads and never improve the process.",
+      "measure": "Recurring failure rate, correction effort, and regression outcomes after a method change."
+    },
+    {
+      "id": "J16",
+      "title": "Agree product scope, lifecycle methods, and evidence responsibilities",
+      "actor": "Product/project owner with engineering, QA, and relevant domain leads",
+      "trigger": "An engagement starts, the toolset changes, or intended use and project scope materially change.",
+      "inputs": [
+        "SRC",
+        "SCOPE",
+        "METHOD",
+        "REVIEW"
+      ],
+      "outputs": [
+        "SCOPE",
+        "REVIEW"
+      ],
+      "steps": [
+        "Agree intended use, users/population, product boundaries, and the evidence activities applicable to this scope.",
+        "Agree lifecycle methods, acceptance criteria, review cadence, and responsibilities.",
+        "Choose the authoritative home and granularity of each controlled record, including coexistence and handover arrangements.",
+        "Record how human and agent work enter the process and who can make each decision."
+      ],
+      "decision": "The designated engagement owners agree the versioned scope, methods, record ownership, and review responsibilities.",
+      "handoff": "J01\u2013J14 use the agreed scope and criteria; J15 uses the agreed method ownership and evaluation approach.",
+      "change": "Scope, home, method, or responsibility changes prompt review of affected workflows and historical-record access.",
+      "inner": "Check that the proposed plan names record types, owners, criteria, methods, and unresolved decisions.",
+      "outer": "Independently inspect whether the planned activities and responsibilities cover the selected product scope and normal developer work.",
+      "feedback": "Capture missing ownership, unsuitable review cadence, migration problems, and avoidable process overhead.",
+      "friction": "Tool selection may move faster than decisions about record ownership and practical review responsibilities.",
+      "measure": "Unassigned decisions, duplicate authoritative records, and effort spent reconciling process or ownership ambiguity."
+    }
+  ],
+  "flows": [
+    {
+      "id": "F01",
+      "source": "SRC",
+      "target": "CLAR",
+      "meaning": "raises questions",
+      "jobs": [
+        "J01",
+        "J02"
+      ]
+    },
+    {
+      "id": "F02",
+      "source": "SRC",
+      "target": "NEED",
+      "meaning": "supports interpretation",
+      "jobs": [
+        "J01",
+        "J02"
+      ]
+    },
+    {
+      "id": "F03",
+      "source": "CLAR",
+      "target": "NEED",
+      "meaning": "records agreed clarification",
+      "jobs": [
+        "J02"
+      ]
+    },
+    {
+      "id": "F04",
+      "source": "SCOPE",
+      "target": "NEED",
+      "meaning": "constrains intended use",
+      "jobs": [
+        "J02"
+      ]
+    },
+    {
+      "id": "F05",
+      "source": "NEED",
+      "target": "SYS",
+      "meaning": "defines the need to satisfy",
+      "jobs": [
+        "J03"
+      ]
+    },
+    {
+      "id": "F06",
+      "source": "SYS",
+      "target": "SUB",
+      "meaning": "decomposes and allocates",
+      "jobs": [
+        "J03"
+      ]
+    },
+    {
+      "id": "F07",
+      "source": "SCOPE",
+      "target": "HAZ",
+      "meaning": "sets use context and risk criteria",
+      "jobs": [
+        "J05"
+      ]
+    },
+    {
+      "id": "F08",
+      "source": "HAZ",
+      "target": "CTRL",
+      "meaning": "defines risk to control",
+      "jobs": [
+        "J05"
+      ]
+    },
+    {
+      "id": "F09",
+      "source": "CTRL",
+      "target": "SYS",
+      "meaning": "expresses system-level control",
+      "jobs": [
+        "J03",
+        "J05"
+      ]
+    },
+    {
+      "id": "F10",
+      "source": "CTRL",
+      "target": "SUB",
+      "meaning": "expresses allocated control",
+      "jobs": [
+        "J03",
+        "J05"
+      ]
+    },
+    {
+      "id": "F11",
+      "source": "USE",
+      "target": "NEED",
+      "meaning": "informs user/task needs",
+      "jobs": [
+        "J02",
+        "J06"
+      ]
+    },
+    {
+      "id": "F12",
+      "source": "USE",
+      "target": "SUB",
+      "meaning": "informs UI and use-related controls",
+      "jobs": [
+        "J03",
+        "J06"
+      ]
+    },
+    {
+      "id": "F13",
+      "source": "SYS",
+      "target": "ARCH",
+      "meaning": "allocates system behaviour",
+      "jobs": [
+        "J04"
+      ]
+    },
+    {
+      "id": "F14",
+      "source": "SUB",
+      "target": "ARCH",
+      "meaning": "allocates requirement to component",
+      "jobs": [
+        "J04"
+      ]
+    },
+    {
+      "id": "F15",
+      "source": "ARCH",
+      "target": "DESIGN",
+      "meaning": "defines component/interface context",
+      "jobs": [
+        "J04"
+      ]
+    },
+    {
+      "id": "F16",
+      "source": "SUB",
+      "target": "DESIGN",
+      "meaning": "defines detailed design obligation",
+      "jobs": [
+        "J04"
+      ]
+    },
+    {
+      "id": "F17",
+      "source": "DESIGN",
+      "target": "WORK",
+      "meaning": "scopes implementation work",
+      "jobs": [
+        "J04"
+      ]
+    },
+    {
+      "id": "F18",
+      "source": "WORK",
+      "target": "CODE",
+      "meaning": "records work implemented at a revision",
+      "jobs": [
+        "J04"
+      ]
+    },
+    {
+      "id": "F19",
+      "source": "CODE",
+      "target": "ARCH",
+      "meaning": "provides as-built observation to reconcile",
+      "jobs": [
+        "J04",
+        "J13"
+      ]
+    },
+    {
+      "id": "F20",
+      "source": "SYS",
+      "target": "TEST",
+      "meaning": "defines system verification criteria",
+      "jobs": [
+        "J07"
+      ]
+    },
+    {
+      "id": "F21",
+      "source": "SUB",
+      "target": "TEST",
+      "meaning": "defines subsystem verification criteria",
+      "jobs": [
+        "J07"
+      ]
+    },
+    {
+      "id": "F22",
+      "source": "ARCH",
+      "target": "TEST",
+      "meaning": "defines integration verification scope",
+      "jobs": [
+        "J07"
+      ]
+    },
+    {
+      "id": "F23",
+      "source": "DESIGN",
+      "target": "TEST",
+      "meaning": "defines unit verification scope",
+      "jobs": [
+        "J07"
+      ]
+    },
+    {
+      "id": "F24",
+      "source": "CTRL",
+      "target": "TEST",
+      "meaning": "defines implementation/effectiveness checks",
+      "jobs": [
+        "J05",
+        "J07"
+      ]
+    },
+    {
+      "id": "F25",
+      "source": "TEST",
+      "target": "RUN",
+      "meaning": "defines executed plan and criteria",
+      "jobs": [
+        "J07"
+      ]
+    },
+    {
+      "id": "F26",
+      "source": "CODE",
+      "target": "RUN",
+      "meaning": "identifies exact tested build",
+      "jobs": [
+        "J07"
+      ]
+    },
+    {
+      "id": "F27",
+      "source": "RUN",
+      "target": "DEFECT",
+      "meaning": "records failed expectation",
+      "jobs": [
+        "J07"
+      ]
+    },
+    {
+      "id": "F28",
+      "source": "DEFECT",
+      "target": "CHANGE",
+      "meaning": "initiates assessed remediation",
+      "jobs": [
+        "J09",
+        "J13"
+      ]
+    },
+    {
+      "id": "F29",
+      "source": "NEED",
+      "target": "VP",
+      "meaning": "defines validation outcome",
+      "jobs": [
+        "J08"
+      ]
+    },
+    {
+      "id": "F30",
+      "source": "USE",
+      "target": "VP",
+      "meaning": "defines tasks and use conditions",
+      "jobs": [
+        "J06",
+        "J08"
+      ]
+    },
+    {
+      "id": "F31",
+      "source": "CLAIM",
+      "target": "VP",
+      "meaning": "defines claim to evaluate",
+      "jobs": [
+        "J08"
+      ]
+    },
+    {
+      "id": "F32",
+      "source": "VP",
+      "target": "VR",
+      "meaning": "defines executed evaluation",
+      "jobs": [
+        "J08"
+      ]
+    },
+    {
+      "id": "F33",
+      "source": "CODE",
+      "target": "VR",
+      "meaning": "identifies evaluated configuration",
+      "jobs": [
+        "J08"
+      ]
+    },
+    {
+      "id": "F34",
+      "source": "RUN",
+      "target": "VR",
+      "meaning": "references verification of that configuration",
+      "jobs": [
+        "J08"
+      ]
+    },
+    {
+      "id": "F35",
+      "source": "ML",
+      "target": "CODE",
+      "meaning": "identifies model artifact used",
+      "jobs": [
+        "J04",
+        "J14"
+      ]
+    },
+    {
+      "id": "F36",
+      "source": "ML",
+      "target": "TEST",
+      "meaning": "defines dataset/model test configuration",
+      "jobs": [
+        "J07",
+        "J14"
+      ]
+    },
+    {
+      "id": "F37",
+      "source": "ML",
+      "target": "VR",
+      "meaning": "provides versioned performance evidence",
+      "jobs": [
+        "J08",
+        "J14"
+      ]
+    },
+    {
+      "id": "F38",
+      "source": "HAZ",
+      "target": "RISK",
+      "meaning": "provides assessed hazard context",
+      "jobs": [
+        "J05"
+      ]
+    },
+    {
+      "id": "F39",
+      "source": "CTRL",
+      "target": "RISK",
+      "meaning": "provides control implementation context",
+      "jobs": [
+        "J05"
+      ]
+    },
+    {
+      "id": "F40",
+      "source": "RUN",
+      "target": "RISK",
+      "meaning": "provides control verification evidence",
+      "jobs": [
+        "J05",
+        "J07"
+      ]
+    },
+    {
+      "id": "F41",
+      "source": "VR",
+      "target": "RISK",
+      "meaning": "provides relevant validation findings",
+      "jobs": [
+        "J05",
+        "J08"
+      ]
+    },
+    {
+      "id": "F42",
+      "source": "VR",
+      "target": "CLAIM",
+      "meaning": "supports or limits claim",
+      "jobs": [
+        "J08"
+      ]
+    },
+    {
+      "id": "F43",
+      "source": "RISK",
+      "target": "LABEL",
+      "meaning": "defines required risk disclosure",
+      "jobs": [
+        "J05",
+        "J12"
+      ]
+    },
+    {
+      "id": "F44",
+      "source": "CLAIM",
+      "target": "LABEL",
+      "meaning": "provides supported claim wording",
+      "jobs": [
+        "J08",
+        "J12"
+      ]
+    },
+    {
+      "id": "F45",
+      "source": "SUB",
+      "target": "LABEL",
+      "meaning": "defines labelling requirement",
+      "jobs": [
+        "J03",
+        "J12"
+      ]
+    },
+    {
+      "id": "F46",
+      "source": "CHANGE",
+      "target": "REVIEW",
+      "meaning": "requests version-specific impact decisions",
+      "jobs": [
+        "J09"
+      ]
+    },
+    {
+      "id": "F47",
+      "source": "REVIEW",
+      "target": "BASE",
+      "meaning": "records decisions for selected evidence state",
+      "jobs": [
+        "J10"
+      ]
+    },
+    {
+      "id": "F48",
+      "source": "BASE",
+      "target": "DOC",
+      "meaning": "selects exact rendered evidence versions",
+      "jobs": [
+        "J12"
+      ]
+    },
+    {
+      "id": "F49",
+      "source": "BASE",
+      "target": "REL",
+      "meaning": "identifies reviewed product state",
+      "jobs": [
+        "J11"
+      ]
+    },
+    {
+      "id": "F50",
+      "source": "CODE",
+      "target": "REL",
+      "meaning": "identifies implementation/build",
+      "jobs": [
+        "J11"
+      ]
+    },
+    {
+      "id": "F51",
+      "source": "RUN",
+      "target": "REL",
+      "meaning": "provides applicable execution and disposition",
+      "jobs": [
+        "J11"
+      ]
+    },
+    {
+      "id": "F52",
+      "source": "VR",
+      "target": "REL",
+      "meaning": "provides applicable validation and limitations",
+      "jobs": [
+        "J11"
+      ]
+    },
+    {
+      "id": "F53",
+      "source": "RISK",
+      "target": "REL",
+      "meaning": "provides applicable risk decisions",
+      "jobs": [
+        "J11"
+      ]
+    },
+    {
+      "id": "F54",
+      "source": "LABEL",
+      "target": "REL",
+      "meaning": "identifies released label versions",
+      "jobs": [
+        "J11"
+      ]
+    },
+    {
+      "id": "F55",
+      "source": "DEFECT",
+      "target": "REL",
+      "meaning": "records remaining anomaly disposition",
+      "jobs": [
+        "J11"
+      ]
+    },
+    {
+      "id": "F56",
+      "source": "DOC",
+      "target": "REL",
+      "meaning": "provides exact output package",
+      "jobs": [
+        "J11",
+        "J12"
+      ]
+    },
+    {
+      "id": "F57",
+      "source": "REVIEW",
+      "target": "REL",
+      "meaning": "records separate release decision",
+      "jobs": [
+        "J11"
+      ]
+    },
+    {
+      "id": "F58",
+      "source": "SRC",
+      "target": "CHANGE",
+      "meaning": "raises source-drift work",
+      "jobs": [
+        "J09",
+        "J13"
+      ]
+    },
+    {
+      "id": "F59",
+      "source": "CODE",
+      "target": "CHANGE",
+      "meaning": "raises implementation-drift work",
+      "jobs": [
+        "J09",
+        "J13"
+      ]
+    },
+    {
+      "id": "F60",
+      "source": "RUN",
+      "target": "CHANGE",
+      "meaning": "raises failure or changed-evidence work",
+      "jobs": [
+        "J09",
+        "J13"
+      ]
+    },
+    {
+      "id": "F61",
+      "source": "WORK",
+      "target": "CHANGE",
+      "meaning": "raises relevant external-work observation",
+      "jobs": [
+        "J09",
+        "J13"
+      ]
+    },
+    {
+      "id": "F62",
+      "source": "BASE",
+      "target": "CHANGE",
+      "meaning": "provides prior controlled comparison state",
+      "jobs": [
+        "J09"
+      ]
+    },
+    {
+      "id": "F63",
+      "source": "REVIEW",
+      "target": "FB",
+      "meaning": "records edits, rejections, and reasons",
+      "jobs": [
+        "J15"
+      ]
+    },
+    {
+      "id": "F64",
+      "source": "RUN",
+      "target": "FB",
+      "meaning": "records failures and result corrections",
+      "jobs": [
+        "J15"
+      ]
+    },
+    {
+      "id": "F65",
+      "source": "CHANGE",
+      "target": "FB",
+      "meaning": "records missed impacts and redirection",
+      "jobs": [
+        "J15"
+      ]
+    },
+    {
+      "id": "F66",
+      "source": "DEFECT",
+      "target": "FB",
+      "meaning": "records recurring failure evidence",
+      "jobs": [
+        "J15"
+      ]
+    },
+    {
+      "id": "F67",
+      "source": "FB",
+      "target": "METHOD",
+      "meaning": "informs investigated method improvement",
+      "jobs": [
+        "J15"
+      ]
+    },
+    {
+      "id": "F68",
+      "source": "METHOD",
+      "target": "REVIEW",
+      "meaning": "defines versioned checking method",
+      "jobs": [
+        "J15"
+      ]
+    },
+    {
+      "id": "F69",
+      "source": "METHOD",
+      "target": "NEED",
+      "meaning": "defines versioned drafting method",
+      "jobs": [
+        "J02",
+        "J15"
+      ]
+    },
+    {
+      "id": "F70",
+      "source": "SRC",
+      "target": "SCOPE",
+      "meaning": "provides project and intended-use basis",
+      "jobs": [
+        "J16"
+      ]
+    },
+    {
+      "id": "F71",
+      "source": "SCOPE",
+      "target": "REVIEW",
+      "meaning": "defines responsibilities, criteria, and methods",
+      "jobs": [
+        "J16"
+      ]
+    },
+    {
+      "id": "F72",
+      "source": "USE",
+      "target": "HAZ",
+      "meaning": "provides use-related hazard context",
+      "jobs": [
+        "J05",
+        "J06"
+      ]
+    },
+    {
+      "id": "F73",
+      "source": "ML",
+      "target": "HAZ",
+      "meaning": "provides model/data hazard context",
+      "jobs": [
+        "J05",
+        "J14"
+      ]
+    },
+    {
+      "id": "F74",
+      "source": "CODE",
+      "target": "HAZ",
+      "meaning": "provides implementation, dependency, and security observations",
+      "jobs": [
+        "J04",
+        "J05"
+      ]
+    },
+    {
+      "id": "F75",
+      "source": "DEFECT",
+      "target": "HAZ",
+      "meaning": "provides observed failure for risk reassessment",
+      "jobs": [
+        "J05",
+        "J07"
+      ]
+    },
+    {
+      "id": "F76",
+      "source": "SRC",
+      "target": "USE",
+      "meaning": "supports task and study interpretation",
+      "jobs": [
+        "J01",
+        "J06"
+      ]
+    },
+    {
+      "id": "F77",
+      "source": "SRC",
+      "target": "CLAIM",
+      "meaning": "supports proposed claim and its basis",
+      "jobs": [
+        "J02"
+      ]
+    },
+    {
+      "id": "F78",
+      "source": "LABEL",
+      "target": "BASE",
+      "meaning": "selects reviewed labelling version",
+      "jobs": [
+        "J10",
+        "J12"
+      ]
+    },
+    {
+      "id": "F79",
+      "source": "LINK",
+      "target": "REVIEW",
+      "meaning": "requests confirmation, retype, retirement, or rejection",
+      "jobs": [
+        "J03",
+        "J04",
+        "J05",
+        "J07",
+        "J08",
+        "J09"
+      ]
+    },
+    {
+      "id": "F80",
+      "source": "LINK",
+      "target": "BASE",
+      "meaning": "selects confirmed relationship versions",
+      "jobs": [
+        "J10"
+      ]
+    },
+    {
+      "id": "F81",
+      "source": "LINK",
+      "target": "CHANGE",
+      "meaning": "provides known trace context for impact analysis",
+      "jobs": [
+        "J09"
+      ]
+    },
+    {
+      "id": "F82",
+      "source": "LINK",
+      "target": "DOC",
+      "meaning": "provides matrix and cited trace answers",
+      "jobs": [
+        "J12"
+      ]
+    }
+  ]
+}

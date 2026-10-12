@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1120" viewBox="0 0 1800 1120" role="img" aria-labelledby="feature-roadmap-title feature-roadmap-desc">
+<title id="feature-roadmap-title">Capability availability and useful delivery packages</title>
+<desc id="feature-roadmap-desc">A prerequisite can come from internal work, a bought tool, or a manual process · package numbers do not impose one serial build</desc>
+<defs><marker id="arrow-feature-roadmap" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#667683"/></marker></defs>
+<rect width="1800" height="1120" fill="white"/>
+<text x="35" y="40" font-family="Arial,sans-serif" font-size="25" font-weight="bold" fill="#223746">Capability availability and useful delivery packages</text>
+<text x="35" y="70" font-family="Arial,sans-serif" font-size="16" fill="#52616b">A prerequisite can come from internal work, a bought tool, or a manual process · package numbers do not impose one serial build</text>
+<polyline points="270,245 270,355" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-feature-roadmap)"/>
+<polyline points="510,185 900,185 900,355" fill="none" stroke="#667683" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#arrow-feature-roadmap)"/>
+<polyline points="510,155 1520,155 1520,355" fill="none" stroke="#667683" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#arrow-feature-roadmap)"/>
+<polyline points="1145,380 1205,380 1205,285 1400,285 1400,355" fill="none" stroke="#667683" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#arrow-feature-roadmap)"/>
+<polyline points="1520,480 1520,680" fill="none" stroke="#667683" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#arrow-feature-roadmap)"/>
+<rect x="35" y="130" width="475" height="115" rx="5" fill="#faf3e6" stroke="#977642"/>
+<text x="47" y="155" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">P0 · Agree conventions and exchange</text>
+<text x="47" y="182" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">IDs / versions / link meanings / human decisions</text>
+<text x="47" y="202" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Processing contracts and accepted target references</text>
+<rect x="35" y="355" width="475" height="125" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="47" y="380" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">P1 · Source → reviewed evidence</text>
+<text x="47" y="407" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Capture → clarify → draft → check → independent review</text>
+<text x="47" y="427" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Human decision, accepted records/links, feedback</text>
+<rect x="655" y="355" width="490" height="125" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="667" y="380" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">P2 · Trace and significant-change review</text>
+<text x="667" y="407" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Existing records and links can provide the starting point</text>
+<text x="667" y="427" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Known impacts, independent findings, owned follow-up</text>
+<rect x="1265" y="355" width="500" height="125" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="1277" y="380" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">P3 · Implementation and verification</text>
+<text x="1277" y="407" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Exact design / task / commit / build / test references</text>
+<text x="1277" y="427" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Manual associations first; PR-path checks as an increment</text>
+<rect x="1265" y="680" width="500" height="125" rx="5" fill="#faf3e6" stroke="#977642"/>
+<text x="1277" y="705" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">P4 · Baseline → selected outputs</text>
+<text x="1277" y="732" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Exact reviewed state, identifiable documents/packages</text>
+<text x="1277" y="752" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Release support adds scope-specific prerequisites</text>
+<rect x="35" y="680" width="630" height="115" rx="5" fill="#f4f4f2" stroke="#71776f"/>
+<text x="47" y="705" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">P-IN · Independent adapter increments</text>
+<text x="47" y="732" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Slack · meeting platform · tracker · repository · CI</text>
+<text x="47" y="752" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Each adapter has its own source and downstream prerequisites</text>
+<rect x="715" y="680" width="480" height="145" rx="5" fill="#f4f4f2" stroke="#71776f"/>
+<text x="727" y="705" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Domain branches · provide evidence where</text>
+<text x="727" y="726" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">applicable</text>
+<text x="727" y="753" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">P-R risk · P-U usability · P-V validation · P-M model/data</text>
+<text x="727" y="773" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Evidence can be supplied externally before native modules</text>
+<text x="727" y="793" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">exist</text>
+<rect x="35" y="930" width="1730" height="105" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="47" y="955" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">P-L · Feedback and method improvement begin with the first workflow</text>
+<text x="47" y="982" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Capture human corrections and failures → investigate causes → evaluate and adopt method versions</text>
+<text x="47" y="1002" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Manual review/evaluation can start immediately. Broader automated pattern analysis can follow.</text>
+<rect x="168.15" y="286" width="203.7" height="20" fill="white"/>
+<text x="270" y="300" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">minimum contracts available</text>
+<rect x="747.8" y="196" width="324.4" height="20" fill="white"/>
+<text x="910" y="210" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">minimum contracts + existing records / links</text>
+<rect x="1071.5" y="128" width="367.0" height="20" fill="white"/>
+<text x="1255" y="142" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">minimum contracts + implementation / test evidence</text>
+<rect x="1215.25" y="259" width="189.5" height="20" fill="white"/>
+<text x="1310" y="273" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">for developer-path checks</text>
+<rect x="1357.8" y="574" width="324.4" height="20" fill="white"/>
+<text x="1520" y="588" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">implementation / tests for release increment</text>
+<text x="35" y="545" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Baseline-to-document work can start from an external baseline</text>
+<text x="35" y="571" font-family="Arial,sans-serif" font-size="15" fill="#52616b">P4&#x27;s document minimum does not require P1, P2, or automated P3 integrations. The release increment needs the applicable current implementation,</text>
+<text x="35" y="591" font-family="Arial,sans-serif" font-size="15" fill="#52616b">verification, validation, risk, labels, and decisions.</text>
+<text x="35" y="1065" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Meaning of connections</text>
+<text x="35" y="1091" font-family="Arial,sans-serif" font-size="15" fill="#52616b">Solid = minimum prerequisite for the named workflow. Dashed = another available input path or an increment-specific prerequisite. Domain evidence and feedback apply across packages; boxes do not establish supplier coverage or</text>
+<text x="35" y="1111" font-family="Arial,sans-serif" font-size="15" fill="#52616b">implementation status.</text>
+</svg>

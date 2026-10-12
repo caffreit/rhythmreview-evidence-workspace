@@ -1,0 +1,1907 @@
+{
+  "date": "9 October 2026",
+  "status": "first proposal; job families reasonable working basis; responsibilities and homes provisional",
+  "features": [
+    {
+      "id": "CAP-01",
+      "title": "Record scope, evidence homes, and decision responsibilities",
+      "jobs": [
+        "J16"
+      ],
+      "package": "P0",
+      "inputs": [
+        "SRC",
+        "SCOPE",
+        "METHOD"
+      ],
+      "outputs": [
+        "SCOPE",
+        "REVIEW"
+      ],
+      "minimum": "A recorded agreement names product scope, record types, authoritative homes, link meanings, responsible people, and applicable checks.",
+      "later": "Configurable scope/role profiles and rules selected for each engagement.",
+      "hard": [],
+      "external": "Responsible BBT/client owners must agree the first scope and permitted decision roles.",
+      "example": "A requirement has one agreed home and named author/reviewer; the team can identify who resolves an ownership conflict.",
+      "reuse": "Product rules and an authority explanation are documented; engagement-level configuration is a broader proposal.",
+      "doc": "authority-model.md",
+      "conditional": []
+    },
+    {
+      "id": "CAP-02",
+      "title": "Identify and retain exact record versions",
+      "jobs": [
+        "J01",
+        "J02",
+        "J03",
+        "J04",
+        "J05",
+        "J06",
+        "J07",
+        "J08",
+        "J09",
+        "J10",
+        "J11",
+        "J12",
+        "J13",
+        "J14",
+        "J15",
+        "J16"
+      ],
+      "package": "P0",
+      "inputs": [
+        "SRC",
+        "NEED",
+        "SYS",
+        "SUB",
+        "LINK",
+        "REVIEW"
+      ],
+      "outputs": [
+        "SRC",
+        "NEED",
+        "SYS",
+        "SUB",
+        "LINK",
+        "REVIEW"
+      ],
+      "minimum": "Use stable IDs, exact revisions, source references, and distinct candidate/accepted states in the selected record home. A small agreed record set is enough to start.",
+      "later": "Internal editing/history for more evidence types, with cross-system identity mappings and concurrency handling.",
+      "hard": [
+        "CAP-01"
+      ],
+      "external": "The chosen home must support, or be supplemented with, usable version references and accessible history.",
+      "example": "A reviewer can open the source and requirement revisions used by a check even after the latest versions change.",
+      "reuse": "Evidence versions, source revisions, and retained baselines are described in the demo data model.",
+      "doc": "data-model.md",
+      "conditional": []
+    },
+    {
+      "id": "CAP-03",
+      "title": "Define trace meanings and allowed relationships",
+      "jobs": [
+        "J03",
+        "J04",
+        "J05",
+        "J06",
+        "J07",
+        "J08",
+        "J09",
+        "J10",
+        "J12",
+        "J14",
+        "J16"
+      ],
+      "package": "P0",
+      "inputs": [
+        "SCOPE",
+        "LINK"
+      ],
+      "outputs": [
+        "METHOD",
+        "LINK"
+      ],
+      "minimum": "Define a small vocabulary with endpoint types, direction, meaning, and review expectations for the first workflow.",
+      "later": "Versioned policies covering additional evidence types and conditional coverage rules.",
+      "hard": [
+        "CAP-01",
+        "CAP-02"
+      ],
+      "external": "Domain owners must agree what a link establishes and which links are expected for the selected scope.",
+      "example": "A need-to-requirement link means derivation, while a requirement-to-test link names verification scope; neither transfers approval.",
+      "reuse": "A controlled prototype relationship policy is documented; the wider map vocabulary still needs agreement.",
+      "doc": "relationship-policy.md",
+      "conditional": []
+    },
+    {
+      "id": "CAP-04",
+      "title": "Record human decisions and return work for revision",
+      "jobs": [
+        "J02",
+        "J03",
+        "J04",
+        "J05",
+        "J06",
+        "J07",
+        "J08",
+        "J09",
+        "J10",
+        "J11",
+        "J12",
+        "J14",
+        "J15",
+        "J16"
+      ],
+      "package": "P0",
+      "inputs": [
+        "REVIEW",
+        "NEED",
+        "SYS",
+        "SUB",
+        "LINK",
+        "CHANGE"
+      ],
+      "outputs": [
+        "REVIEW",
+        "FB"
+      ],
+      "minimum": "Retain the named person, role, object/version, reason, and accept/revise/reject/defer outcome. An existing review process can supply the decision.",
+      "later": "Integrated review queues, reminders, permission enforcement, and authenticated decision capture for the selected deployment.",
+      "hard": [
+        "CAP-01",
+        "CAP-02"
+      ],
+      "external": "A designated reviewer and an agreed decision record are required; a checker finding remains separate from approval.",
+      "example": "Editing a submitted requirement prevents an earlier acceptance from applying to the new wording.",
+      "reuse": "Revision-bound prototype decisions and return-to-author history are documented; simulated personas do not establish production identity.",
+      "doc": "authority-model.md",
+      "conditional": []
+    },
+    {
+      "id": "CAP-05",
+      "title": "Version processing instructions and retain run provenance",
+      "jobs": [
+        "J01",
+        "J02",
+        "J03",
+        "J09",
+        "J15"
+      ],
+      "package": "P0",
+      "inputs": [
+        "SRC",
+        "METHOD"
+      ],
+      "outputs": [
+        "METHOD",
+        "REVIEW"
+      ],
+      "minimum": "Select an agreed prompt, output schema, source/context revisions, and model configuration; retain result, validation failures, and run identity.",
+      "later": "A managed policy registry, richer run comparison, and evaluated configuration changes.",
+      "hard": [
+        "CAP-01",
+        "CAP-02"
+      ],
+      "external": "A method owner agrees the initial instructions, output contract, and evaluation examples.",
+      "example": "Two drafts can be compared using their exact inputs and prompt versions; a failed output does not become accepted evidence.",
+      "reuse": "Versioned source/context/needs/requirements/impact contracts and run records are documented.",
+      "doc": "llm-actions.md",
+      "conditional": []
+    },
+    {
+      "id": "CAP-06",
+      "title": "Capture source material manually with citations",
+      "jobs": [
+        "J01",
+        "J13"
+      ],
+      "package": "P1",
+      "inputs": [
+        "SRC"
+      ],
+      "outputs": [
+        "SRC"
+      ],
+      "minimum": "Paste or upload supported text; retain origin, revision, captured content, and exact locators. Record duplicate capture without duplicating the interpretation work.",
+      "later": "Additional source formats and assisted selection of relevant spans.",
+      "hard": [
+        "CAP-02"
+      ],
+      "external": "A usable source and the selected capture destination must be available.",
+      "example": "A pasted transcript remains identifiable, and a draft need points to the exact quoted passage.",
+      "reuse": "Text/Markdown source intake and source-derived provenance are documented.",
+      "doc": "product-architecture.md",
+      "conditional": []
+    },
+    {
+      "id": "CAP-07",
+      "title": "Extract source text from documents",
+      "jobs": [
+        "J01",
+        "J12",
+        "J13"
+      ],
+      "package": "P1",
+      "inputs": [
+        "SRC",
+        "DOC"
+      ],
+      "outputs": [
+        "SRC"
+      ],
+      "minimum": "Extract supported text-based PDF/DOCX content with page/paragraph locators, original file references, and visible extraction warnings.",
+      "later": "Additional formats and separately evaluated OCR where needed.",
+      "hard": [
+        "CAP-06"
+      ],
+      "external": "Representative files, extraction limits, and a decision about retaining the original bytes are required.",
+      "example": "A requirement citation opens the correct paragraph in the imported document revision.",
+      "reuse": "WP-30 document intake and anchored extraction are recorded as local work in the delivery plan; acceptance status is not rechecked here.",
+      "doc": "delivery-plan.md",
+      "conditional": []
+    },
+    {
+      "id": "CAP-08",
+      "title": "Capture selected Slack discussions",
+      "jobs": [
+        "J01",
+        "J13"
+      ],
+      "package": "P-IN",
+      "inputs": [
+        "SRC"
+      ],
+      "outputs": [
+        "SRC"
+      ],
+      "minimum": "Import a selected thread with message IDs, author/time, edits, and source references into the common intake path.",
+      "later": "Scoped ongoing observation, edited/deleted-message handling, and recoverable capture.",
+      "hard": [
+        "CAP-06"
+      ],
+      "external": "The selected workspace, access permissions, capture scope, and retention expectations must be agreed.",
+      "example": "A thread becomes a cited source without implying that every message is an approved product decision.",
+      "reuse": "No live Slack connector is established by the current documentation.",
+      "doc": "product-architecture.md",
+      "conditional": [
+        {
+          "when": "Capture runs unattended",
+          "requires": [
+            "CAP-39"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CAP-09",
+      "title": "Capture meeting transcripts and associated notes",
+      "jobs": [
+        "J01",
+        "J13"
+      ],
+      "package": "P-IN",
+      "inputs": [
+        "SRC"
+      ],
+      "outputs": [
+        "SRC"
+      ],
+      "minimum": "Import an identified transcript/notes pair with meeting date, speaker/time locators where supplied, and revision references.",
+      "later": "A selected meeting-platform connection and recovery of later transcript corrections.",
+      "hard": [
+        "CAP-06"
+      ],
+      "external": "The selected transcript source, access, and interpretation of speaker/time metadata must be agreed.",
+      "example": "A candidate decision cites a transcript passage while a later correction creates a new source revision.",
+      "reuse": "Manual source intake offers a reuse path; a live meeting-platform connector is not established.",
+      "doc": "product-architecture.md",
+      "conditional": [
+        {
+          "when": "Capture runs unattended",
+          "requires": [
+            "CAP-39"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CAP-10",
+      "title": "Ask and resolve clarification questions",
+      "jobs": [
+        "J01",
+        "J02",
+        "J03",
+        "J16"
+      ],
+      "package": "P1",
+      "inputs": [
+        "SRC",
+        "SCOPE",
+        "CLAR"
+      ],
+      "outputs": [
+        "CLAR",
+        "REVIEW"
+      ],
+      "minimum": "Identify ambiguous or unsupported statements, assign questions, and retain answers/deferrals with their source and rationale.",
+      "later": "Assisted question generation, discipline routing, and richer conflict handling.",
+      "hard": [
+        "CAP-02",
+        "CAP-04"
+      ],
+      "external": "Someone with the relevant product/domain knowledge must be available to answer material questions.",
+      "example": "An unclear alert threshold produces a question rather than an invented numeric requirement.",
+      "reuse": "Source-context questions with required/advisory handling are documented.",
+      "doc": "llm-actions.md",
+      "conditional": []
+    },
+    {
+      "id": "CAP-11",
+      "title": "Draft needs and requirements from agreed evidence",
+      "jobs": [
+        "J02",
+        "J03"
+      ],
+      "package": "P1",
+      "inputs": [
+        "SRC",
+        "SCOPE",
+        "CLAR",
+        "NEED",
+        "CTRL",
+        "USE"
+      ],
+      "outputs": [
+        "NEED",
+        "SYS",
+        "SUB",
+        "LINK"
+      ],
+      "minimum": "Run an agreed prompt to produce a small structured batch of cited candidate needs/requirements and proposed links. Required clarifications and relevant risk/task inputs enter the context. Derived requirements use reviewed needs; parent acceptance does not approve the resulting requirement.",
+      "later": "Additional evidence types, tailored schemas, and improved drafting based on evaluated feedback.",
+      "hard": [
+        "CAP-05",
+        "CAP-06",
+        "CAP-10",
+        "CAP-13"
+      ],
+      "external": "Agree the output type, destination, source context, and representative evaluation examples. Risk/task inputs may be supplied externally.",
+      "example": "A transcript creates a candidate need and measurable requirement with citations; the reviewer corrects unsupported detail before acceptance.",
+      "reuse": "Needs/requirements drafting is documented; the full risk/usability-before-requirements workflow remains broader than the existing source-first slice.",
+      "doc": "llm-actions.md",
+      "conditional": []
+    },
+    {
+      "id": "CAP-12",
+      "title": "Check and revise the worker's draft",
+      "jobs": [
+        "J02",
+        "J03",
+        "J04",
+        "J12"
+      ],
+      "package": "P1",
+      "inputs": [
+        "NEED",
+        "SYS",
+        "SUB",
+        "DESIGN",
+        "METHOD",
+        "LINK"
+      ],
+      "outputs": [
+        "NEED",
+        "SYS",
+        "SUB",
+        "DESIGN",
+        "REVIEW"
+      ],
+      "minimum": "Apply defined checks for schema, measurability, units, citations, and link rules. Record findings; a person or drafting agent revises and rechecks within a bounded loop.",
+      "later": "Targeted agent repairs, additional domain rules, and tool-assisted checking.",
+      "hard": [
+        "CAP-02",
+        "CAP-03",
+        "CAP-05"
+      ],
+      "external": "Agree the check criteria and retry/escalation limits for each output type.",
+      "example": "A requirement missing a measurable criterion is revised or routed to a person; exhausting retries leaves the issue visible.",
+      "reuse": "Schema/provenance validation and deterministic checks are documented; a general autonomous revise/recheck loop is a proposed increment.",
+      "doc": "llm-actions.md",
+      "conditional": []
+    },
+    {
+      "id": "CAP-13",
+      "title": "Find and assemble relevant existing evidence",
+      "jobs": [
+        "J02",
+        "J03",
+        "J04",
+        "J05",
+        "J06",
+        "J07",
+        "J08",
+        "J09",
+        "J10",
+        "J11",
+        "J12",
+        "J14"
+      ],
+      "package": "P1",
+      "inputs": [
+        "SRC",
+        "NEED",
+        "SYS",
+        "SUB",
+        "ARCH",
+        "HAZ",
+        "CTRL",
+        "TEST",
+        "LINK",
+        "BASE"
+      ],
+      "outputs": [
+        "SRC",
+        "NEED",
+        "SYS",
+        "SUB",
+        "ARCH",
+        "HAZ",
+        "CTRL",
+        "TEST",
+        "LINK",
+        "BASE"
+      ],
+      "minimum": "Open a curated set of referenced records and exact versions from their homes; retain the context selection and mark unavailable evidence.",
+      "later": "Search, filtering, semantic retrieval, and independently selected context bundles.",
+      "hard": [
+        "CAP-02"
+      ],
+      "external": "Read access and usable references to the evidence needed by the selected job.",
+      "example": "A requirement reviewer can inspect the existing need, risk control, and related test without relying on the drafting agent's summary.",
+      "reuse": "Evidence browsing, graph neighborhoods, and bounded impact retrieval are documented.",
+      "doc": "product-architecture.md",
+      "conditional": []
+    },
+    {
+      "id": "CAP-14",
+      "title": "Propose and review trace-link changes",
+      "jobs": [
+        "J03",
+        "J04",
+        "J05",
+        "J06",
+        "J07",
+        "J08",
+        "J09",
+        "J10",
+        "J12",
+        "J14"
+      ],
+      "package": "P1",
+      "inputs": [
+        "NEED",
+        "SYS",
+        "SUB",
+        "ARCH",
+        "CTRL",
+        "TEST",
+        "LINK",
+        "REVIEW"
+      ],
+      "outputs": [
+        "LINK",
+        "REVIEW"
+      ],
+      "minimum": "Create, confirm, retype, or retire a link with defined meaning, endpoint/version context, rationale, and a separate decision.",
+      "later": "Bulk proposal review and changes launched from the graph, matrix, or change work.",
+      "hard": [
+        "CAP-02",
+        "CAP-03",
+        "CAP-04"
+      ],
+      "external": "The authoritative link home and reviewer must be agreed. Existing external link controls can supply this capability.",
+      "example": "Rejecting a suggested test link leaves the suggestion in history and keeps it out of the confirmed trace set.",
+      "reuse": "WP-10 controlled relationship lifecycle is documented as accepted at prototype scope.",
+      "doc": "delivery-plan.md",
+      "conditional": []
+    },
+    {
+      "id": "CAP-15",
+      "title": "Inspect traceability and identify defined coverage gaps",
+      "jobs": [
+        "J03",
+        "J05",
+        "J06",
+        "J07",
+        "J08",
+        "J09",
+        "J10",
+        "J11",
+        "J12",
+        "J14"
+      ],
+      "package": "P2",
+      "inputs": [
+        "NEED",
+        "SYS",
+        "SUB",
+        "CTRL",
+        "TEST",
+        "VP",
+        "LINK",
+        "BASE"
+      ],
+      "outputs": [
+        "REVIEW",
+        "DOC"
+      ],
+      "minimum": "Show a read-only matrix/neighborhood from identifiable accepted links and report missing relationships under named scope rules.",
+      "later": "Candidate-state comparison, richer domain coverage, and explainable gap priorities.",
+      "hard": [
+        "CAP-02",
+        "CAP-03",
+        "CAP-13"
+      ],
+      "external": "A usable relationship set and agreed coverage expectations. The set may be imported from a bought tool.",
+      "example": "A control lacking an applicable verification test is visible with the reason and affected version.",
+      "reuse": "Matrix, graph, coverage rules, and candidate projections are documented.",
+      "doc": "relationship-policy.md",
+      "conditional": []
+    },
+    {
+      "id": "CAP-16",
+      "title": "Coordinate a change and its follow-up work",
+      "jobs": [
+        "J04",
+        "J05",
+        "J06",
+        "J07",
+        "J08",
+        "J09",
+        "J10",
+        "J13"
+      ],
+      "package": "P2",
+      "inputs": [
+        "SRC",
+        "BASE",
+        "CHANGE",
+        "REVIEW"
+      ],
+      "outputs": [
+        "CHANGE",
+        "WORK",
+        "REVIEW"
+      ],
+      "minimum": "Record old/proposed states, reason, scope, impact decisions, owners, and update/relink/retest tasks; retain unresolved work.",
+      "later": "Integrated review queues, task synchronization, and workflow rules for different change classes.",
+      "hard": [
+        "CAP-02",
+        "CAP-04"
+      ],
+      "external": "Agree what constitutes a significant change, the responsible disciplines, and the chosen work home.",
+      "example": "A threshold change has named requirement, risk, test, and label follow-up with separate dispositions.",
+      "reuse": "Controlled change, impact decisions, return-to-author, and reanalysis are documented.",
+      "doc": "product-architecture.md",
+      "conditional": []
+    },
+    {
+      "id": "CAP-17",
+      "title": "Trace the known consequences of a change",
+      "jobs": [
+        "J05",
+        "J07",
+        "J09",
+        "J10"
+      ],
+      "package": "P2",
+      "inputs": [
+        "CHANGE",
+        "BASE",
+        "LINK",
+        "NEED",
+        "SYS",
+        "SUB",
+        "CTRL",
+        "TEST",
+        "LABEL"
+      ],
+      "outputs": [
+        "REVIEW",
+        "CHANGE"
+      ],
+      "minimum": "Traverse known links under defined bounds and show why each record is in the review set.",
+      "later": "Configurable traversal and collection/configuration-aware impact context.",
+      "hard": [
+        "CAP-03",
+        "CAP-13",
+        "CAP-16"
+      ],
+      "external": "Relevant links and a declared traversal policy must be available; an empty graph cannot establish absence of impact.",
+      "example": "The reviewer can follow the path from the changed requirement to a control and verification plan.",
+      "reuse": "Bounded graph/collection candidate selection and path origins are documented.",
+      "doc": "llm-actions.md",
+      "conditional": []
+    },
+    {
+      "id": "CAP-18",
+      "title": "Independently check a candidate or change",
+      "jobs": [
+        "J02",
+        "J03",
+        "J04",
+        "J05",
+        "J06",
+        "J07",
+        "J08",
+        "J09",
+        "J10",
+        "J11",
+        "J12",
+        "J14"
+      ],
+      "package": "P1",
+      "inputs": [
+        "SRC",
+        "NEED",
+        "SYS",
+        "SUB",
+        "HAZ",
+        "CTRL",
+        "TEST",
+        "RUN",
+        "LINK",
+        "CHANGE",
+        "METHOD"
+      ],
+      "outputs": [
+        "REVIEW",
+        "FB"
+      ],
+      "minimum": "Use a separate reviewer or checker with underlying sources, explicit criteria, and independently selected context. Record findings, coverage limits, and exact examined versions.",
+      "later": "Automated broader checks using separately configured model/prompt/context choices, with evaluated independence and miss/false-alarm measures.",
+      "hard": [
+        "CAP-02",
+        "CAP-04",
+        "CAP-05",
+        "CAP-13"
+      ],
+      "external": "An independent checker and relevant evidence access are needed. Formal approval remains a separate decision.",
+      "example": "The outer check catches an affected control or test omitted by the worker and sends a finding to the responsible person.",
+      "reuse": "Impact assistance and deterministic coherence checks offer components; the documented workflow does not establish a fully independent outer-check design.",
+      "doc": "llm-actions.md",
+      "conditional": [
+        {
+          "when": "Checking a significant change with assigned follow-up",
+          "requires": [
+            "CAP-16"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CAP-19",
+      "title": "Suggest missing relationships and unlinked impacts",
+      "jobs": [
+        "J03",
+        "J05",
+        "J07",
+        "J09"
+      ],
+      "package": "P2",
+      "inputs": [
+        "CHANGE",
+        "SRC",
+        "SYS",
+        "SUB",
+        "CTRL",
+        "TEST",
+        "LINK",
+        "METHOD"
+      ],
+      "outputs": [
+        "LINK",
+        "REVIEW"
+      ],
+      "minimum": "Search supplied records beyond known links and propose cited possible relationships/impacts; people confirm or reject them.",
+      "later": "Improved retrieval and evaluations that measure consequential misses and unhelpful suggestions.",
+      "hard": [
+        "CAP-03",
+        "CAP-05",
+        "CAP-13",
+        "CAP-04"
+      ],
+      "external": "A representative evidence corpus, review criteria, and access to records outside the current linked neighborhood.",
+      "example": "A relevant label outside the confirmed graph appears as a possible impact and stays provisional until reviewed.",
+      "reuse": "Semantic impact candidates are documented; similarity remains distinct from controlled traceability.",
+      "doc": "llm-actions.md",
+      "conditional": []
+    },
+    {
+      "id": "CAP-20",
+      "title": "Detect source and implementation drift",
+      "jobs": [
+        "J01",
+        "J04",
+        "J09",
+        "J13"
+      ],
+      "package": "P2",
+      "inputs": [
+        "SRC",
+        "WORK",
+        "CODE",
+        "RUN",
+        "BASE"
+      ],
+      "outputs": [
+        "SRC",
+        "CHANGE",
+        "REVIEW"
+      ],
+      "minimum": "Compare captured old/new observations, distinguish duplicates from material changes, and route meaningful drift to review without rewriting accepted records.",
+      "later": "Continuous scoped observation and recoverable synchronization.",
+      "hard": [
+        "CAP-02",
+        "CAP-06",
+        "CAP-16"
+      ],
+      "external": "The previous observed revision and current source access must be available.",
+      "example": "A changed transcript or commit creates review work while the prior requirement and baseline retain their original basis.",
+      "reuse": "Source-revision drift is documented; live work-system observations are broader planned work.",
+      "doc": "system-architecture.md",
+      "conditional": [
+        {
+          "when": "Observation runs unattended",
+          "requires": [
+            "CAP-39"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CAP-21",
+      "title": "Connect design, work, code, and builds",
+      "jobs": [
+        "J04",
+        "J07",
+        "J09",
+        "J11",
+        "J13"
+      ],
+      "package": "P3",
+      "inputs": [
+        "SYS",
+        "SUB",
+        "ARCH",
+        "DESIGN",
+        "WORK",
+        "CODE",
+        "LINK"
+      ],
+      "outputs": [
+        "ARCH",
+        "DESIGN",
+        "WORK",
+        "CODE",
+        "LINK"
+      ],
+      "minimum": "Author or reference design records and manually associate requirement/component IDs, tasks, commits, PRs, and builds with reviewed link meanings.",
+      "later": "Assisted as-built comparison and synchronized implementation references.",
+      "hard": [
+        "CAP-02",
+        "CAP-03",
+        "CAP-14"
+      ],
+      "external": "Access to the selected work/repository/build systems and agreement on design granularity.",
+      "example": "A reviewer can identify the design rationale, work item, and exact implementation revision associated with a requirement.",
+      "reuse": "Component evidence exists in the product model; live repository/work-tracker connections remain planned in the documentation.",
+      "doc": "product-architecture.md",
+      "conditional": []
+    },
+    {
+      "id": "CAP-22",
+      "title": "Observe work-tracker records",
+      "jobs": [
+        "J04",
+        "J09",
+        "J13"
+      ],
+      "package": "P-IN",
+      "inputs": [
+        "WORK",
+        "SRC"
+      ],
+      "outputs": [
+        "WORK",
+        "SRC"
+      ],
+      "minimum": "Capture a selected ticket revision, assignment/state, and controlled-record references using a defined mapping.",
+      "later": "Event-driven capture and deliberate exchange of follow-up tasks without duplicating product truth.",
+      "hard": [
+        "CAP-02",
+        "CAP-06"
+      ],
+      "external": "Select the tracker, access, field mapping, and task-state authority.",
+      "example": "A ticket update becomes an observation; moving a ticket to Done does not accept a requirement.",
+      "reuse": "Fixture-backed work observations are planned in WP-40; no live connector is established here.",
+      "doc": "delivery-plan.md",
+      "conditional": [
+        {
+          "when": "Updates should create drift review",
+          "requires": [
+            "CAP-20"
+          ]
+        },
+        {
+          "when": "Capture runs unattended",
+          "requires": [
+            "CAP-39"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CAP-23",
+      "title": "Observe repository and PR revisions",
+      "jobs": [
+        "J04",
+        "J09",
+        "J13"
+      ],
+      "package": "P-IN",
+      "inputs": [
+        "CODE",
+        "SRC"
+      ],
+      "outputs": [
+        "CODE",
+        "SRC"
+      ],
+      "minimum": "Capture exact commits, paths, PR decisions, and build references with origin and mapping metadata.",
+      "later": "Scoped event handling and assisted comparison between intended and observed implementation.",
+      "hard": [
+        "CAP-02",
+        "CAP-06"
+      ],
+      "external": "Select repository/PR access and the observation scope; code presence does not establish product intent.",
+      "example": "A changed threshold is associated with its commit and relevant evidence without silently changing a requirement.",
+      "reuse": "Repository observation is described as planned product direction.",
+      "doc": "product-architecture.md",
+      "conditional": [
+        {
+          "when": "Changes should create drift review",
+          "requires": [
+            "CAP-20"
+          ]
+        },
+        {
+          "when": "Capture runs unattended",
+          "requires": [
+            "CAP-39"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CAP-24",
+      "title": "Capture CI executions and report evidence",
+      "jobs": [
+        "J07",
+        "J11",
+        "J13"
+      ],
+      "package": "P-IN",
+      "inputs": [
+        "CODE",
+        "TEST",
+        "RUN",
+        "SRC"
+      ],
+      "outputs": [
+        "RUN",
+        "SRC",
+        "REVIEW"
+      ],
+      "minimum": "Import a run/report bundle with exact build/test references, provenance, result checks, and file integrity; retain the execution and its review separately.",
+      "later": "A selected live CI connection with authenticated run observations and recoverable report capture.",
+      "hard": [
+        "CAP-02",
+        "CAP-06",
+        "CAP-26"
+      ],
+      "external": "Agree CI report formats, required checks, test/build mappings, and read access.",
+      "example": "A green pipeline from a different commit cannot provide current evidence for the proposed build.",
+      "reuse": "Manual verified GitHub Actions bundle import is documented; a live CI connector is not established.",
+      "doc": "delivery-plan.md",
+      "conditional": [
+        {
+          "when": "Capture runs unattended",
+          "requires": [
+            "CAP-39"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CAP-25",
+      "title": "Run checks in normal PR and work-item workflows",
+      "jobs": [
+        "J04",
+        "J07",
+        "J09",
+        "J13"
+      ],
+      "package": "P3",
+      "inputs": [
+        "WORK",
+        "CODE",
+        "CHANGE",
+        "METHOD"
+      ],
+      "outputs": [
+        "REVIEW",
+        "CHANGE"
+      ],
+      "minimum": "Provide an explicit command/action from the chosen developer workflow that checks named revisions and reports findings there with evidence links.",
+      "later": "Event-triggered checks and agreed tool-native gates for defined significant changes.",
+      "hard": [
+        "CAP-16",
+        "CAP-18"
+      ],
+      "external": "Select the event/command surface, criteria, write permissions for results, and ownership of any gate.",
+      "example": "A PR author sees independent requirement/risk/test findings before the significant change proceeds.",
+      "reuse": "Thin developer-tool controls are identified as a gap in the charter alignment notes.",
+      "doc": "sdlc-charter-alignment.md",
+      "conditional": [
+        {
+          "when": "Checks run unattended",
+          "requires": [
+            "CAP-39"
+          ]
+        },
+        {
+          "when": "Checks use captured PR context",
+          "requires": [
+            "CAP-23"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CAP-26",
+      "title": "Manage verification plans, executions, and dispositions",
+      "jobs": [
+        "J07",
+        "J09",
+        "J11"
+      ],
+      "package": "P3",
+      "inputs": [
+        "SYS",
+        "SUB",
+        "ARCH",
+        "DESIGN",
+        "CTRL",
+        "TEST",
+        "CODE",
+        "LINK"
+      ],
+      "outputs": [
+        "TEST",
+        "RUN",
+        "DEFECT",
+        "REVIEW",
+        "LINK"
+      ],
+      "minimum": "Maintain a test plan at a named V-model level, link its criterion to the checked item, record an exact execution/configuration, and review the outcome.",
+      "later": "More execution formats, regression selection, suite-level coverage, and stale-evidence detection.",
+      "hard": [
+        "CAP-02",
+        "CAP-03",
+        "CAP-04",
+        "CAP-14"
+      ],
+      "external": "Test owners, criteria, build/environment identity, and access to original execution evidence.",
+      "example": "A failed execution creates an anomaly; a rerun is a new execution and does not erase the failure.",
+      "reuse": "WP-20A test-plan/execution/review controls are documented at fictional prototype scope.",
+      "doc": "delivery-plan.md",
+      "conditional": []
+    },
+    {
+      "id": "CAP-27",
+      "title": "Support risk analysis, controls, and residual-risk review",
+      "jobs": [
+        "J05",
+        "J03",
+        "J07",
+        "J11",
+        "J12"
+      ],
+      "package": "P-R",
+      "inputs": [
+        "SCOPE",
+        "HAZ",
+        "CTRL",
+        "RUN",
+        "VR",
+        "RISK",
+        "LINK"
+      ],
+      "outputs": [
+        "HAZ",
+        "CTRL",
+        "RISK",
+        "LINK",
+        "REVIEW"
+      ],
+      "minimum": "Maintain or reference risk records and controls, their requirement/test links, supporting evidence, and named risk decisions.",
+      "later": "Domain-specific analysis forms, control effectiveness checks, and broader risk-change assistance.",
+      "hard": [
+        "CAP-02",
+        "CAP-03",
+        "CAP-04",
+        "CAP-14"
+      ],
+      "external": "Risk owners, criteria, relevant analyses, and supporting evidence appropriate to the selected product scope.",
+      "example": "Changing a control exposes the requirement/test evidence and residual-risk decision that need review.",
+      "reuse": "Hazard/control evidence and WP-20B residual-risk decisions are documented; a complete risk authoring system is broader work.",
+      "doc": "delivery-plan.md",
+      "conditional": []
+    },
+    {
+      "id": "CAP-28",
+      "title": "Support tasks, UI requirements, and usability evidence",
+      "jobs": [
+        "J06",
+        "J02",
+        "J03",
+        "J05",
+        "J08"
+      ],
+      "package": "P-U",
+      "inputs": [
+        "USE",
+        "NEED",
+        "HAZ",
+        "SUB",
+        "VP",
+        "VR"
+      ],
+      "outputs": [
+        "USE",
+        "SUB",
+        "VP",
+        "VR",
+        "LINK",
+        "REVIEW"
+      ],
+      "minimum": "Maintain or reference user tasks, critical tasks, UI requirements, study versions, and resulting review actions.",
+      "later": "Dedicated formative/summative workflow and assisted use-related coverage checks.",
+      "hard": [
+        "CAP-02",
+        "CAP-04",
+        "CAP-14"
+      ],
+      "external": "Usability owner, task identities, study evidence, and applicability to the selected scope.",
+      "example": "A critical task can be followed through the UI requirement to its evaluation outcome.",
+      "reuse": "General clinical/usability evidence is in the product model; a dedicated usability workflow is not established.",
+      "doc": "product-architecture.md",
+      "conditional": []
+    },
+    {
+      "id": "CAP-29",
+      "title": "Support validation and claim-evidence review",
+      "jobs": [
+        "J08",
+        "J02",
+        "J05",
+        "J11",
+        "J12"
+      ],
+      "package": "P-V",
+      "inputs": [
+        "NEED",
+        "SCOPE",
+        "CLAIM",
+        "VP",
+        "VR",
+        "CODE"
+      ],
+      "outputs": [
+        "VP",
+        "VR",
+        "CLAIM",
+        "LINK",
+        "REVIEW"
+      ],
+      "minimum": "Maintain or reference protocols/results per need or claim, their evaluation configuration, limitations, and review decisions.",
+      "later": "Dedicated study/evidence-package workflows and domain-specific coverage checks.",
+      "hard": [
+        "CAP-02",
+        "CAP-04",
+        "CAP-14"
+      ],
+      "external": "Validation/domain owners, criteria, population/scenario scope, and original evaluation evidence.",
+      "example": "A claim unsupported by the selected study remains an unresolved finding even if system tests pass.",
+      "reuse": "Clinical evidence and validation links appear in the product model; a full validation workflow is not established.",
+      "doc": "product-architecture.md",
+      "conditional": [
+        {
+          "when": "A usability evaluation supplies validation",
+          "requires": [
+            "CAP-28"
+          ]
+        },
+        {
+          "when": "Model/data evidence supplies validation",
+          "requires": [
+            "CAP-31"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CAP-30",
+      "title": "Author and review labelling and instructions",
+      "jobs": [
+        "J03",
+        "J05",
+        "J08",
+        "J11",
+        "J12"
+      ],
+      "package": "P4",
+      "inputs": [
+        "SUB",
+        "CLAIM",
+        "RISK",
+        "LABEL",
+        "LINK"
+      ],
+      "outputs": [
+        "LABEL",
+        "LINK",
+        "REVIEW"
+      ],
+      "minimum": "Maintain controlled label content with source requirements, supported claims, limitations, risk disclosures, and separate review.",
+      "later": "Template-assisted label authoring, cross-version comparison, and broader consistency checks.",
+      "hard": [
+        "CAP-02",
+        "CAP-04",
+        "CAP-14"
+      ],
+      "external": "Label owner and applicable claim/risk evidence; the authoritative content home remains provisional.",
+      "example": "Changing a performance claim identifies the label wording and supporting evidence that must be reconsidered.",
+      "reuse": "Label evidence/change scenarios are documented; dedicated label authoring remains broader work.",
+      "doc": "product-architecture.md",
+      "conditional": [
+        {
+          "when": "Risk disclosure is required",
+          "requires": [
+            "CAP-27"
+          ]
+        },
+        {
+          "when": "Claims require validation support",
+          "requires": [
+            "CAP-29"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CAP-31",
+      "title": "Associate model and dataset versions with product evidence",
+      "jobs": [
+        "J14",
+        "J04",
+        "J05",
+        "J07",
+        "J08",
+        "J11"
+      ],
+      "package": "P-M",
+      "inputs": [
+        "ML",
+        "SCOPE",
+        "CODE",
+        "TEST",
+        "RUN",
+        "VR"
+      ],
+      "outputs": [
+        "ML",
+        "LINK",
+        "REVIEW"
+      ],
+      "minimum": "Reference dataset/model identities, provenance, partitions, training configuration, locked-test criteria, and the exact build/evaluation using them.",
+      "later": "Adapters to selected registries and domain-specific split/performance/change checks.",
+      "hard": [
+        "CAP-02",
+        "CAP-04",
+        "CAP-14"
+      ],
+      "external": "An applicable ML scope, accessible artifact versions, and agreed data/model ownership and criteria.",
+      "example": "A performance report tied to model A does not establish performance of a release containing model B.",
+      "reuse": "Dataset/model records are in the wider planning map, with no dedicated implemented workflow established here.",
+      "doc": "product-architecture.md",
+      "conditional": []
+    },
+    {
+      "id": "CAP-32",
+      "title": "Review and freeze an exact evidence baseline",
+      "jobs": [
+        "J09",
+        "J10",
+        "J11",
+        "J12"
+      ],
+      "package": "P4",
+      "inputs": [
+        "NEED",
+        "SYS",
+        "SUB",
+        "ARCH",
+        "LINK",
+        "REVIEW",
+        "CHANGE"
+      ],
+      "outputs": [
+        "BASE",
+        "REVIEW"
+      ],
+      "minimum": "Select exact evidence/link versions, inspect current decisions and coherence, and record a separate baseline decision while retaining the prior state.",
+      "later": "Richer baseline comparison and checks for more evidence families.",
+      "hard": [
+        "CAP-02",
+        "CAP-04",
+        "CAP-14"
+      ],
+      "external": "A baseline authority and the evidence scope/decision criteria must be agreed. A bought-tool baseline can supply the capability.",
+      "example": "A later requirement edit creates new candidate work while documents from the previous baseline remain reproducible.",
+      "reuse": "Immutable baseline selection, projections, decisions, and retained history are documented.",
+      "doc": "authority-model.md",
+      "conditional": []
+    },
+    {
+      "id": "CAP-33",
+      "title": "Render and review baseline-linked document packages",
+      "jobs": [
+        "J10",
+        "J11",
+        "J12"
+      ],
+      "package": "P4",
+      "inputs": [
+        "BASE",
+        "DOC",
+        "REVIEW"
+      ],
+      "outputs": [
+        "DOC",
+        "REVIEW"
+      ],
+      "minimum": "Use an agreed template to assemble a version-identifiable document/package from exact baseline membership, then review completeness.",
+      "later": "Governed template versions, automated PDF/DOCX/ZIP outputs, and meaningful redlines.",
+      "hard": [
+        "CAP-32"
+      ],
+      "external": "Document owners, required outputs, templates, and access to baseline evidence.",
+      "example": "A specification identifies the evidence versions it contains and explains differences from the prior output.",
+      "reuse": "WP-30 controlled snapshots/templates/packages are recorded as local work; this exercise does not revalidate acceptance.",
+      "doc": "delivery-plan.md",
+      "conditional": []
+    },
+    {
+      "id": "CAP-34",
+      "title": "Assemble release evidence and a separate decision",
+      "jobs": [
+        "J11",
+        "J10",
+        "J12"
+      ],
+      "package": "P4",
+      "inputs": [
+        "BASE",
+        "CODE",
+        "RUN",
+        "VR",
+        "RISK",
+        "LABEL",
+        "DEFECT",
+        "DOC",
+        "REVIEW"
+      ],
+      "outputs": [
+        "REL",
+        "REVIEW"
+      ],
+      "minimum": "Join the named baseline/build to applicable current support, open-issue dispositions, and required distinct release/transfer decisions.",
+      "later": "Automated freshness/readiness checks and richer transfer packages for the selected scope.",
+      "hard": [
+        "CAP-32",
+        "CAP-21",
+        "CAP-26",
+        "CAP-30",
+        "CAP-04"
+      ],
+      "external": "Agree release scope, required evidence, decision authorities, and the selected release home.",
+      "example": "A changed test, label, or risk decision makes the relevant readiness assessment subject to recheck.",
+      "reuse": "WP-20B final-release controls are documented at fictional prototype scope, with specified support and role limits.",
+      "doc": "delivery-plan.md",
+      "conditional": [
+        {
+          "when": "Risk acceptance is required for this release",
+          "requires": [
+            "CAP-27"
+          ]
+        },
+        {
+          "when": "Validation evidence is required",
+          "requires": [
+            "CAP-29"
+          ]
+        },
+        {
+          "when": "A document package is required",
+          "requires": [
+            "CAP-33"
+          ]
+        },
+        {
+          "when": "Model/data versions are part of the release",
+          "requires": [
+            "CAP-31"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CAP-35",
+      "title": "Capture corrections and failure feedback",
+      "jobs": [
+        "J01",
+        "J02",
+        "J03",
+        "J04",
+        "J05",
+        "J06",
+        "J07",
+        "J08",
+        "J09",
+        "J10",
+        "J11",
+        "J12",
+        "J13",
+        "J14",
+        "J15"
+      ],
+      "package": "P-L",
+      "inputs": [
+        "REVIEW",
+        "CHANGE",
+        "RUN",
+        "DEFECT",
+        "SRC",
+        "METHOD"
+      ],
+      "outputs": [
+        "FB"
+      ],
+      "minimum": "Retain before/after, reason, relevant record/source/method versions, and subsequent outcome when someone corrects or rejects work.",
+      "later": "Structured failure categories and feedback capture embedded in every review surface.",
+      "hard": [
+        "CAP-02",
+        "CAP-04"
+      ],
+      "external": "Agree a small feedback record and responsibility for completing it. Start with human edits and rejections.",
+      "example": "A reviewer changing an invented threshold records what changed and why, rather than leaving only the final wording.",
+      "reuse": "Audit and correction histories offer source material; a joined meta-loop feedback workflow is not established.",
+      "doc": "authority-model.md",
+      "conditional": []
+    },
+    {
+      "id": "CAP-36",
+      "title": "Review recurring corrections and failures",
+      "jobs": [
+        "J15",
+        "J16"
+      ],
+      "package": "P-L",
+      "inputs": [
+        "FB",
+        "REVIEW",
+        "RUN",
+        "DEFECT"
+      ],
+      "outputs": [
+        "FB",
+        "REVIEW"
+      ],
+      "minimum": "A process owner periodically groups feedback, investigates causes, and records proposed improvements; a spreadsheet or simple query can suffice.",
+      "later": "Assisted pattern summaries across suitable projects, with access-aware aggregation and follow-up tracking.",
+      "hard": [
+        "CAP-35"
+      ],
+      "external": "A named process owner, review cadence, sufficient context, and appropriate access to project feedback.",
+      "example": "Repeated missing control links lead to an investigation of context selection rather than repeated one-off instructions.",
+      "reuse": "The loop concept comes from the user's framing; a recurring cross-project review workflow is proposed.",
+      "doc": "bluebridge-problem-framing.md",
+      "conditional": []
+    },
+    {
+      "id": "CAP-37",
+      "title": "Evaluate and adopt improved working methods",
+      "jobs": [
+        "J15",
+        "J16"
+      ],
+      "package": "P-L",
+      "inputs": [
+        "FB",
+        "METHOD",
+        "REVIEW"
+      ],
+      "outputs": [
+        "METHOD",
+        "REVIEW"
+      ],
+      "minimum": "Propose a versioned prompt/rule/context/tool change, evaluate failure examples and previously correct cases, record adoption, and observe later regressions.",
+      "later": "A richer evaluation library, comparisons by method version, and monitored rollout.",
+      "hard": [
+        "CAP-05",
+        "CAP-35",
+        "CAP-04"
+      ],
+      "external": "A method owner, representative reviewed examples, evaluation criteria, and an adoption decision.",
+      "example": "A new context rule catches the missed label while preserving correct previous decisions; it changes future methods without rewriting product records.",
+      "reuse": "Prompt evaluation and offline regression precedents are documented; continuous meta-loop adoption is broader work.",
+      "doc": "prompt-evaluation.md",
+      "conditional": []
+    },
+    {
+      "id": "CAP-38",
+      "title": "Exchange records and preserve a handover path",
+      "jobs": [
+        "J01",
+        "J02",
+        "J03",
+        "J04",
+        "J05",
+        "J06",
+        "J07",
+        "J08",
+        "J09",
+        "J10",
+        "J11",
+        "J12",
+        "J13",
+        "J14",
+        "J16"
+      ],
+      "package": "P0",
+      "inputs": [
+        "SRC",
+        "NEED",
+        "SYS",
+        "SUB",
+        "LINK",
+        "REVIEW",
+        "BASE"
+      ],
+      "outputs": [
+        "SRC",
+        "NEED",
+        "SYS",
+        "SUB",
+        "LINK",
+        "REVIEW",
+        "BASE"
+      ],
+      "minimum": "Define a small import/export contract for the first workflow, preserve IDs/provenance/decisions, and record the accepted target IDs. Manual transfer can suffice.",
+      "later": "Selected API adapters, broader history/attachment exchange, and rehearsed migration of scoped record ownership.",
+      "hard": [
+        "CAP-02",
+        "CAP-03",
+        "CAP-04"
+      ],
+      "external": "Agree the destination's supported format and ownership boundary; confirm access to history and relationships before a handover.",
+      "example": "Accepted drafts reach the chosen evidence home with their source references and decisions; the team can retrieve them there without a second authoritative copy.",
+      "reuse": "Document packages and an authority model offer pieces; supplier-neutral exchange and handover are proposed.",
+      "doc": "authority-model.md",
+      "conditional": []
+    },
+    {
+      "id": "CAP-39",
+      "title": "Run background work with visible status and recovery",
+      "jobs": [
+        "J01",
+        "J04",
+        "J07",
+        "J09",
+        "J13",
+        "J15"
+      ],
+      "package": "P3",
+      "inputs": [
+        "SRC",
+        "CHANGE",
+        "METHOD",
+        "REVIEW"
+      ],
+      "outputs": [
+        "SRC",
+        "CHANGE",
+        "REVIEW"
+      ],
+      "minimum": "Give unattended capture/check operations durable identities, explicit queued/running/failed/completed states, bounded retries, duplicate handling, and a recovery path.",
+      "later": "Broader job coordination, concurrency protection, cost limits, and operational monitoring.",
+      "hard": [
+        "CAP-02",
+        "CAP-05"
+      ],
+      "external": "Agree operating environment, ownership of failed work, and recovery/retention expectations.",
+      "example": "A connector retry captures the same source revision once; a failed check remains visible and cannot be mistaken for a passing review.",
+      "reuse": "Run failures are documented; durable jobs/recovery and related production foundations are deferred in the delivery plan.",
+      "doc": "delivery-plan.md",
+      "conditional": []
+    }
+  ],
+  "packages": [
+    {
+      "id": "P0",
+      "title": "Agree conventions and a usable exchange path",
+      "adds": [
+        "CAP-01",
+        "CAP-02",
+        "CAP-03",
+        "CAP-04",
+        "CAP-05",
+        "CAP-38"
+      ],
+      "minimum": [
+        "CAP-01",
+        "CAP-02",
+        "CAP-03",
+        "CAP-04",
+        "CAP-05",
+        "CAP-38"
+      ],
+      "outcome": "The first workflow has agreed record identities, homes, review responsibilities, processing contracts, and a way to transfer accepted outputs.",
+      "gate": "One sample source, candidate, decision, and accepted target record can be followed using exact IDs and versions, with one authoritative home per controlled record.",
+      "interim": "Existing document agreements and selected bought-tool record/review functions can provide these capabilities. Internal D1 storage is an option.",
+      "later": "Broader record schemas, managed policy/role configuration, and API exchange.",
+      "basis": "Shared capabilities must be available at their minimum level; they do not all require new internal software.",
+      "effort": "Main drivers: ownership decisions, usable existing data, destination formats, and internal-versus-external storage choice."
+    },
+    {
+      "id": "P1",
+      "title": "Turn one source into reviewed needs and requirements",
+      "adds": [
+        "CAP-06",
+        "CAP-07",
+        "CAP-10",
+        "CAP-11",
+        "CAP-12",
+        "CAP-13",
+        "CAP-14",
+        "CAP-18"
+      ],
+      "minimum": [
+        "CAP-06",
+        "CAP-10",
+        "CAP-11",
+        "CAP-12",
+        "CAP-13",
+        "CAP-14",
+        "CAP-18",
+        "CAP-35",
+        "CAP-38"
+      ],
+      "outcome": "A person captures a transcript, resolves questions, obtains cited candidate needs/requirements, reviews them and their links, and saves accepted outputs to the chosen home.",
+      "gate": "Complete the flow on a representative source; an independent check finds a deliberately unsupported statement; revisions receive fresh checks; accepted target IDs, citations, decisions, and correction reasons are retrievable.",
+      "interim": "Manual risk/task context, existing or bought-tool evidence/review, and current test/validation/release processes cover the rest of the lifecycle.",
+      "later": "CAP-07 document formats are optional; live Slack/meeting capture can be added independently through P-IN.",
+      "basis": "Drafting, checking, independent scrutiny, human acceptance, usable links, persistence/exchange, and feedback are required together for this promised outcome. AI extraction by itself is a smaller assistance feature.",
+      "effort": "Main drivers: fresh application/storage setup, prompt quality, citation reliability, reviewer workflow, and target-home exchange."
+    },
+    {
+      "id": "P2",
+      "title": "Inspect traces and coordinate a significant change",
+      "adds": [
+        "CAP-15",
+        "CAP-16",
+        "CAP-17",
+        "CAP-19",
+        "CAP-20"
+      ],
+      "minimum": [
+        "CAP-15",
+        "CAP-16",
+        "CAP-17",
+        "CAP-18",
+        "CAP-14",
+        "CAP-35"
+      ],
+      "outcome": "A reviewer sees known traces, assesses change consequences, independently inspects wider evidence, and assigns update/relink/retest work.",
+      "gate": "The threshold-change scenario exposes affected requirements, controls, tests, and labels; each finding has a version, reason, owner, and disposition. Missing context is visible.",
+      "interim": "An imported external relationship set and manual review can supply initial coverage. Existing owners/tools continue to implement and execute follow-up work.",
+      "later": "CAP-19 unlinked suggestions and CAP-20 drift automation are separate increments. Initial review can be manually triggered.",
+      "basis": "This package can precede P1 if existing records and links supply its inputs. P1 transcript ingestion is not a hard prerequisite.",
+      "effort": "Main drivers: existing graph quality, missing-link prevalence, impact-review breadth, evaluation cases, and integration with follow-up work."
+    },
+    {
+      "id": "P3",
+      "title": "Connect implementation, verification, and normal developer work",
+      "adds": [
+        "CAP-21",
+        "CAP-25",
+        "CAP-26",
+        "CAP-39"
+      ],
+      "minimum": [
+        "CAP-21",
+        "CAP-26"
+      ],
+      "outcome": "A team connects requirements/design to exact work/code/build references and reviewed test plans/executions at the relevant V-model levels.",
+      "gate": "A reviewer can follow a requirement to its design/build/test execution and disposition; failed and stale evidence remains distinguishable from current support.",
+      "interim": "Repository, CI, and work-tracker systems retain their facts. Manual references/imports and existing reviewers can start this workflow.",
+      "later": "CAP-25 adds checks in the PR/work path; CAP-39 supports unattended operations; selected P-IN adapters can arrive separately.",
+      "basis": "The minimum does not require every connector or a full automated release gate. CAP-25's developer-check workflow additionally needs change work and independent checking.",
+      "effort": "Main drivers: reference/mapping quality, report formats, execution identity, workflow permissions, and background-operation needs."
+    },
+    {
+      "id": "P4",
+      "title": "Review baselines and produce selected outputs",
+      "adds": [
+        "CAP-30",
+        "CAP-32",
+        "CAP-33",
+        "CAP-34"
+      ],
+      "minimum": [
+        "CAP-32",
+        "CAP-33"
+      ],
+      "outcome": "A team reviews an exact evidence state and produces a version-identifiable specification/report/package. Release support is a further scoped workflow.",
+      "gate": "The output identifies baseline, template, and evidence versions; a changed baseline/template produces a new output and an explainable difference.",
+      "interim": "Selected bought-tool baselines, documents, label records, and release processes can continue while internal output capabilities grow.",
+      "later": "CAP-30 label authoring and CAP-34 release/transfer support have additional evidence prerequisites. Full release takeover is a separate handover decision.",
+      "basis": "The baseline-to-document minimum does not depend on internal transcript intake or all automated developer integrations.",
+      "effort": "Main drivers: required outputs, template governance, target formats, evidence freshness, and scope of release support."
+    },
+    {
+      "id": "P-IN",
+      "title": "Add selected source and engineering adapters",
+      "adds": [
+        "CAP-08",
+        "CAP-09",
+        "CAP-22",
+        "CAP-23",
+        "CAP-24"
+      ],
+      "minimum": [],
+      "outcome": "Reduce manual capture for one selected source or engineering system using the common intake and identity contracts.",
+      "gate": "For each adapter, test capture, repeated capture, source revision/configuration mapping, failure visibility, and the relevant downstream review path.",
+      "interim": "Manual upload, paste, references, and report bundles remain usable between adapter deliveries.",
+      "later": "Choose Slack, meetings, tracker, repository, or CI independently according to actual friction and selected systems.",
+      "basis": "This is a grouping by shared integration work, not an all-or-nothing release package. There is no minimum bundle of all five adapters.",
+      "effort": "Main drivers: selected vendor APIs, permissions, field/report mappings, revision semantics, and unattended reliability."
+    },
+    {
+      "id": "P-R",
+      "title": "Extend risk records and control-evidence review",
+      "adds": [
+        "CAP-27"
+      ],
+      "minimum": [
+        "CAP-27"
+      ],
+      "outcome": "Support the selected risk authoring/reference and control-evidence workflow.",
+      "gate": "A changed control identifies the related requirement/test evidence and risk decision to reconsider.",
+      "interim": "A bought tool or existing risk process can supply reviewed risk/control inputs from the first slice.",
+      "later": "Domain forms and broader effectiveness/risk-change assistance.",
+      "basis": "Risk information may be required early even when native risk authoring is delivered later.",
+      "effort": "Main drivers: product scope, existing risk data, analysis conventions, reviewers, and supporting evidence."
+    },
+    {
+      "id": "P-U",
+      "title": "Extend task, UI, and usability evidence",
+      "adds": [
+        "CAP-28"
+      ],
+      "minimum": [
+        "CAP-28"
+      ],
+      "outcome": "Support the chosen task-to-UI-to-evaluation workflow.",
+      "gate": "A critical task links to the relevant UI requirement, use-related risk, and evaluation outcome.",
+      "interim": "Existing design/study processes or a bought tool provide task and usability inputs meanwhile.",
+      "later": "Dedicated formative/summative work and coverage assistance.",
+      "basis": "This branch is selected by product scope and source availability, not by completion of all other domain modules.",
+      "effort": "Main drivers: study/task granularity, critical-task coverage, data formats, and design-system references."
+    },
+    {
+      "id": "P-V",
+      "title": "Extend validation and claim evidence",
+      "adds": [
+        "CAP-29"
+      ],
+      "minimum": [
+        "CAP-29"
+      ],
+      "outcome": "Support per-need/per-claim evaluation plans, results, limitations, and decisions.",
+      "gate": "A reviewer can explain the evidence basis and limitations of a need/claim for the evaluated product configuration.",
+      "interim": "Existing validation/clinical processes or a bought tool continue to supply evidence and decisions.",
+      "later": "More study types and appropriate usability/model context.",
+      "basis": "Validation evidence is required where applicable; native validation workflow is an optional ownership choice.",
+      "effort": "Main drivers: applicable claims/needs, study types, evidence quality, and domain review responsibilities."
+    },
+    {
+      "id": "P-M",
+      "title": "Extend model and dataset evidence where applicable",
+      "adds": [
+        "CAP-31"
+      ],
+      "minimum": [
+        "CAP-31"
+      ],
+      "outcome": "Connect exact model/data versions with implementation, performance, risk, and evaluation evidence.",
+      "gate": "A build/model/performance version mismatch is visible with the affected evidence references.",
+      "interim": "Selected model/dataset registries and current ML review practices retain artifact ownership.",
+      "later": "Registry adapters and domain-specific integrity/performance checks.",
+      "basis": "Conditional on product scope. A conventional software product need not build an ML module.",
+      "effort": "Main drivers: registry/data access, versioning, provenance, dataset partitions, and evaluation criteria."
+    },
+    {
+      "id": "P-L",
+      "title": "Learn from corrections from the first workflow",
+      "adds": [
+        "CAP-35",
+        "CAP-36",
+        "CAP-37"
+      ],
+      "minimum": [
+        "CAP-35",
+        "CAP-36",
+        "CAP-37"
+      ],
+      "outcome": "Capture corrections, investigate recurring causes, and adopt evaluated changes to working methods.",
+      "gate": "A real correction has source/output/method references and a reason; a proposed method change is evaluated against failure and correct cases before adoption.",
+      "interim": "Manual feedback capture, a periodic human review, and an existing evaluation script/spreadsheet can supply the first meta-loop.",
+      "later": "Assisted cross-project pattern analysis and monitored method rollout.",
+      "basis": "Start CAP-35 with P1 or the first delivered workflow. Periodic analysis and evaluation can grow independently; a single important failure can trigger CAP-37 without waiting for CAP-36 pattern summaries.",
+      "effort": "Main drivers: feedback quality, reviewer effort, representative examples, evaluation coverage, and adoption ownership."
+    }
+  ],
+  "coverage": [
+    {
+      "job": "J01",
+      "increment": "P1 / selected P-IN adapter",
+      "internal": "Capture and citations for selected sources.",
+      "interim": "Manual capture or existing/bought source intake covers unconnected formats/systems."
+    },
+    {
+      "job": "J02",
+      "increment": "P1",
+      "internal": "Clarifications and reviewed need/claim candidates.",
+      "interim": "Product/domain owners still agree intended use, meaning, and claims; unsupported scope stays with the existing process."
+    },
+    {
+      "job": "J03",
+      "increment": "P1; broader P2 checks later",
+      "internal": "Drafting, inner checks, review, and trace links for the chosen requirement scope.",
+      "interim": "Existing/bought requirements processes cover unimplemented types or deeper decomposition."
+    },
+    {
+      "job": "J04",
+      "increment": "P3; P2/P-IN increments",
+      "internal": "Design/work/code references and independent significant-change checking.",
+      "interim": "Current design, repository, PR, and work processes perform implementation and their own reviews."
+    },
+    {
+      "job": "J05",
+      "increment": "P-R; P2 review assistance",
+      "internal": "Selected risk/control records and change/coverage assistance.",
+      "interim": "Risk owners and existing/bought risk management supply records, criteria, and decisions from day one."
+    },
+    {
+      "job": "J06",
+      "increment": "P-U",
+      "internal": "Selected task/UI/study references and coverage.",
+      "interim": "Existing design/usability processes conduct studies and maintain unimplemented work."
+    },
+    {
+      "job": "J07",
+      "increment": "P3; CI adapter separately",
+      "internal": "Versioned plans, execution associations, dispositions, and selected coverage checks.",
+      "interim": "Developers/test owners and execution systems still run tests; other test workflows stay with existing/bought tools."
+    },
+    {
+      "job": "J08",
+      "increment": "P-V",
+      "internal": "Selected validation/claim records and review support.",
+      "interim": "Validation/clinical/usability owners and their current or bought processes conduct and interpret evaluations."
+    },
+    {
+      "job": "J09",
+      "increment": "P2; P3 developer-path increment",
+      "internal": "Recorded scope, linked/unlinked impact assistance, independent findings, and follow-up.",
+      "interim": "Affected people decide consequences and complete updates/retests; existing change control covers unsupported scope."
+    },
+    {
+      "job": "J10",
+      "increment": "P4 baseline increment",
+      "internal": "Exact evidence-state selection and coherence/review support.",
+      "interim": "The chosen external review/baseline process remains authoritative until a scoped handover."
+    },
+    {
+      "job": "J11",
+      "increment": "P4 release increment after applicable prerequisites",
+      "internal": "Current evidence association and separate readiness/release decisions.",
+      "interim": "Existing/bought release/transfer process covers the complete job meanwhile, including evidence branches not yet internal."
+    },
+    {
+      "job": "J12",
+      "increment": "P4 output/label increments; P2 trace answers",
+      "internal": "Selected baseline documents, labels, packages, and cited trace views.",
+      "interim": "Existing/bought document and labelling processes cover remaining outputs and content types."
+    },
+    {
+      "job": "J13",
+      "increment": "P2; each P-IN adapter independently",
+      "internal": "Captured revision comparison and meaningful drift work.",
+      "interim": "Manual checks of unconnected systems and existing owners keep other evidence current."
+    },
+    {
+      "job": "J14",
+      "increment": "P-M only if applicable",
+      "internal": "Exact model/data/build/evaluation associations.",
+      "interim": "Model/dataset systems and current ML owners supply artifacts and performance evidence."
+    },
+    {
+      "job": "J15",
+      "increment": "P-L from first delivered workflow",
+      "internal": "Correction capture, cause investigation, and evaluated method changes.",
+      "interim": "Human process owners supply the early meta-loop; regulatory/audit signals can join project feedback."
+    },
+    {
+      "job": "J16",
+      "increment": "P0 and ongoing P-L feedback",
+      "internal": "Recorded scope, ownership, decision methods, and chosen exchange boundaries.",
+      "interim": "BBT/client owners agree the operating model; selecting software alone does not allocate these responsibilities."
+    }
+  ],
+  "affinities": [
+    {
+      "features": [
+        "CAP-08",
+        "CAP-09"
+      ],
+      "reason": "Conversation capture uses a common intake contract; either source can ship alone."
+    },
+    {
+      "features": [
+        "CAP-22",
+        "CAP-23",
+        "CAP-24"
+      ],
+      "reason": "Engineering adapters share identity/provenance work; each has its own source mapping and downstream use."
+    },
+    {
+      "features": [
+        "CAP-15",
+        "CAP-17"
+      ],
+      "reason": "A trace view helps explain impact traversal, but traversal does not need a graphical UI."
+    },
+    {
+      "features": [
+        "CAP-35",
+        "CAP-36",
+        "CAP-37"
+      ],
+      "reason": "Feedback, pattern review, and method evaluation form a practical meta-loop; feedback capture is useful before automated pattern analysis."
+    }
+  ]
+}

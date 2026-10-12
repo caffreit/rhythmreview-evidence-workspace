@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1060" viewBox="0 0 1800 1060" role="img" aria-labelledby="change-loops-title change-loops-desc">
+<title id="change-loops-title">3. Change review and the learning loop</title>
+<desc id="change-loops-desc">Outer-loop independence and breadth are separate from cadence · learning changes methods through reviewed versions</desc>
+<defs><marker id="arrow-change-loops" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#667683"/></marker></defs>
+<rect width="1800" height="1060" fill="white"/>
+<text x="35" y="40" font-family="Arial,sans-serif" font-size="25" font-weight="bold" fill="#223746">3. Change review and the learning loop</text>
+<text x="35" y="70" font-family="Arial,sans-serif" font-size="16" fill="#52616b">Outer-loop independence and breadth are separate from cadence · learning changes methods through reviewed versions</text>
+<polyline points="290,230 330,230" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-change-loops)"/>
+<polyline points="585,230 625,230" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-change-loops)"/>
+<polyline points="880,230 920,230" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-change-loops)"/>
+<polyline points="1175,230 1215,230" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-change-loops)"/>
+<polyline points="1470,230 1510,230" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-change-loops)"/>
+<polyline points="800,455 1047,455 1047,325" fill="none" stroke="#667683" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#arrow-change-loops)"/>
+<polyline points="1342,325 1342,555 262,555 262,615" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-change-loops)"/>
+<polyline points="1637,325 1637,585 405,585 405,615" fill="none" stroke="#667683" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#arrow-change-loops)"/>
+<polyline points="490,692 620,692" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-change-loops)"/>
+<polyline points="955,692 1065,692" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-change-loops)"/>
+<polyline points="1425,692 1490,692" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-change-loops)"/>
+<polyline points="1627,790 1627,835 765,835 765,900" fill="none" stroke="#667683" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#arrow-change-loops)"/>
+<a href="#j13" aria-label="Read J13: Observe a significant change">
+<rect x="35" y="155" width="255" height="170" rx="5" fill="#f4f4f2" stroke="#71776f"/>
+<text x="47" y="180" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Observe a significant</text>
+<text x="47" y="201" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">change</text>
+<text x="47" y="228" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">SRC / CODE / RUN / DEFECT</text>
+<text x="47" y="248" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">J13 → J09</text>
+<text x="47" y="268" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Exact old / new references</text>
+</a>
+<a href="#j09" aria-label="Read J09: Record scope and impact work">
+<rect x="330" y="155" width="255" height="170" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="342" y="180" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Record scope and impact</text>
+<text x="342" y="201" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">work</text>
+<text x="342" y="228" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">CHANGE · J09</text>
+<text x="342" y="248" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Prior BASE and relevant links</text>
+<text x="342" y="268" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Owners and unresolved</text>
+<text x="342" y="288" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">questions</text>
+</a>
+<a href="#j03" aria-label="Read J03: Worker drafts, checks, revises">
+<rect x="625" y="155" width="255" height="170" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="637" y="180" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Worker drafts, checks,</text>
+<text x="637" y="201" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">revises</text>
+<text x="637" y="228" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Inner loop</text>
+<text x="637" y="248" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Local rules and relevant</text>
+<text x="637" y="268" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">evidence</text>
+<text x="637" y="288" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Versioned candidate and check</text>
+<text x="637" y="308" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">results</text>
+</a>
+<a href="#j09" aria-label="Read J09: Independent broader check">
+<rect x="920" y="155" width="255" height="170" rx="5" fill="#faf3e6" stroke="#977642"/>
+<text x="932" y="180" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Independent broader check</text>
+<text x="932" y="207" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Outer loop · per significant</text>
+<text x="932" y="227" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">change</text>
+<text x="932" y="247" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Requirements, hazards,</text>
+<text x="932" y="267" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">controls</text>
+<text x="932" y="287" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Tests, traces, labels,</text>
+<text x="932" y="307" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">configuration</text>
+</a>
+<a href="#j09" aria-label="Read J09: People disposition findings">
+<rect x="1215" y="155" width="255" height="170" rx="5" fill="#faf3e6" stroke="#977642"/>
+<text x="1227" y="180" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">People disposition</text>
+<text x="1227" y="201" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">findings</text>
+<text x="1227" y="228" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">REVIEW · J09</text>
+<text x="1227" y="248" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Update / relink / retest /</text>
+<text x="1227" y="268" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">defer</text>
+<text x="1227" y="288" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Reasons and accountable owners</text>
+</a>
+<a href="#j10" aria-label="Read J10: Review the resulting state">
+<rect x="1510" y="155" width="255" height="170" rx="5" fill="#faf3e6" stroke="#977642"/>
+<text x="1522" y="180" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Review the resulting</text>
+<text x="1522" y="201" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">state</text>
+<text x="1522" y="228" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">J07 / J08 retest or evaluate</text>
+<text x="1522" y="248" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">as needed</text>
+<text x="1522" y="268" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">J10 new BASE; J12 new DOC</text>
+<text x="1522" y="288" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">J11 separate REL decision if</text>
+<text x="1522" y="308" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">relevant</text>
+</a>
+<a href="#j09" aria-label="Read J09: Check the underlying evidence, including missing links">
+<rect x="35" y="395" width="765" height="125" rx="5" fill="#f4f4f2" stroke="#71776f"/>
+<text x="47" y="420" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Check the underlying evidence, including missing links</text>
+<text x="47" y="447" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">J02 / J03 needs and requirements · J04 design/build</text>
+<text x="47" y="467" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">J05 risk and controls · J06 tasks/UI · J07 tests/results</text>
+<text x="47" y="487" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">J08 validation · J14 model/data where applicable</text>
+</a>
+<a href="#j15" aria-label="Read J15: Capture corrections and failures">
+<rect x="35" y="615" width="455" height="155" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="47" y="640" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Capture corrections and failures</text>
+<text x="47" y="667" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">FB · start with the first workflow</text>
+<text x="47" y="687" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Reviewer edits, rejections, QA/risk comments</text>
+<text x="47" y="707" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Missing traces, failures, rework, redirection</text>
+</a>
+<a href="#j15" aria-label="Read J15: Investigate recurring causes">
+<rect x="620" y="615" width="335" height="155" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="632" y="640" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Investigate recurring causes</text>
+<text x="632" y="667" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Meta-loop · J15</text>
+<text x="632" y="687" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Daily / weekly / monthly as appropriate</text>
+<text x="632" y="707" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Separate product defects from method</text>
+<text x="632" y="727" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">failures</text>
+</a>
+<a href="#j15" aria-label="Read J15: Propose and evaluate a method change">
+<rect x="1065" y="615" width="360" height="155" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="1077" y="640" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Propose and evaluate a method change</text>
+<text x="1077" y="667" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">METHOD · J15</text>
+<text x="1077" y="687" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Prompt, rule, context, tool, or workflow</text>
+<text x="1077" y="707" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Evaluate failures and previously correct</text>
+<text x="1077" y="727" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">cases</text>
+</a>
+<a href="#j15" aria-label="Read J15: Review and adopt a method version">
+<rect x="1490" y="615" width="275" height="175" rx="5" fill="#faf3e6" stroke="#977642"/>
+<text x="1502" y="640" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Review and adopt a method</text>
+<text x="1502" y="661" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">version</text>
+<text x="1502" y="688" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">METHOD / REVIEW · J15</text>
+<text x="1502" y="708" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Record before / after, evidence,</text>
+<text x="1502" y="728" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">owner</text>
+<text x="1502" y="748" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Observe subsequent corrections</text>
+<text x="1502" y="768" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">and regressions</text>
+</a>
+<a href="#j15" aria-label="Read J15: Use adopted methods in future work and checking">
+<rect x="450" y="900" width="1220" height="90" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="462" y="925" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Use adopted methods in future work and checking</text>
+<text x="462" y="952" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">J01–J14 · versioned drafting instructions, rules, context selection, and independent review methods</text>
+<text x="462" y="972" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Retain prior methods and evaluation evidence. Product evidence changes still use their own change process.</text>
+</a>
+<rect x="923.3" y="368" width="253.39999999999998" height="20" fill="white"/>
+<text x="1050" y="382" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">independently retrieve and inspect</text>
+<rect x="637.0" y="529" width="296.0" height="20" fill="white"/>
+<text x="785" y="543" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">findings, human edits, reasons, outcomes</text>
+<rect x="1290.4" y="560" width="239.2" height="20" fill="white"/>
+<text x="1410" y="574" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">test failures and package rework</text>
+<rect x="499.3" y="666" width="111.39999999999999" height="20" fill="white"/>
+<text x="555" y="680" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">review signals</text>
+<rect x="954.3" y="666" width="111.39999999999999" height="20" fill="white"/>
+<text x="1010" y="680" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">propose change</text>
+<rect x="1429.7" y="666" width="54.599999999999994" height="20" fill="white"/>
+<text x="1457" y="680" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">review</text>
+<rect x="970.2" y="810" width="409.59999999999997" height="20" fill="white"/>
+<text x="1175" y="824" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">adopted method versions return to future work and checks</text>
+<text x="35" y="1010" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Additional meta-loop signals</text>
+<text x="35" y="1036" font-family="Arial,sans-serif" font-size="15" fill="#52616b">Audit observations and regulatory/FDA feedback can inform J15. Internal BBT/client corrections supply feedback from week one. Different models/prompts/context can support independence; a different model alone does not establish</text>
+<text x="35" y="1056" font-family="Arial,sans-serif" font-size="15" fill="#52616b">it.</text>
+</svg>

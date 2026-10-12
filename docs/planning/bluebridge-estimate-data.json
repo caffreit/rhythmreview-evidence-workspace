@@ -1,0 +1,365 @@
+{
+  "date": "2026-10-09",
+  "basis": "fresh build; recalled demo pace; judgement scenarios; no measured actuals",
+  "confidence": "low",
+  "focused_engineering_hours_per_day": 6,
+  "engineering_hours_per_week": 30,
+  "review_hours_per_week": 6,
+  "tasks": [
+    {
+      "id": "E01",
+      "package": "P0",
+      "title": "Agree the first workflow and record contracts",
+      "capabilities": [
+        "CAP-01",
+        "CAP-03"
+      ],
+      "engineering_hours": {
+        "lower": 2,
+        "central": 3,
+        "upper": 5
+      },
+      "review_hours": {
+        "lower": 1,
+        "central": 2,
+        "upper": 3
+      },
+      "done": "Agree one project, provisional homes, record schemas, link meanings, check criteria, and named decision roles."
+    },
+    {
+      "id": "E02",
+      "package": "P0",
+      "title": "Create the application and versioned store",
+      "capabilities": [
+        "CAP-02"
+      ],
+      "engineering_hours": {
+        "lower": 3,
+        "central": 4,
+        "upper": 7
+      },
+      "review_hours": {
+        "lower": 0,
+        "central": 0,
+        "upper": 0
+      },
+      "done": "Start a new repository/application/database; create stable IDs and retained revisions, candidate/accepted states, and record lookup."
+    },
+    {
+      "id": "E03",
+      "package": "P0",
+      "title": "Record decisions and return work for revision",
+      "capabilities": [
+        "CAP-04"
+      ],
+      "engineering_hours": {
+        "lower": 2,
+        "central": 4,
+        "upper": 6
+      },
+      "review_hours": {
+        "lower": 1,
+        "central": 1,
+        "upper": 2
+      },
+      "done": "A simple screen records person, role, reason, disposition, and exact revision; a new revision needs a new decision."
+    },
+    {
+      "id": "E04",
+      "package": "P0",
+      "title": "Create the model-call and run-record contracts",
+      "capabilities": [
+        "CAP-05"
+      ],
+      "engineering_hours": {
+        "lower": 3,
+        "central": 4,
+        "upper": 7
+      },
+      "review_hours": {
+        "lower": 0,
+        "central": 0,
+        "upper": 0
+      },
+      "done": "Connect one available model provider; validate structured outputs and retain prompt/context/model versions, failures, and run identity."
+    },
+    {
+      "id": "E05",
+      "package": "P0",
+      "title": "Add local execution and one exchange format",
+      "capabilities": [
+        "CAP-38"
+      ],
+      "engineering_hours": {
+        "lower": 2,
+        "central": 3,
+        "upper": 5
+      },
+      "review_hours": {
+        "lower": 0,
+        "central": 0,
+        "upper": 0
+      },
+      "done": "A colleague can launch the workspace, retain records across restart, and export/reopen one agreed JSON bundle with IDs, revisions, decisions, and links."
+    },
+    {
+      "id": "E06",
+      "package": "P1",
+      "title": "Capture a transcript with passage references",
+      "capabilities": [
+        "CAP-06"
+      ],
+      "engineering_hours": {
+        "lower": 2,
+        "central": 3,
+        "upper": 5
+      },
+      "review_hours": {
+        "lower": 0,
+        "central": 0,
+        "upper": 0
+      },
+      "done": "Paste/upload one plain-text format; preserve the source revision and paragraph locators and identify repeated capture."
+    },
+    {
+      "id": "E07",
+      "package": "P1",
+      "title": "Select context and resolve questions",
+      "capabilities": [
+        "CAP-10",
+        "CAP-13"
+      ],
+      "engineering_hours": {
+        "lower": 2,
+        "central": 3,
+        "upper": 5
+      },
+      "review_hours": {
+        "lower": 1,
+        "central": 1,
+        "upper": 2
+      },
+      "done": "A person chooses exact context records, records questions/answers/deferrals, and sees missing required context."
+    },
+    {
+      "id": "E08",
+      "package": "P1",
+      "title": "Draft needs, then derive requirements",
+      "capabilities": [
+        "CAP-11"
+      ],
+      "engineering_hours": {
+        "lower": 3,
+        "central": 4,
+        "upper": 7
+      },
+      "review_hours": {
+        "lower": 0,
+        "central": 1,
+        "upper": 2
+      },
+      "done": "Two explicit actions produce cited structured candidates. Requirements use reviewed needs and supplied risk/task context."
+    },
+    {
+      "id": "E09",
+      "package": "P1",
+      "title": "Check drafts and review trace links",
+      "capabilities": [
+        "CAP-12",
+        "CAP-14"
+      ],
+      "engineering_hours": {
+        "lower": 2,
+        "central": 3,
+        "upper": 5
+      },
+      "review_hours": {
+        "lower": 0,
+        "central": 0,
+        "upper": 0
+      },
+      "done": "Check schema, required measurable fields, citation locators, and allowed link types. People revise/recheck and separately accept or reject proposed links."
+    },
+    {
+      "id": "E10",
+      "package": "P1",
+      "title": "Support independent checking and correction capture",
+      "capabilities": [
+        "CAP-18",
+        "CAP-35"
+      ],
+      "engineering_hours": {
+        "lower": 1,
+        "central": 2,
+        "upper": 3
+      },
+      "review_hours": {
+        "lower": 0,
+        "central": 1,
+        "upper": 1
+      },
+      "done": "A separate human opens underlying evidence, records findings and correction reasons, and then records the human disposition through the shared review path."
+    },
+    {
+      "id": "E11",
+      "package": "P1",
+      "title": "Exercise the complete source-to-evidence workflow and repair it",
+      "capabilities": [
+        "CAP-06",
+        "CAP-10",
+        "CAP-11",
+        "CAP-12",
+        "CAP-13",
+        "CAP-14",
+        "CAP-18",
+        "CAP-35",
+        "CAP-38"
+      ],
+      "engineering_hours": {
+        "lower": 2,
+        "central": 3,
+        "upper": 5
+      },
+      "review_hours": {
+        "lower": 1,
+        "central": 1,
+        "upper": 2
+      },
+      "done": "Check ambiguous input, unsupported output, invalid citations, model failure, rejected links, edited decisions, and saved-record retrieval; fix defects found in the bounded examples."
+    },
+    {
+      "id": "E12",
+      "package": "P2",
+      "title": "Import reference evidence and inspect traces",
+      "capabilities": [
+        "CAP-13",
+        "CAP-15"
+      ],
+      "engineering_hours": {
+        "lower": 3,
+        "central": 4,
+        "upper": 7
+      },
+      "review_hours": {
+        "lower": 1,
+        "central": 1,
+        "upper": 2
+      },
+      "done": "Import one agreed record/link bundle, identify missing endpoints, and show a read-only table and record neighborhood."
+    },
+    {
+      "id": "E13",
+      "package": "P2",
+      "title": "Report a small set of defined coverage gaps",
+      "capabilities": [
+        "CAP-15"
+      ],
+      "engineering_hours": {
+        "lower": 2,
+        "central": 3,
+        "upper": 5
+      },
+      "review_hours": {
+        "lower": 0,
+        "central": 1,
+        "upper": 1
+      },
+      "done": "Apply the agreed relationships, such as need-to-requirement and requirement/control-to-test; show the rule, record revision, and missing evidence."
+    },
+    {
+      "id": "E14",
+      "package": "P2",
+      "title": "Record a change and owned follow-up",
+      "capabilities": [
+        "CAP-16",
+        "CAP-14"
+      ],
+      "engineering_hours": {
+        "lower": 2,
+        "central": 3,
+        "upper": 5
+      },
+      "review_hours": {
+        "lower": 0,
+        "central": 0,
+        "upper": 0
+      },
+      "done": "Record old/proposed revisions, reason, scope, and update/relink/retest tasks with owner, reason, and disposition. Reuse only the new P0/P1 components built in this estimate."
+    },
+    {
+      "id": "E15",
+      "package": "P2",
+      "title": "Traverse known links and explain consequences",
+      "capabilities": [
+        "CAP-17"
+      ],
+      "engineering_hours": {
+        "lower": 2,
+        "central": 3,
+        "upper": 5
+      },
+      "review_hours": {
+        "lower": 0,
+        "central": 0,
+        "upper": 0
+      },
+      "done": "Use one bounded traversal policy, retain explanatory paths, handle cycles, and show unavailable evidence without asserting that it has no impact."
+    },
+    {
+      "id": "E16",
+      "package": "P2",
+      "title": "Extend independent review to the whole change",
+      "capabilities": [
+        "CAP-18",
+        "CAP-35"
+      ],
+      "engineering_hours": {
+        "lower": 1,
+        "central": 2,
+        "upper": 3
+      },
+      "review_hours": {
+        "lower": 0,
+        "central": 1,
+        "upper": 2
+      },
+      "done": "A separate human inspects requirements, hazards, controls, tests, and labels, including supplied evidence beyond the graph. Capture findings, limits, and follow-up."
+    },
+    {
+      "id": "E17",
+      "package": "P2",
+      "title": "Exercise change-review scenarios and repair them",
+      "capabilities": [
+        "CAP-15",
+        "CAP-16",
+        "CAP-17",
+        "CAP-18",
+        "CAP-14",
+        "CAP-35"
+      ],
+      "engineering_hours": {
+        "lower": 2,
+        "central": 3,
+        "upper": 5
+      },
+      "review_hours": {
+        "lower": 1,
+        "central": 1,
+        "upper": 2
+      },
+      "done": "Check a threshold change, an omitted link, a graph cycle, missing context, and revised evidence. Retrieve each finding's version, reason, owner, and disposition."
+    }
+  ],
+  "totals": {
+    "engineering_hours": {
+      "lower": 36,
+      "central": 54,
+      "upper": 90
+    },
+    "review_hours": {
+      "lower": 6,
+      "central": 11,
+      "upper": 19
+    }
+  }
+}

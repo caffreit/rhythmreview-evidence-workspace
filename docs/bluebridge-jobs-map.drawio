@@ -1,0 +1,406 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net" pages="3">
+  <diagram id="v-model" name="1. Jobs and evidence across the V model">
+    <mxGraphModel dx="1800" dy="1210" grid="1" gridSize="10" page="1" pageScale="1" pageWidth="1800" pageHeight="1210" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="1. Jobs and evidence across the V model" style="text;html=0;fontSize=25;fontStyle=1;align=left;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="15" width="1730" height="40" />
+        </mxCell>
+        <mxCell id="subtitle" value="Working map · provisional record homes · arrows describe information use, not automatic approval" style="text;html=0;fontSize=16;align=left;fontColor=#52616b;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="55" width="1730" height="35" />
+        </mxCell>
+        <mxCell id="needs" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;User needs&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;NEED · J02&lt;br&gt;User, outcome, intended use&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#eff5f9;strokeColor=#41637c;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="150" y="220" width="300" height="105" />
+        </mxCell>
+        <mxCell id="validation" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;Validation and clinical&lt;br&gt;evidence&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;VP / VR · J08&lt;br&gt;Protocol → per-need / claim results&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#eff5f9;strokeColor=#41637c;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1350" y="220" width="300" height="105" />
+        </mxCell>
+        <mxCell id="sys" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;Product / system requirements&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;SYS · J03&lt;br&gt;Behaviour and acceptance criteria&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#eff5f9;strokeColor=#41637c;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="250" y="340" width="300" height="105" />
+        </mxCell>
+        <mxCell id="system-test" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;System verification&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;TEST / RUN · J07&lt;br&gt;Plan → execution → disposition&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#eff5f9;strokeColor=#41637c;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1250" y="340" width="300" height="105" />
+        </mxCell>
+        <mxCell id="sub" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;SW / HW / UI / label&lt;br&gt;requirements&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;SUB · J03&lt;br&gt;Allocation and control criteria&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#eff5f9;strokeColor=#41637c;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="350" y="460" width="300" height="105" />
+        </mxCell>
+        <mxCell id="sub-test" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;Subsystem verification&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;TEST / RUN · J07&lt;br&gt;Plan → execution → disposition&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#eff5f9;strokeColor=#41637c;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1150" y="460" width="300" height="105" />
+        </mxCell>
+        <mxCell id="arch" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;Architecture and components&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;ARCH · J04&lt;br&gt;Components and interfaces&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#eff5f9;strokeColor=#41637c;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="450" y="580" width="300" height="105" />
+        </mxCell>
+        <mxCell id="int-test" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;Integration verification&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;TEST / RUN · J07&lt;br&gt;Plan → execution → disposition&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#eff5f9;strokeColor=#41637c;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1050" y="580" width="300" height="105" />
+        </mxCell>
+        <mxCell id="design" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;Detailed design&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;DESIGN · J04&lt;br&gt;Units, decisions, rationale&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#eff5f9;strokeColor=#41637c;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="550" y="700" width="300" height="105" />
+        </mxCell>
+        <mxCell id="unit-test" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;Unit verification&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;TEST / RUN · J07&lt;br&gt;Plan → execution → disposition&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#eff5f9;strokeColor=#41637c;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="950" y="700" width="300" height="105" />
+        </mxCell>
+        <mxCell id="code" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;Implementation work and exact build&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;WORK / CODE · J04&lt;br&gt;Task, commit, PR, build, artifacts&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#f4f4f2;strokeColor=#71776f;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="750" y="825" width="340" height="95" />
+        </mxCell>
+        <mxCell id="intake" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;Capture information where work happens&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;SRC / CLAR · J01&lt;br&gt;Slack, meetings, documents, design notes, developer observations&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#f4f4f2;strokeColor=#71776f;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="150" y="105" width="650" height="80" />
+        </mxCell>
+        <mxCell id="scope" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;Agree scope and evidence ownership&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;SCOPE · J16 · owners, criteria, methods&lt;br&gt;Internal, bought, and existing tool homes remain provisional&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#faf3e6;strokeColor=#977642;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="920" y="105" width="730" height="80" />
+        </mxCell>
+        <mxCell id="cross-cutting" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;Inputs and evidence that span the V&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;Risk J05 · HAZ / CTRL / RISK → requirements, tests, labels, release&lt;br&gt;Usability J06 · USE → needs, UI requirements, validation&lt;br&gt;Dataset / model J14, if applicable · ML → build, tests, performance evidence&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#eff5f9;strokeColor=#41637c;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="150" y="960" width="850" height="125" />
+        </mxCell>
+        <mxCell id="controlled-state" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;Reviewed states and usable outputs&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;Baseline J10 · BASE&lt;br&gt;Documents / matrices / packages J12 · DOC&lt;br&gt;Release / transfer J11 · REL&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#faf3e6;strokeColor=#977642;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1050" y="960" width="600" height="125" />
+        </mxCell>
+        <mxCell id="edge-needs-match" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=1;exitX=1.0;exitY=0.42857142857142855;entryX=0.0;entryY=0.42857142857142855;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="needs" target="validation">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="label-needs-match" value="defines validation" style="text;html=0;fontSize=14;align=center;fillColor=#ffffff;fontColor=#465966;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="830.1" y="236" width="139.8" height="24" />
+        </mxCell>
+        <mxCell id="edge-sys-match" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=1;exitX=1.0;exitY=0.42857142857142855;entryX=0.0;entryY=0.42857142857142855;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="sys" target="system-test">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="label-sys-match" value="defines system tests" style="text;html=0;fontSize=14;align=center;fillColor=#ffffff;fontColor=#465966;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="823.0" y="356" width="154.0" height="24" />
+        </mxCell>
+        <mxCell id="edge-sub-match" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=1;exitX=1.0;exitY=0.42857142857142855;entryX=0.0;entryY=0.42857142857142855;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="sub" target="sub-test">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="label-sub-match" value="defines subsystem tests" style="text;html=0;fontSize=14;align=center;fillColor=#ffffff;fontColor=#465966;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="812.35" y="476" width="175.29999999999998" height="24" />
+        </mxCell>
+        <mxCell id="edge-arch-match" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=1;exitX=1.0;exitY=0.42857142857142855;entryX=0.0;entryY=0.42857142857142855;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="arch" target="int-test">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="label-arch-match" value="defines integration tests" style="text;html=0;fontSize=14;align=center;fillColor=#ffffff;fontColor=#465966;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="805.25" y="596" width="189.5" height="24" />
+        </mxCell>
+        <mxCell id="edge-design-match" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=1;exitX=1.0;exitY=0.42857142857142855;entryX=0.0;entryY=0.42857142857142855;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="design" target="unit-test">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="label-design-match" value="unit tests" style="text;html=0;fontSize=14;align=center;fillColor=#ffffff;fontColor=#465966;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="858.5" y="716" width="83.0" height="24" />
+        </mxCell>
+        <mxCell id="edge-needs-down" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=0;exitX=0.5;exitY=1.0;entryX=0.5;entryY=0.0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="needs" target="sys">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="edge-sys-down" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=0;exitX=0.5;exitY=1.0;entryX=0.5;entryY=0.0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="sys" target="sub">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="edge-sub-down" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=0;exitX=0.5;exitY=1.0;entryX=0.5;entryY=0.0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="sub" target="arch">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="edge-arch-down" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=0;exitX=0.5;exitY=1.0;entryX=0.5;entryY=0.0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="arch" target="design">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="edge-to-code" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=0;exitX=0.5;exitY=1.0;entryX=0.5;entryY=0.0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="design" target="code">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="label-to-code" value="implements" style="text;html=0;fontSize=14;align=center;fillColor=#ffffff;fontColor=#465966;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="728.5" y="794" width="83.0" height="24" />
+        </mxCell>
+        <mxCell id="edge-build-to-test" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=0;exitX=1.0;exitY=0.3684210526315789;entryX=1.0;entryY=0.42857142857142855;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="code" target="unit-test">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1270" y="860" />
+              <mxPoint x="1270" y="745" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-build-to-test" value="execution reference" style="text;html=0;fontSize=14;align=center;fillColor=#ffffff;fontColor=#465966;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1116.55" y="868" width="146.9" height="24" />
+        </mxCell>
+        <mxCell id="edge-source-to-needs" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=0;exitX=0.23076923076923078;exitY=1.0;entryX=0.5;entryY=0.0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="intake" target="needs">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="label-source-to-needs" value="source support" style="text;html=0;fontSize=14;align=center;fillColor=#ffffff;fontColor=#465966;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="342.3" y="190" width="111.39999999999999" height="24" />
+        </mxCell>
+        <mxCell id="note-0" value="Continuous work around every level&#10;J09 change impact · J13 drift capture · J15 method improvement. Inner checks assist the worker; outer checks independently inspect the result and wider evidence. See views 2 and 3 for the process and feedback paths." style="text;whiteSpace=wrap;html=0;align=left;fontSize=15;fontColor=#52616b;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="150" y="1102" width="1500" height="85" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="source-flow" name="2. Source information becomes reviewed, connected evidence">
+    <mxGraphModel dx="1500" dy="1190" grid="1" gridSize="10" page="1" pageScale="1" pageWidth="1500" pageHeight="1190" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="2. Source information becomes reviewed, connected evidence" style="text;html=0;fontSize=25;fontStyle=1;align=left;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="15" width="1430" height="40" />
+        </mxCell>
+        <mxCell id="subtitle" value="Capturing a reference does not transfer authority · a finding, a decision, and a baseline are separate records" style="text;html=0;fontSize=16;align=left;fontColor=#52616b;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="55" width="1430" height="35" />
+        </mxCell>
+        <mxCell id="capture" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;Capture an exact source revision&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;SRC · J01 / J13&lt;br&gt;Origin, revision, locator, captured content&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#f4f4f2;strokeColor=#71776f;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="450" y="135" width="430" height="100" />
+        </mxCell>
+        <mxCell id="draft" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;Interpret, clarify, and draft candidates&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;NEED / SYS / SUB / LINK · J02 / J03&lt;br&gt;Citations, proposed links, unresolved questions&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#eff5f9;strokeColor=#41637c;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="450" y="315" width="430" height="110" />
+        </mxCell>
+        <mxCell id="outer" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;Independently interrogate the result&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;REVIEW · outer loop&lt;br&gt;Check source meaning, coverage, links, and wider&lt;br&gt;consistency&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#faf3e6;strokeColor=#977642;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="450" y="510" width="430" height="110" />
+        </mxCell>
+        <mxCell id="human" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;Review the named candidate and links&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;REVIEW · responsible person&lt;br&gt;Accept, reject, revise, or defer with a reason&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#faf3e6;strokeColor=#977642;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="450" y="700" width="430" height="110" />
+        </mxCell>
+        <mxCell id="baseline" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;Save accepted records; review the state&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;Stable IDs and versions → BASE · J10&lt;br&gt;Individual acceptance and baseline decision stay&lt;br&gt;distinct&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#faf3e6;strokeColor=#977642;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="450" y="900" width="430" height="110" />
+        </mxCell>
+        <mxCell id="original" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;Original information homes&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;Slack / meeting system / documents&lt;br&gt;Authoritative for supplied source content&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#f4f4f2;strokeColor=#71776f;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="135" width="335" height="100" />
+        </mxCell>
+        <mxCell id="clarify" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;Clarify with the responsible&lt;br&gt;person&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;CLAR · J02&lt;br&gt;Retain the question, answer, and basis&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#faf3e6;strokeColor=#977642;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="315" width="335" height="110" />
+        </mxCell>
+        <mxCell id="inner" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;Inner loop: check and revise&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;Worker / drafting agent&lt;br&gt;Measurability, format, rules, citations&lt;br&gt;Bounded retries; unresolved issues remain&lt;br&gt;visible&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#eff5f9;strokeColor=#41637c;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="510" width="335" height="120" />
+        </mxCell>
+        <mxCell id="rework" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;Return to the author or&lt;br&gt;clarification&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;Record rejected / deferred proposals&lt;br&gt;A revised candidate gets fresh applicable&lt;br&gt;checks&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#faf3e6;strokeColor=#977642;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="710" width="335" height="130" />
+        </mxCell>
+        <mxCell id="context" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;Independent access to underlying evidence&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;Sources, existing needs and requirements&lt;br&gt;Risk / usability / model evidence&lt;br&gt;Design, code/build, tests, and configuration&lt;br&gt;Selected for the change; omissions are findings&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#f4f4f2;strokeColor=#71776f;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1000" y="315" width="445" height="150" />
+        </mxCell>
+        <mxCell id="homes" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;Provisional homes for controlled records&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;Internal BlueBridge, bought tool, or a hybrid&lt;br&gt;Demo candidate: D1 / SQLite structured records&lt;br&gt;R2 file bytes and attachments&lt;br&gt;One authoritative home per controlled record&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#eff5f9;strokeColor=#41637c;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1000" y="700" width="445" height="145" />
+        </mxCell>
+        <mxCell id="outputs" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;Answer questions and produce outputs&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;DOC · J12 from exact baseline / template&lt;br&gt;REL · J11 with build, test, validation, and risk&lt;br&gt;evidence&lt;br&gt;A document is an identifiable view of records&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#faf3e6;strokeColor=#977642;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1000" y="900" width="445" height="125" />
+        </mxCell>
+        <mxCell id="edge-capture-draft" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=0;exitX=0.5;exitY=1.0;entryX=0.5;entryY=0.0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="capture" target="draft">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="label-capture-draft" value="interpret with source support" style="text;html=0;fontSize=14;align=center;fillColor=#ffffff;fontColor=#465966;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="556.05" y="251.0" width="217.89999999999998" height="24" />
+        </mxCell>
+        <mxCell id="edge-draft-outer" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=0;exitX=0.5;exitY=1.0;entryX=0.5;entryY=0.0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="draft" target="outer">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="label-draft-outer" value="candidate plus check results" style="text;html=0;fontSize=14;align=center;fillColor=#ffffff;fontColor=#465966;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="559.6" y="443.5" width="210.79999999999998" height="24" />
+        </mxCell>
+        <mxCell id="edge-outer-human" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=0;exitX=0.5;exitY=1.0;entryX=0.5;entryY=0.0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="outer" target="human">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="label-outer-human" value="findings for disposition" style="text;html=0;fontSize=14;align=center;fillColor=#ffffff;fontColor=#465966;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="573.8" y="636.0" width="182.39999999999998" height="24" />
+        </mxCell>
+        <mxCell id="edge-human-baseline" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=0;exitX=0.5;exitY=1.0;entryX=0.5;entryY=0.0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="human" target="baseline">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="label-human-baseline" value="accepted versions and confirmed links" style="text;html=0;fontSize=14;align=center;fillColor=#ffffff;fontColor=#465966;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="527.65" y="831.0" width="274.7" height="24" />
+        </mxCell>
+        <mxCell id="edge-origin" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=0;exitX=1.0;exitY=0.5;entryX=0.0;entryY=0.5;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="original" target="capture">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="label-origin" value="capture" style="text;html=0;fontSize=14;align=center;fillColor=#ffffff;fontColor=#465966;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="379.15" y="155" width="61.699999999999996" height="24" />
+        </mxCell>
+        <mxCell id="edge-clarification" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=0;exitX=1.0;exitY=0.5;entryX=0.0;entryY=0.5;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="clarify" target="draft">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="label-clarification" value="answer" style="text;html=0;fontSize=14;align=center;fillColor=#ffffff;fontColor=#465966;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="382.7" y="340" width="54.599999999999994" height="24" />
+        </mxCell>
+        <mxCell id="edge-draft-check" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=0;exitX=0.0;exitY=0.7727272727272727;entryX=1.0;entryY=0.375;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="draft" target="inner">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="410" y="400" />
+              <mxPoint x="410" y="555" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-draft-check" value="check" style="text;html=0;fontSize=14;align=center;fillColor=#ffffff;fontColor=#465966;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="386.25" y="463" width="47.5" height="24" />
+        </mxCell>
+        <mxCell id="edge-revise-draft" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=0;exitX=0.4925373134328358;exitY=0.0;entryX=0.11627906976744186;entryY=1.0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="inner" target="draft">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="200" y="465" />
+              <mxPoint x="500" y="465" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-revise-draft" value="revise" style="text;html=0;fontSize=14;align=center;fillColor=#ffffff;fontColor=#465966;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="282.7" y="435" width="54.599999999999994" height="24" />
+        </mxCell>
+        <mxCell id="edge-return" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=0;exitX=0.0;exitY=0.5909090909090909;entryX=1.0;entryY=0.4230769230769231;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="human" target="rework">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="label-return" value="return" style="text;html=0;fontSize=14;align=center;fillColor=#ffffff;fontColor=#465966;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="382.7" y="736" width="54.599999999999994" height="24" />
+        </mxCell>
+        <mxCell id="edge-rework-draft" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=1;exitX=0.4925373134328358;exitY=0.0;entryX=0.3488372093023256;entryY=0.0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="rework" target="draft">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="200" y="670" />
+              <mxPoint x="395" y="670" />
+              <mxPoint x="395" y="285" />
+              <mxPoint x="600" y="285" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-rework-draft" value="new candidate revision" style="text;html=0;fontSize=14;align=center;fillColor=#ffffff;fontColor=#465966;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="310.9" y="638" width="168.2" height="24" />
+        </mxCell>
+        <mxCell id="edge-context-check" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=1;exitX=0.0;exitY=0.5;entryX=1.0;entryY=0.5;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="context" target="outer">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="940" y="390" />
+              <mxPoint x="940" y="565" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-context-check" value="independently selected context" style="text;html=0;fontSize=14;align=center;fillColor=#ffffff;fontColor=#465966;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1067.5" y="483" width="225.0" height="24" />
+        </mxCell>
+        <mxCell id="edge-baseline-outputs" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=0;exitX=1.0;exitY=0.5;entryX=0.0;entryY=0.44;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="baseline" target="outputs">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="label-baseline-outputs" value="selected state" style="text;html=0;fontSize=14;align=center;fillColor=#ffffff;fontColor=#465966;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="884.3" y="925" width="111.39999999999999" height="24" />
+        </mxCell>
+        <mxCell id="note-0" value="Authored evidence can enter at candidate creation&#10;Developers can write design notes, requirements, code, and review rationale directly. LLM extraction is optional. Existing controlled evidence supplies context without passing through transcript ingestion. Both paths need clear ownership, version references, and the applicable reviews." style="text;whiteSpace=wrap;html=0;align=left;fontSize=15;fontColor=#52616b;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="1047" width="1410" height="85" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="change-loops" name="3. Change review and the learning loop">
+    <mxGraphModel dx="1800" dy="1060" grid="1" gridSize="10" page="1" pageScale="1" pageWidth="1800" pageHeight="1060" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="3. Change review and the learning loop" style="text;html=0;fontSize=25;fontStyle=1;align=left;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="15" width="1730" height="40" />
+        </mxCell>
+        <mxCell id="subtitle" value="Outer-loop independence and breadth are separate from cadence · learning changes methods through reviewed versions" style="text;html=0;fontSize=16;align=left;fontColor=#52616b;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="55" width="1730" height="35" />
+        </mxCell>
+        <mxCell id="observe" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;Observe a significant&lt;br&gt;change&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;SRC / CODE / RUN / DEFECT&lt;br&gt;J13 → J09&lt;br&gt;Exact old / new references&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#f4f4f2;strokeColor=#71776f;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="155" width="255" height="170" />
+        </mxCell>
+        <mxCell id="scope-change" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;Record scope and impact&lt;br&gt;work&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;CHANGE · J09&lt;br&gt;Prior BASE and relevant links&lt;br&gt;Owners and unresolved&lt;br&gt;questions&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#eff5f9;strokeColor=#41637c;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="330" y="155" width="255" height="170" />
+        </mxCell>
+        <mxCell id="worker" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;Worker drafts, checks,&lt;br&gt;revises&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;Inner loop&lt;br&gt;Local rules and relevant&lt;br&gt;evidence&lt;br&gt;Versioned candidate and check&lt;br&gt;results&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#eff5f9;strokeColor=#41637c;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="625" y="155" width="255" height="170" />
+        </mxCell>
+        <mxCell id="independent" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;Independent broader check&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;Outer loop · per significant&lt;br&gt;change&lt;br&gt;Requirements, hazards,&lt;br&gt;controls&lt;br&gt;Tests, traces, labels,&lt;br&gt;configuration&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#faf3e6;strokeColor=#977642;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="920" y="155" width="255" height="170" />
+        </mxCell>
+        <mxCell id="dispose" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;People disposition&lt;br&gt;findings&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;REVIEW · J09&lt;br&gt;Update / relink / retest /&lt;br&gt;defer&lt;br&gt;Reasons and accountable owners&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#faf3e6;strokeColor=#977642;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1215" y="155" width="255" height="170" />
+        </mxCell>
+        <mxCell id="new-state" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;Review the resulting&lt;br&gt;state&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;J07 / J08 retest or evaluate&lt;br&gt;as needed&lt;br&gt;J10 new BASE; J12 new DOC&lt;br&gt;J11 separate REL decision if&lt;br&gt;relevant&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#faf3e6;strokeColor=#977642;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1510" y="155" width="255" height="170" />
+        </mxCell>
+        <mxCell id="scope-evidence" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;Check the underlying evidence, including missing links&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;J02 / J03 needs and requirements · J04 design/build&lt;br&gt;J05 risk and controls · J06 tasks/UI · J07 tests/results&lt;br&gt;J08 validation · J14 model/data where applicable&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#f4f4f2;strokeColor=#71776f;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="395" width="765" height="125" />
+        </mxCell>
+        <mxCell id="corrections" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;Capture corrections and failures&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;FB · start with the first workflow&lt;br&gt;Reviewer edits, rejections, QA/risk comments&lt;br&gt;Missing traces, failures, rework, redirection&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#eff5f9;strokeColor=#41637c;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="615" width="455" height="155" />
+        </mxCell>
+        <mxCell id="patterns" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;Investigate recurring causes&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;Meta-loop · J15&lt;br&gt;Daily / weekly / monthly as appropriate&lt;br&gt;Separate product defects from method&lt;br&gt;failures&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#eff5f9;strokeColor=#41637c;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="620" y="615" width="335" height="155" />
+        </mxCell>
+        <mxCell id="evaluate" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;Propose and evaluate a method change&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;METHOD · J15&lt;br&gt;Prompt, rule, context, tool, or workflow&lt;br&gt;Evaluate failures and previously correct&lt;br&gt;cases&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#eff5f9;strokeColor=#41637c;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1065" y="615" width="360" height="155" />
+        </mxCell>
+        <mxCell id="adopt" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;Review and adopt a method&lt;br&gt;version&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;METHOD / REVIEW · J15&lt;br&gt;Record before / after, evidence,&lt;br&gt;owner&lt;br&gt;Observe subsequent corrections&lt;br&gt;and regressions&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#faf3e6;strokeColor=#977642;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1490" y="615" width="275" height="175" />
+        </mxCell>
+        <mxCell id="method-use" value="&lt;div style=&quot;font-size:16px;font-weight:bold;line-height:19px&quot;&gt;Use adopted methods in future work and checking&lt;/div&gt;&lt;div style=&quot;margin-top:4px;font-size:14px;line-height:18px&quot;&gt;J01–J14 · versioned drafting instructions, rules, context selection, and independent review methods&lt;br&gt;Retain prior methods and evaluation evidence. Product evidence changes still use their own change process.&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacing=12;fillColor=#eff5f9;strokeColor=#41637c;fontColor=#223746;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="450" y="900" width="1220" height="90" />
+        </mxCell>
+        <mxCell id="edge-top-0" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=0;exitX=1.0;exitY=0.4411764705882353;entryX=0.0;entryY=0.4411764705882353;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="observe" target="scope-change">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="edge-top-1" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=0;exitX=1.0;exitY=0.4411764705882353;entryX=0.0;entryY=0.4411764705882353;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="scope-change" target="worker">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="edge-top-2" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=0;exitX=1.0;exitY=0.4411764705882353;entryX=0.0;entryY=0.4411764705882353;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="worker" target="independent">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="edge-top-3" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=0;exitX=1.0;exitY=0.4411764705882353;entryX=0.0;entryY=0.4411764705882353;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="independent" target="dispose">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="edge-top-4" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=0;exitX=1.0;exitY=0.4411764705882353;entryX=0.0;entryY=0.4411764705882353;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="dispose" target="new-state">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="edge-context" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=1;exitX=1.0;exitY=0.48;entryX=0.4980392156862745;entryY=1.0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="scope-evidence" target="independent">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1047" y="455" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-context" value="independently retrieve and inspect" style="text;html=0;fontSize=14;align=center;fillColor=#ffffff;fontColor=#465966;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="923.3" y="365" width="253.39999999999998" height="24" />
+        </mxCell>
+        <mxCell id="edge-feedback" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=0;exitX=0.4980392156862745;exitY=1.0;entryX=0.4989010989010989;entryY=0.0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="dispose" target="corrections">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1342" y="555" />
+              <mxPoint x="262" y="555" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-feedback" value="findings, human edits, reasons, outcomes" style="text;html=0;fontSize=14;align=center;fillColor=#ffffff;fontColor=#465966;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="637.0" y="526" width="296.0" height="24" />
+        </mxCell>
+        <mxCell id="edge-failures" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=1;exitX=0.4980392156862745;exitY=1.0;entryX=0.8131868131868132;entryY=0.0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="new-state" target="corrections">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1637" y="585" />
+              <mxPoint x="405" y="585" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-failures" value="test failures and package rework" style="text;html=0;fontSize=14;align=center;fillColor=#ffffff;fontColor=#465966;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1290.4" y="557" width="239.2" height="24" />
+        </mxCell>
+        <mxCell id="edge-pattern" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=0;exitX=1.0;exitY=0.4967741935483871;entryX=0.0;entryY=0.4967741935483871;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="corrections" target="patterns">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="label-pattern" value="review signals" style="text;html=0;fontSize=14;align=center;fillColor=#ffffff;fontColor=#465966;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="499.3" y="663" width="111.39999999999999" height="24" />
+        </mxCell>
+        <mxCell id="edge-improve" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=0;exitX=1.0;exitY=0.4967741935483871;entryX=0.0;entryY=0.4967741935483871;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="patterns" target="evaluate">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="label-improve" value="propose change" style="text;html=0;fontSize=14;align=center;fillColor=#ffffff;fontColor=#465966;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="954.3" y="663" width="111.39999999999999" height="24" />
+        </mxCell>
+        <mxCell id="edge-adoption" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=0;exitX=1.0;exitY=0.4967741935483871;entryX=0.0;entryY=0.44;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="evaluate" target="adopt">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="label-adoption" value="review" style="text;html=0;fontSize=14;align=center;fillColor=#ffffff;fontColor=#465966;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1429.7" y="663" width="54.599999999999994" height="24" />
+        </mxCell>
+        <mxCell id="edge-method-return" style="edgeStyle=none;html=0;endArrow=block;endFill=1;strokeColor=#667683;strokeWidth=1.8;dashed=1;exitX=0.49818181818181817;exitY=1.0;entryX=0.2581967213114754;entryY=0.0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="adopt" target="method-use">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1627" y="835" />
+              <mxPoint x="765" y="835" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-method-return" value="adopted method versions return to future work and checks" style="text;html=0;fontSize=14;align=center;fillColor=#ffffff;fontColor=#465966;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="970.2" y="807" width="409.59999999999997" height="24" />
+        </mxCell>
+        <mxCell id="note-0" value="Additional meta-loop signals&#10;Audit observations and regulatory/FDA feedback can inform J15. Internal BBT/client corrections supply feedback from week one. Different models/prompts/context can support independence; a different model alone does not establish it." style="text;whiteSpace=wrap;html=0;align=left;fontSize=15;fontColor=#52616b;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="992" width="1730" height="85" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

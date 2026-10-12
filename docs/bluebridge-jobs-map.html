@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BlueBridge jobs and information-flow map</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#fff;color:#243746;font:16px/1.55 system-ui,Arial,sans-serif}main{max-width:1540px;margin:auto;padding:28px 30px 60px}h1{font-size:28px;margin:0 0 8px}h2{font-size:23px;margin:30px 0 8px}h3{font-size:16px;margin:18px 0 4px}p{margin:0 0 12px;max-width:1150px}.status{color:#63717a;font-size:14px}.context{border-left:3px solid #41637c;padding:12px 18px;background:#f6f8fa;margin:22px 0}.view{border-top:1px solid #d8dfe4;margin-top:18px}.view>summary{font-weight:650;padding:14px 0;cursor:pointer}.map{overflow:auto}.map svg{display:block;width:100%;min-width:1000px;height:auto}.map a:hover rect,.map a:focus rect{stroke-width:3}.job{border-bottom:1px solid #d8dfe4;scroll-margin-top:20px}.job>summary{padding:14px 4px;cursor:pointer}.jid{display:inline-block;min-width:48px;color:#41637c;font-weight:650}.job-body{padding:0 28px 20px;max-width:1150px}.job:target{background:#f6f8fa}.job:target>.job-body{display:block}.job:target{content-visibility:visible}dl{display:grid;grid-template-columns:120px 1fr;gap:10px 16px}dt{font-weight:650}dd{margin:0}li{padding-bottom:6px}a{color:#315d7e}footer{border-top:1px solid #d8dfe4;margin-top:30px;padding-top:16px;color:#63717a;font-size:14px}@media(max-width:650px){main{padding:20px 16px}h1{font-size:24px}dl{grid-template-columns:1fr;gap:4px}.job-body{padding-left:12px}.context{padding:10px 12px}}@media print{.map svg{min-width:0}.view,.job{break-inside:avoid}.view .map,.job .job-body{display:block}summary{list-style:none}}
+</style></head><body><main>
+<h1>BlueBridge jobs and information-flow map</h1><p class="status">First working map · 9 October 2026 · proposed operating model, not implementation status</p>
+<div class="context"><p><strong>Confirmed context.</strong> The previous arrangement used Jira, GitHub, and manual document processes. Future evidence homes are undecided. The new toolset and processes should keep pace with AI-powered development.</p><p><strong>Candidate internal home.</strong> The compliance demo uses Cloudflare D1 / SQLite for structured records and R2 for file bytes. This is a candidate, not a selected future allocation.</p><p><strong>Reading the map.</strong> Arrows describe information use. Captured sources, proposed evidence, independent findings, human decisions, baselines, and release decisions stay distinct. Dashed arrows show context or matching trace relationships.</p></div>
+<details class="view" open><summary>1. Jobs and evidence across the V model</summary><div class="map"><svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1210" viewBox="0 0 1800 1210" role="img" aria-labelledby="v-model-title v-model-desc">
+<title id="v-model-title">1. Jobs and evidence across the V model</title>
+<desc id="v-model-desc">Working map · provisional record homes · arrows describe information use, not automatic approval</desc>
+<defs><marker id="arrow-v-model" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#667683"/></marker></defs>
+<rect width="1800" height="1210" fill="white"/>
+<text x="35" y="40" font-family="Arial,sans-serif" font-size="25" font-weight="bold" fill="#223746">1. Jobs and evidence across the V model</text>
+<text x="35" y="70" font-family="Arial,sans-serif" font-size="16" fill="#52616b">Working map · provisional record homes · arrows describe information use, not automatic approval</text>
+<polyline points="450,265 1350,265" fill="none" stroke="#667683" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#arrow-v-model)"/>
+<polyline points="550,385 1250,385" fill="none" stroke="#667683" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#arrow-v-model)"/>
+<polyline points="650,505 1150,505" fill="none" stroke="#667683" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#arrow-v-model)"/>
+<polyline points="750,625 1050,625" fill="none" stroke="#667683" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#arrow-v-model)"/>
+<polyline points="850,745 950,745" fill="none" stroke="#667683" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#arrow-v-model)"/>
+<polyline points="300,325 400,340" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-v-model)"/>
+<polyline points="400,445 500,460" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-v-model)"/>
+<polyline points="500,565 600,580" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-v-model)"/>
+<polyline points="600,685 700,700" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-v-model)"/>
+<polyline points="700,805 920,825" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-v-model)"/>
+<polyline points="1090,860 1270,860 1270,745 1250,745" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-v-model)"/>
+<polyline points="300,185 300,220" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-v-model)"/>
+<a href="#j02" aria-label="Read J02: User needs">
+<rect x="150" y="220" width="300" height="105" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="162" y="245" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">User needs</text>
+<text x="162" y="272" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">NEED · J02</text>
+<text x="162" y="292" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">User, outcome, intended use</text>
+</a>
+<a href="#j08" aria-label="Read J08: Validation and clinical evidence">
+<rect x="1350" y="220" width="300" height="105" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="1362" y="245" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Validation and clinical</text>
+<text x="1362" y="266" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">evidence</text>
+<text x="1362" y="293" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">VP / VR · J08</text>
+<text x="1362" y="313" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Protocol → per-need / claim results</text>
+</a>
+<a href="#j03" aria-label="Read J03: Product / system requirements">
+<rect x="250" y="340" width="300" height="105" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="262" y="365" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Product / system requirements</text>
+<text x="262" y="392" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">SYS · J03</text>
+<text x="262" y="412" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Behaviour and acceptance criteria</text>
+</a>
+<a href="#j07" aria-label="Read J07: System verification">
+<rect x="1250" y="340" width="300" height="105" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="1262" y="365" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">System verification</text>
+<text x="1262" y="392" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">TEST / RUN · J07</text>
+<text x="1262" y="412" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Plan → execution → disposition</text>
+</a>
+<a href="#j03" aria-label="Read J03: SW / HW / UI / label requirements">
+<rect x="350" y="460" width="300" height="105" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="362" y="485" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">SW / HW / UI / label</text>
+<text x="362" y="506" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">requirements</text>
+<text x="362" y="533" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">SUB · J03</text>
+<text x="362" y="553" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Allocation and control criteria</text>
+</a>
+<a href="#j07" aria-label="Read J07: Subsystem verification">
+<rect x="1150" y="460" width="300" height="105" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="1162" y="485" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Subsystem verification</text>
+<text x="1162" y="512" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">TEST / RUN · J07</text>
+<text x="1162" y="532" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Plan → execution → disposition</text>
+</a>
+<a href="#j04" aria-label="Read J04: Architecture and components">
+<rect x="450" y="580" width="300" height="105" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="462" y="605" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Architecture and components</text>
+<text x="462" y="632" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">ARCH · J04</text>
+<text x="462" y="652" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Components and interfaces</text>
+</a>
+<a href="#j07" aria-label="Read J07: Integration verification">
+<rect x="1050" y="580" width="300" height="105" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="1062" y="605" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Integration verification</text>
+<text x="1062" y="632" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">TEST / RUN · J07</text>
+<text x="1062" y="652" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Plan → execution → disposition</text>
+</a>
+<a href="#j04" aria-label="Read J04: Detailed design">
+<rect x="550" y="700" width="300" height="105" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="562" y="725" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Detailed design</text>
+<text x="562" y="752" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">DESIGN · J04</text>
+<text x="562" y="772" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Units, decisions, rationale</text>
+</a>
+<a href="#j07" aria-label="Read J07: Unit verification">
+<rect x="950" y="700" width="300" height="105" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="962" y="725" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Unit verification</text>
+<text x="962" y="752" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">TEST / RUN · J07</text>
+<text x="962" y="772" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Plan → execution → disposition</text>
+</a>
+<a href="#j04" aria-label="Read J04: Implementation work and exact build">
+<rect x="750" y="825" width="340" height="95" rx="5" fill="#f4f4f2" stroke="#71776f"/>
+<text x="762" y="850" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Implementation work and exact build</text>
+<text x="762" y="877" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">WORK / CODE · J04</text>
+<text x="762" y="897" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Task, commit, PR, build, artifacts</text>
+</a>
+<a href="#j01" aria-label="Read J01: Capture information where work happens">
+<rect x="150" y="105" width="650" height="80" rx="5" fill="#f4f4f2" stroke="#71776f"/>
+<text x="162" y="130" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Capture information where work happens</text>
+<text x="162" y="157" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">SRC / CLAR · J01</text>
+<text x="162" y="177" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Slack, meetings, documents, design notes, developer observations</text>
+</a>
+<a href="#j16" aria-label="Read J16: Agree scope and evidence ownership">
+<rect x="920" y="105" width="730" height="80" rx="5" fill="#faf3e6" stroke="#977642"/>
+<text x="932" y="130" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Agree scope and evidence ownership</text>
+<text x="932" y="157" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">SCOPE · J16 · owners, criteria, methods</text>
+<text x="932" y="177" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Internal, bought, and existing tool homes remain provisional</text>
+</a>
+<rect x="150" y="960" width="850" height="125" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="162" y="985" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Inputs and evidence that span the V</text>
+<text x="162" y="1012" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Risk J05 · HAZ / CTRL / RISK → requirements, tests, labels, release</text>
+<text x="162" y="1032" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Usability J06 · USE → needs, UI requirements, validation</text>
+<text x="162" y="1052" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Dataset / model J14, if applicable · ML → build, tests, performance evidence</text>
+<a href="#j10" aria-label="Read J10: Reviewed states and usable outputs">
+<rect x="1050" y="960" width="600" height="125" rx="5" fill="#faf3e6" stroke="#977642"/>
+<text x="1062" y="985" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Reviewed states and usable outputs</text>
+<text x="1062" y="1012" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Baseline J10 · BASE</text>
+<text x="1062" y="1032" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Documents / matrices / packages J12 · DOC</text>
+<text x="1062" y="1052" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Release / transfer J11 · REL</text>
+</a>
+<rect x="830.1" y="239" width="139.8" height="20" fill="white"/>
+<text x="900.0" y="253" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">defines validation</text>
+<rect x="823.0" y="359" width="154.0" height="20" fill="white"/>
+<text x="900.0" y="373" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">defines system tests</text>
+<rect x="812.35" y="479" width="175.29999999999998" height="20" fill="white"/>
+<text x="900.0" y="493" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">defines subsystem tests</text>
+<rect x="805.25" y="599" width="189.5" height="20" fill="white"/>
+<text x="900.0" y="613" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">defines integration tests</text>
+<rect x="858.5" y="719" width="83.0" height="20" fill="white"/>
+<text x="900.0" y="733" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">unit tests</text>
+<rect x="728.5" y="797" width="83.0" height="20" fill="white"/>
+<text x="770" y="811" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">implements</text>
+<rect x="1116.55" y="871" width="146.9" height="20" fill="white"/>
+<text x="1190" y="885" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">execution reference</text>
+<rect x="342.3" y="193" width="111.39999999999999" height="20" fill="white"/>
+<text x="398" y="207" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">source support</text>
+<text x="150" y="1120" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Continuous work around every level</text>
+<text x="150" y="1146" font-family="Arial,sans-serif" font-size="15" fill="#52616b">J09 change impact · J13 drift capture · J15 method improvement. Inner checks assist the worker; outer checks independently inspect the result and wider evidence. See views 2 and 3 for the process and</text>
+<text x="150" y="1166" font-family="Arial,sans-serif" font-size="15" fill="#52616b">feedback paths.</text>
+</svg></div></details>
+<details class="view" ><summary>2. Source information becomes reviewed, connected evidence</summary><div class="map"><svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1190" viewBox="0 0 1500 1190" role="img" aria-labelledby="source-flow-title source-flow-desc">
+<title id="source-flow-title">2. Source information becomes reviewed, connected evidence</title>
+<desc id="source-flow-desc">Capturing a reference does not transfer authority · a finding, a decision, and a baseline are separate records</desc>
+<defs><marker id="arrow-source-flow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#667683"/></marker></defs>
+<rect width="1500" height="1190" fill="white"/>
+<text x="35" y="40" font-family="Arial,sans-serif" font-size="25" font-weight="bold" fill="#223746">2. Source information becomes reviewed, connected evidence</text>
+<text x="35" y="70" font-family="Arial,sans-serif" font-size="16" fill="#52616b">Capturing a reference does not transfer authority · a finding, a decision, and a baseline are separate records</text>
+<polyline points="665,235 665,315" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-source-flow)"/>
+<polyline points="665,425 665,510" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-source-flow)"/>
+<polyline points="665,620 665,700" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-source-flow)"/>
+<polyline points="665,810 665,900" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-source-flow)"/>
+<polyline points="370,185 450,185" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-source-flow)"/>
+<polyline points="370,370 450,370" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-source-flow)"/>
+<polyline points="450,400 410,400 410,555 370,555" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-source-flow)"/>
+<polyline points="200,510 200,465 500,465 500,425" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-source-flow)"/>
+<polyline points="450,765 370,765" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-source-flow)"/>
+<polyline points="200,710 200,670 395,670 395,285 600,285 600,315" fill="none" stroke="#667683" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#arrow-source-flow)"/>
+<polyline points="1000,390 940,390 940,565 880,565" fill="none" stroke="#667683" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#arrow-source-flow)"/>
+<polyline points="880,955 1000,955" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-source-flow)"/>
+<a href="#j01" aria-label="Read J01: Capture an exact source revision">
+<rect x="450" y="135" width="430" height="100" rx="5" fill="#f4f4f2" stroke="#71776f"/>
+<text x="462" y="160" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Capture an exact source revision</text>
+<text x="462" y="187" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">SRC · J01 / J13</text>
+<text x="462" y="207" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Origin, revision, locator, captured content</text>
+</a>
+<a href="#j03" aria-label="Read J03: Interpret, clarify, and draft candidates">
+<rect x="450" y="315" width="430" height="110" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="462" y="340" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Interpret, clarify, and draft candidates</text>
+<text x="462" y="367" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">NEED / SYS / SUB / LINK · J02 / J03</text>
+<text x="462" y="387" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Citations, proposed links, unresolved questions</text>
+</a>
+<a href="#j09" aria-label="Read J09: Independently interrogate the result">
+<rect x="450" y="510" width="430" height="110" rx="5" fill="#faf3e6" stroke="#977642"/>
+<text x="462" y="535" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Independently interrogate the result</text>
+<text x="462" y="562" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">REVIEW · outer loop</text>
+<text x="462" y="582" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Check source meaning, coverage, links, and wider</text>
+<text x="462" y="602" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">consistency</text>
+</a>
+<a href="#j10" aria-label="Read J10: Review the named candidate and links">
+<rect x="450" y="700" width="430" height="110" rx="5" fill="#faf3e6" stroke="#977642"/>
+<text x="462" y="725" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Review the named candidate and links</text>
+<text x="462" y="752" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">REVIEW · responsible person</text>
+<text x="462" y="772" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Accept, reject, revise, or defer with a reason</text>
+</a>
+<a href="#j10" aria-label="Read J10: Save accepted records; review the state">
+<rect x="450" y="900" width="430" height="110" rx="5" fill="#faf3e6" stroke="#977642"/>
+<text x="462" y="925" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Save accepted records; review the state</text>
+<text x="462" y="952" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Stable IDs and versions → BASE · J10</text>
+<text x="462" y="972" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Individual acceptance and baseline decision stay</text>
+<text x="462" y="992" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">distinct</text>
+</a>
+<a href="#j01" aria-label="Read J01: Original information homes">
+<rect x="35" y="135" width="335" height="100" rx="5" fill="#f4f4f2" stroke="#71776f"/>
+<text x="47" y="160" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Original information homes</text>
+<text x="47" y="187" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Slack / meeting system / documents</text>
+<text x="47" y="207" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Authoritative for supplied source content</text>
+</a>
+<a href="#j02" aria-label="Read J02: Clarify with the responsible person">
+<rect x="35" y="315" width="335" height="110" rx="5" fill="#faf3e6" stroke="#977642"/>
+<text x="47" y="340" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Clarify with the responsible</text>
+<text x="47" y="361" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">person</text>
+<text x="47" y="388" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">CLAR · J02</text>
+<text x="47" y="408" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Retain the question, answer, and basis</text>
+</a>
+<a href="#j03" aria-label="Read J03: Inner loop: check and revise">
+<rect x="35" y="510" width="335" height="120" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="47" y="535" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Inner loop: check and revise</text>
+<text x="47" y="562" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Worker / drafting agent</text>
+<text x="47" y="582" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Measurability, format, rules, citations</text>
+<text x="47" y="602" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Bounded retries; unresolved issues remain</text>
+<text x="47" y="622" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">visible</text>
+</a>
+<a href="#j09" aria-label="Read J09: Return to the author or clarification">
+<rect x="35" y="710" width="335" height="130" rx="5" fill="#faf3e6" stroke="#977642"/>
+<text x="47" y="735" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Return to the author or</text>
+<text x="47" y="756" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">clarification</text>
+<text x="47" y="783" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Record rejected / deferred proposals</text>
+<text x="47" y="803" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">A revised candidate gets fresh applicable</text>
+<text x="47" y="823" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">checks</text>
+</a>
+<a href="#j09" aria-label="Read J09: Independent access to underlying evidence">
+<rect x="1000" y="315" width="445" height="150" rx="5" fill="#f4f4f2" stroke="#71776f"/>
+<text x="1012" y="340" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Independent access to underlying evidence</text>
+<text x="1012" y="367" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Sources, existing needs and requirements</text>
+<text x="1012" y="387" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Risk / usability / model evidence</text>
+<text x="1012" y="407" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Design, code/build, tests, and configuration</text>
+<text x="1012" y="427" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Selected for the change; omissions are findings</text>
+</a>
+<rect x="1000" y="700" width="445" height="145" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="1012" y="725" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Provisional homes for controlled records</text>
+<text x="1012" y="752" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Internal BlueBridge, bought tool, or a hybrid</text>
+<text x="1012" y="772" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Demo candidate: D1 / SQLite structured records</text>
+<text x="1012" y="792" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">R2 file bytes and attachments</text>
+<text x="1012" y="812" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">One authoritative home per controlled record</text>
+<a href="#j12" aria-label="Read J12: Answer questions and produce outputs">
+<rect x="1000" y="900" width="445" height="125" rx="5" fill="#faf3e6" stroke="#977642"/>
+<text x="1012" y="925" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Answer questions and produce outputs</text>
+<text x="1012" y="952" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">DOC · J12 from exact baseline / template</text>
+<text x="1012" y="972" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">REL · J11 with build, test, validation, and risk</text>
+<text x="1012" y="992" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">evidence</text>
+<text x="1012" y="1012" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">A document is an identifiable view of records</text>
+</a>
+<rect x="556.05" y="254.0" width="217.89999999999998" height="20" fill="white"/>
+<text x="665" y="268.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">interpret with source support</text>
+<rect x="559.6" y="446.5" width="210.79999999999998" height="20" fill="white"/>
+<text x="665" y="460.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">candidate plus check results</text>
+<rect x="573.8" y="639.0" width="182.39999999999998" height="20" fill="white"/>
+<text x="665" y="653.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">findings for disposition</text>
+<rect x="527.65" y="834.0" width="274.7" height="20" fill="white"/>
+<text x="665" y="848.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">accepted versions and confirmed links</text>
+<rect x="379.15" y="158" width="61.699999999999996" height="20" fill="white"/>
+<text x="410" y="172" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">capture</text>
+<rect x="382.7" y="343" width="54.599999999999994" height="20" fill="white"/>
+<text x="410" y="357" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">answer</text>
+<rect x="386.25" y="466" width="47.5" height="20" fill="white"/>
+<text x="410" y="480" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">check</text>
+<rect x="282.7" y="438" width="54.599999999999994" height="20" fill="white"/>
+<text x="310" y="452" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">revise</text>
+<rect x="382.7" y="739" width="54.599999999999994" height="20" fill="white"/>
+<text x="410" y="753" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">return</text>
+<rect x="310.9" y="641" width="168.2" height="20" fill="white"/>
+<text x="395" y="655" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">new candidate revision</text>
+<rect x="1067.5" y="486" width="225.0" height="20" fill="white"/>
+<text x="1180" y="500" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">independently selected context</text>
+<rect x="884.3" y="928" width="111.39999999999999" height="20" fill="white"/>
+<text x="940" y="942" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">selected state</text>
+<text x="35" y="1065" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Authored evidence can enter at candidate creation</text>
+<text x="35" y="1091" font-family="Arial,sans-serif" font-size="15" fill="#52616b">Developers can write design notes, requirements, code, and review rationale directly. LLM extraction is optional. Existing controlled evidence supplies context without passing through</text>
+<text x="35" y="1111" font-family="Arial,sans-serif" font-size="15" fill="#52616b">transcript ingestion. Both paths need clear ownership, version references, and the applicable reviews.</text>
+</svg></div></details>
+<details class="view" ><summary>3. Change review and the learning loop</summary><div class="map"><svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1060" viewBox="0 0 1800 1060" role="img" aria-labelledby="change-loops-title change-loops-desc">
+<title id="change-loops-title">3. Change review and the learning loop</title>
+<desc id="change-loops-desc">Outer-loop independence and breadth are separate from cadence · learning changes methods through reviewed versions</desc>
+<defs><marker id="arrow-change-loops" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#667683"/></marker></defs>
+<rect width="1800" height="1060" fill="white"/>
+<text x="35" y="40" font-family="Arial,sans-serif" font-size="25" font-weight="bold" fill="#223746">3. Change review and the learning loop</text>
+<text x="35" y="70" font-family="Arial,sans-serif" font-size="16" fill="#52616b">Outer-loop independence and breadth are separate from cadence · learning changes methods through reviewed versions</text>
+<polyline points="290,230 330,230" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-change-loops)"/>
+<polyline points="585,230 625,230" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-change-loops)"/>
+<polyline points="880,230 920,230" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-change-loops)"/>
+<polyline points="1175,230 1215,230" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-change-loops)"/>
+<polyline points="1470,230 1510,230" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-change-loops)"/>
+<polyline points="800,455 1047,455 1047,325" fill="none" stroke="#667683" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#arrow-change-loops)"/>
+<polyline points="1342,325 1342,555 262,555 262,615" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-change-loops)"/>
+<polyline points="1637,325 1637,585 405,585 405,615" fill="none" stroke="#667683" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#arrow-change-loops)"/>
+<polyline points="490,692 620,692" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-change-loops)"/>
+<polyline points="955,692 1065,692" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-change-loops)"/>
+<polyline points="1425,692 1490,692" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-change-loops)"/>
+<polyline points="1627,790 1627,835 765,835 765,900" fill="none" stroke="#667683" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#arrow-change-loops)"/>
+<a href="#j13" aria-label="Read J13: Observe a significant change">
+<rect x="35" y="155" width="255" height="170" rx="5" fill="#f4f4f2" stroke="#71776f"/>
+<text x="47" y="180" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Observe a significant</text>
+<text x="47" y="201" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">change</text>
+<text x="47" y="228" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">SRC / CODE / RUN / DEFECT</text>
+<text x="47" y="248" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">J13 → J09</text>
+<text x="47" y="268" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Exact old / new references</text>
+</a>
+<a href="#j09" aria-label="Read J09: Record scope and impact work">
+<rect x="330" y="155" width="255" height="170" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="342" y="180" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Record scope and impact</text>
+<text x="342" y="201" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">work</text>
+<text x="342" y="228" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">CHANGE · J09</text>
+<text x="342" y="248" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Prior BASE and relevant links</text>
+<text x="342" y="268" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Owners and unresolved</text>
+<text x="342" y="288" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">questions</text>
+</a>
+<a href="#j03" aria-label="Read J03: Worker drafts, checks, revises">
+<rect x="625" y="155" width="255" height="170" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="637" y="180" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Worker drafts, checks,</text>
+<text x="637" y="201" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">revises</text>
+<text x="637" y="228" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Inner loop</text>
+<text x="637" y="248" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Local rules and relevant</text>
+<text x="637" y="268" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">evidence</text>
+<text x="637" y="288" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Versioned candidate and check</text>
+<text x="637" y="308" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">results</text>
+</a>
+<a href="#j09" aria-label="Read J09: Independent broader check">
+<rect x="920" y="155" width="255" height="170" rx="5" fill="#faf3e6" stroke="#977642"/>
+<text x="932" y="180" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Independent broader check</text>
+<text x="932" y="207" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Outer loop · per significant</text>
+<text x="932" y="227" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">change</text>
+<text x="932" y="247" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Requirements, hazards,</text>
+<text x="932" y="267" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">controls</text>
+<text x="932" y="287" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Tests, traces, labels,</text>
+<text x="932" y="307" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">configuration</text>
+</a>
+<a href="#j09" aria-label="Read J09: People disposition findings">
+<rect x="1215" y="155" width="255" height="170" rx="5" fill="#faf3e6" stroke="#977642"/>
+<text x="1227" y="180" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">People disposition</text>
+<text x="1227" y="201" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">findings</text>
+<text x="1227" y="228" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">REVIEW · J09</text>
+<text x="1227" y="248" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Update / relink / retest /</text>
+<text x="1227" y="268" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">defer</text>
+<text x="1227" y="288" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Reasons and accountable owners</text>
+</a>
+<a href="#j10" aria-label="Read J10: Review the resulting state">
+<rect x="1510" y="155" width="255" height="170" rx="5" fill="#faf3e6" stroke="#977642"/>
+<text x="1522" y="180" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Review the resulting</text>
+<text x="1522" y="201" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">state</text>
+<text x="1522" y="228" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">J07 / J08 retest or evaluate</text>
+<text x="1522" y="248" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">as needed</text>
+<text x="1522" y="268" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">J10 new BASE; J12 new DOC</text>
+<text x="1522" y="288" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">J11 separate REL decision if</text>
+<text x="1522" y="308" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">relevant</text>
+</a>
+<a href="#j09" aria-label="Read J09: Check the underlying evidence, including missing links">
+<rect x="35" y="395" width="765" height="125" rx="5" fill="#f4f4f2" stroke="#71776f"/>
+<text x="47" y="420" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Check the underlying evidence, including missing links</text>
+<text x="47" y="447" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">J02 / J03 needs and requirements · J04 design/build</text>
+<text x="47" y="467" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">J05 risk and controls · J06 tasks/UI · J07 tests/results</text>
+<text x="47" y="487" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">J08 validation · J14 model/data where applicable</text>
+</a>
+<a href="#j15" aria-label="Read J15: Capture corrections and failures">
+<rect x="35" y="615" width="455" height="155" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="47" y="640" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Capture corrections and failures</text>
+<text x="47" y="667" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">FB · start with the first workflow</text>
+<text x="47" y="687" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Reviewer edits, rejections, QA/risk comments</text>
+<text x="47" y="707" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Missing traces, failures, rework, redirection</text>
+</a>
+<a href="#j15" aria-label="Read J15: Investigate recurring causes">
+<rect x="620" y="615" width="335" height="155" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="632" y="640" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Investigate recurring causes</text>
+<text x="632" y="667" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Meta-loop · J15</text>
+<text x="632" y="687" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Daily / weekly / monthly as appropriate</text>
+<text x="632" y="707" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Separate product defects from method</text>
+<text x="632" y="727" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">failures</text>
+</a>
+<a href="#j15" aria-label="Read J15: Propose and evaluate a method change">
+<rect x="1065" y="615" width="360" height="155" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="1077" y="640" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Propose and evaluate a method change</text>
+<text x="1077" y="667" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">METHOD · J15</text>
+<text x="1077" y="687" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Prompt, rule, context, tool, or workflow</text>
+<text x="1077" y="707" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Evaluate failures and previously correct</text>
+<text x="1077" y="727" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">cases</text>
+</a>
+<a href="#j15" aria-label="Read J15: Review and adopt a method version">
+<rect x="1490" y="615" width="275" height="175" rx="5" fill="#faf3e6" stroke="#977642"/>
+<text x="1502" y="640" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Review and adopt a method</text>
+<text x="1502" y="661" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">version</text>
+<text x="1502" y="688" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">METHOD / REVIEW · J15</text>
+<text x="1502" y="708" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Record before / after, evidence,</text>
+<text x="1502" y="728" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">owner</text>
+<text x="1502" y="748" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Observe subsequent corrections</text>
+<text x="1502" y="768" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">and regressions</text>
+</a>
+<a href="#j15" aria-label="Read J15: Use adopted methods in future work and checking">
+<rect x="450" y="900" width="1220" height="90" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="462" y="925" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Use adopted methods in future work and checking</text>
+<text x="462" y="952" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">J01–J14 · versioned drafting instructions, rules, context selection, and independent review methods</text>
+<text x="462" y="972" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Retain prior methods and evaluation evidence. Product evidence changes still use their own change process.</text>
+</a>
+<rect x="923.3" y="368" width="253.39999999999998" height="20" fill="white"/>
+<text x="1050" y="382" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">independently retrieve and inspect</text>
+<rect x="637.0" y="529" width="296.0" height="20" fill="white"/>
+<text x="785" y="543" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">findings, human edits, reasons, outcomes</text>
+<rect x="1290.4" y="560" width="239.2" height="20" fill="white"/>
+<text x="1410" y="574" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">test failures and package rework</text>
+<rect x="499.3" y="666" width="111.39999999999999" height="20" fill="white"/>
+<text x="555" y="680" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">review signals</text>
+<rect x="954.3" y="666" width="111.39999999999999" height="20" fill="white"/>
+<text x="1010" y="680" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">propose change</text>
+<rect x="1429.7" y="666" width="54.599999999999994" height="20" fill="white"/>
+<text x="1457" y="680" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">review</text>
+<rect x="970.2" y="810" width="409.59999999999997" height="20" fill="white"/>
+<text x="1175" y="824" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">adopted method versions return to future work and checks</text>
+<text x="35" y="1010" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Additional meta-loop signals</text>
+<text x="35" y="1036" font-family="Arial,sans-serif" font-size="15" fill="#52616b">Audit observations and regulatory/FDA feedback can inform J15. Internal BBT/client corrections supply feedback from week one. Different models/prompts/context can support independence; a different model alone does not establish</text>
+<text x="35" y="1056" font-family="Arial,sans-serif" font-size="15" fill="#52616b">it.</text>
+</svg></div></details>
+<section><h2>Job catalogue</h2><p>Open a job to inspect its input, output, handoff, decisions, and quality loops. Diagram nodes link to the related job.</p>
+<details id="j01" class="job"><summary><span class="jid">J01</span> Capture information with a usable source reference</summary><div class="job-body"><dl><dt>Actor</dt><dd>Meeting participant, product lead, engineer, or source owner</dd><dt>Trigger</dt><dd>A discussion, document, note, or new source revision contains product information.</dd><dt>Inputs</dt><dd>SRC: Source revisions</dd><dt>Outputs</dt><dd>SRC: Source revisions; CLAR: Clarification and decision</dd></dl><h3>Tasks</h3><ol><li>Capture the relevant thread, transcript, note, or document revision.</li><li>Record origin, author/date where available, revision, and exact locators.</li><li>Identify missing context, ambiguity, and candidate decisions for follow-up.</li></ol><h3>Decision</h3><p>A source owner confirms usable capture; candidate statements still need their own review.</p><h3>Handoff</h3><p>J02, J03, J05, J06, or J09 receives the relevant source and questions.</p><h3>When something changes</h3><p>A new source revision raises J13 drift review; earlier interpretations retain their original citation.</p><h3>Inner loop</h3><p>Check extraction completeness, locators, duplicates, and structured output.</p><h3>Outer loop</h3><p>Inspect the original source for omitted qualifiers, disagreements, or unsupported interpretation.</p><h3>Feedback to the meta-loop</h3><p>Capture extraction errors, missed decisions, and manual redirection.</p><h3>Friction hypothesis</h3><p>Decisions may be reconstructed later from scattered conversations.</p><h3>Measure</h3><p>Capture effort and the proportion of outputs with usable exact source references.</p></div></details>
+<details id="j02" class="job"><summary><span class="jid">J02</span> Agree the user need and its intended-use context</summary><div class="job-body"><dl><dt>Actor</dt><dd>Product owner with user, clinical, or domain reviewers</dd><dt>Trigger</dt><dd>New evidence, an unresolved clarification, or a change affects what users need.</dd><dt>Inputs</dt><dd>SRC: Source revisions; SCOPE: Product scope and planning basis; CLAR: Clarification and decision; USE: Use and usability evidence</dd><dt>Outputs</dt><dd>NEED: User need; CLAIM: Product / clinical claim; CLAR: Clarification and decision; REVIEW: Check, finding, and human decision</dd></dl><h3>Tasks</h3><ol><li>Identify the user, problem, use environment, and desired outcome.</li><li>Resolve ambiguity with the responsible person.</li><li>Record proposed product claims separately from user needs; supporting evidence is reviewed in J08.</li><li>Review each need and retain its source and rationale.</li></ol><h3>Decision</h3><p>The designated need owner/reviewer accepts, revises, rejects, or defers the specific version.</p><h3>Handoff</h3><p>J03 derives requirements; J08 defines validation against the need.</p><h3>When something changes</h3><p>A changed need prompts review of derived requirements, use-related risks, validation, and claims through J09.</p><h3>Inner loop</h3><p>Check clear actor/outcome, source support, duplicates, and unresolved scope.</p><h3>Outer loop</h3><p>Challenge interpretation against underlying sources, intended use, and existing needs.</p><h3>Feedback to the meta-loop</h3><p>Capture reviewer rewrites and rejected or unsupported needs.</p><h3>Friction hypothesis</h3><p>People may confuse a discussion suggestion with an agreed need.</p><h3>Measure</h3><p>Time to an accepted need and reviewer correction effort.</p></div></details>
+<details id="j03" class="job"><summary><span class="jid">J03</span> Translate needs and controls into testable requirements</summary><div class="job-body"><dl><dt>Actor</dt><dd>Systems, software, hardware, or product engineer</dd><dt>Trigger</dt><dd>A reviewed need, control, constraint, or parent requirement needs implementation detail.</dd><dt>Inputs</dt><dd>NEED: User need; SCOPE: Product scope and planning basis; CLAR: Clarification and decision; CTRL: Risk control; USE: Use and usability evidence; SYS: Product / system requirement; LINK: Trace relationship</dd><dt>Outputs</dt><dd>SYS: Product / system requirement; SUB: Software / hardware / UI / labelling requirement; LINK: Trace relationship; REVIEW: Check, finding, and human decision</dd></dl><h3>Tasks</h3><ol><li>Derive product/system requirements and decompose them into software, hardware, UI, and labelling requirements.</li><li>Specify measurable acceptance criteria, allocation, and source/parent links.</li><li>Review requirement versions and proposed links separately.</li></ol><h3>Decision</h3><p>The assigned discipline reviewer accepts the requirement and its links. Parent acceptance does not accept children.</p><h3>Handoff</h3><p>J04 uses approved design inputs; J07 plans verification; J12 uses the exact versions in specifications.</p><h3>When something changes</h3><p>A changed criterion or allocation prompts design, control, test, and label review through J09.</p><h3>Inner loop</h3><p>Check measurability, schema, units, source support, and allowed link types; revise within a bounded loop.</p><h3>Outer loop</h3><p>Independently inspect consistency with needs, risk controls, related requirements, and testability.</p><h3>Feedback to the meta-loop</h3><p>Capture rejected requirements, ambiguous criteria, missing links, and recurring reviewer edits.</p><h3>Friction hypothesis</h3><p>Requirements may be duplicated in tickets or rewritten retrospectively.</p><h3>Measure</h3><p>First-pass acceptance, correction effort, and unresolved source/trace gaps.</p></div></details>
+<details id="j04" class="job"><summary><span class="jid">J04</span> Connect intended design, implementation work, and what was built</summary><div class="job-body"><dl><dt>Actor</dt><dd>Architect and developer, including coding agents under an assigned owner</dd><dt>Trigger</dt><dd>A requirement is allocated, a design changes, or implementation/PR evidence becomes available.</dd><dt>Inputs</dt><dd>SYS: Product / system requirement; SUB: Software / hardware / UI / labelling requirement; CTRL: Risk control; ARCH: Architecture and components; DESIGN: Detailed design; WORK: Implementation work item; CODE: Implementation and build; LINK: Trace relationship</dd><dt>Outputs</dt><dd>ARCH: Architecture and components; DESIGN: Detailed design; WORK: Implementation work item; CODE: Implementation and build; LINK: Trace relationship; REVIEW: Check, finding, and human decision</dd></dl><h3>Tasks</h3><ol><li>Allocate requirements to components, interfaces, and detailed design.</li><li>Create implementation tasks that reference controlled IDs.</li><li>Capture authored design rationale and as-built observations tied to exact commits and PRs.</li><li>Review mismatches between intended design and implementation.</li></ol><h3>Decision</h3><p>Design reviewer owns design acceptance; repository reviewers own PR decisions. Neither decision automatically approves the other record.</p><h3>Handoff</h3><p>J07 consumes exact design and build references; J09 receives design/implementation mismatches.</p><h3>When something changes</h3><p>Code, interface, dependency, or task changes prompt review of the associated design, requirements, risk, and tests.</p><h3>Inner loop</h3><p>Check local design/code constraints, referenced IDs, and local tests.</p><h3>Outer loop</h3><p>Inspect requirement and control coverage, component boundaries, and configuration consistency beyond the local change.</p><h3>Feedback to the meta-loop</h3><p>Capture missed allocations, design/code divergence, PR corrections, and agent redirection.</p><h3>Friction hypothesis</h3><p>The reason for a code change may remain in a PR while design evidence becomes stale.</p><h3>Measure</h3><p>Effort to reconstruct requirement-to-build evidence and unresolved design/implementation mismatches.</p></div></details>
+<details id="j05" class="job"><summary><span class="jid">J05</span> Analyse risk, define controls, and assess residual risk</summary><div class="job-body"><dl><dt>Actor</dt><dd>Risk owner with engineering, clinical, security, usability, and QA reviewers</dd><dt>Trigger</dt><dd>Scope/design changes, a hazard is identified, or control/test evidence changes.</dd><dt>Inputs</dt><dd>SCOPE: Product scope and planning basis; NEED: User need; ARCH: Architecture and components; CODE: Implementation and build; USE: Use and usability evidence; ML: Dataset and model evidence, if applicable; HAZ: Hazard and risk analysis; RUN: Verification execution and results; VR: Validation and clinical results; LINK: Trace relationship</dd><dt>Outputs</dt><dd>HAZ: Hazard and risk analysis; CTRL: Risk control; RISK: Residual-risk decision; LINK: Trace relationship; REVIEW: Check, finding, and human decision</dd></dl><h3>Tasks</h3><ol><li>Record hazards, causes, assumptions, and the relevant risk analyses, including security and dependencies where applicable.</li><li>Define controls and translate them into requirement/design inputs.</li><li>Define how implementation and effectiveness will be checked.</li><li>Evaluate residual risk against current evidence and record the responsible decision.</li></ol><h3>Decision</h3><p>The named risk authority records acceptance or further work for the relevant product state.</p><h3>Handoff</h3><p>J03/J04 implement controls; J07 verifies them; J08 contributes use/clinical evidence; J11/J12 use risk decisions and disclosures.</p><h3>When something changes</h3><p>Changed assumptions, controls, failures, or use conditions trigger risk reassessment and linked follow-up.</p><h3>Inner loop</h3><p>Check required fields, criteria, control references, and evidence versions.</p><h3>Outer loop</h3><p>Challenge missing hazards, ineffective controls, conflicting requirements, and unsupported residual-risk conclusions.</p><h3>Feedback to the meta-loop</h3><p>Capture risk-review changes, missing hazards, and recurring control-evidence gaps.</p><h3>Friction hypothesis</h3><p>Risk records may lag behind implementation and test changes.</p><h3>Measure</h3><p>Time to assess a change and the number/type of unresolved control-evidence gaps.</p></div></details>
+<details id="j06" class="job"><summary><span class="jid">J06</span> Connect user tasks, interface design, and usability evidence</summary><div class="job-body"><dl><dt>Actor</dt><dd>Designer and usability lead with product and risk reviewers</dd><dt>Trigger</dt><dd>A task, user profile, interface, or use-related risk changes.</dd><dt>Inputs</dt><dd>SRC: Source revisions; SCOPE: Product scope and planning basis; NEED: User need; USE: Use and usability evidence; HAZ: Hazard and risk analysis; SUB: Software / hardware / UI / labelling requirement; CODE: Implementation and build</dd><dt>Outputs</dt><dd>USE: Use and usability evidence; SUB: Software / hardware / UI / labelling requirement; VP: Validation plan / protocol; VR: Validation and clinical results; REVIEW: Check, finding, and human decision</dd></dl><h3>Tasks</h3><ol><li>Describe user profiles, environment, tasks, and critical tasks.</li><li>Use task/risk evidence to define UI requirements.</li><li>Record formative evaluations and resulting changes.</li><li>Connect summative evaluation plans/results to critical tasks and needs.</li></ol><h3>Decision</h3><p>Assigned design/usability reviewers accept interpretations and required changes; risk acceptance has its own owner.</p><h3>Handoff</h3><p>J02/J03 receive task evidence; J05 receives use-related risk; J08 receives summative validation evidence.</p><h3>When something changes</h3><p>Changed users, tasks, interface, or use errors trigger requirement, risk, and evaluation review.</p><h3>Inner loop</h3><p>Check task IDs, design versions, critical-task links, and study/result structure.</p><h3>Outer loop</h3><p>Inspect whether tasks and use-related controls are covered by the UI design and evaluation scope.</p><h3>Feedback to the meta-loop</h3><p>Capture missing tasks, repeated use errors, and study/document rework.</p><h3>Friction hypothesis</h3><p>Task analyses, UI designs, and evaluation results may be maintained separately.</p><h3>Measure</h3><p>Effort to trace a critical task through UI requirements to evaluated outcomes.</p></div></details>
+<details id="j07" class="job"><summary><span class="jid">J07</span> Plan verification and preserve results at every V-model level</summary><div class="job-body"><dl><dt>Actor</dt><dd>Test engineer or developer with assigned verification reviewer</dd><dt>Trigger</dt><dd>Requirements/design need tests, a build is ready, or a change requires regression.</dd><dt>Inputs</dt><dd>SYS: Product / system requirement; SUB: Software / hardware / UI / labelling requirement; ARCH: Architecture and components; DESIGN: Detailed design; CTRL: Risk control; CODE: Implementation and build; TEST: Verification plan / test case; CHANGE: Change and impact work; LINK: Trace relationship</dd><dt>Outputs</dt><dd>TEST: Verification plan / test case; RUN: Verification execution and results; DEFECT: Anomaly / defect; LINK: Trace relationship; REVIEW: Check, finding, and human decision</dd></dl><h3>Tasks</h3><ol><li>Plan unit tests against detailed design, integration tests against components/interfaces, subsystem tests against allocated requirements, and system tests against system requirements.</li><li>Record test identity, plan version, acceptance criteria, configuration, and traced items.</li><li>Execute against an exact build and retain raw results and attachments.</li><li>Review results, record anomalies, and determine relevant regression work.</li></ol><h3>Decision</h3><p>The assigned reviewer disposes of each execution and its applicability. A passing run alone does not approve a release.</p><h3>Handoff</h3><p>J05 reviews control evidence; J08 references the verified configuration; J11 consumes applicable results and dispositions.</p><h3>When something changes</h3><p>A changed test, requirement, build, environment, or failed execution prompts freshness, regression, and impact review.</p><h3>Inner loop</h3><p>Check test schema, criteria, configuration, raw-result integrity, and local failures.</p><h3>Outer loop</h3><p>Independently inspect requirement/control coverage, missing tests, stale runs, and consistency across levels.</p><h3>Feedback to the meta-loop</h3><p>Capture verification failures, missing coverage, unreliable checks, and incorrect execution associations.</p><h3>Friction hypothesis</h3><p>A test result may be available without a reliable link to the requirement and release version.</p><h3>Measure</h3><p>Coverage gaps, stale evidence, result-review effort, and missed required regression.</p></div></details>
+<details id="j08" class="job"><summary><span class="jid">J08</span> Validate user needs and support applicable product claims</summary><div class="job-body"><dl><dt>Actor</dt><dd>Validation, usability, or clinical lead with assigned reviewers</dd><dt>Trigger</dt><dd>A product version is evaluated, a need/claim changes, or new study evidence arrives.</dd><dt>Inputs</dt><dd>NEED: User need; SCOPE: Product scope and planning basis; USE: Use and usability evidence; CLAIM: Product / clinical claim; VP: Validation plan / protocol; CODE: Implementation and build; RUN: Verification execution and results; ML: Dataset and model evidence, if applicable; LINK: Trace relationship</dd><dt>Outputs</dt><dd>VP: Validation plan / protocol; VR: Validation and clinical results; CLAIM: Product / clinical claim; LINK: Trace relationship; REVIEW: Check, finding, and human decision</dd></dl><h3>Tasks</h3><ol><li>Define representative needs, populations, scenarios, critical tasks, and applicable claims.</li><li>Specify criteria and the exact evaluation configuration.</li><li>Record results per need/claim, limitations, and unresolved gaps.</li><li>Review conclusions and route failures back to needs, design, risk, or evidence collection.</li></ol><h3>Decision</h3><p>Assigned reviewers assess whether the evidence supports the specific need or claim. Verification success does not establish validation.</p><h3>Handoff</h3><p>J05 uses relevant results for risk decisions; J11/J12 use reviewed conclusions and limitations.</p><h3>When something changes</h3><p>A changed need, claim, population, interface, model, or evaluated configuration prompts validation-scope review.</p><h3>Inner loop</h3><p>Check protocol/result association, criteria, population, and configuration references.</p><h3>Outer loop</h3><p>Challenge representativeness, uncovered needs/critical tasks, claim support, and interpretation of failures.</p><h3>Feedback to the meta-loop</h3><p>Capture validation failures, unsupported claims, study corrections, and repeated evidence gaps.</p><h3>Friction hypothesis</h3><p>Validation conclusions may be stored as reports with weak links to individual needs.</p><h3>Measure</h3><p>Effort to establish per-need/claim support and unresolved validation gaps.</p></div></details>
+<details id="j09" class="job"><summary><span class="jid">J09</span> Determine and resolve the consequences of a change</summary><div class="job-body"><dl><dt>Actor</dt><dd>Change author and reviewers from affected disciplines</dd><dt>Trigger</dt><dd>A significant source, requirement, design, code, risk, test, label, or relationship changes.</dd><dt>Inputs</dt><dd>SRC: Source revisions; CHANGE: Change and impact work; BASE: Reviewed baseline; NEED: User need; SYS: Product / system requirement; SUB: Software / hardware / UI / labelling requirement; ARCH: Architecture and components; CODE: Implementation and build; HAZ: Hazard and risk analysis; CTRL: Risk control; TEST: Verification plan / test case; RUN: Verification execution and results; VR: Validation and clinical results; LABEL: Labelling and instructions for use; LINK: Trace relationship</dd><dt>Outputs</dt><dd>CHANGE: Change and impact work; LINK: Trace relationship; REVIEW: Check, finding, and human decision; WORK: Implementation work item</dd></dl><h3>Tasks</h3><ol><li>Identify the old state, proposed state, reason, and change scope.</li><li>Inspect known links and independently look for missing relationships or consequences.</li><li>Assign updates, relinking, retesting, and reviews to owners.</li><li>Resolve or explicitly disposition findings before advancing the changed records.</li></ol><h3>Decision</h3><p>Affected reviewers decide which impacts are real and what follow-up is required; the author does not approve the agent&#x27;s conclusions by default.</p><h3>Handoff</h3><p>J02 through J08 and J12 receive named follow-up work; J10 receives the reviewed candidate state.</p><h3>When something changes</h3><p>A candidate edit or new external revision makes version-bound checks and decisions subject to freshness review.</p><h3>Inner loop</h3><p>Check the proposed change and its known direct relationships.</p><h3>Outer loop</h3><p>Independently interrogate impacted requirements, hazards, controls, tests, labels, configuration, and potentially absent links.</p><h3>Feedback to the meta-loop</h3><p>Capture missed impacts, false alarms, reviewer additions, and manually redirected analysis.</p><h3>Friction hypothesis</h3><p>People may rely on memory to identify impacts across disconnected records.</p><h3>Measure</h3><p>Impact-review effort, missed consequential impacts, and unhelpful findings.</p></div></details>
+<details id="j10" class="job"><summary><span class="jid">J10</span> Establish a coherent reviewed baseline</summary><div class="job-body"><dl><dt>Actor</dt><dd>Design reviewers and designated baseline authority</dd><dt>Trigger</dt><dd>A change or review package has a candidate evidence state ready for a decision.</dd><dt>Inputs</dt><dd>CHANGE: Change and impact work; REVIEW: Check, finding, and human decision; NEED: User need; SYS: Product / system requirement; SUB: Software / hardware / UI / labelling requirement; ARCH: Architecture and components; DESIGN: Detailed design; HAZ: Hazard and risk analysis; CTRL: Risk control; USE: Use and usability evidence; TEST: Verification plan / test case; ML: Dataset and model evidence, if applicable; CLAIM: Product / clinical claim; LABEL: Labelling and instructions for use; LINK: Trace relationship</dd><dt>Outputs</dt><dd>BASE: Reviewed baseline; REVIEW: Check, finding, and human decision</dd></dl><h3>Tasks</h3><ol><li>Select exact evidence and relationship versions for the proposed scope.</li><li>Check consistency, completeness, current review decisions, and unresolved issues.</li><li>Return work for revision or explicitly disposition it.</li><li>Record the baseline decision and retain the previous baseline.</li></ol><h3>Decision</h3><p>The designated authority accepts the named evidence state. Baseline acceptance and release approval remain separate.</p><h3>Handoff</h3><p>J12 renders controlled views; J11 references the baseline in release/transfer work; J09 uses it as the comparison state.</p><h3>When something changes</h3><p>New candidate versions require relevant checks and reviews to run again against that state.</p><h3>Inner loop</h3><p>Check membership, IDs, version freshness, and known consistency rules.</p><h3>Outer loop</h3><p>Independently inspect package-wide consistency and whether unresolved work changes the decision.</p><h3>Feedback to the meta-loop</h3><p>Capture returned packages, stale decisions, and repeated coherence findings.</p><h3>Friction hypothesis</h3><p>Different documents may describe different versions of the product.</p><h3>Measure</h3><p>Baseline-review effort and unresolved or recurring configuration inconsistencies.</p></div></details>
+<details id="j11" class="job"><summary><span class="jid">J11</span> Establish release or transfer readiness and record the decision</summary><div class="job-body"><dl><dt>Actor</dt><dd>QA and designated release/transfer owner</dd><dt>Trigger</dt><dd>A named baseline and implementation version are proposed for release or transfer.</dd><dt>Inputs</dt><dd>BASE: Reviewed baseline; CODE: Implementation and build; RUN: Verification execution and results; VR: Validation and clinical results; RISK: Residual-risk decision; LABEL: Labelling and instructions for use; DEFECT: Anomaly / defect; DOC: Document snapshot / package; REVIEW: Check, finding, and human decision</dd><dt>Outputs</dt><dd>REL: Release / transfer record; REVIEW: Check, finding, and human decision</dd></dl><h3>Tasks</h3><ol><li>Assemble applicable current verification, validation, risk, labels, anomalies, and output evidence.</li><li>Check that the evidence applies to the same proposed product/build state.</li><li>Resolve readiness findings and obtain the required distinct decisions.</li><li>Record release/transfer scope and retain the exact evidence references.</li></ol><h3>Decision</h3><p>The designated release/transfer authority records the final decision according to the chosen process.</p><h3>Handoff</h3><p>Operations or the receiving team uses the release record; J13 monitors later changes and feedback.</p><h3>When something changes</h3><p>Changed supporting evidence requires readiness and decision freshness review; historical release evidence stays identifiable.</p><h3>Inner loop</h3><p>Check required records, file integrity, configuration, and decision freshness.</p><h3>Outer loop</h3><p>Inspect cross-package coverage, residual risks, validation limitations, open anomalies, and configuration consistency.</p><h3>Feedback to the meta-loop</h3><p>Capture readiness blockers, missing support, and recurring release-package rework.</p><h3>Friction hypothesis</h3><p>People may manually reconcile test reports, code versions, labels, and approval documents.</p><h3>Measure</h3><p>Assembly/review effort and late discoveries of missing or mismatched evidence.</p></div></details>
+<details id="j12" class="job"><summary><span class="jid">J12</span> Maintain labelling, produce document views, and answer evidence questions</summary><div class="job-body"><dl><dt>Actor</dt><dd>Evidence or labelling author, reviewer, or QA/RA reader</dd><dt>Trigger</dt><dd>A label, specification, report, trace matrix, design-review package, or evidence answer is needed.</dd><dt>Inputs</dt><dd>BASE: Reviewed baseline; NEED: User need; SYS: Product / system requirement; SUB: Software / hardware / UI / labelling requirement; ARCH: Architecture and components; HAZ: Hazard and risk analysis; CTRL: Risk control; RUN: Verification execution and results; VR: Validation and clinical results; RISK: Residual-risk decision; CLAIM: Product / clinical claim; LABEL: Labelling and instructions for use; LINK: Trace relationship; REVIEW: Check, finding, and human decision</dd><dt>Outputs</dt><dd>LABEL: Labelling and instructions for use; DOC: Document snapshot / package; REVIEW: Check, finding, and human decision</dd></dl><h3>Tasks</h3><ol><li>Author or revise controlled labelling and instructions for use from requirements, supported claims, limitations, and risk disclosures.</li><li>Select the relevant baseline and evidence scope.</li><li>Render or assemble a specification, report, matrix, or package using a named template.</li><li>Preserve exact source membership and review the output.</li><li>Answer a traceability question with references to the underlying records.</li></ol><h3>Decision</h3><p>The assigned document/package reviewer accepts the projection and completeness; rendering does not create new product truth.</p><h3>Handoff</h3><p>Reviewers, release owners, clients, or other readers receive a version-identifiable output.</p><h3>When something changes</h3><p>Changed baseline or template creates a new output and an explainable difference; edits to exported content return through controlled review.</p><h3>Inner loop</h3><p>Check membership, layout, references, template version, and required sections.</p><h3>Outer loop</h3><p>Inspect completeness and consistency with the underlying evidence, including meaningful omissions.</p><h3>Feedback to the meta-loop</h3><p>Capture recurring document edits, template omissions, and misleading evidence presentation.</p><h3>Friction hypothesis</h3><p>Manual copying and reconciliation may consume time and introduce divergence.</p><h3>Measure</h3><p>Output-preparation effort, repeated edits, and time to answer a cited evidence question.</p></div></details>
+<details id="j13" class="job"><summary><span class="jid">J13</span> Detect drift and route ongoing observations into review</summary><div class="job-body"><dl><dt>Actor</dt><dd>Source and record owners with affected reviewers</dd><dt>Trigger</dt><dd>A source revision, ticket, commit, test run, defect, or post-release observation arrives.</dd><dt>Inputs</dt><dd>SRC: Source revisions; WORK: Implementation work item; CODE: Implementation and build; RUN: Verification execution and results; DEFECT: Anomaly / defect; REL: Release / transfer record; BASE: Reviewed baseline</dd><dt>Outputs</dt><dd>SRC: Source revisions; CHANGE: Change and impact work; REVIEW: Check, finding, and human decision</dd></dl><h3>Tasks</h3><ol><li>Capture the observation at an exact external revision.</li><li>Compare it with the version previously used by evidence.</li><li>Distinguish duplicates, irrelevant updates, and meaningful changes.</li><li>Route meaningful drift into J09 with the relevant records and owners.</li></ol><h3>Decision</h3><p>The responsible person dispositions drift; external activity does not automatically rewrite controlled evidence.</p><h3>Handoff</h3><p>J09 handles product consequences; J15 receives capture and routing failures.</p><h3>When something changes</h3><p>Repeated capture of the same revision should converge; lost or failed capture remains visible for recovery.</p><h3>Inner loop</h3><p>Check source identity, revision ordering, duplicates, and capture completeness.</p><h3>Outer loop</h3><p>Inspect whether material changes were missed or incorrectly associated with controlled records.</p><h3>Feedback to the meta-loop</h3><p>Capture missed/stale observations, duplicate work, routing errors, and recurring drift.</p><h3>Friction hypothesis</h3><p>Evidence may fall behind work in developer tools, particularly as AI accelerates changes.</p><h3>Measure</h3><p>Time from observation to disposition, missed material drift, and duplicate review work.</p></div></details>
+<details id="j14" class="job"><summary><span class="jid">J14</span> Maintain dataset and model evidence where product scope requires it</summary><div class="job-body"><dl><dt>Actor</dt><dd>ML lead with test, risk, and domain reviewers</dd><dt>Trigger</dt><dd>A dataset, model, training process, performance criterion, or permitted change scope changes.</dd><dt>Inputs</dt><dd>SCOPE: Product scope and planning basis; SRC: Source revisions; SYS: Product / system requirement; SUB: Software / hardware / UI / labelling requirement; HAZ: Hazard and risk analysis; ML: Dataset and model evidence, if applicable; TEST: Verification plan / test case; RUN: Verification execution and results; VR: Validation and clinical results</dd><dt>Outputs</dt><dd>ML: Dataset and model evidence, if applicable; REVIEW: Check, finding, and human decision</dd></dl><h3>Tasks</h3><ol><li>Record dataset origins, versions, partitions, and test-set independence/lock.</li><li>Record model/training configuration and the exact artifact used in a build.</li><li>Associate performance and subgroup evidence with the intended use and predefined criteria.</li><li>Review model/data changes alongside requirements, risk, verification, and validation.</li></ol><h3>Decision</h3><p>Named ML/domain reviewers decide the evidence interpretation; risk and release decisions retain their own owners.</p><h3>Handoff</h3><p>J04 uses the model artifact; J05, J07, and J08 use its risk and performance evidence; J11 uses the exact released configuration.</p><h3>When something changes</h3><p>Changed model/data versions or distributions trigger performance, risk, traceability, and evaluation-scope review.</p><h3>Inner loop</h3><p>Check version identity, split integrity, criteria, and result associations.</p><h3>Outer loop</h3><p>Inspect population coverage, leakage/independence assumptions, subgroup limitations, and model/build consistency.</p><h3>Feedback to the meta-loop</h3><p>Capture provenance gaps, incorrect version associations, performance failures, and review corrections.</p><h3>Friction hypothesis</h3><p>Model, dataset, build, and performance records may be maintained separately.</p><h3>Measure</h3><p>Effort to reconstruct the released model/data evidence and unresolved version/provenance gaps.</p></div></details>
+<details id="j15" class="job"><summary><span class="jid">J15</span> Improve the working system from corrections and failures</summary><div class="job-body"><dl><dt>Actor</dt><dd>BBT process owner with project engineers and reviewers</dd><dt>Trigger</dt><dd>Feedback accumulates or an important failure warrants immediate investigation.</dd><dt>Inputs</dt><dd>FB: Correction and failure feedback; REVIEW: Check, finding, and human decision; RUN: Verification execution and results; DEFECT: Anomaly / defect; CHANGE: Change and impact work; METHOD: Working methods and evaluation evidence</dd><dt>Outputs</dt><dd>FB: Correction and failure feedback; METHOD: Working methods and evaluation evidence; REVIEW: Check, finding, and human decision</dd></dl><h3>Tasks</h3><ol><li>Retain human edits, rejections, QA/risk comments, missing traces, failures, audit observations, document rework, and agent redirection.</li><li>Investigate why patterns recur and distinguish product issues from method or checking failures.</li><li>Propose a versioned change to prompts, rules, context selection, tools, or workflows.</li><li>Evaluate against relevant failure examples and correct cases, review adoption, and monitor subsequent outcomes.</li></ol><h3>Decision</h3><p>The method/process owner adopts a reviewed method version. This does not retrospectively approve product evidence.</p><h3>Handoff</h3><p>J01 through J14 use the adopted methods; new project feedback returns to this job.</p><h3>When something changes</h3><p>Method changes retain before/after versions and evaluation outcomes; regression or new failures prompt another meta-loop review.</p><h3>Inner loop</h3><p>Check feedback identity, source versions, proposed configuration, and evaluation execution.</p><h3>Outer loop</h3><p>Independently review whether the proposed method change addresses the cause and introduces new omissions or false alarms.</p><h3>Feedback to the meta-loop</h3><p>This is the meta-loop. Regulatory/FDA feedback is one external input; internal project corrections can supply signals from week one.</p><h3>Friction hypothesis</h3><p>Repeated corrections may stay in individual reviewers&#x27; heads and never improve the process.</p><h3>Measure</h3><p>Recurring failure rate, correction effort, and regression outcomes after a method change.</p></div></details>
+<details id="j16" class="job"><summary><span class="jid">J16</span> Agree product scope, lifecycle methods, and evidence responsibilities</summary><div class="job-body"><dl><dt>Actor</dt><dd>Product/project owner with engineering, QA, and relevant domain leads</dd><dt>Trigger</dt><dd>An engagement starts, the toolset changes, or intended use and project scope materially change.</dd><dt>Inputs</dt><dd>SRC: Source revisions; SCOPE: Product scope and planning basis; METHOD: Working methods and evaluation evidence; REVIEW: Check, finding, and human decision</dd><dt>Outputs</dt><dd>SCOPE: Product scope and planning basis; REVIEW: Check, finding, and human decision</dd></dl><h3>Tasks</h3><ol><li>Agree intended use, users/population, product boundaries, and the evidence activities applicable to this scope.</li><li>Agree lifecycle methods, acceptance criteria, review cadence, and responsibilities.</li><li>Choose the authoritative home and granularity of each controlled record, including coexistence and handover arrangements.</li><li>Record how human and agent work enter the process and who can make each decision.</li></ol><h3>Decision</h3><p>The designated engagement owners agree the versioned scope, methods, record ownership, and review responsibilities.</p><h3>Handoff</h3><p>J01–J14 use the agreed scope and criteria; J15 uses the agreed method ownership and evaluation approach.</p><h3>When something changes</h3><p>Scope, home, method, or responsibility changes prompt review of affected workflows and historical-record access.</p><h3>Inner loop</h3><p>Check that the proposed plan names record types, owners, criteria, methods, and unresolved decisions.</p><h3>Outer loop</h3><p>Independently inspect whether the planned activities and responsibilities cover the selected product scope and normal developer work.</p><h3>Feedback to the meta-loop</h3><p>Capture missing ownership, unsuitable review cadence, migration problems, and avoidable process overhead.</p><h3>Friction hypothesis</h3><p>Tool selection may move faster than decisions about record ownership and practical review responsibilities.</p><h3>Measure</h3><p>Unassigned decisions, duplicate authoritative records, and effort spent reconciling process or ownership ambiguity.</p></div></details>
+</section>
+<footer>Source basis: user discussion and supplied design-control draw.io; local product architecture, authority model, and data model. Roles, pain points, evidence scope, and future homes remain provisional. The detailed <a href="bluebridge-jobs-map.md">catalogue and connection register</a>, <a href="bluebridge-jobs-map.drawio">editable draw.io</a>, and <a href="bluebridge-feature-map.html">supporting feature map</a> accompany this map.</footer>
+</main><script>
+function openJob(){const id=location.hash.slice(1);const element=document.getElementById(id);if(element&&element.classList.contains('job')){element.open=true;requestAnimationFrame(()=>element.scrollIntoView({block:'start'}));}}
+window.addEventListener('hashchange',openJob);openJob();
+</script></body></html>

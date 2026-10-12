@@ -1,0 +1,805 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BlueBridge feature map and useful delivery packages</title><style>
+*{box-sizing:border-box}body{margin:0;background:#fff;color:#243746;font:16px/1.55 system-ui,Arial,sans-serif}main{max-width:1540px;margin:auto;padding:28px 30px 60px}h1{font-size:28px;margin:0 0 8px}h2{font-size:23px;margin:32px 0 10px}h3{font-size:16px;margin:18px 0 4px}p{margin:0 0 12px;max-width:1150px}a{color:#315d7e}.status,.meta{color:#63717a;font-size:14px}.lead{padding:16px 20px;background:#f6f8fa;border-left:3px solid #41637c;margin:22px 0}.diagram{overflow:auto}.diagram svg{display:block;width:100%;min-width:1000px;height:auto}details{border-bottom:1px solid #d8dfe4;scroll-margin-top:20px}summary{padding:14px 4px;cursor:pointer}.package>summary{font-weight:650}.body{padding:0 28px 20px;max-width:1160px}.id{display:inline-block;min-width:78px;color:#41637c;font-weight:650}details:target{background:#f6f8fa}li{padding-bottom:5px}.first-slice{padding-left:22px}footer{margin-top:32px;border-top:1px solid #d8dfe4;padding-top:16px;color:#63717a;font-size:14px}@media(max-width:650px){main{padding:20px 16px}h1{font-size:24px}.body{padding-left:12px}.lead{padding:12px}}@media print{details{break-inside:avoid}details .body{display:block}summary{list-style:none}.diagram svg{min-width:0}}
+</style></head><body><main><h1>BlueBridge feature map and useful delivery packages</h1><p class="status">First feature-mapping proposal · 9 October 2026 · responsibilities and record homes remain provisional</p>
+<div class="lead"><p>The user-reviewed job list is the working basis. Each feature has a minimum version, later increments, prerequisites, and an acceptance example.</p><p>A prerequisite must be <strong>available</strong>. An existing tool or manual process can supply it while internal capability grows. Supplier coverage and delivery dates have not been established.</p><p>The <a href="bluebridge-estimation.md">first P0/P1/P2 estimation pass</a> assumes a fresh build. The demo supplies design and rough timing references, with no code-reuse saving.</p></div>
+<h2>Recommended first useful slice</h2><p>One transcript or text source becomes reviewed needs and requirements, with source support, confirmed links, saved target records, and correction feedback.</p><ol class="first-slice"><li>Capture the source and resolve material questions.</li><li>Draft cited needs, check/revise, independently inspect, and review them.</li><li>Derive requirements from reviewed needs and relevant risk/task context.</li><li>Check/revise and independently inspect the requirements, then record human decisions and confirmed links.</li><li>Save accepted outputs to the chosen evidence home and retain corrections.</li></ol>
+<p>Manual context, independent human checking, and manual transfer can start this workflow. Live connectors can arrive separately. Change review can start first if existing records and traces make that the more useful workflow.</p>
+<h2>Package outcomes and sequencing</h2>
+<div class="diagram"><svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1120" viewBox="0 0 1800 1120" role="img" aria-labelledby="feature-roadmap-title feature-roadmap-desc">
+<title id="feature-roadmap-title">Capability availability and useful delivery packages</title>
+<desc id="feature-roadmap-desc">A prerequisite can come from internal work, a bought tool, or a manual process · package numbers do not impose one serial build</desc>
+<defs><marker id="arrow-feature-roadmap" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#667683"/></marker></defs>
+<rect width="1800" height="1120" fill="white"/>
+<text x="35" y="40" font-family="Arial,sans-serif" font-size="25" font-weight="bold" fill="#223746">Capability availability and useful delivery packages</text>
+<text x="35" y="70" font-family="Arial,sans-serif" font-size="16" fill="#52616b">A prerequisite can come from internal work, a bought tool, or a manual process · package numbers do not impose one serial build</text>
+<polyline points="270,245 270,355" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-feature-roadmap)"/>
+<polyline points="510,185 900,185 900,355" fill="none" stroke="#667683" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#arrow-feature-roadmap)"/>
+<polyline points="510,155 1520,155 1520,355" fill="none" stroke="#667683" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#arrow-feature-roadmap)"/>
+<polyline points="1145,380 1205,380 1205,285 1400,285 1400,355" fill="none" stroke="#667683" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#arrow-feature-roadmap)"/>
+<polyline points="1520,480 1520,680" fill="none" stroke="#667683" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#arrow-feature-roadmap)"/>
+<rect x="35" y="130" width="475" height="115" rx="5" fill="#faf3e6" stroke="#977642"/>
+<text x="47" y="155" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">P0 · Agree conventions and exchange</text>
+<text x="47" y="182" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">IDs / versions / link meanings / human decisions</text>
+<text x="47" y="202" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Processing contracts and accepted target references</text>
+<rect x="35" y="355" width="475" height="125" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="47" y="380" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">P1 · Source → reviewed evidence</text>
+<text x="47" y="407" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Capture → clarify → draft → check → independent review</text>
+<text x="47" y="427" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Human decision, accepted records/links, feedback</text>
+<rect x="655" y="355" width="490" height="125" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="667" y="380" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">P2 · Trace and significant-change review</text>
+<text x="667" y="407" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Existing records and links can provide the starting point</text>
+<text x="667" y="427" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Known impacts, independent findings, owned follow-up</text>
+<rect x="1265" y="355" width="500" height="125" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="1277" y="380" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">P3 · Implementation and verification</text>
+<text x="1277" y="407" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Exact design / task / commit / build / test references</text>
+<text x="1277" y="427" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Manual associations first; PR-path checks as an increment</text>
+<rect x="1265" y="680" width="500" height="125" rx="5" fill="#faf3e6" stroke="#977642"/>
+<text x="1277" y="705" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">P4 · Baseline → selected outputs</text>
+<text x="1277" y="732" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Exact reviewed state, identifiable documents/packages</text>
+<text x="1277" y="752" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Release support adds scope-specific prerequisites</text>
+<rect x="35" y="680" width="630" height="115" rx="5" fill="#f4f4f2" stroke="#71776f"/>
+<text x="47" y="705" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">P-IN · Independent adapter increments</text>
+<text x="47" y="732" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Slack · meeting platform · tracker · repository · CI</text>
+<text x="47" y="752" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Each adapter has its own source and downstream prerequisites</text>
+<rect x="715" y="680" width="480" height="145" rx="5" fill="#f4f4f2" stroke="#71776f"/>
+<text x="727" y="705" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Domain branches · provide evidence where</text>
+<text x="727" y="726" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">applicable</text>
+<text x="727" y="753" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">P-R risk · P-U usability · P-V validation · P-M model/data</text>
+<text x="727" y="773" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Evidence can be supplied externally before native modules</text>
+<text x="727" y="793" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">exist</text>
+<rect x="35" y="930" width="1730" height="105" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="47" y="955" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">P-L · Feedback and method improvement begin with the first workflow</text>
+<text x="47" y="982" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Capture human corrections and failures → investigate causes → evaluate and adopt method versions</text>
+<text x="47" y="1002" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Manual review/evaluation can start immediately. Broader automated pattern analysis can follow.</text>
+<rect x="168.15" y="286" width="203.7" height="20" fill="white"/>
+<text x="270" y="300" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">minimum contracts available</text>
+<rect x="747.8" y="196" width="324.4" height="20" fill="white"/>
+<text x="910" y="210" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">minimum contracts + existing records / links</text>
+<rect x="1071.5" y="128" width="367.0" height="20" fill="white"/>
+<text x="1255" y="142" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">minimum contracts + implementation / test evidence</text>
+<rect x="1215.25" y="259" width="189.5" height="20" fill="white"/>
+<text x="1310" y="273" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">for developer-path checks</text>
+<rect x="1357.8" y="574" width="324.4" height="20" fill="white"/>
+<text x="1520" y="588" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">implementation / tests for release increment</text>
+<text x="35" y="545" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Baseline-to-document work can start from an external baseline</text>
+<text x="35" y="571" font-family="Arial,sans-serif" font-size="15" fill="#52616b">P4&#x27;s document minimum does not require P1, P2, or automated P3 integrations. The release increment needs the applicable current implementation,</text>
+<text x="35" y="591" font-family="Arial,sans-serif" font-size="15" fill="#52616b">verification, validation, risk, labels, and decisions.</text>
+<text x="35" y="1065" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Meaning of connections</text>
+<text x="35" y="1091" font-family="Arial,sans-serif" font-size="15" fill="#52616b">Solid = minimum prerequisite for the named workflow. Dashed = another available input path or an increment-specific prerequisite. Domain evidence and feedback apply across packages; boxes do not establish supplier coverage or</text>
+<text x="35" y="1111" font-family="Arial,sans-serif" font-size="15" fill="#52616b">implementation status.</text>
+</svg></div>
+<details class="package" id="p0"><summary>P0 · Agree conventions and a usable exchange path</summary><div class="body"><p>The first workflow has agreed record identities, homes, review responsibilities, processing contracts, and a way to transfer accepted outputs.</p>
+<h3>Features grouped here</h3><p><a href="#cap-01">CAP-01</a>, <a href="#cap-02">CAP-02</a>, <a href="#cap-03">CAP-03</a>, <a href="#cap-04">CAP-04</a>, <a href="#cap-05">CAP-05</a>, <a href="#cap-38">CAP-38</a></p>
+<h3>Minimum outcome</h3><p><a href="#cap-01">CAP-01</a>, <a href="#cap-02">CAP-02</a>, <a href="#cap-03">CAP-03</a>, <a href="#cap-04">CAP-04</a>, <a href="#cap-05">CAP-05</a>, <a href="#cap-38">CAP-38</a></p>
+<h3>Completion gate</h3><p>One sample source, candidate, decision, and accepted target record can be followed using exact IDs and versions, with one authoritative home per controlled record.</p>
+<h3>Sequencing</h3><p>Shared capabilities must be available at their minimum level; they do not all require new internal software.</p>
+<h3>Interim coverage</h3><p>Existing document agreements and selected bought-tool record/review functions can provide these capabilities. Internal D1 storage is an option.</p>
+<h3>Later increments</h3><p>Broader record schemas, managed policy/role configuration, and API exchange.</p>
+<h3>Effort drivers; dates remain open</h3><p>Main drivers: ownership decisions, usable existing data, destination formats, and internal-versus-external storage choice.</p>
+<p><a href="bluebridge-estimation.md">Fresh-build effort scenarios for the narrow P0/P1/P2 pilot</a></p>
+</div></details>
+<details class="package" id="p1"><summary>P1 · Turn one source into reviewed needs and requirements</summary><div class="body"><p>A person captures a transcript, resolves questions, obtains cited candidate needs/requirements, reviews them and their links, and saves accepted outputs to the chosen home.</p>
+<h3>Features grouped here</h3><p><a href="#cap-06">CAP-06</a>, <a href="#cap-07">CAP-07</a>, <a href="#cap-10">CAP-10</a>, <a href="#cap-11">CAP-11</a>, <a href="#cap-12">CAP-12</a>, <a href="#cap-13">CAP-13</a>, <a href="#cap-14">CAP-14</a>, <a href="#cap-18">CAP-18</a></p>
+<h3>Minimum outcome</h3><p><a href="#cap-06">CAP-06</a>, <a href="#cap-10">CAP-10</a>, <a href="#cap-11">CAP-11</a>, <a href="#cap-12">CAP-12</a>, <a href="#cap-13">CAP-13</a>, <a href="#cap-14">CAP-14</a>, <a href="#cap-18">CAP-18</a>, <a href="#cap-35">CAP-35</a>, <a href="#cap-38">CAP-38</a></p>
+<h3>Completion gate</h3><p>Complete the flow on a representative source; an independent check finds a deliberately unsupported statement; revisions receive fresh checks; accepted target IDs, citations, decisions, and correction reasons are retrievable.</p>
+<h3>Sequencing</h3><p>Drafting, checking, independent scrutiny, human acceptance, usable links, persistence/exchange, and feedback are required together for this promised outcome. AI extraction by itself is a smaller assistance feature.</p>
+<h3>Interim coverage</h3><p>Manual risk/task context, existing or bought-tool evidence/review, and current test/validation/release processes cover the rest of the lifecycle.</p>
+<h3>Later increments</h3><p>CAP-07 document formats are optional; live Slack/meeting capture can be added independently through P-IN.</p>
+<h3>Effort drivers; dates remain open</h3><p>Main drivers: fresh application/storage setup, prompt quality, citation reliability, reviewer workflow, and target-home exchange.</p>
+<p><a href="bluebridge-estimation.md">Fresh-build effort scenarios for the narrow P0/P1/P2 pilot</a></p>
+</div></details>
+<details class="package" id="p2"><summary>P2 · Inspect traces and coordinate a significant change</summary><div class="body"><p>A reviewer sees known traces, assesses change consequences, independently inspects wider evidence, and assigns update/relink/retest work.</p>
+<h3>Features grouped here</h3><p><a href="#cap-15">CAP-15</a>, <a href="#cap-16">CAP-16</a>, <a href="#cap-17">CAP-17</a>, <a href="#cap-19">CAP-19</a>, <a href="#cap-20">CAP-20</a></p>
+<h3>Minimum outcome</h3><p><a href="#cap-15">CAP-15</a>, <a href="#cap-16">CAP-16</a>, <a href="#cap-17">CAP-17</a>, <a href="#cap-18">CAP-18</a>, <a href="#cap-14">CAP-14</a>, <a href="#cap-35">CAP-35</a></p>
+<h3>Completion gate</h3><p>The threshold-change scenario exposes affected requirements, controls, tests, and labels; each finding has a version, reason, owner, and disposition. Missing context is visible.</p>
+<h3>Sequencing</h3><p>This package can precede P1 if existing records and links supply its inputs. P1 transcript ingestion is not a hard prerequisite.</p>
+<h3>Interim coverage</h3><p>An imported external relationship set and manual review can supply initial coverage. Existing owners/tools continue to implement and execute follow-up work.</p>
+<h3>Later increments</h3><p>CAP-19 unlinked suggestions and CAP-20 drift automation are separate increments. Initial review can be manually triggered.</p>
+<h3>Effort drivers; dates remain open</h3><p>Main drivers: existing graph quality, missing-link prevalence, impact-review breadth, evaluation cases, and integration with follow-up work.</p>
+<p><a href="bluebridge-estimation.md">Fresh-build effort scenarios for the narrow P0/P1/P2 pilot</a></p>
+</div></details>
+<details class="package" id="p3"><summary>P3 · Connect implementation, verification, and normal developer work</summary><div class="body"><p>A team connects requirements/design to exact work/code/build references and reviewed test plans/executions at the relevant V-model levels.</p>
+<h3>Features grouped here</h3><p><a href="#cap-21">CAP-21</a>, <a href="#cap-25">CAP-25</a>, <a href="#cap-26">CAP-26</a>, <a href="#cap-39">CAP-39</a></p>
+<h3>Minimum outcome</h3><p><a href="#cap-21">CAP-21</a>, <a href="#cap-26">CAP-26</a></p>
+<h3>Completion gate</h3><p>A reviewer can follow a requirement to its design/build/test execution and disposition; failed and stale evidence remains distinguishable from current support.</p>
+<h3>Sequencing</h3><p>The minimum does not require every connector or a full automated release gate. CAP-25&#x27;s developer-check workflow additionally needs change work and independent checking.</p>
+<h3>Interim coverage</h3><p>Repository, CI, and work-tracker systems retain their facts. Manual references/imports and existing reviewers can start this workflow.</p>
+<h3>Later increments</h3><p>CAP-25 adds checks in the PR/work path; CAP-39 supports unattended operations; selected P-IN adapters can arrive separately.</p>
+<h3>Effort drivers; dates remain open</h3><p>Main drivers: reference/mapping quality, report formats, execution identity, workflow permissions, and background-operation needs.</p>
+</div></details>
+<details class="package" id="p4"><summary>P4 · Review baselines and produce selected outputs</summary><div class="body"><p>A team reviews an exact evidence state and produces a version-identifiable specification/report/package. Release support is a further scoped workflow.</p>
+<h3>Features grouped here</h3><p><a href="#cap-30">CAP-30</a>, <a href="#cap-32">CAP-32</a>, <a href="#cap-33">CAP-33</a>, <a href="#cap-34">CAP-34</a></p>
+<h3>Minimum outcome</h3><p><a href="#cap-32">CAP-32</a>, <a href="#cap-33">CAP-33</a></p>
+<h3>Completion gate</h3><p>The output identifies baseline, template, and evidence versions; a changed baseline/template produces a new output and an explainable difference.</p>
+<h3>Sequencing</h3><p>The baseline-to-document minimum does not depend on internal transcript intake or all automated developer integrations.</p>
+<h3>Interim coverage</h3><p>Selected bought-tool baselines, documents, label records, and release processes can continue while internal output capabilities grow.</p>
+<h3>Later increments</h3><p>CAP-30 label authoring and CAP-34 release/transfer support have additional evidence prerequisites. Full release takeover is a separate handover decision.</p>
+<h3>Effort drivers; dates remain open</h3><p>Main drivers: required outputs, template governance, target formats, evidence freshness, and scope of release support.</p>
+</div></details>
+<details class="package" id="p-in"><summary>P-IN · Add selected source and engineering adapters</summary><div class="body"><p>Reduce manual capture for one selected source or engineering system using the common intake and identity contracts.</p>
+<h3>Features grouped here</h3><p><a href="#cap-08">CAP-08</a>, <a href="#cap-09">CAP-09</a>, <a href="#cap-22">CAP-22</a>, <a href="#cap-23">CAP-23</a>, <a href="#cap-24">CAP-24</a></p>
+<h3>Minimum outcome</h3><p>Choose one adapter; these increments ship independently.</p>
+<h3>Completion gate</h3><p>For each adapter, test capture, repeated capture, source revision/configuration mapping, failure visibility, and the relevant downstream review path.</p>
+<h3>Sequencing</h3><p>This is a grouping by shared integration work, not an all-or-nothing release package. There is no minimum bundle of all five adapters.</p>
+<h3>Interim coverage</h3><p>Manual upload, paste, references, and report bundles remain usable between adapter deliveries.</p>
+<h3>Later increments</h3><p>Choose Slack, meetings, tracker, repository, or CI independently according to actual friction and selected systems.</p>
+<h3>Effort drivers; dates remain open</h3><p>Main drivers: selected vendor APIs, permissions, field/report mappings, revision semantics, and unattended reliability.</p>
+</div></details>
+<details class="package" id="p-r"><summary>P-R · Extend risk records and control-evidence review</summary><div class="body"><p>Support the selected risk authoring/reference and control-evidence workflow.</p>
+<h3>Features grouped here</h3><p><a href="#cap-27">CAP-27</a></p>
+<h3>Minimum outcome</h3><p><a href="#cap-27">CAP-27</a></p>
+<h3>Completion gate</h3><p>A changed control identifies the related requirement/test evidence and risk decision to reconsider.</p>
+<h3>Sequencing</h3><p>Risk information may be required early even when native risk authoring is delivered later.</p>
+<h3>Interim coverage</h3><p>A bought tool or existing risk process can supply reviewed risk/control inputs from the first slice.</p>
+<h3>Later increments</h3><p>Domain forms and broader effectiveness/risk-change assistance.</p>
+<h3>Effort drivers; dates remain open</h3><p>Main drivers: product scope, existing risk data, analysis conventions, reviewers, and supporting evidence.</p>
+</div></details>
+<details class="package" id="p-u"><summary>P-U · Extend task, UI, and usability evidence</summary><div class="body"><p>Support the chosen task-to-UI-to-evaluation workflow.</p>
+<h3>Features grouped here</h3><p><a href="#cap-28">CAP-28</a></p>
+<h3>Minimum outcome</h3><p><a href="#cap-28">CAP-28</a></p>
+<h3>Completion gate</h3><p>A critical task links to the relevant UI requirement, use-related risk, and evaluation outcome.</p>
+<h3>Sequencing</h3><p>This branch is selected by product scope and source availability, not by completion of all other domain modules.</p>
+<h3>Interim coverage</h3><p>Existing design/study processes or a bought tool provide task and usability inputs meanwhile.</p>
+<h3>Later increments</h3><p>Dedicated formative/summative work and coverage assistance.</p>
+<h3>Effort drivers; dates remain open</h3><p>Main drivers: study/task granularity, critical-task coverage, data formats, and design-system references.</p>
+</div></details>
+<details class="package" id="p-v"><summary>P-V · Extend validation and claim evidence</summary><div class="body"><p>Support per-need/per-claim evaluation plans, results, limitations, and decisions.</p>
+<h3>Features grouped here</h3><p><a href="#cap-29">CAP-29</a></p>
+<h3>Minimum outcome</h3><p><a href="#cap-29">CAP-29</a></p>
+<h3>Completion gate</h3><p>A reviewer can explain the evidence basis and limitations of a need/claim for the evaluated product configuration.</p>
+<h3>Sequencing</h3><p>Validation evidence is required where applicable; native validation workflow is an optional ownership choice.</p>
+<h3>Interim coverage</h3><p>Existing validation/clinical processes or a bought tool continue to supply evidence and decisions.</p>
+<h3>Later increments</h3><p>More study types and appropriate usability/model context.</p>
+<h3>Effort drivers; dates remain open</h3><p>Main drivers: applicable claims/needs, study types, evidence quality, and domain review responsibilities.</p>
+</div></details>
+<details class="package" id="p-m"><summary>P-M · Extend model and dataset evidence where applicable</summary><div class="body"><p>Connect exact model/data versions with implementation, performance, risk, and evaluation evidence.</p>
+<h3>Features grouped here</h3><p><a href="#cap-31">CAP-31</a></p>
+<h3>Minimum outcome</h3><p><a href="#cap-31">CAP-31</a></p>
+<h3>Completion gate</h3><p>A build/model/performance version mismatch is visible with the affected evidence references.</p>
+<h3>Sequencing</h3><p>Conditional on product scope. A conventional software product need not build an ML module.</p>
+<h3>Interim coverage</h3><p>Selected model/dataset registries and current ML review practices retain artifact ownership.</p>
+<h3>Later increments</h3><p>Registry adapters and domain-specific integrity/performance checks.</p>
+<h3>Effort drivers; dates remain open</h3><p>Main drivers: registry/data access, versioning, provenance, dataset partitions, and evaluation criteria.</p>
+</div></details>
+<details class="package" id="p-l"><summary>P-L · Learn from corrections from the first workflow</summary><div class="body"><p>Capture corrections, investigate recurring causes, and adopt evaluated changes to working methods.</p>
+<h3>Features grouped here</h3><p><a href="#cap-35">CAP-35</a>, <a href="#cap-36">CAP-36</a>, <a href="#cap-37">CAP-37</a></p>
+<h3>Minimum outcome</h3><p><a href="#cap-35">CAP-35</a>, <a href="#cap-36">CAP-36</a>, <a href="#cap-37">CAP-37</a></p>
+<h3>Completion gate</h3><p>A real correction has source/output/method references and a reason; a proposed method change is evaluated against failure and correct cases before adoption.</p>
+<h3>Sequencing</h3><p>Start CAP-35 with P1 or the first delivered workflow. Periodic analysis and evaluation can grow independently; a single important failure can trigger CAP-37 without waiting for CAP-36 pattern summaries.</p>
+<h3>Interim coverage</h3><p>Manual feedback capture, a periodic human review, and an existing evaluation script/spreadsheet can supply the first meta-loop.</p>
+<h3>Later increments</h3><p>Assisted cross-project pattern analysis and monitored method rollout.</p>
+<h3>Effort drivers; dates remain open</h3><p>Main drivers: feedback quality, reviewer effort, representative examples, evaluation coverage, and adoption ownership.</p>
+</div></details>
+<h2>Features by job</h2><p>Open a job to see its supporting features and remaining responsibilities.</p>
+<details class="job" id="j01"><summary>J01 · Capture information with a usable source reference</summary><div class="body"><p><strong>Useful increment.</strong> P1 / selected P-IN adapter. Capture and citations for selected sources.</p><ul>
+<li><a href="#cap-02">CAP-02</a> Identify and retain exact record versions</li>
+<li><a href="#cap-05">CAP-05</a> Version processing instructions and retain run provenance</li>
+<li><a href="#cap-06">CAP-06</a> Capture source material manually with citations</li>
+<li><a href="#cap-07">CAP-07</a> Extract source text from documents</li>
+<li><a href="#cap-08">CAP-08</a> Capture selected Slack discussions</li>
+<li><a href="#cap-09">CAP-09</a> Capture meeting transcripts and associated notes</li>
+<li><a href="#cap-10">CAP-10</a> Ask and resolve clarification questions</li>
+<li><a href="#cap-20">CAP-20</a> Detect source and implementation drift</li>
+<li><a href="#cap-35">CAP-35</a> Capture corrections and failure feedback</li>
+<li><a href="#cap-38">CAP-38</a> Exchange records and preserve a handover path</li>
+<li><a href="#cap-39">CAP-39</a> Run background work with visible status and recovery</li>
+</ul><p><strong>Interim / remaining work.</strong> Manual capture or existing/bought source intake covers unconnected formats/systems.</p></div></details>
+<details class="job" id="j02"><summary>J02 · Agree the user need and its intended-use context</summary><div class="body"><p><strong>Useful increment.</strong> P1. Clarifications and reviewed need/claim candidates.</p><ul>
+<li><a href="#cap-02">CAP-02</a> Identify and retain exact record versions</li>
+<li><a href="#cap-04">CAP-04</a> Record human decisions and return work for revision</li>
+<li><a href="#cap-05">CAP-05</a> Version processing instructions and retain run provenance</li>
+<li><a href="#cap-10">CAP-10</a> Ask and resolve clarification questions</li>
+<li><a href="#cap-11">CAP-11</a> Draft needs and requirements from agreed evidence</li>
+<li><a href="#cap-12">CAP-12</a> Check and revise the worker&#x27;s draft</li>
+<li><a href="#cap-13">CAP-13</a> Find and assemble relevant existing evidence</li>
+<li><a href="#cap-18">CAP-18</a> Independently check a candidate or change</li>
+<li><a href="#cap-28">CAP-28</a> Support tasks, UI requirements, and usability evidence</li>
+<li><a href="#cap-29">CAP-29</a> Support validation and claim-evidence review</li>
+<li><a href="#cap-35">CAP-35</a> Capture corrections and failure feedback</li>
+<li><a href="#cap-38">CAP-38</a> Exchange records and preserve a handover path</li>
+</ul><p><strong>Interim / remaining work.</strong> Product/domain owners still agree intended use, meaning, and claims; unsupported scope stays with the existing process.</p></div></details>
+<details class="job" id="j03"><summary>J03 · Translate needs and controls into testable requirements</summary><div class="body"><p><strong>Useful increment.</strong> P1; broader P2 checks later. Drafting, inner checks, review, and trace links for the chosen requirement scope.</p><ul>
+<li><a href="#cap-02">CAP-02</a> Identify and retain exact record versions</li>
+<li><a href="#cap-03">CAP-03</a> Define trace meanings and allowed relationships</li>
+<li><a href="#cap-04">CAP-04</a> Record human decisions and return work for revision</li>
+<li><a href="#cap-05">CAP-05</a> Version processing instructions and retain run provenance</li>
+<li><a href="#cap-10">CAP-10</a> Ask and resolve clarification questions</li>
+<li><a href="#cap-11">CAP-11</a> Draft needs and requirements from agreed evidence</li>
+<li><a href="#cap-12">CAP-12</a> Check and revise the worker&#x27;s draft</li>
+<li><a href="#cap-13">CAP-13</a> Find and assemble relevant existing evidence</li>
+<li><a href="#cap-14">CAP-14</a> Propose and review trace-link changes</li>
+<li><a href="#cap-15">CAP-15</a> Inspect traceability and identify defined coverage gaps</li>
+<li><a href="#cap-18">CAP-18</a> Independently check a candidate or change</li>
+<li><a href="#cap-19">CAP-19</a> Suggest missing relationships and unlinked impacts</li>
+<li><a href="#cap-27">CAP-27</a> Support risk analysis, controls, and residual-risk review</li>
+<li><a href="#cap-28">CAP-28</a> Support tasks, UI requirements, and usability evidence</li>
+<li><a href="#cap-30">CAP-30</a> Author and review labelling and instructions</li>
+<li><a href="#cap-35">CAP-35</a> Capture corrections and failure feedback</li>
+<li><a href="#cap-38">CAP-38</a> Exchange records and preserve a handover path</li>
+</ul><p><strong>Interim / remaining work.</strong> Existing/bought requirements processes cover unimplemented types or deeper decomposition.</p></div></details>
+<details class="job" id="j04"><summary>J04 · Connect intended design, implementation work, and what was built</summary><div class="body"><p><strong>Useful increment.</strong> P3; P2/P-IN increments. Design/work/code references and independent significant-change checking.</p><ul>
+<li><a href="#cap-02">CAP-02</a> Identify and retain exact record versions</li>
+<li><a href="#cap-03">CAP-03</a> Define trace meanings and allowed relationships</li>
+<li><a href="#cap-04">CAP-04</a> Record human decisions and return work for revision</li>
+<li><a href="#cap-12">CAP-12</a> Check and revise the worker&#x27;s draft</li>
+<li><a href="#cap-13">CAP-13</a> Find and assemble relevant existing evidence</li>
+<li><a href="#cap-14">CAP-14</a> Propose and review trace-link changes</li>
+<li><a href="#cap-16">CAP-16</a> Coordinate a change and its follow-up work</li>
+<li><a href="#cap-18">CAP-18</a> Independently check a candidate or change</li>
+<li><a href="#cap-20">CAP-20</a> Detect source and implementation drift</li>
+<li><a href="#cap-21">CAP-21</a> Connect design, work, code, and builds</li>
+<li><a href="#cap-22">CAP-22</a> Observe work-tracker records</li>
+<li><a href="#cap-23">CAP-23</a> Observe repository and PR revisions</li>
+<li><a href="#cap-25">CAP-25</a> Run checks in normal PR and work-item workflows</li>
+<li><a href="#cap-31">CAP-31</a> Associate model and dataset versions with product evidence</li>
+<li><a href="#cap-35">CAP-35</a> Capture corrections and failure feedback</li>
+<li><a href="#cap-38">CAP-38</a> Exchange records and preserve a handover path</li>
+<li><a href="#cap-39">CAP-39</a> Run background work with visible status and recovery</li>
+</ul><p><strong>Interim / remaining work.</strong> Current design, repository, PR, and work processes perform implementation and their own reviews.</p></div></details>
+<details class="job" id="j05"><summary>J05 · Analyse risk, define controls, and assess residual risk</summary><div class="body"><p><strong>Useful increment.</strong> P-R; P2 review assistance. Selected risk/control records and change/coverage assistance.</p><ul>
+<li><a href="#cap-02">CAP-02</a> Identify and retain exact record versions</li>
+<li><a href="#cap-03">CAP-03</a> Define trace meanings and allowed relationships</li>
+<li><a href="#cap-04">CAP-04</a> Record human decisions and return work for revision</li>
+<li><a href="#cap-13">CAP-13</a> Find and assemble relevant existing evidence</li>
+<li><a href="#cap-14">CAP-14</a> Propose and review trace-link changes</li>
+<li><a href="#cap-15">CAP-15</a> Inspect traceability and identify defined coverage gaps</li>
+<li><a href="#cap-16">CAP-16</a> Coordinate a change and its follow-up work</li>
+<li><a href="#cap-17">CAP-17</a> Trace the known consequences of a change</li>
+<li><a href="#cap-18">CAP-18</a> Independently check a candidate or change</li>
+<li><a href="#cap-19">CAP-19</a> Suggest missing relationships and unlinked impacts</li>
+<li><a href="#cap-27">CAP-27</a> Support risk analysis, controls, and residual-risk review</li>
+<li><a href="#cap-28">CAP-28</a> Support tasks, UI requirements, and usability evidence</li>
+<li><a href="#cap-29">CAP-29</a> Support validation and claim-evidence review</li>
+<li><a href="#cap-30">CAP-30</a> Author and review labelling and instructions</li>
+<li><a href="#cap-31">CAP-31</a> Associate model and dataset versions with product evidence</li>
+<li><a href="#cap-35">CAP-35</a> Capture corrections and failure feedback</li>
+<li><a href="#cap-38">CAP-38</a> Exchange records and preserve a handover path</li>
+</ul><p><strong>Interim / remaining work.</strong> Risk owners and existing/bought risk management supply records, criteria, and decisions from day one.</p></div></details>
+<details class="job" id="j06"><summary>J06 · Connect user tasks, interface design, and usability evidence</summary><div class="body"><p><strong>Useful increment.</strong> P-U. Selected task/UI/study references and coverage.</p><ul>
+<li><a href="#cap-02">CAP-02</a> Identify and retain exact record versions</li>
+<li><a href="#cap-03">CAP-03</a> Define trace meanings and allowed relationships</li>
+<li><a href="#cap-04">CAP-04</a> Record human decisions and return work for revision</li>
+<li><a href="#cap-13">CAP-13</a> Find and assemble relevant existing evidence</li>
+<li><a href="#cap-14">CAP-14</a> Propose and review trace-link changes</li>
+<li><a href="#cap-15">CAP-15</a> Inspect traceability and identify defined coverage gaps</li>
+<li><a href="#cap-16">CAP-16</a> Coordinate a change and its follow-up work</li>
+<li><a href="#cap-18">CAP-18</a> Independently check a candidate or change</li>
+<li><a href="#cap-28">CAP-28</a> Support tasks, UI requirements, and usability evidence</li>
+<li><a href="#cap-35">CAP-35</a> Capture corrections and failure feedback</li>
+<li><a href="#cap-38">CAP-38</a> Exchange records and preserve a handover path</li>
+</ul><p><strong>Interim / remaining work.</strong> Existing design/usability processes conduct studies and maintain unimplemented work.</p></div></details>
+<details class="job" id="j07"><summary>J07 · Plan verification and preserve results at every V-model level</summary><div class="body"><p><strong>Useful increment.</strong> P3; CI adapter separately. Versioned plans, execution associations, dispositions, and selected coverage checks.</p><ul>
+<li><a href="#cap-02">CAP-02</a> Identify and retain exact record versions</li>
+<li><a href="#cap-03">CAP-03</a> Define trace meanings and allowed relationships</li>
+<li><a href="#cap-04">CAP-04</a> Record human decisions and return work for revision</li>
+<li><a href="#cap-13">CAP-13</a> Find and assemble relevant existing evidence</li>
+<li><a href="#cap-14">CAP-14</a> Propose and review trace-link changes</li>
+<li><a href="#cap-15">CAP-15</a> Inspect traceability and identify defined coverage gaps</li>
+<li><a href="#cap-16">CAP-16</a> Coordinate a change and its follow-up work</li>
+<li><a href="#cap-17">CAP-17</a> Trace the known consequences of a change</li>
+<li><a href="#cap-18">CAP-18</a> Independently check a candidate or change</li>
+<li><a href="#cap-19">CAP-19</a> Suggest missing relationships and unlinked impacts</li>
+<li><a href="#cap-21">CAP-21</a> Connect design, work, code, and builds</li>
+<li><a href="#cap-24">CAP-24</a> Capture CI executions and report evidence</li>
+<li><a href="#cap-25">CAP-25</a> Run checks in normal PR and work-item workflows</li>
+<li><a href="#cap-26">CAP-26</a> Manage verification plans, executions, and dispositions</li>
+<li><a href="#cap-27">CAP-27</a> Support risk analysis, controls, and residual-risk review</li>
+<li><a href="#cap-31">CAP-31</a> Associate model and dataset versions with product evidence</li>
+<li><a href="#cap-35">CAP-35</a> Capture corrections and failure feedback</li>
+<li><a href="#cap-38">CAP-38</a> Exchange records and preserve a handover path</li>
+<li><a href="#cap-39">CAP-39</a> Run background work with visible status and recovery</li>
+</ul><p><strong>Interim / remaining work.</strong> Developers/test owners and execution systems still run tests; other test workflows stay with existing/bought tools.</p></div></details>
+<details class="job" id="j08"><summary>J08 · Validate user needs and support applicable product claims</summary><div class="body"><p><strong>Useful increment.</strong> P-V. Selected validation/claim records and review support.</p><ul>
+<li><a href="#cap-02">CAP-02</a> Identify and retain exact record versions</li>
+<li><a href="#cap-03">CAP-03</a> Define trace meanings and allowed relationships</li>
+<li><a href="#cap-04">CAP-04</a> Record human decisions and return work for revision</li>
+<li><a href="#cap-13">CAP-13</a> Find and assemble relevant existing evidence</li>
+<li><a href="#cap-14">CAP-14</a> Propose and review trace-link changes</li>
+<li><a href="#cap-15">CAP-15</a> Inspect traceability and identify defined coverage gaps</li>
+<li><a href="#cap-16">CAP-16</a> Coordinate a change and its follow-up work</li>
+<li><a href="#cap-18">CAP-18</a> Independently check a candidate or change</li>
+<li><a href="#cap-28">CAP-28</a> Support tasks, UI requirements, and usability evidence</li>
+<li><a href="#cap-29">CAP-29</a> Support validation and claim-evidence review</li>
+<li><a href="#cap-30">CAP-30</a> Author and review labelling and instructions</li>
+<li><a href="#cap-31">CAP-31</a> Associate model and dataset versions with product evidence</li>
+<li><a href="#cap-35">CAP-35</a> Capture corrections and failure feedback</li>
+<li><a href="#cap-38">CAP-38</a> Exchange records and preserve a handover path</li>
+</ul><p><strong>Interim / remaining work.</strong> Validation/clinical/usability owners and their current or bought processes conduct and interpret evaluations.</p></div></details>
+<details class="job" id="j09"><summary>J09 · Determine and resolve the consequences of a change</summary><div class="body"><p><strong>Useful increment.</strong> P2; P3 developer-path increment. Recorded scope, linked/unlinked impact assistance, independent findings, and follow-up.</p><ul>
+<li><a href="#cap-02">CAP-02</a> Identify and retain exact record versions</li>
+<li><a href="#cap-03">CAP-03</a> Define trace meanings and allowed relationships</li>
+<li><a href="#cap-04">CAP-04</a> Record human decisions and return work for revision</li>
+<li><a href="#cap-05">CAP-05</a> Version processing instructions and retain run provenance</li>
+<li><a href="#cap-13">CAP-13</a> Find and assemble relevant existing evidence</li>
+<li><a href="#cap-14">CAP-14</a> Propose and review trace-link changes</li>
+<li><a href="#cap-15">CAP-15</a> Inspect traceability and identify defined coverage gaps</li>
+<li><a href="#cap-16">CAP-16</a> Coordinate a change and its follow-up work</li>
+<li><a href="#cap-17">CAP-17</a> Trace the known consequences of a change</li>
+<li><a href="#cap-18">CAP-18</a> Independently check a candidate or change</li>
+<li><a href="#cap-19">CAP-19</a> Suggest missing relationships and unlinked impacts</li>
+<li><a href="#cap-20">CAP-20</a> Detect source and implementation drift</li>
+<li><a href="#cap-21">CAP-21</a> Connect design, work, code, and builds</li>
+<li><a href="#cap-22">CAP-22</a> Observe work-tracker records</li>
+<li><a href="#cap-23">CAP-23</a> Observe repository and PR revisions</li>
+<li><a href="#cap-25">CAP-25</a> Run checks in normal PR and work-item workflows</li>
+<li><a href="#cap-26">CAP-26</a> Manage verification plans, executions, and dispositions</li>
+<li><a href="#cap-32">CAP-32</a> Review and freeze an exact evidence baseline</li>
+<li><a href="#cap-35">CAP-35</a> Capture corrections and failure feedback</li>
+<li><a href="#cap-38">CAP-38</a> Exchange records and preserve a handover path</li>
+<li><a href="#cap-39">CAP-39</a> Run background work with visible status and recovery</li>
+</ul><p><strong>Interim / remaining work.</strong> Affected people decide consequences and complete updates/retests; existing change control covers unsupported scope.</p></div></details>
+<details class="job" id="j10"><summary>J10 · Establish a coherent reviewed baseline</summary><div class="body"><p><strong>Useful increment.</strong> P4 baseline increment. Exact evidence-state selection and coherence/review support.</p><ul>
+<li><a href="#cap-02">CAP-02</a> Identify and retain exact record versions</li>
+<li><a href="#cap-03">CAP-03</a> Define trace meanings and allowed relationships</li>
+<li><a href="#cap-04">CAP-04</a> Record human decisions and return work for revision</li>
+<li><a href="#cap-13">CAP-13</a> Find and assemble relevant existing evidence</li>
+<li><a href="#cap-14">CAP-14</a> Propose and review trace-link changes</li>
+<li><a href="#cap-15">CAP-15</a> Inspect traceability and identify defined coverage gaps</li>
+<li><a href="#cap-16">CAP-16</a> Coordinate a change and its follow-up work</li>
+<li><a href="#cap-17">CAP-17</a> Trace the known consequences of a change</li>
+<li><a href="#cap-18">CAP-18</a> Independently check a candidate or change</li>
+<li><a href="#cap-32">CAP-32</a> Review and freeze an exact evidence baseline</li>
+<li><a href="#cap-33">CAP-33</a> Render and review baseline-linked document packages</li>
+<li><a href="#cap-34">CAP-34</a> Assemble release evidence and a separate decision</li>
+<li><a href="#cap-35">CAP-35</a> Capture corrections and failure feedback</li>
+<li><a href="#cap-38">CAP-38</a> Exchange records and preserve a handover path</li>
+</ul><p><strong>Interim / remaining work.</strong> The chosen external review/baseline process remains authoritative until a scoped handover.</p></div></details>
+<details class="job" id="j11"><summary>J11 · Establish release or transfer readiness and record the decision</summary><div class="body"><p><strong>Useful increment.</strong> P4 release increment after applicable prerequisites. Current evidence association and separate readiness/release decisions.</p><ul>
+<li><a href="#cap-02">CAP-02</a> Identify and retain exact record versions</li>
+<li><a href="#cap-04">CAP-04</a> Record human decisions and return work for revision</li>
+<li><a href="#cap-13">CAP-13</a> Find and assemble relevant existing evidence</li>
+<li><a href="#cap-15">CAP-15</a> Inspect traceability and identify defined coverage gaps</li>
+<li><a href="#cap-18">CAP-18</a> Independently check a candidate or change</li>
+<li><a href="#cap-21">CAP-21</a> Connect design, work, code, and builds</li>
+<li><a href="#cap-24">CAP-24</a> Capture CI executions and report evidence</li>
+<li><a href="#cap-26">CAP-26</a> Manage verification plans, executions, and dispositions</li>
+<li><a href="#cap-27">CAP-27</a> Support risk analysis, controls, and residual-risk review</li>
+<li><a href="#cap-29">CAP-29</a> Support validation and claim-evidence review</li>
+<li><a href="#cap-30">CAP-30</a> Author and review labelling and instructions</li>
+<li><a href="#cap-31">CAP-31</a> Associate model and dataset versions with product evidence</li>
+<li><a href="#cap-32">CAP-32</a> Review and freeze an exact evidence baseline</li>
+<li><a href="#cap-33">CAP-33</a> Render and review baseline-linked document packages</li>
+<li><a href="#cap-34">CAP-34</a> Assemble release evidence and a separate decision</li>
+<li><a href="#cap-35">CAP-35</a> Capture corrections and failure feedback</li>
+<li><a href="#cap-38">CAP-38</a> Exchange records and preserve a handover path</li>
+</ul><p><strong>Interim / remaining work.</strong> Existing/bought release/transfer process covers the complete job meanwhile, including evidence branches not yet internal.</p></div></details>
+<details class="job" id="j12"><summary>J12 · Maintain labelling, produce document views, and answer evidence questions</summary><div class="body"><p><strong>Useful increment.</strong> P4 output/label increments; P2 trace answers. Selected baseline documents, labels, packages, and cited trace views.</p><ul>
+<li><a href="#cap-02">CAP-02</a> Identify and retain exact record versions</li>
+<li><a href="#cap-03">CAP-03</a> Define trace meanings and allowed relationships</li>
+<li><a href="#cap-04">CAP-04</a> Record human decisions and return work for revision</li>
+<li><a href="#cap-07">CAP-07</a> Extract source text from documents</li>
+<li><a href="#cap-12">CAP-12</a> Check and revise the worker&#x27;s draft</li>
+<li><a href="#cap-13">CAP-13</a> Find and assemble relevant existing evidence</li>
+<li><a href="#cap-14">CAP-14</a> Propose and review trace-link changes</li>
+<li><a href="#cap-15">CAP-15</a> Inspect traceability and identify defined coverage gaps</li>
+<li><a href="#cap-18">CAP-18</a> Independently check a candidate or change</li>
+<li><a href="#cap-27">CAP-27</a> Support risk analysis, controls, and residual-risk review</li>
+<li><a href="#cap-29">CAP-29</a> Support validation and claim-evidence review</li>
+<li><a href="#cap-30">CAP-30</a> Author and review labelling and instructions</li>
+<li><a href="#cap-32">CAP-32</a> Review and freeze an exact evidence baseline</li>
+<li><a href="#cap-33">CAP-33</a> Render and review baseline-linked document packages</li>
+<li><a href="#cap-34">CAP-34</a> Assemble release evidence and a separate decision</li>
+<li><a href="#cap-35">CAP-35</a> Capture corrections and failure feedback</li>
+<li><a href="#cap-38">CAP-38</a> Exchange records and preserve a handover path</li>
+</ul><p><strong>Interim / remaining work.</strong> Existing/bought document and labelling processes cover remaining outputs and content types.</p></div></details>
+<details class="job" id="j13"><summary>J13 · Detect drift and route ongoing observations into review</summary><div class="body"><p><strong>Useful increment.</strong> P2; each P-IN adapter independently. Captured revision comparison and meaningful drift work.</p><ul>
+<li><a href="#cap-02">CAP-02</a> Identify and retain exact record versions</li>
+<li><a href="#cap-06">CAP-06</a> Capture source material manually with citations</li>
+<li><a href="#cap-07">CAP-07</a> Extract source text from documents</li>
+<li><a href="#cap-08">CAP-08</a> Capture selected Slack discussions</li>
+<li><a href="#cap-09">CAP-09</a> Capture meeting transcripts and associated notes</li>
+<li><a href="#cap-16">CAP-16</a> Coordinate a change and its follow-up work</li>
+<li><a href="#cap-20">CAP-20</a> Detect source and implementation drift</li>
+<li><a href="#cap-21">CAP-21</a> Connect design, work, code, and builds</li>
+<li><a href="#cap-22">CAP-22</a> Observe work-tracker records</li>
+<li><a href="#cap-23">CAP-23</a> Observe repository and PR revisions</li>
+<li><a href="#cap-24">CAP-24</a> Capture CI executions and report evidence</li>
+<li><a href="#cap-25">CAP-25</a> Run checks in normal PR and work-item workflows</li>
+<li><a href="#cap-35">CAP-35</a> Capture corrections and failure feedback</li>
+<li><a href="#cap-38">CAP-38</a> Exchange records and preserve a handover path</li>
+<li><a href="#cap-39">CAP-39</a> Run background work with visible status and recovery</li>
+</ul><p><strong>Interim / remaining work.</strong> Manual checks of unconnected systems and existing owners keep other evidence current.</p></div></details>
+<details class="job" id="j14"><summary>J14 · Maintain dataset and model evidence where product scope requires it</summary><div class="body"><p><strong>Useful increment.</strong> P-M only if applicable. Exact model/data/build/evaluation associations.</p><ul>
+<li><a href="#cap-02">CAP-02</a> Identify and retain exact record versions</li>
+<li><a href="#cap-03">CAP-03</a> Define trace meanings and allowed relationships</li>
+<li><a href="#cap-04">CAP-04</a> Record human decisions and return work for revision</li>
+<li><a href="#cap-13">CAP-13</a> Find and assemble relevant existing evidence</li>
+<li><a href="#cap-14">CAP-14</a> Propose and review trace-link changes</li>
+<li><a href="#cap-15">CAP-15</a> Inspect traceability and identify defined coverage gaps</li>
+<li><a href="#cap-18">CAP-18</a> Independently check a candidate or change</li>
+<li><a href="#cap-31">CAP-31</a> Associate model and dataset versions with product evidence</li>
+<li><a href="#cap-35">CAP-35</a> Capture corrections and failure feedback</li>
+<li><a href="#cap-38">CAP-38</a> Exchange records and preserve a handover path</li>
+</ul><p><strong>Interim / remaining work.</strong> Model/dataset systems and current ML owners supply artifacts and performance evidence.</p></div></details>
+<details class="job" id="j15"><summary>J15 · Improve the working system from corrections and failures</summary><div class="body"><p><strong>Useful increment.</strong> P-L from first delivered workflow. Correction capture, cause investigation, and evaluated method changes.</p><ul>
+<li><a href="#cap-02">CAP-02</a> Identify and retain exact record versions</li>
+<li><a href="#cap-04">CAP-04</a> Record human decisions and return work for revision</li>
+<li><a href="#cap-05">CAP-05</a> Version processing instructions and retain run provenance</li>
+<li><a href="#cap-35">CAP-35</a> Capture corrections and failure feedback</li>
+<li><a href="#cap-36">CAP-36</a> Review recurring corrections and failures</li>
+<li><a href="#cap-37">CAP-37</a> Evaluate and adopt improved working methods</li>
+<li><a href="#cap-39">CAP-39</a> Run background work with visible status and recovery</li>
+</ul><p><strong>Interim / remaining work.</strong> Human process owners supply the early meta-loop; regulatory/audit signals can join project feedback.</p></div></details>
+<details class="job" id="j16"><summary>J16 · Agree product scope, lifecycle methods, and evidence responsibilities</summary><div class="body"><p><strong>Useful increment.</strong> P0 and ongoing P-L feedback. Recorded scope, ownership, decision methods, and chosen exchange boundaries.</p><ul>
+<li><a href="#cap-01">CAP-01</a> Record scope, evidence homes, and decision responsibilities</li>
+<li><a href="#cap-02">CAP-02</a> Identify and retain exact record versions</li>
+<li><a href="#cap-03">CAP-03</a> Define trace meanings and allowed relationships</li>
+<li><a href="#cap-04">CAP-04</a> Record human decisions and return work for revision</li>
+<li><a href="#cap-10">CAP-10</a> Ask and resolve clarification questions</li>
+<li><a href="#cap-36">CAP-36</a> Review recurring corrections and failures</li>
+<li><a href="#cap-37">CAP-37</a> Evaluate and adopt improved working methods</li>
+<li><a href="#cap-38">CAP-38</a> Exchange records and preserve a handover path</li>
+</ul><p><strong>Interim / remaining work.</strong> BBT/client owners agree the operating model; selecting software alone does not allocate these responsibilities.</p></div></details>
+<h2>Feature catalogue</h2><p>Minimum capability, later increments, dependencies, and concrete acceptance examples.</p>
+<details class="feature" id="cap-01"><summary><span class="id">CAP-01</span> Record scope, evidence homes, and decision responsibilities</summary><div class="body"><p class="meta">Supports <a href="#j16">J16</a> · <a href="#p0">P0</a></p>
+<p class="meta">Inputs: SRC, SCOPE, METHOD. Outputs: SCOPE, REVIEW.</p>
+<h3>Minimum useful version</h3><p>A recorded agreement names product scope, record types, authoritative homes, link meanings, responsible people, and applicable checks.</p>
+<h3>Later capability</h3><p>Configurable scope/role profiles and rules selected for each engagement.</p>
+<h3>Hard prerequisites</h3><p>Agree the first scope.</p>
+<h3>External prerequisites</h3><p>Responsible BBT/client owners must agree the first scope and permitted decision roles.</p>
+<h3>Acceptance example</h3><p>A requirement has one agreed home and named author/reviewer; the team can identify who resolves an ownership conflict.</p>
+<h3>Documented demo precedent</h3><p>Product rules and an authority explanation are documented; engagement-level configuration is a broader proposal.</p>
+<p><a href="authority-model.md">Source documentation</a></p></div></details>
+<details class="feature" id="cap-02"><summary><span class="id">CAP-02</span> Identify and retain exact record versions</summary><div class="body"><p class="meta">Supports <a href="#j01">J01</a>, <a href="#j02">J02</a>, <a href="#j03">J03</a>, <a href="#j04">J04</a>, <a href="#j05">J05</a>, <a href="#j06">J06</a>, <a href="#j07">J07</a>, <a href="#j08">J08</a>, <a href="#j09">J09</a>, <a href="#j10">J10</a>, <a href="#j11">J11</a>, <a href="#j12">J12</a>, <a href="#j13">J13</a>, <a href="#j14">J14</a>, <a href="#j15">J15</a>, <a href="#j16">J16</a> · <a href="#p0">P0</a></p>
+<p class="meta">Inputs: SRC, NEED, SYS, SUB, LINK, REVIEW. Outputs: SRC, NEED, SYS, SUB, LINK, REVIEW.</p>
+<h3>Minimum useful version</h3><p>Use stable IDs, exact revisions, source references, and distinct candidate/accepted states in the selected record home. A small agreed record set is enough to start.</p>
+<h3>Later capability</h3><p>Internal editing/history for more evidence types, with cross-system identity mappings and concurrency handling.</p>
+<h3>Hard prerequisites</h3><p><a href="#cap-01">CAP-01</a></p>
+<h3>External prerequisites</h3><p>The chosen home must support, or be supplemented with, usable version references and accessible history.</p>
+<h3>Acceptance example</h3><p>A reviewer can open the source and requirement revisions used by a check even after the latest versions change.</p>
+<h3>Documented demo precedent</h3><p>Evidence versions, source revisions, and retained baselines are described in the demo data model.</p>
+<p><a href="data-model.md">Source documentation</a></p></div></details>
+<details class="feature" id="cap-03"><summary><span class="id">CAP-03</span> Define trace meanings and allowed relationships</summary><div class="body"><p class="meta">Supports <a href="#j03">J03</a>, <a href="#j04">J04</a>, <a href="#j05">J05</a>, <a href="#j06">J06</a>, <a href="#j07">J07</a>, <a href="#j08">J08</a>, <a href="#j09">J09</a>, <a href="#j10">J10</a>, <a href="#j12">J12</a>, <a href="#j14">J14</a>, <a href="#j16">J16</a> · <a href="#p0">P0</a></p>
+<p class="meta">Inputs: SCOPE, LINK. Outputs: METHOD, LINK.</p>
+<h3>Minimum useful version</h3><p>Define a small vocabulary with endpoint types, direction, meaning, and review expectations for the first workflow.</p>
+<h3>Later capability</h3><p>Versioned policies covering additional evidence types and conditional coverage rules.</p>
+<h3>Hard prerequisites</h3><p><a href="#cap-01">CAP-01</a>, <a href="#cap-02">CAP-02</a></p>
+<h3>External prerequisites</h3><p>Domain owners must agree what a link establishes and which links are expected for the selected scope.</p>
+<h3>Acceptance example</h3><p>A need-to-requirement link means derivation, while a requirement-to-test link names verification scope; neither transfers approval.</p>
+<h3>Documented demo precedent</h3><p>A controlled prototype relationship policy is documented; the wider map vocabulary still needs agreement.</p>
+<p><a href="relationship-policy.md">Source documentation</a></p></div></details>
+<details class="feature" id="cap-04"><summary><span class="id">CAP-04</span> Record human decisions and return work for revision</summary><div class="body"><p class="meta">Supports <a href="#j02">J02</a>, <a href="#j03">J03</a>, <a href="#j04">J04</a>, <a href="#j05">J05</a>, <a href="#j06">J06</a>, <a href="#j07">J07</a>, <a href="#j08">J08</a>, <a href="#j09">J09</a>, <a href="#j10">J10</a>, <a href="#j11">J11</a>, <a href="#j12">J12</a>, <a href="#j14">J14</a>, <a href="#j15">J15</a>, <a href="#j16">J16</a> · <a href="#p0">P0</a></p>
+<p class="meta">Inputs: REVIEW, NEED, SYS, SUB, LINK, CHANGE. Outputs: REVIEW, FB.</p>
+<h3>Minimum useful version</h3><p>Retain the named person, role, object/version, reason, and accept/revise/reject/defer outcome. An existing review process can supply the decision.</p>
+<h3>Later capability</h3><p>Integrated review queues, reminders, permission enforcement, and authenticated decision capture for the selected deployment.</p>
+<h3>Hard prerequisites</h3><p><a href="#cap-01">CAP-01</a>, <a href="#cap-02">CAP-02</a></p>
+<h3>External prerequisites</h3><p>A designated reviewer and an agreed decision record are required; a checker finding remains separate from approval.</p>
+<h3>Acceptance example</h3><p>Editing a submitted requirement prevents an earlier acceptance from applying to the new wording.</p>
+<h3>Documented demo precedent</h3><p>Revision-bound prototype decisions and return-to-author history are documented; simulated personas do not establish production identity.</p>
+<p><a href="authority-model.md">Source documentation</a></p></div></details>
+<details class="feature" id="cap-05"><summary><span class="id">CAP-05</span> Version processing instructions and retain run provenance</summary><div class="body"><p class="meta">Supports <a href="#j01">J01</a>, <a href="#j02">J02</a>, <a href="#j03">J03</a>, <a href="#j09">J09</a>, <a href="#j15">J15</a> · <a href="#p0">P0</a></p>
+<p class="meta">Inputs: SRC, METHOD. Outputs: METHOD, REVIEW.</p>
+<h3>Minimum useful version</h3><p>Select an agreed prompt, output schema, source/context revisions, and model configuration; retain result, validation failures, and run identity.</p>
+<h3>Later capability</h3><p>A managed policy registry, richer run comparison, and evaluated configuration changes.</p>
+<h3>Hard prerequisites</h3><p><a href="#cap-01">CAP-01</a>, <a href="#cap-02">CAP-02</a></p>
+<h3>External prerequisites</h3><p>A method owner agrees the initial instructions, output contract, and evaluation examples.</p>
+<h3>Acceptance example</h3><p>Two drafts can be compared using their exact inputs and prompt versions; a failed output does not become accepted evidence.</p>
+<h3>Documented demo precedent</h3><p>Versioned source/context/needs/requirements/impact contracts and run records are documented.</p>
+<p><a href="llm-actions.md">Source documentation</a></p></div></details>
+<details class="feature" id="cap-06"><summary><span class="id">CAP-06</span> Capture source material manually with citations</summary><div class="body"><p class="meta">Supports <a href="#j01">J01</a>, <a href="#j13">J13</a> · <a href="#p1">P1</a></p>
+<p class="meta">Inputs: SRC. Outputs: SRC.</p>
+<h3>Minimum useful version</h3><p>Paste or upload supported text; retain origin, revision, captured content, and exact locators. Record duplicate capture without duplicating the interpretation work.</p>
+<h3>Later capability</h3><p>Additional source formats and assisted selection of relevant spans.</p>
+<h3>Hard prerequisites</h3><p><a href="#cap-02">CAP-02</a></p>
+<h3>External prerequisites</h3><p>A usable source and the selected capture destination must be available.</p>
+<h3>Acceptance example</h3><p>A pasted transcript remains identifiable, and a draft need points to the exact quoted passage.</p>
+<h3>Documented demo precedent</h3><p>Text/Markdown source intake and source-derived provenance are documented.</p>
+<p><a href="product-architecture.md">Source documentation</a></p></div></details>
+<details class="feature" id="cap-07"><summary><span class="id">CAP-07</span> Extract source text from documents</summary><div class="body"><p class="meta">Supports <a href="#j01">J01</a>, <a href="#j12">J12</a>, <a href="#j13">J13</a> · <a href="#p1">P1</a></p>
+<p class="meta">Inputs: SRC, DOC. Outputs: SRC.</p>
+<h3>Minimum useful version</h3><p>Extract supported text-based PDF/DOCX content with page/paragraph locators, original file references, and visible extraction warnings.</p>
+<h3>Later capability</h3><p>Additional formats and separately evaluated OCR where needed.</p>
+<h3>Hard prerequisites</h3><p><a href="#cap-06">CAP-06</a></p>
+<h3>External prerequisites</h3><p>Representative files, extraction limits, and a decision about retaining the original bytes are required.</p>
+<h3>Acceptance example</h3><p>A requirement citation opens the correct paragraph in the imported document revision.</p>
+<h3>Documented demo precedent</h3><p>WP-30 document intake and anchored extraction are recorded as local work in the delivery plan; acceptance status is not rechecked here.</p>
+<p><a href="delivery-plan.md">Source documentation</a></p></div></details>
+<details class="feature" id="cap-08"><summary><span class="id">CAP-08</span> Capture selected Slack discussions</summary><div class="body"><p class="meta">Supports <a href="#j01">J01</a>, <a href="#j13">J13</a> · <a href="#p-in">P-IN</a></p>
+<p class="meta">Inputs: SRC. Outputs: SRC.</p>
+<h3>Minimum useful version</h3><p>Import a selected thread with message IDs, author/time, edits, and source references into the common intake path.</p>
+<h3>Later capability</h3><p>Scoped ongoing observation, edited/deleted-message handling, and recoverable capture.</p>
+<h3>Hard prerequisites</h3><p><a href="#cap-06">CAP-06</a></p>
+<h3>Conditional prerequisite</h3><p>Capture runs unattended: <a href="#cap-39">CAP-39</a>.</p>
+<h3>External prerequisites</h3><p>The selected workspace, access permissions, capture scope, and retention expectations must be agreed.</p>
+<h3>Acceptance example</h3><p>A thread becomes a cited source without implying that every message is an approved product decision.</p>
+<h3>Documented demo precedent</h3><p>No live Slack connector is established by the current documentation.</p>
+<p><a href="product-architecture.md">Source documentation</a></p></div></details>
+<details class="feature" id="cap-09"><summary><span class="id">CAP-09</span> Capture meeting transcripts and associated notes</summary><div class="body"><p class="meta">Supports <a href="#j01">J01</a>, <a href="#j13">J13</a> · <a href="#p-in">P-IN</a></p>
+<p class="meta">Inputs: SRC. Outputs: SRC.</p>
+<h3>Minimum useful version</h3><p>Import an identified transcript/notes pair with meeting date, speaker/time locators where supplied, and revision references.</p>
+<h3>Later capability</h3><p>A selected meeting-platform connection and recovery of later transcript corrections.</p>
+<h3>Hard prerequisites</h3><p><a href="#cap-06">CAP-06</a></p>
+<h3>Conditional prerequisite</h3><p>Capture runs unattended: <a href="#cap-39">CAP-39</a>.</p>
+<h3>External prerequisites</h3><p>The selected transcript source, access, and interpretation of speaker/time metadata must be agreed.</p>
+<h3>Acceptance example</h3><p>A candidate decision cites a transcript passage while a later correction creates a new source revision.</p>
+<h3>Documented demo precedent</h3><p>Manual source intake offers a reuse path; a live meeting-platform connector is not established.</p>
+<p><a href="product-architecture.md">Source documentation</a></p></div></details>
+<details class="feature" id="cap-10"><summary><span class="id">CAP-10</span> Ask and resolve clarification questions</summary><div class="body"><p class="meta">Supports <a href="#j01">J01</a>, <a href="#j02">J02</a>, <a href="#j03">J03</a>, <a href="#j16">J16</a> · <a href="#p1">P1</a></p>
+<p class="meta">Inputs: SRC, SCOPE, CLAR. Outputs: CLAR, REVIEW.</p>
+<h3>Minimum useful version</h3><p>Identify ambiguous or unsupported statements, assign questions, and retain answers/deferrals with their source and rationale.</p>
+<h3>Later capability</h3><p>Assisted question generation, discipline routing, and richer conflict handling.</p>
+<h3>Hard prerequisites</h3><p><a href="#cap-02">CAP-02</a>, <a href="#cap-04">CAP-04</a></p>
+<h3>External prerequisites</h3><p>Someone with the relevant product/domain knowledge must be available to answer material questions.</p>
+<h3>Acceptance example</h3><p>An unclear alert threshold produces a question rather than an invented numeric requirement.</p>
+<h3>Documented demo precedent</h3><p>Source-context questions with required/advisory handling are documented.</p>
+<p><a href="llm-actions.md">Source documentation</a></p></div></details>
+<details class="feature" id="cap-11"><summary><span class="id">CAP-11</span> Draft needs and requirements from agreed evidence</summary><div class="body"><p class="meta">Supports <a href="#j02">J02</a>, <a href="#j03">J03</a> · <a href="#p1">P1</a></p>
+<p class="meta">Inputs: SRC, SCOPE, CLAR, NEED, CTRL, USE. Outputs: NEED, SYS, SUB, LINK.</p>
+<h3>Minimum useful version</h3><p>Run an agreed prompt to produce a small structured batch of cited candidate needs/requirements and proposed links. Required clarifications and relevant risk/task inputs enter the context. Derived requirements use reviewed needs; parent acceptance does not approve the resulting requirement.</p>
+<h3>Later capability</h3><p>Additional evidence types, tailored schemas, and improved drafting based on evaluated feedback.</p>
+<h3>Hard prerequisites</h3><p><a href="#cap-05">CAP-05</a>, <a href="#cap-06">CAP-06</a>, <a href="#cap-10">CAP-10</a>, <a href="#cap-13">CAP-13</a></p>
+<h3>External prerequisites</h3><p>Agree the output type, destination, source context, and representative evaluation examples. Risk/task inputs may be supplied externally.</p>
+<h3>Acceptance example</h3><p>A transcript creates a candidate need and measurable requirement with citations; the reviewer corrects unsupported detail before acceptance.</p>
+<h3>Documented demo precedent</h3><p>Needs/requirements drafting is documented; the full risk/usability-before-requirements workflow remains broader than the existing source-first slice.</p>
+<p><a href="llm-actions.md">Source documentation</a></p></div></details>
+<details class="feature" id="cap-12"><summary><span class="id">CAP-12</span> Check and revise the worker&#x27;s draft</summary><div class="body"><p class="meta">Supports <a href="#j02">J02</a>, <a href="#j03">J03</a>, <a href="#j04">J04</a>, <a href="#j12">J12</a> · <a href="#p1">P1</a></p>
+<p class="meta">Inputs: NEED, SYS, SUB, DESIGN, METHOD, LINK. Outputs: NEED, SYS, SUB, DESIGN, REVIEW.</p>
+<h3>Minimum useful version</h3><p>Apply defined checks for schema, measurability, units, citations, and link rules. Record findings; a person or drafting agent revises and rechecks within a bounded loop.</p>
+<h3>Later capability</h3><p>Targeted agent repairs, additional domain rules, and tool-assisted checking.</p>
+<h3>Hard prerequisites</h3><p><a href="#cap-02">CAP-02</a>, <a href="#cap-03">CAP-03</a>, <a href="#cap-05">CAP-05</a></p>
+<h3>External prerequisites</h3><p>Agree the check criteria and retry/escalation limits for each output type.</p>
+<h3>Acceptance example</h3><p>A requirement missing a measurable criterion is revised or routed to a person; exhausting retries leaves the issue visible.</p>
+<h3>Documented demo precedent</h3><p>Schema/provenance validation and deterministic checks are documented; a general autonomous revise/recheck loop is a proposed increment.</p>
+<p><a href="llm-actions.md">Source documentation</a></p></div></details>
+<details class="feature" id="cap-13"><summary><span class="id">CAP-13</span> Find and assemble relevant existing evidence</summary><div class="body"><p class="meta">Supports <a href="#j02">J02</a>, <a href="#j03">J03</a>, <a href="#j04">J04</a>, <a href="#j05">J05</a>, <a href="#j06">J06</a>, <a href="#j07">J07</a>, <a href="#j08">J08</a>, <a href="#j09">J09</a>, <a href="#j10">J10</a>, <a href="#j11">J11</a>, <a href="#j12">J12</a>, <a href="#j14">J14</a> · <a href="#p1">P1</a></p>
+<p class="meta">Inputs: SRC, NEED, SYS, SUB, ARCH, HAZ, CTRL, TEST, LINK, BASE. Outputs: SRC, NEED, SYS, SUB, ARCH, HAZ, CTRL, TEST, LINK, BASE.</p>
+<h3>Minimum useful version</h3><p>Open a curated set of referenced records and exact versions from their homes; retain the context selection and mark unavailable evidence.</p>
+<h3>Later capability</h3><p>Search, filtering, semantic retrieval, and independently selected context bundles.</p>
+<h3>Hard prerequisites</h3><p><a href="#cap-02">CAP-02</a></p>
+<h3>External prerequisites</h3><p>Read access and usable references to the evidence needed by the selected job.</p>
+<h3>Acceptance example</h3><p>A requirement reviewer can inspect the existing need, risk control, and related test without relying on the drafting agent&#x27;s summary.</p>
+<h3>Documented demo precedent</h3><p>Evidence browsing, graph neighborhoods, and bounded impact retrieval are documented.</p>
+<p><a href="product-architecture.md">Source documentation</a></p></div></details>
+<details class="feature" id="cap-14"><summary><span class="id">CAP-14</span> Propose and review trace-link changes</summary><div class="body"><p class="meta">Supports <a href="#j03">J03</a>, <a href="#j04">J04</a>, <a href="#j05">J05</a>, <a href="#j06">J06</a>, <a href="#j07">J07</a>, <a href="#j08">J08</a>, <a href="#j09">J09</a>, <a href="#j10">J10</a>, <a href="#j12">J12</a>, <a href="#j14">J14</a> · <a href="#p1">P1</a></p>
+<p class="meta">Inputs: NEED, SYS, SUB, ARCH, CTRL, TEST, LINK, REVIEW. Outputs: LINK, REVIEW.</p>
+<h3>Minimum useful version</h3><p>Create, confirm, retype, or retire a link with defined meaning, endpoint/version context, rationale, and a separate decision.</p>
+<h3>Later capability</h3><p>Bulk proposal review and changes launched from the graph, matrix, or change work.</p>
+<h3>Hard prerequisites</h3><p><a href="#cap-02">CAP-02</a>, <a href="#cap-03">CAP-03</a>, <a href="#cap-04">CAP-04</a></p>
+<h3>External prerequisites</h3><p>The authoritative link home and reviewer must be agreed. Existing external link controls can supply this capability.</p>
+<h3>Acceptance example</h3><p>Rejecting a suggested test link leaves the suggestion in history and keeps it out of the confirmed trace set.</p>
+<h3>Documented demo precedent</h3><p>WP-10 controlled relationship lifecycle is documented as accepted at prototype scope.</p>
+<p><a href="delivery-plan.md">Source documentation</a></p></div></details>
+<details class="feature" id="cap-15"><summary><span class="id">CAP-15</span> Inspect traceability and identify defined coverage gaps</summary><div class="body"><p class="meta">Supports <a href="#j03">J03</a>, <a href="#j05">J05</a>, <a href="#j06">J06</a>, <a href="#j07">J07</a>, <a href="#j08">J08</a>, <a href="#j09">J09</a>, <a href="#j10">J10</a>, <a href="#j11">J11</a>, <a href="#j12">J12</a>, <a href="#j14">J14</a> · <a href="#p2">P2</a></p>
+<p class="meta">Inputs: NEED, SYS, SUB, CTRL, TEST, VP, LINK, BASE. Outputs: REVIEW, DOC.</p>
+<h3>Minimum useful version</h3><p>Show a read-only matrix/neighborhood from identifiable accepted links and report missing relationships under named scope rules.</p>
+<h3>Later capability</h3><p>Candidate-state comparison, richer domain coverage, and explainable gap priorities.</p>
+<h3>Hard prerequisites</h3><p><a href="#cap-02">CAP-02</a>, <a href="#cap-03">CAP-03</a>, <a href="#cap-13">CAP-13</a></p>
+<h3>External prerequisites</h3><p>A usable relationship set and agreed coverage expectations. The set may be imported from a bought tool.</p>
+<h3>Acceptance example</h3><p>A control lacking an applicable verification test is visible with the reason and affected version.</p>
+<h3>Documented demo precedent</h3><p>Matrix, graph, coverage rules, and candidate projections are documented.</p>
+<p><a href="relationship-policy.md">Source documentation</a></p></div></details>
+<details class="feature" id="cap-16"><summary><span class="id">CAP-16</span> Coordinate a change and its follow-up work</summary><div class="body"><p class="meta">Supports <a href="#j04">J04</a>, <a href="#j05">J05</a>, <a href="#j06">J06</a>, <a href="#j07">J07</a>, <a href="#j08">J08</a>, <a href="#j09">J09</a>, <a href="#j10">J10</a>, <a href="#j13">J13</a> · <a href="#p2">P2</a></p>
+<p class="meta">Inputs: SRC, BASE, CHANGE, REVIEW. Outputs: CHANGE, WORK, REVIEW.</p>
+<h3>Minimum useful version</h3><p>Record old/proposed states, reason, scope, impact decisions, owners, and update/relink/retest tasks; retain unresolved work.</p>
+<h3>Later capability</h3><p>Integrated review queues, task synchronization, and workflow rules for different change classes.</p>
+<h3>Hard prerequisites</h3><p><a href="#cap-02">CAP-02</a>, <a href="#cap-04">CAP-04</a></p>
+<h3>External prerequisites</h3><p>Agree what constitutes a significant change, the responsible disciplines, and the chosen work home.</p>
+<h3>Acceptance example</h3><p>A threshold change has named requirement, risk, test, and label follow-up with separate dispositions.</p>
+<h3>Documented demo precedent</h3><p>Controlled change, impact decisions, return-to-author, and reanalysis are documented.</p>
+<p><a href="product-architecture.md">Source documentation</a></p></div></details>
+<details class="feature" id="cap-17"><summary><span class="id">CAP-17</span> Trace the known consequences of a change</summary><div class="body"><p class="meta">Supports <a href="#j05">J05</a>, <a href="#j07">J07</a>, <a href="#j09">J09</a>, <a href="#j10">J10</a> · <a href="#p2">P2</a></p>
+<p class="meta">Inputs: CHANGE, BASE, LINK, NEED, SYS, SUB, CTRL, TEST, LABEL. Outputs: REVIEW, CHANGE.</p>
+<h3>Minimum useful version</h3><p>Traverse known links under defined bounds and show why each record is in the review set.</p>
+<h3>Later capability</h3><p>Configurable traversal and collection/configuration-aware impact context.</p>
+<h3>Hard prerequisites</h3><p><a href="#cap-03">CAP-03</a>, <a href="#cap-13">CAP-13</a>, <a href="#cap-16">CAP-16</a></p>
+<h3>External prerequisites</h3><p>Relevant links and a declared traversal policy must be available; an empty graph cannot establish absence of impact.</p>
+<h3>Acceptance example</h3><p>The reviewer can follow the path from the changed requirement to a control and verification plan.</p>
+<h3>Documented demo precedent</h3><p>Bounded graph/collection candidate selection and path origins are documented.</p>
+<p><a href="llm-actions.md">Source documentation</a></p></div></details>
+<details class="feature" id="cap-18"><summary><span class="id">CAP-18</span> Independently check a candidate or change</summary><div class="body"><p class="meta">Supports <a href="#j02">J02</a>, <a href="#j03">J03</a>, <a href="#j04">J04</a>, <a href="#j05">J05</a>, <a href="#j06">J06</a>, <a href="#j07">J07</a>, <a href="#j08">J08</a>, <a href="#j09">J09</a>, <a href="#j10">J10</a>, <a href="#j11">J11</a>, <a href="#j12">J12</a>, <a href="#j14">J14</a> · <a href="#p1">P1</a></p>
+<p class="meta">Inputs: SRC, NEED, SYS, SUB, HAZ, CTRL, TEST, RUN, LINK, CHANGE, METHOD. Outputs: REVIEW, FB.</p>
+<h3>Minimum useful version</h3><p>Use a separate reviewer or checker with underlying sources, explicit criteria, and independently selected context. Record findings, coverage limits, and exact examined versions.</p>
+<h3>Later capability</h3><p>Automated broader checks using separately configured model/prompt/context choices, with evaluated independence and miss/false-alarm measures.</p>
+<h3>Hard prerequisites</h3><p><a href="#cap-02">CAP-02</a>, <a href="#cap-04">CAP-04</a>, <a href="#cap-05">CAP-05</a>, <a href="#cap-13">CAP-13</a></p>
+<h3>Conditional prerequisite</h3><p>Checking a significant change with assigned follow-up: <a href="#cap-16">CAP-16</a>.</p>
+<h3>External prerequisites</h3><p>An independent checker and relevant evidence access are needed. Formal approval remains a separate decision.</p>
+<h3>Acceptance example</h3><p>The outer check catches an affected control or test omitted by the worker and sends a finding to the responsible person.</p>
+<h3>Documented demo precedent</h3><p>Impact assistance and deterministic coherence checks offer components; the documented workflow does not establish a fully independent outer-check design.</p>
+<p><a href="llm-actions.md">Source documentation</a></p></div></details>
+<details class="feature" id="cap-19"><summary><span class="id">CAP-19</span> Suggest missing relationships and unlinked impacts</summary><div class="body"><p class="meta">Supports <a href="#j03">J03</a>, <a href="#j05">J05</a>, <a href="#j07">J07</a>, <a href="#j09">J09</a> · <a href="#p2">P2</a></p>
+<p class="meta">Inputs: CHANGE, SRC, SYS, SUB, CTRL, TEST, LINK, METHOD. Outputs: LINK, REVIEW.</p>
+<h3>Minimum useful version</h3><p>Search supplied records beyond known links and propose cited possible relationships/impacts; people confirm or reject them.</p>
+<h3>Later capability</h3><p>Improved retrieval and evaluations that measure consequential misses and unhelpful suggestions.</p>
+<h3>Hard prerequisites</h3><p><a href="#cap-03">CAP-03</a>, <a href="#cap-05">CAP-05</a>, <a href="#cap-13">CAP-13</a>, <a href="#cap-04">CAP-04</a></p>
+<h3>External prerequisites</h3><p>A representative evidence corpus, review criteria, and access to records outside the current linked neighborhood.</p>
+<h3>Acceptance example</h3><p>A relevant label outside the confirmed graph appears as a possible impact and stays provisional until reviewed.</p>
+<h3>Documented demo precedent</h3><p>Semantic impact candidates are documented; similarity remains distinct from controlled traceability.</p>
+<p><a href="llm-actions.md">Source documentation</a></p></div></details>
+<details class="feature" id="cap-20"><summary><span class="id">CAP-20</span> Detect source and implementation drift</summary><div class="body"><p class="meta">Supports <a href="#j01">J01</a>, <a href="#j04">J04</a>, <a href="#j09">J09</a>, <a href="#j13">J13</a> · <a href="#p2">P2</a></p>
+<p class="meta">Inputs: SRC, WORK, CODE, RUN, BASE. Outputs: SRC, CHANGE, REVIEW.</p>
+<h3>Minimum useful version</h3><p>Compare captured old/new observations, distinguish duplicates from material changes, and route meaningful drift to review without rewriting accepted records.</p>
+<h3>Later capability</h3><p>Continuous scoped observation and recoverable synchronization.</p>
+<h3>Hard prerequisites</h3><p><a href="#cap-02">CAP-02</a>, <a href="#cap-06">CAP-06</a>, <a href="#cap-16">CAP-16</a></p>
+<h3>Conditional prerequisite</h3><p>Observation runs unattended: <a href="#cap-39">CAP-39</a>.</p>
+<h3>External prerequisites</h3><p>The previous observed revision and current source access must be available.</p>
+<h3>Acceptance example</h3><p>A changed transcript or commit creates review work while the prior requirement and baseline retain their original basis.</p>
+<h3>Documented demo precedent</h3><p>Source-revision drift is documented; live work-system observations are broader planned work.</p>
+<p><a href="system-architecture.md">Source documentation</a></p></div></details>
+<details class="feature" id="cap-21"><summary><span class="id">CAP-21</span> Connect design, work, code, and builds</summary><div class="body"><p class="meta">Supports <a href="#j04">J04</a>, <a href="#j07">J07</a>, <a href="#j09">J09</a>, <a href="#j11">J11</a>, <a href="#j13">J13</a> · <a href="#p3">P3</a></p>
+<p class="meta">Inputs: SYS, SUB, ARCH, DESIGN, WORK, CODE, LINK. Outputs: ARCH, DESIGN, WORK, CODE, LINK.</p>
+<h3>Minimum useful version</h3><p>Author or reference design records and manually associate requirement/component IDs, tasks, commits, PRs, and builds with reviewed link meanings.</p>
+<h3>Later capability</h3><p>Assisted as-built comparison and synchronized implementation references.</p>
+<h3>Hard prerequisites</h3><p><a href="#cap-02">CAP-02</a>, <a href="#cap-03">CAP-03</a>, <a href="#cap-14">CAP-14</a></p>
+<h3>External prerequisites</h3><p>Access to the selected work/repository/build systems and agreement on design granularity.</p>
+<h3>Acceptance example</h3><p>A reviewer can identify the design rationale, work item, and exact implementation revision associated with a requirement.</p>
+<h3>Documented demo precedent</h3><p>Component evidence exists in the product model; live repository/work-tracker connections remain planned in the documentation.</p>
+<p><a href="product-architecture.md">Source documentation</a></p></div></details>
+<details class="feature" id="cap-22"><summary><span class="id">CAP-22</span> Observe work-tracker records</summary><div class="body"><p class="meta">Supports <a href="#j04">J04</a>, <a href="#j09">J09</a>, <a href="#j13">J13</a> · <a href="#p-in">P-IN</a></p>
+<p class="meta">Inputs: WORK, SRC. Outputs: WORK, SRC.</p>
+<h3>Minimum useful version</h3><p>Capture a selected ticket revision, assignment/state, and controlled-record references using a defined mapping.</p>
+<h3>Later capability</h3><p>Event-driven capture and deliberate exchange of follow-up tasks without duplicating product truth.</p>
+<h3>Hard prerequisites</h3><p><a href="#cap-02">CAP-02</a>, <a href="#cap-06">CAP-06</a></p>
+<h3>Conditional prerequisite</h3><p>Updates should create drift review: <a href="#cap-20">CAP-20</a>.</p>
+<h3>Conditional prerequisite</h3><p>Capture runs unattended: <a href="#cap-39">CAP-39</a>.</p>
+<h3>External prerequisites</h3><p>Select the tracker, access, field mapping, and task-state authority.</p>
+<h3>Acceptance example</h3><p>A ticket update becomes an observation; moving a ticket to Done does not accept a requirement.</p>
+<h3>Documented demo precedent</h3><p>Fixture-backed work observations are planned in WP-40; no live connector is established here.</p>
+<p><a href="delivery-plan.md">Source documentation</a></p></div></details>
+<details class="feature" id="cap-23"><summary><span class="id">CAP-23</span> Observe repository and PR revisions</summary><div class="body"><p class="meta">Supports <a href="#j04">J04</a>, <a href="#j09">J09</a>, <a href="#j13">J13</a> · <a href="#p-in">P-IN</a></p>
+<p class="meta">Inputs: CODE, SRC. Outputs: CODE, SRC.</p>
+<h3>Minimum useful version</h3><p>Capture exact commits, paths, PR decisions, and build references with origin and mapping metadata.</p>
+<h3>Later capability</h3><p>Scoped event handling and assisted comparison between intended and observed implementation.</p>
+<h3>Hard prerequisites</h3><p><a href="#cap-02">CAP-02</a>, <a href="#cap-06">CAP-06</a></p>
+<h3>Conditional prerequisite</h3><p>Changes should create drift review: <a href="#cap-20">CAP-20</a>.</p>
+<h3>Conditional prerequisite</h3><p>Capture runs unattended: <a href="#cap-39">CAP-39</a>.</p>
+<h3>External prerequisites</h3><p>Select repository/PR access and the observation scope; code presence does not establish product intent.</p>
+<h3>Acceptance example</h3><p>A changed threshold is associated with its commit and relevant evidence without silently changing a requirement.</p>
+<h3>Documented demo precedent</h3><p>Repository observation is described as planned product direction.</p>
+<p><a href="product-architecture.md">Source documentation</a></p></div></details>
+<details class="feature" id="cap-24"><summary><span class="id">CAP-24</span> Capture CI executions and report evidence</summary><div class="body"><p class="meta">Supports <a href="#j07">J07</a>, <a href="#j11">J11</a>, <a href="#j13">J13</a> · <a href="#p-in">P-IN</a></p>
+<p class="meta">Inputs: CODE, TEST, RUN, SRC. Outputs: RUN, SRC, REVIEW.</p>
+<h3>Minimum useful version</h3><p>Import a run/report bundle with exact build/test references, provenance, result checks, and file integrity; retain the execution and its review separately.</p>
+<h3>Later capability</h3><p>A selected live CI connection with authenticated run observations and recoverable report capture.</p>
+<h3>Hard prerequisites</h3><p><a href="#cap-02">CAP-02</a>, <a href="#cap-06">CAP-06</a>, <a href="#cap-26">CAP-26</a></p>
+<h3>Conditional prerequisite</h3><p>Capture runs unattended: <a href="#cap-39">CAP-39</a>.</p>
+<h3>External prerequisites</h3><p>Agree CI report formats, required checks, test/build mappings, and read access.</p>
+<h3>Acceptance example</h3><p>A green pipeline from a different commit cannot provide current evidence for the proposed build.</p>
+<h3>Documented demo precedent</h3><p>Manual verified GitHub Actions bundle import is documented; a live CI connector is not established.</p>
+<p><a href="delivery-plan.md">Source documentation</a></p></div></details>
+<details class="feature" id="cap-25"><summary><span class="id">CAP-25</span> Run checks in normal PR and work-item workflows</summary><div class="body"><p class="meta">Supports <a href="#j04">J04</a>, <a href="#j07">J07</a>, <a href="#j09">J09</a>, <a href="#j13">J13</a> · <a href="#p3">P3</a></p>
+<p class="meta">Inputs: WORK, CODE, CHANGE, METHOD. Outputs: REVIEW, CHANGE.</p>
+<h3>Minimum useful version</h3><p>Provide an explicit command/action from the chosen developer workflow that checks named revisions and reports findings there with evidence links.</p>
+<h3>Later capability</h3><p>Event-triggered checks and agreed tool-native gates for defined significant changes.</p>
+<h3>Hard prerequisites</h3><p><a href="#cap-16">CAP-16</a>, <a href="#cap-18">CAP-18</a></p>
+<h3>Conditional prerequisite</h3><p>Checks run unattended: <a href="#cap-39">CAP-39</a>.</p>
+<h3>Conditional prerequisite</h3><p>Checks use captured PR context: <a href="#cap-23">CAP-23</a>.</p>
+<h3>External prerequisites</h3><p>Select the event/command surface, criteria, write permissions for results, and ownership of any gate.</p>
+<h3>Acceptance example</h3><p>A PR author sees independent requirement/risk/test findings before the significant change proceeds.</p>
+<h3>Documented demo precedent</h3><p>Thin developer-tool controls are identified as a gap in the charter alignment notes.</p>
+<p><a href="sdlc-charter-alignment.md">Source documentation</a></p></div></details>
+<details class="feature" id="cap-26"><summary><span class="id">CAP-26</span> Manage verification plans, executions, and dispositions</summary><div class="body"><p class="meta">Supports <a href="#j07">J07</a>, <a href="#j09">J09</a>, <a href="#j11">J11</a> · <a href="#p3">P3</a></p>
+<p class="meta">Inputs: SYS, SUB, ARCH, DESIGN, CTRL, TEST, CODE, LINK. Outputs: TEST, RUN, DEFECT, REVIEW, LINK.</p>
+<h3>Minimum useful version</h3><p>Maintain a test plan at a named V-model level, link its criterion to the checked item, record an exact execution/configuration, and review the outcome.</p>
+<h3>Later capability</h3><p>More execution formats, regression selection, suite-level coverage, and stale-evidence detection.</p>
+<h3>Hard prerequisites</h3><p><a href="#cap-02">CAP-02</a>, <a href="#cap-03">CAP-03</a>, <a href="#cap-04">CAP-04</a>, <a href="#cap-14">CAP-14</a></p>
+<h3>External prerequisites</h3><p>Test owners, criteria, build/environment identity, and access to original execution evidence.</p>
+<h3>Acceptance example</h3><p>A failed execution creates an anomaly; a rerun is a new execution and does not erase the failure.</p>
+<h3>Documented demo precedent</h3><p>WP-20A test-plan/execution/review controls are documented at fictional prototype scope.</p>
+<p><a href="delivery-plan.md">Source documentation</a></p></div></details>
+<details class="feature" id="cap-27"><summary><span class="id">CAP-27</span> Support risk analysis, controls, and residual-risk review</summary><div class="body"><p class="meta">Supports <a href="#j05">J05</a>, <a href="#j03">J03</a>, <a href="#j07">J07</a>, <a href="#j11">J11</a>, <a href="#j12">J12</a> · <a href="#p-r">P-R</a></p>
+<p class="meta">Inputs: SCOPE, HAZ, CTRL, RUN, VR, RISK, LINK. Outputs: HAZ, CTRL, RISK, LINK, REVIEW.</p>
+<h3>Minimum useful version</h3><p>Maintain or reference risk records and controls, their requirement/test links, supporting evidence, and named risk decisions.</p>
+<h3>Later capability</h3><p>Domain-specific analysis forms, control effectiveness checks, and broader risk-change assistance.</p>
+<h3>Hard prerequisites</h3><p><a href="#cap-02">CAP-02</a>, <a href="#cap-03">CAP-03</a>, <a href="#cap-04">CAP-04</a>, <a href="#cap-14">CAP-14</a></p>
+<h3>External prerequisites</h3><p>Risk owners, criteria, relevant analyses, and supporting evidence appropriate to the selected product scope.</p>
+<h3>Acceptance example</h3><p>Changing a control exposes the requirement/test evidence and residual-risk decision that need review.</p>
+<h3>Documented demo precedent</h3><p>Hazard/control evidence and WP-20B residual-risk decisions are documented; a complete risk authoring system is broader work.</p>
+<p><a href="delivery-plan.md">Source documentation</a></p></div></details>
+<details class="feature" id="cap-28"><summary><span class="id">CAP-28</span> Support tasks, UI requirements, and usability evidence</summary><div class="body"><p class="meta">Supports <a href="#j06">J06</a>, <a href="#j02">J02</a>, <a href="#j03">J03</a>, <a href="#j05">J05</a>, <a href="#j08">J08</a> · <a href="#p-u">P-U</a></p>
+<p class="meta">Inputs: USE, NEED, HAZ, SUB, VP, VR. Outputs: USE, SUB, VP, VR, LINK, REVIEW.</p>
+<h3>Minimum useful version</h3><p>Maintain or reference user tasks, critical tasks, UI requirements, study versions, and resulting review actions.</p>
+<h3>Later capability</h3><p>Dedicated formative/summative workflow and assisted use-related coverage checks.</p>
+<h3>Hard prerequisites</h3><p><a href="#cap-02">CAP-02</a>, <a href="#cap-04">CAP-04</a>, <a href="#cap-14">CAP-14</a></p>
+<h3>External prerequisites</h3><p>Usability owner, task identities, study evidence, and applicability to the selected scope.</p>
+<h3>Acceptance example</h3><p>A critical task can be followed through the UI requirement to its evaluation outcome.</p>
+<h3>Documented demo precedent</h3><p>General clinical/usability evidence is in the product model; a dedicated usability workflow is not established.</p>
+<p><a href="product-architecture.md">Source documentation</a></p></div></details>
+<details class="feature" id="cap-29"><summary><span class="id">CAP-29</span> Support validation and claim-evidence review</summary><div class="body"><p class="meta">Supports <a href="#j08">J08</a>, <a href="#j02">J02</a>, <a href="#j05">J05</a>, <a href="#j11">J11</a>, <a href="#j12">J12</a> · <a href="#p-v">P-V</a></p>
+<p class="meta">Inputs: NEED, SCOPE, CLAIM, VP, VR, CODE. Outputs: VP, VR, CLAIM, LINK, REVIEW.</p>
+<h3>Minimum useful version</h3><p>Maintain or reference protocols/results per need or claim, their evaluation configuration, limitations, and review decisions.</p>
+<h3>Later capability</h3><p>Dedicated study/evidence-package workflows and domain-specific coverage checks.</p>
+<h3>Hard prerequisites</h3><p><a href="#cap-02">CAP-02</a>, <a href="#cap-04">CAP-04</a>, <a href="#cap-14">CAP-14</a></p>
+<h3>Conditional prerequisite</h3><p>A usability evaluation supplies validation: <a href="#cap-28">CAP-28</a>.</p>
+<h3>Conditional prerequisite</h3><p>Model/data evidence supplies validation: <a href="#cap-31">CAP-31</a>.</p>
+<h3>External prerequisites</h3><p>Validation/domain owners, criteria, population/scenario scope, and original evaluation evidence.</p>
+<h3>Acceptance example</h3><p>A claim unsupported by the selected study remains an unresolved finding even if system tests pass.</p>
+<h3>Documented demo precedent</h3><p>Clinical evidence and validation links appear in the product model; a full validation workflow is not established.</p>
+<p><a href="product-architecture.md">Source documentation</a></p></div></details>
+<details class="feature" id="cap-30"><summary><span class="id">CAP-30</span> Author and review labelling and instructions</summary><div class="body"><p class="meta">Supports <a href="#j03">J03</a>, <a href="#j05">J05</a>, <a href="#j08">J08</a>, <a href="#j11">J11</a>, <a href="#j12">J12</a> · <a href="#p4">P4</a></p>
+<p class="meta">Inputs: SUB, CLAIM, RISK, LABEL, LINK. Outputs: LABEL, LINK, REVIEW.</p>
+<h3>Minimum useful version</h3><p>Maintain controlled label content with source requirements, supported claims, limitations, risk disclosures, and separate review.</p>
+<h3>Later capability</h3><p>Template-assisted label authoring, cross-version comparison, and broader consistency checks.</p>
+<h3>Hard prerequisites</h3><p><a href="#cap-02">CAP-02</a>, <a href="#cap-04">CAP-04</a>, <a href="#cap-14">CAP-14</a></p>
+<h3>Conditional prerequisite</h3><p>Risk disclosure is required: <a href="#cap-27">CAP-27</a>.</p>
+<h3>Conditional prerequisite</h3><p>Claims require validation support: <a href="#cap-29">CAP-29</a>.</p>
+<h3>External prerequisites</h3><p>Label owner and applicable claim/risk evidence; the authoritative content home remains provisional.</p>
+<h3>Acceptance example</h3><p>Changing a performance claim identifies the label wording and supporting evidence that must be reconsidered.</p>
+<h3>Documented demo precedent</h3><p>Label evidence/change scenarios are documented; dedicated label authoring remains broader work.</p>
+<p><a href="product-architecture.md">Source documentation</a></p></div></details>
+<details class="feature" id="cap-31"><summary><span class="id">CAP-31</span> Associate model and dataset versions with product evidence</summary><div class="body"><p class="meta">Supports <a href="#j14">J14</a>, <a href="#j04">J04</a>, <a href="#j05">J05</a>, <a href="#j07">J07</a>, <a href="#j08">J08</a>, <a href="#j11">J11</a> · <a href="#p-m">P-M</a></p>
+<p class="meta">Inputs: ML, SCOPE, CODE, TEST, RUN, VR. Outputs: ML, LINK, REVIEW.</p>
+<h3>Minimum useful version</h3><p>Reference dataset/model identities, provenance, partitions, training configuration, locked-test criteria, and the exact build/evaluation using them.</p>
+<h3>Later capability</h3><p>Adapters to selected registries and domain-specific split/performance/change checks.</p>
+<h3>Hard prerequisites</h3><p><a href="#cap-02">CAP-02</a>, <a href="#cap-04">CAP-04</a>, <a href="#cap-14">CAP-14</a></p>
+<h3>External prerequisites</h3><p>An applicable ML scope, accessible artifact versions, and agreed data/model ownership and criteria.</p>
+<h3>Acceptance example</h3><p>A performance report tied to model A does not establish performance of a release containing model B.</p>
+<h3>Documented demo precedent</h3><p>Dataset/model records are in the wider planning map, with no dedicated implemented workflow established here.</p>
+<p><a href="product-architecture.md">Source documentation</a></p></div></details>
+<details class="feature" id="cap-32"><summary><span class="id">CAP-32</span> Review and freeze an exact evidence baseline</summary><div class="body"><p class="meta">Supports <a href="#j09">J09</a>, <a href="#j10">J10</a>, <a href="#j11">J11</a>, <a href="#j12">J12</a> · <a href="#p4">P4</a></p>
+<p class="meta">Inputs: NEED, SYS, SUB, ARCH, LINK, REVIEW, CHANGE. Outputs: BASE, REVIEW.</p>
+<h3>Minimum useful version</h3><p>Select exact evidence/link versions, inspect current decisions and coherence, and record a separate baseline decision while retaining the prior state.</p>
+<h3>Later capability</h3><p>Richer baseline comparison and checks for more evidence families.</p>
+<h3>Hard prerequisites</h3><p><a href="#cap-02">CAP-02</a>, <a href="#cap-04">CAP-04</a>, <a href="#cap-14">CAP-14</a></p>
+<h3>External prerequisites</h3><p>A baseline authority and the evidence scope/decision criteria must be agreed. A bought-tool baseline can supply the capability.</p>
+<h3>Acceptance example</h3><p>A later requirement edit creates new candidate work while documents from the previous baseline remain reproducible.</p>
+<h3>Documented demo precedent</h3><p>Immutable baseline selection, projections, decisions, and retained history are documented.</p>
+<p><a href="authority-model.md">Source documentation</a></p></div></details>
+<details class="feature" id="cap-33"><summary><span class="id">CAP-33</span> Render and review baseline-linked document packages</summary><div class="body"><p class="meta">Supports <a href="#j10">J10</a>, <a href="#j11">J11</a>, <a href="#j12">J12</a> · <a href="#p4">P4</a></p>
+<p class="meta">Inputs: BASE, DOC, REVIEW. Outputs: DOC, REVIEW.</p>
+<h3>Minimum useful version</h3><p>Use an agreed template to assemble a version-identifiable document/package from exact baseline membership, then review completeness.</p>
+<h3>Later capability</h3><p>Governed template versions, automated PDF/DOCX/ZIP outputs, and meaningful redlines.</p>
+<h3>Hard prerequisites</h3><p><a href="#cap-32">CAP-32</a></p>
+<h3>External prerequisites</h3><p>Document owners, required outputs, templates, and access to baseline evidence.</p>
+<h3>Acceptance example</h3><p>A specification identifies the evidence versions it contains and explains differences from the prior output.</p>
+<h3>Documented demo precedent</h3><p>WP-30 controlled snapshots/templates/packages are recorded as local work; this exercise does not revalidate acceptance.</p>
+<p><a href="delivery-plan.md">Source documentation</a></p></div></details>
+<details class="feature" id="cap-34"><summary><span class="id">CAP-34</span> Assemble release evidence and a separate decision</summary><div class="body"><p class="meta">Supports <a href="#j11">J11</a>, <a href="#j10">J10</a>, <a href="#j12">J12</a> · <a href="#p4">P4</a></p>
+<p class="meta">Inputs: BASE, CODE, RUN, VR, RISK, LABEL, DEFECT, DOC, REVIEW. Outputs: REL, REVIEW.</p>
+<h3>Minimum useful version</h3><p>Join the named baseline/build to applicable current support, open-issue dispositions, and required distinct release/transfer decisions.</p>
+<h3>Later capability</h3><p>Automated freshness/readiness checks and richer transfer packages for the selected scope.</p>
+<h3>Hard prerequisites</h3><p><a href="#cap-32">CAP-32</a>, <a href="#cap-21">CAP-21</a>, <a href="#cap-26">CAP-26</a>, <a href="#cap-30">CAP-30</a>, <a href="#cap-04">CAP-04</a></p>
+<h3>Conditional prerequisite</h3><p>Risk acceptance is required for this release: <a href="#cap-27">CAP-27</a>.</p>
+<h3>Conditional prerequisite</h3><p>Validation evidence is required: <a href="#cap-29">CAP-29</a>.</p>
+<h3>Conditional prerequisite</h3><p>A document package is required: <a href="#cap-33">CAP-33</a>.</p>
+<h3>Conditional prerequisite</h3><p>Model/data versions are part of the release: <a href="#cap-31">CAP-31</a>.</p>
+<h3>External prerequisites</h3><p>Agree release scope, required evidence, decision authorities, and the selected release home.</p>
+<h3>Acceptance example</h3><p>A changed test, label, or risk decision makes the relevant readiness assessment subject to recheck.</p>
+<h3>Documented demo precedent</h3><p>WP-20B final-release controls are documented at fictional prototype scope, with specified support and role limits.</p>
+<p><a href="delivery-plan.md">Source documentation</a></p></div></details>
+<details class="feature" id="cap-35"><summary><span class="id">CAP-35</span> Capture corrections and failure feedback</summary><div class="body"><p class="meta">Supports <a href="#j01">J01</a>, <a href="#j02">J02</a>, <a href="#j03">J03</a>, <a href="#j04">J04</a>, <a href="#j05">J05</a>, <a href="#j06">J06</a>, <a href="#j07">J07</a>, <a href="#j08">J08</a>, <a href="#j09">J09</a>, <a href="#j10">J10</a>, <a href="#j11">J11</a>, <a href="#j12">J12</a>, <a href="#j13">J13</a>, <a href="#j14">J14</a>, <a href="#j15">J15</a> · <a href="#p-l">P-L</a></p>
+<p class="meta">Inputs: REVIEW, CHANGE, RUN, DEFECT, SRC, METHOD. Outputs: FB.</p>
+<h3>Minimum useful version</h3><p>Retain before/after, reason, relevant record/source/method versions, and subsequent outcome when someone corrects or rejects work.</p>
+<h3>Later capability</h3><p>Structured failure categories and feedback capture embedded in every review surface.</p>
+<h3>Hard prerequisites</h3><p><a href="#cap-02">CAP-02</a>, <a href="#cap-04">CAP-04</a></p>
+<h3>External prerequisites</h3><p>Agree a small feedback record and responsibility for completing it. Start with human edits and rejections.</p>
+<h3>Acceptance example</h3><p>A reviewer changing an invented threshold records what changed and why, rather than leaving only the final wording.</p>
+<h3>Documented demo precedent</h3><p>Audit and correction histories offer source material; a joined meta-loop feedback workflow is not established.</p>
+<p><a href="authority-model.md">Source documentation</a></p></div></details>
+<details class="feature" id="cap-36"><summary><span class="id">CAP-36</span> Review recurring corrections and failures</summary><div class="body"><p class="meta">Supports <a href="#j15">J15</a>, <a href="#j16">J16</a> · <a href="#p-l">P-L</a></p>
+<p class="meta">Inputs: FB, REVIEW, RUN, DEFECT. Outputs: FB, REVIEW.</p>
+<h3>Minimum useful version</h3><p>A process owner periodically groups feedback, investigates causes, and records proposed improvements; a spreadsheet or simple query can suffice.</p>
+<h3>Later capability</h3><p>Assisted pattern summaries across suitable projects, with access-aware aggregation and follow-up tracking.</p>
+<h3>Hard prerequisites</h3><p><a href="#cap-35">CAP-35</a></p>
+<h3>External prerequisites</h3><p>A named process owner, review cadence, sufficient context, and appropriate access to project feedback.</p>
+<h3>Acceptance example</h3><p>Repeated missing control links lead to an investigation of context selection rather than repeated one-off instructions.</p>
+<h3>Documented demo precedent</h3><p>The loop concept comes from the user&#x27;s framing; a recurring cross-project review workflow is proposed.</p>
+<p><a href="bluebridge-problem-framing.md">Source documentation</a></p></div></details>
+<details class="feature" id="cap-37"><summary><span class="id">CAP-37</span> Evaluate and adopt improved working methods</summary><div class="body"><p class="meta">Supports <a href="#j15">J15</a>, <a href="#j16">J16</a> · <a href="#p-l">P-L</a></p>
+<p class="meta">Inputs: FB, METHOD, REVIEW. Outputs: METHOD, REVIEW.</p>
+<h3>Minimum useful version</h3><p>Propose a versioned prompt/rule/context/tool change, evaluate failure examples and previously correct cases, record adoption, and observe later regressions.</p>
+<h3>Later capability</h3><p>A richer evaluation library, comparisons by method version, and monitored rollout.</p>
+<h3>Hard prerequisites</h3><p><a href="#cap-05">CAP-05</a>, <a href="#cap-35">CAP-35</a>, <a href="#cap-04">CAP-04</a></p>
+<h3>External prerequisites</h3><p>A method owner, representative reviewed examples, evaluation criteria, and an adoption decision.</p>
+<h3>Acceptance example</h3><p>A new context rule catches the missed label while preserving correct previous decisions; it changes future methods without rewriting product records.</p>
+<h3>Documented demo precedent</h3><p>Prompt evaluation and offline regression precedents are documented; continuous meta-loop adoption is broader work.</p>
+<p><a href="prompt-evaluation.md">Source documentation</a></p></div></details>
+<details class="feature" id="cap-38"><summary><span class="id">CAP-38</span> Exchange records and preserve a handover path</summary><div class="body"><p class="meta">Supports <a href="#j01">J01</a>, <a href="#j02">J02</a>, <a href="#j03">J03</a>, <a href="#j04">J04</a>, <a href="#j05">J05</a>, <a href="#j06">J06</a>, <a href="#j07">J07</a>, <a href="#j08">J08</a>, <a href="#j09">J09</a>, <a href="#j10">J10</a>, <a href="#j11">J11</a>, <a href="#j12">J12</a>, <a href="#j13">J13</a>, <a href="#j14">J14</a>, <a href="#j16">J16</a> · <a href="#p0">P0</a></p>
+<p class="meta">Inputs: SRC, NEED, SYS, SUB, LINK, REVIEW, BASE. Outputs: SRC, NEED, SYS, SUB, LINK, REVIEW, BASE.</p>
+<h3>Minimum useful version</h3><p>Define a small import/export contract for the first workflow, preserve IDs/provenance/decisions, and record the accepted target IDs. Manual transfer can suffice.</p>
+<h3>Later capability</h3><p>Selected API adapters, broader history/attachment exchange, and rehearsed migration of scoped record ownership.</p>
+<h3>Hard prerequisites</h3><p><a href="#cap-02">CAP-02</a>, <a href="#cap-03">CAP-03</a>, <a href="#cap-04">CAP-04</a></p>
+<h3>External prerequisites</h3><p>Agree the destination&#x27;s supported format and ownership boundary; confirm access to history and relationships before a handover.</p>
+<h3>Acceptance example</h3><p>Accepted drafts reach the chosen evidence home with their source references and decisions; the team can retrieve them there without a second authoritative copy.</p>
+<h3>Documented demo precedent</h3><p>Document packages and an authority model offer pieces; supplier-neutral exchange and handover are proposed.</p>
+<p><a href="authority-model.md">Source documentation</a></p></div></details>
+<details class="feature" id="cap-39"><summary><span class="id">CAP-39</span> Run background work with visible status and recovery</summary><div class="body"><p class="meta">Supports <a href="#j01">J01</a>, <a href="#j04">J04</a>, <a href="#j07">J07</a>, <a href="#j09">J09</a>, <a href="#j13">J13</a>, <a href="#j15">J15</a> · <a href="#p3">P3</a></p>
+<p class="meta">Inputs: SRC, CHANGE, METHOD, REVIEW. Outputs: SRC, CHANGE, REVIEW.</p>
+<h3>Minimum useful version</h3><p>Give unattended capture/check operations durable identities, explicit queued/running/failed/completed states, bounded retries, duplicate handling, and a recovery path.</p>
+<h3>Later capability</h3><p>Broader job coordination, concurrency protection, cost limits, and operational monitoring.</p>
+<h3>Hard prerequisites</h3><p><a href="#cap-02">CAP-02</a>, <a href="#cap-05">CAP-05</a></p>
+<h3>External prerequisites</h3><p>Agree operating environment, ownership of failed work, and recovery/retention expectations.</p>
+<h3>Acceptance example</h3><p>A connector retry captures the same source revision once; a failed check remains visible and cannot be mistaken for a passing review.</p>
+<h3>Documented demo precedent</h3><p>Run failures are documented; durable jobs/recovery and related production foundations are deferred in the delivery plan.</p>
+<p><a href="delivery-plan.md">Source documentation</a></p></div></details>
+<footer><a href="bluebridge-feature-map.md">Full planning reference</a> · <a href="bluebridge-feature-roadmap.drawio">Editable package diagram</a> · <a href="bluebridge-jobs-map.html">Jobs and information-flow map</a> · <a href="bluebridge-estimation.md">First estimation pass</a><p>Source basis: user discussion, canonical job definitions, and local prototype documentation. Documented demo precedents have not been revalidated; the first estimate assumes a fresh build. Remaining jobs retain an existing/bought/manual owner throughout the build.</p></footer>
+</main><script>function openTarget(){const e=document.getElementById(location.hash.slice(1));if(e&&e.tagName==='DETAILS'){e.open=true;requestAnimationFrame(()=>e.scrollIntoView({block:'start'}));}}window.addEventListener('hashchange',openTarget);openTarget();</script></body></html>

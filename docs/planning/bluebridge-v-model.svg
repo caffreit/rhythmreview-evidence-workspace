@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1210" viewBox="0 0 1800 1210" role="img" aria-labelledby="v-model-title v-model-desc">
+<title id="v-model-title">1. Jobs and evidence across the V model</title>
+<desc id="v-model-desc">Working map · provisional record homes · arrows describe information use, not automatic approval</desc>
+<defs><marker id="arrow-v-model" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#667683"/></marker></defs>
+<rect width="1800" height="1210" fill="white"/>
+<text x="35" y="40" font-family="Arial,sans-serif" font-size="25" font-weight="bold" fill="#223746">1. Jobs and evidence across the V model</text>
+<text x="35" y="70" font-family="Arial,sans-serif" font-size="16" fill="#52616b">Working map · provisional record homes · arrows describe information use, not automatic approval</text>
+<polyline points="450,265 1350,265" fill="none" stroke="#667683" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#arrow-v-model)"/>
+<polyline points="550,385 1250,385" fill="none" stroke="#667683" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#arrow-v-model)"/>
+<polyline points="650,505 1150,505" fill="none" stroke="#667683" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#arrow-v-model)"/>
+<polyline points="750,625 1050,625" fill="none" stroke="#667683" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#arrow-v-model)"/>
+<polyline points="850,745 950,745" fill="none" stroke="#667683" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#arrow-v-model)"/>
+<polyline points="300,325 400,340" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-v-model)"/>
+<polyline points="400,445 500,460" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-v-model)"/>
+<polyline points="500,565 600,580" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-v-model)"/>
+<polyline points="600,685 700,700" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-v-model)"/>
+<polyline points="700,805 920,825" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-v-model)"/>
+<polyline points="1090,860 1270,860 1270,745 1250,745" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-v-model)"/>
+<polyline points="300,185 300,220" fill="none" stroke="#667683" stroke-width="1.8" marker-end="url(#arrow-v-model)"/>
+<a href="#j02" aria-label="Read J02: User needs">
+<rect x="150" y="220" width="300" height="105" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="162" y="245" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">User needs</text>
+<text x="162" y="272" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">NEED · J02</text>
+<text x="162" y="292" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">User, outcome, intended use</text>
+</a>
+<a href="#j08" aria-label="Read J08: Validation and clinical evidence">
+<rect x="1350" y="220" width="300" height="105" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="1362" y="245" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Validation and clinical</text>
+<text x="1362" y="266" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">evidence</text>
+<text x="1362" y="293" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">VP / VR · J08</text>
+<text x="1362" y="313" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Protocol → per-need / claim results</text>
+</a>
+<a href="#j03" aria-label="Read J03: Product / system requirements">
+<rect x="250" y="340" width="300" height="105" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="262" y="365" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Product / system requirements</text>
+<text x="262" y="392" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">SYS · J03</text>
+<text x="262" y="412" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Behaviour and acceptance criteria</text>
+</a>
+<a href="#j07" aria-label="Read J07: System verification">
+<rect x="1250" y="340" width="300" height="105" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="1262" y="365" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">System verification</text>
+<text x="1262" y="392" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">TEST / RUN · J07</text>
+<text x="1262" y="412" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Plan → execution → disposition</text>
+</a>
+<a href="#j03" aria-label="Read J03: SW / HW / UI / label requirements">
+<rect x="350" y="460" width="300" height="105" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="362" y="485" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">SW / HW / UI / label</text>
+<text x="362" y="506" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">requirements</text>
+<text x="362" y="533" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">SUB · J03</text>
+<text x="362" y="553" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Allocation and control criteria</text>
+</a>
+<a href="#j07" aria-label="Read J07: Subsystem verification">
+<rect x="1150" y="460" width="300" height="105" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="1162" y="485" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Subsystem verification</text>
+<text x="1162" y="512" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">TEST / RUN · J07</text>
+<text x="1162" y="532" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Plan → execution → disposition</text>
+</a>
+<a href="#j04" aria-label="Read J04: Architecture and components">
+<rect x="450" y="580" width="300" height="105" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="462" y="605" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Architecture and components</text>
+<text x="462" y="632" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">ARCH · J04</text>
+<text x="462" y="652" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Components and interfaces</text>
+</a>
+<a href="#j07" aria-label="Read J07: Integration verification">
+<rect x="1050" y="580" width="300" height="105" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="1062" y="605" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Integration verification</text>
+<text x="1062" y="632" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">TEST / RUN · J07</text>
+<text x="1062" y="652" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Plan → execution → disposition</text>
+</a>
+<a href="#j04" aria-label="Read J04: Detailed design">
+<rect x="550" y="700" width="300" height="105" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="562" y="725" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Detailed design</text>
+<text x="562" y="752" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">DESIGN · J04</text>
+<text x="562" y="772" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Units, decisions, rationale</text>
+</a>
+<a href="#j07" aria-label="Read J07: Unit verification">
+<rect x="950" y="700" width="300" height="105" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="962" y="725" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Unit verification</text>
+<text x="962" y="752" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">TEST / RUN · J07</text>
+<text x="962" y="772" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Plan → execution → disposition</text>
+</a>
+<a href="#j04" aria-label="Read J04: Implementation work and exact build">
+<rect x="750" y="825" width="340" height="95" rx="5" fill="#f4f4f2" stroke="#71776f"/>
+<text x="762" y="850" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Implementation work and exact build</text>
+<text x="762" y="877" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">WORK / CODE · J04</text>
+<text x="762" y="897" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Task, commit, PR, build, artifacts</text>
+</a>
+<a href="#j01" aria-label="Read J01: Capture information where work happens">
+<rect x="150" y="105" width="650" height="80" rx="5" fill="#f4f4f2" stroke="#71776f"/>
+<text x="162" y="130" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Capture information where work happens</text>
+<text x="162" y="157" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">SRC / CLAR · J01</text>
+<text x="162" y="177" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Slack, meetings, documents, design notes, developer observations</text>
+</a>
+<a href="#j16" aria-label="Read J16: Agree scope and evidence ownership">
+<rect x="920" y="105" width="730" height="80" rx="5" fill="#faf3e6" stroke="#977642"/>
+<text x="932" y="130" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Agree scope and evidence ownership</text>
+<text x="932" y="157" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">SCOPE · J16 · owners, criteria, methods</text>
+<text x="932" y="177" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Internal, bought, and existing tool homes remain provisional</text>
+</a>
+<rect x="150" y="960" width="850" height="125" rx="5" fill="#eff5f9" stroke="#41637c"/>
+<text x="162" y="985" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Inputs and evidence that span the V</text>
+<text x="162" y="1012" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Risk J05 · HAZ / CTRL / RISK → requirements, tests, labels, release</text>
+<text x="162" y="1032" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Usability J06 · USE → needs, UI requirements, validation</text>
+<text x="162" y="1052" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Dataset / model J14, if applicable · ML → build, tests, performance evidence</text>
+<a href="#j10" aria-label="Read J10: Reviewed states and usable outputs">
+<rect x="1050" y="960" width="600" height="125" rx="5" fill="#faf3e6" stroke="#977642"/>
+<text x="1062" y="985" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Reviewed states and usable outputs</text>
+<text x="1062" y="1012" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Baseline J10 · BASE</text>
+<text x="1062" y="1032" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Documents / matrices / packages J12 · DOC</text>
+<text x="1062" y="1052" font-family="Arial,sans-serif" font-size="15" fill="#384d5b">Release / transfer J11 · REL</text>
+</a>
+<rect x="830.1" y="239" width="139.8" height="20" fill="white"/>
+<text x="900.0" y="253" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">defines validation</text>
+<rect x="823.0" y="359" width="154.0" height="20" fill="white"/>
+<text x="900.0" y="373" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">defines system tests</text>
+<rect x="812.35" y="479" width="175.29999999999998" height="20" fill="white"/>
+<text x="900.0" y="493" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">defines subsystem tests</text>
+<rect x="805.25" y="599" width="189.5" height="20" fill="white"/>
+<text x="900.0" y="613" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">defines integration tests</text>
+<rect x="858.5" y="719" width="83.0" height="20" fill="white"/>
+<text x="900.0" y="733" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">unit tests</text>
+<rect x="728.5" y="797" width="83.0" height="20" fill="white"/>
+<text x="770" y="811" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">implements</text>
+<rect x="1116.55" y="871" width="146.9" height="20" fill="white"/>
+<text x="1190" y="885" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">execution reference</text>
+<rect x="342.3" y="193" width="111.39999999999999" height="20" fill="white"/>
+<text x="398" y="207" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#465966">source support</text>
+<text x="150" y="1120" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#223746">Continuous work around every level</text>
+<text x="150" y="1146" font-family="Arial,sans-serif" font-size="15" fill="#52616b">J09 change impact · J13 drift capture · J15 method improvement. Inner checks assist the worker; outer checks independently inspect the result and wider evidence. See views 2 and 3 for the process and</text>
+<text x="150" y="1166" font-family="Arial,sans-serif" font-size="15" fill="#52616b">feedback paths.</text>
+</svg>
