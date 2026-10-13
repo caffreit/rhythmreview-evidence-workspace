@@ -1,0 +1,110 @@
+{
+  "status": "Discussion proposal, not a delivery commitment or measured effort assessment",
+  "common": ["CAP-01", "CAP-04", "CAP-38", "CAP-35"],
+  "common_enhancements": ["CAP-36", "CAP-37"],
+  "tasks": [
+    {
+      "id": "needs", "number": 1, "short": "Needs and requirements", "title": "Define and maintain product needs and requirements", "jobs": ["J01", "J02", "J03"],
+      "outcome": "A colleague turns source material into reviewed needs and testable requirements with supporting evidence and recorded decisions.",
+      "remains": "People resolve domain ambiguity, independently inspect the evidence and decide what to accept.",
+      "subtasks": [
+        {"title": "Interpret source material and agree the needs", "support": "Capture exact passages, track clarification questions and produce cited candidate needs for review.", "caps": ["CAP-06", "CAP-10", "CAP-11", "CAP-13", "CAP-18"]},
+        {"title": "Derive and review testable requirements", "support": "Draft requirements from reviewed needs, check and revise them, and separately review their proposed links.", "caps": ["CAP-11", "CAP-12", "CAP-14", "CAP-18"]},
+        {"title": "Maintain accepted versions and trace coverage", "support": "Retain decisions and versions, inspect defined coverage gaps and retrieve the accepted records.", "caps": ["CAP-02", "CAP-04", "CAP-14", "CAP-15", "CAP-38"]}
+      ],
+      "conditional": [{"caps": ["CAP-27"], "when": "Risk controls supply requirement inputs."}, {"caps": ["CAP-28"], "when": "User-task and usability evidence supplies requirement inputs."}],
+      "enhancements": [{"caps": ["CAP-07", "CAP-08", "CAP-09"], "when": "Add document extraction or selected live source capture."}, {"caps": ["CAP-19", "CAP-20"], "when": "Add missing-link suggestions or ongoing drift detection."}]
+    },
+    {
+      "id": "risk", "number": 2, "short": "Risk and controls", "title": "Assess and manage product risks", "jobs": ["J05"],
+      "outcome": "A risk reviewer maintains risks and controls, inspects their supporting evidence and records a residual-risk decision.",
+      "remains": "Domain experts analyse hazards, judge control effectiveness and make the risk decision. Record support does not automate that judgement.",
+      "subtasks": [
+        {"title": "Analyse hazards, define controls and assess residual risk", "support": "Maintain or reference risk analyses, assumptions, controls, supporting evidence and named decisions.", "caps": ["CAP-27", "CAP-13", "CAP-18"]},
+        {"title": "Review evidence of implementation and effectiveness", "support": "Connect control requirements to implementation and reviewed test executions, with evidence gaps visible.", "caps": ["CAP-27", "CAP-21", "CAP-26", "CAP-15", "CAP-18"]},
+        {"title": "Maintain links and coordinate risk-related updates", "support": "Review risk-to-requirement/test links, trace known change consequences and assign follow-up.", "caps": ["CAP-27", "CAP-14", "CAP-16", "CAP-17"]}
+      ],
+      "conditional": [{"caps": ["CAP-28"], "when": "Use-related risk evidence is relevant."}, {"caps": ["CAP-29"], "when": "Validation results support the risk decision."}, {"caps": ["CAP-31"], "when": "Model or dataset evidence is relevant."}],
+      "enhancements": [{"caps": ["CAP-19"], "when": "Suggest relationships missing from the recorded graph."}]
+    },
+    {
+      "id": "usability", "number": 3, "short": "Tasks and usability", "title": "Design and evaluate how people use the product", "jobs": ["J06"],
+      "outcome": "A colleague follows a critical user task through UI requirements, relevant risks, study findings and resulting actions.",
+      "remains": "People design the interface, conduct studies and interpret the findings. The tool organises the evidence and review workflow.",
+      "subtasks": [
+        {"title": "Interpret study findings and decide what changes", "support": "Reference study versions, review the evidence and record owned changes arising from the findings.", "caps": ["CAP-28", "CAP-13", "CAP-18", "CAP-16"]},
+        {"title": "Define critical tasks, UI requirements and controls", "support": "Maintain task identities and draft/review UI requirements using selected task context.", "caps": ["CAP-28", "CAP-11", "CAP-14"]},
+        {"title": "Connect tasks, evaluations and follow-up", "support": "Inspect task-to-requirement/evaluation coverage and retain the links and decisions.", "caps": ["CAP-28", "CAP-14", "CAP-15"]}
+      ],
+      "conditional": [{"caps": ["CAP-27"], "when": "Critical tasks involve use-related risks and controls."}, {"caps": ["CAP-29"], "when": "The usability evaluation also supports validation of a need or claim."}],
+      "enhancements": []
+    },
+    {
+      "id": "verification", "number": 4, "short": "Implementation and tests", "title": "Demonstrate that implementation meets requirements", "jobs": ["J04", "J07"],
+      "outcome": "A reviewer follows a requirement through design, an exact build, test execution and the recorded disposition of its result.",
+      "remains": "Engineers implement the product and execute tests. People investigate failures and judge whether the evidence is sufficient.",
+      "subtasks": [
+        {"title": "Review results, investigate failures and decide follow-up", "support": "Preserve executions and anomalies, independently review results and assign updates or retesting.", "caps": ["CAP-26", "CAP-13", "CAP-18", "CAP-16"]},
+        {"title": "Define verification plans and acceptance criteria", "support": "Maintain plans at the selected test level, link criteria to checked items and inspect coverage gaps.", "caps": ["CAP-26", "CAP-14", "CAP-15"]},
+        {"title": "Connect exact builds, executions and supporting evidence", "support": "Associate requirements/design with code/build references and the relevant test configurations and results.", "caps": ["CAP-21", "CAP-26", "CAP-14"]}
+      ],
+      "conditional": [{"caps": ["CAP-27"], "when": "Tests verify risk-control implementation or effectiveness."}, {"caps": ["CAP-31"], "when": "The build includes a model with dataset-specific evidence."}],
+      "enhancements": [{"caps": ["CAP-22", "CAP-23", "CAP-24"], "when": "Capture tracker, repository or CI evidence automatically."}, {"caps": ["CAP-25", "CAP-20"], "when": "Add checks in normal developer work and drift review."}, {"caps": ["CAP-39"], "when": "Operate the selected workflow unattended."}]
+    },
+    {
+      "id": "validation", "number": 5, "short": "Needs and claim evidence", "title": "Demonstrate that the product meets needs and supports claims", "jobs": ["J08"],
+      "outcome": "A reviewer can explain which evaluation evidence supports a need or claim, for which product configuration, and with what limitations.",
+      "remains": "People design and conduct evaluations, collect new evidence and decide whether conclusions are justified.",
+      "subtasks": [
+        {"title": "Interpret results, limitations and unresolved gaps", "support": "Organise results per need/claim, independently inspect supporting evidence and record conclusions or follow-up.", "caps": ["CAP-29", "CAP-13", "CAP-18", "CAP-16"]},
+        {"title": "Define evaluation plans and criteria", "support": "Maintain or reference protocols, population/scenario scope and the exact evaluation configuration.", "caps": ["CAP-29", "CAP-14"]},
+        {"title": "Maintain the evidence basis of each conclusion", "support": "Retain evidence links and decisions, identify defined coverage gaps and relate the evaluated product version.", "caps": ["CAP-29", "CAP-15", "CAP-21"]}
+      ],
+      "conditional": [{"caps": ["CAP-28"], "when": "Usability evaluation supplies validation evidence."}, {"caps": ["CAP-31"], "when": "Model/data evidence supports a need or claim."}, {"caps": ["CAP-27"], "when": "The result requires reconsidering a risk decision."}],
+      "enhancements": []
+    },
+    {
+      "id": "change", "number": 6, "short": "Product changes", "title": "Review and coordinate product changes", "jobs": ["J09", "J13"],
+      "outcome": "A quality colleague reviews a proposed change, sees known impacts and missing context, and coordinates owned updates and reviews.",
+      "remains": "People inspect consequences beyond recorded links, confirm impacts and perform the required product updates and tests.",
+      "subtasks": [
+        {"title": "Determine impacts, including missing relationships", "support": "Assemble relevant evidence, explain known impact paths and provide an independent review path beyond the graph.", "caps": ["CAP-13", "CAP-15", "CAP-16", "CAP-17", "CAP-18"]},
+        {"title": "Coordinate updates, retesting and reviews", "support": "Assign follow-up with owners, reasons and outcomes, then review changed relationships.", "caps": ["CAP-16", "CAP-14"]},
+        {"title": "Record the change and disposition its findings", "support": "Retain old/proposed states, scope and review decisions against exact versions.", "caps": ["CAP-16", "CAP-02", "CAP-04"]}
+      ],
+      "conditional": [{"caps": ["CAP-27"], "when": "Risk records or controls are affected."}, {"caps": ["CAP-21", "CAP-26"], "when": "Implementation or verification evidence is affected."}, {"caps": ["CAP-28"], "when": "User tasks or usability evidence are affected."}, {"caps": ["CAP-29"], "when": "Needs/claim evaluation evidence is affected."}, {"caps": ["CAP-30"], "when": "Labels or instructions are affected. Applicable risk and claim evidence is also needed."}, {"caps": ["CAP-31"], "when": "Models or datasets are affected."}],
+      "enhancements": [{"caps": ["CAP-19"], "when": "Add suggestions for unlinked impacts."}, {"caps": ["CAP-20", "CAP-22", "CAP-23", "CAP-25"], "when": "Trigger review from live changes and checks in developer work."}, {"caps": ["CAP-39"], "when": "Run observations and checks unattended."}]
+    },
+    {
+      "id": "outputs", "number": 7, "short": "Evidence and outputs", "title": "Prepare reviewed evidence, documents and release decisions", "jobs": ["J10", "J11", "J12"],
+      "outcome": "A colleague agrees an exact evidence baseline and produces a reviewable document. Label authoring and release readiness are additional scoped workflows.",
+      "remains": "People resolve substantive evidence issues and make distinct baseline, document, risk and release decisions. Document generation alone does not establish readiness.",
+      "subtasks": [
+        {"title": "Resolve inconsistencies and outstanding evidence issues", "support": "Gather evidence, inspect defined gaps, independently review it and record owned corrections.", "caps": ["CAP-13", "CAP-15", "CAP-18", "CAP-16"]},
+        {"title": "Assemble and review selected documents", "support": "Generate an identifiable specification/report from agreed baseline membership and review completeness.", "caps": ["CAP-32", "CAP-33"]},
+        {"title": "Record an agreed baseline and its decisions", "support": "Retain exact evidence/link versions and a distinct baseline decision. Add release decisions only when release scope is selected.", "caps": ["CAP-32", "CAP-04"]}
+      ],
+      "conditional": [{"caps": ["CAP-30", "CAP-27", "CAP-29"], "when": "Author labels with relevant risk disclosures and supported claims."}, {"caps": ["CAP-34", "CAP-27", "CAP-29"], "when": "Add release support with applicable risk and validation evidence; exact build/test evidence is a prerequisite."}, {"caps": ["CAP-28"], "when": "Usability evidence is required in the selected output or release."}, {"caps": ["CAP-31"], "when": "Model/dataset evidence is part of the selected output or release."}],
+      "enhancements": [{"caps": ["CAP-07"], "when": "Extract source text from documents."}, {"caps": ["CAP-24"], "when": "Capture release-supporting CI evidence automatically."}]
+    },
+    {
+      "id": "models", "number": 8, "short": "Models and datasets", "title": "Manage model and dataset evidence where applicable", "jobs": ["J14"],
+      "outcome": "A reviewer can connect exact model/data versions to the product build, performance evidence and the consequences of a proposed change.",
+      "remains": "Specialists train models, prepare datasets, run evaluations and judge performance and data adequacy.",
+      "subtasks": [
+        {"title": "Assess the consequences of model/data changes", "support": "Reference model/data evidence, trace recorded impacts and retain independent review findings and owned follow-up.", "caps": ["CAP-31", "CAP-13", "CAP-16", "CAP-17", "CAP-18"]},
+        {"title": "Assemble evidence for the exact model and build", "support": "Associate model/data identities with build references and reviewed test/evaluation evidence.", "caps": ["CAP-31", "CAP-21", "CAP-26", "CAP-15"]},
+        {"title": "Maintain version identities and provenance", "support": "Reference dataset origins, partitions, training configuration and the artifact used by each build.", "caps": ["CAP-31", "CAP-02", "CAP-14"]}
+      ],
+      "conditional": [{"caps": ["CAP-27"], "when": "Model performance or data changes affect risk decisions."}, {"caps": ["CAP-29"], "when": "Model evaluation supports product needs or claims."}],
+      "enhancements": [{"caps": ["CAP-23", "CAP-24"], "when": "Automatically capture relevant repository and CI evidence."}]
+    }
+  ],
+  "roadmap": [
+    {"id": "R1", "title": "Review needs and requirements", "tasks": ["needs"], "scope": ["CAP-06", "CAP-10", "CAP-11", "CAP-12", "CAP-13", "CAP-14", "CAP-18"], "outcome": "A representative transcript becomes independently checked, human-reviewed needs and requirements with citations and saved decisions.", "saving": "Less source copying, first-draft preparation and reconstruction of review history.", "boundary": "Start with plain text and selected context. People clarify, revise and accept the outputs. Live capture can follow."},
+    {"id": "R2", "title": "Review one significant product change", "tasks": ["change", "risk"], "scope": ["CAP-15", "CAP-16", "CAP-17", "CAP-18", "CAP-27"], "outcome": "A quality colleague reviews a defined change across known requirements, risk/control references and test evidence, then assigns owned follow-up.", "saving": "Less evidence hunting and manual reconstruction of known impact paths and action lists.", "boundary": "Use a prepared evidence bundle initially. P-R starts with risk/control records and references; broad hazard-authoring assistance and automated unlinked-impact search are further scope."},
+    {"id": "R3", "title": "Connect implementation, tests and controls", "tasks": ["verification", "risk", "change"], "scope": ["CAP-21", "CAP-26", "CAP-27", "CAP-15", "CAP-16"], "outcome": "Reviewers can follow requirements and controls to exact builds, reviewed test executions and anomalies, with follow-up recorded.", "saving": "Less manual reconciliation of build/test identities, control evidence and review status.", "boundary": "Choose a bounded test level and report format first. Test execution and failure investigation remain engineering activities. Adapters are separate increments."},
+    {"id": "R4", "title": "Add selected specialist evaluations", "tasks": ["usability", "validation", "models"], "scope": ["CAP-28", "CAP-29", "CAP-31"], "outcome": "Extend the same review approach to critical tasks, needs/claims or model/data evidence, according to the product scope.", "saving": "Less effort joining study findings and performance evidence to the records and decisions they support.", "boundary": "Select usability, validation and model/data branches independently. Each needs its own evidence examples and acceptance check. Conducting studies and evaluations remains outside record support."},
+    {"id": "R5", "title": "Produce reviewed evidence outputs", "tasks": ["outputs"], "scope": ["CAP-32", "CAP-33"], "outcome": "A colleague selects exact evidence versions, records a baseline decision and produces a reviewed specification or report.", "saving": "Less repeated document assembly and version reconciliation.", "boundary": "Document production can start earlier from a usable baseline. Label authoring and release support require their own evidence scope and distinct decisions; they are not included in this document increment."}
+  ]
+}

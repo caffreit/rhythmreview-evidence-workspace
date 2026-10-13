@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1320 712" role="img" aria-labelledby="st-title st-desc">
+<title id="st-title">Work packages by suggested delivery stage</title>
+<desc id="st-desc">Rows show all eleven work packages. Columns are delivery stages, not time units. P0 sets foundations; the chosen pilot delivers P1 then P2. P3 and P4 extend the workflows. Integrations and native domain workflows are selected as needed. Learning starts with the first workflow. Bar width does not indicate effort or duration.</desc>
+<rect width="1320" height="712" fill="white"/>
+<g font-family="system-ui,Arial,sans-serif">
+<text x="16" y="28" font-size="20" font-weight="600" fill="#334155" text-anchor="start">Suggested delivery sequence</text>
+<text x="16" y="53" font-size="14" font-weight="normal" fill="#334155" text-anchor="start">Work packages by delivery stage. No calendar dates or durations assigned.</text>
+<text x="16" y="105" font-size="13" font-weight="600" fill="#334155" text-anchor="start">Work package</text>
+<text x="328" y="80" font-size="12" font-weight="normal" fill="#64748b" text-anchor="start">Delivery stage</text>
+<rect x="328" y="90" width="243" height="520" fill="#f8fafc"/>
+<text x="449.5" y="109" font-size="12" font-weight="600" fill="#334155" text-anchor="middle">Agree foundations</text>
+<rect x="571" y="90" width="243" height="520" fill="#ffffff"/>
+<text x="692.5" y="109" font-size="12" font-weight="600" fill="#334155" text-anchor="middle">Deliver the first pilot</text>
+<rect x="814" y="90" width="243" height="520" fill="#f8fafc"/>
+<text x="935.5" y="109" font-size="12" font-weight="600" fill="#334155" text-anchor="middle">Extend evidence workflows</text>
+<rect x="1057" y="90" width="243" height="520" fill="#ffffff"/>
+<text x="1178.5" y="109" font-size="12" font-weight="600" fill="#334155" text-anchor="middle">Add scoped release support</text>
+<line x1="16" y1="162" x2="1300" y2="162" stroke="#e2e8f0"/>
+<text x="16" y="148" font-size="13" font-weight="500" fill="#334155" text-anchor="start">P0  Agree the foundations</text>
+<a href="#package-p0"><rect x="336" y="127" width="227" height="29" rx="3" fill="#315d7e"/><text x="348" y="146" font-size="12" font-weight="normal" fill="#ffffff" text-anchor="start">Conventions and exchange</text></a>
+<line x1="16" y1="205" x2="1300" y2="205" stroke="#e2e8f0"/>
+<text x="16" y="191" font-size="13" font-weight="500" fill="#334155" text-anchor="start">P1  Source to reviewed requirements</text>
+<a href="#package-p1"><rect x="579" y="170" width="227" height="29" rx="3" fill="#315d7e"/><text x="591" y="189" font-size="12" font-weight="normal" fill="#ffffff" text-anchor="start">Source to reviewed evidence</text></a>
+<line x1="16" y1="248" x2="1300" y2="248" stroke="#e2e8f0"/>
+<text x="16" y="234" font-size="13" font-weight="500" fill="#334155" text-anchor="start">P2  Trace and change review</text>
+<a href="#package-p2"><rect x="579" y="213" width="227" height="29" rx="3" fill="#315d7e"/><text x="591" y="232" font-size="12" font-weight="normal" fill="#ffffff" text-anchor="start">Trace and change review</text></a>
+<line x1="16" y1="291" x2="1300" y2="291" stroke="#e2e8f0"/>
+<text x="16" y="277" font-size="13" font-weight="500" fill="#334155" text-anchor="start">P3  Implementation and verification</text>
+<a href="#package-p3"><rect x="822" y="256" width="227" height="29" rx="3" fill="#315d7e"/><text x="834" y="275" font-size="12" font-weight="normal" fill="#ffffff" text-anchor="start">Implementation and tests</text></a>
+<line x1="16" y1="334" x2="1300" y2="334" stroke="#e2e8f0"/>
+<text x="16" y="320" font-size="13" font-weight="500" fill="#334155" text-anchor="start">P4  Baselines and outputs</text>
+<a href="#package-p4"><rect x="822" y="299" width="470" height="29" rx="3" fill="#315d7e"/><text x="834" y="318" font-size="12" font-weight="normal" fill="#ffffff" text-anchor="start">Documents, then scoped release support</text></a>
+<line x1="16" y1="377" x2="1300" y2="377" stroke="#e2e8f0"/>
+<text x="16" y="363" font-size="13" font-weight="500" fill="#334155" text-anchor="start">P-IN  Selected integrations</text>
+<a href="#package-p-in"><rect x="579" y="342" width="713" height="29" rx="3" fill="#f8fafc" stroke="#94a3b8" stroke-dasharray="5 4"/><text x="591" y="361" font-size="12" font-weight="normal" fill="#475569" text-anchor="start">Choose and deliver adapters individually</text></a>
+<line x1="16" y1="420" x2="1300" y2="420" stroke="#e2e8f0"/>
+<text x="16" y="406" font-size="13" font-weight="500" fill="#334155" text-anchor="start">P-R  Risk and controls</text>
+<a href="#package-p-r"><rect x="579" y="385" width="713" height="29" rx="3" fill="#f8fafc" stroke="#94a3b8" stroke-dasharray="5 4"/><text x="591" y="404" font-size="12" font-weight="normal" fill="#475569" text-anchor="start">Select native risk workflow when needed</text></a>
+<line x1="16" y1="463" x2="1300" y2="463" stroke="#e2e8f0"/>
+<text x="16" y="449" font-size="13" font-weight="500" fill="#334155" text-anchor="start">P-U  Tasks, UI and usability</text>
+<a href="#package-p-u"><rect x="579" y="428" width="713" height="29" rx="3" fill="#f8fafc" stroke="#94a3b8" stroke-dasharray="5 4"/><text x="591" y="447" font-size="12" font-weight="normal" fill="#475569" text-anchor="start">Select native usability workflow when needed</text></a>
+<line x1="16" y1="506" x2="1300" y2="506" stroke="#e2e8f0"/>
+<text x="16" y="492" font-size="13" font-weight="500" fill="#334155" text-anchor="start">P-V  Validation and claims</text>
+<a href="#package-p-v"><rect x="579" y="471" width="713" height="29" rx="3" fill="#f8fafc" stroke="#94a3b8" stroke-dasharray="5 4"/><text x="591" y="490" font-size="12" font-weight="normal" fill="#475569" text-anchor="start">Select native validation workflow when needed</text></a>
+<line x1="16" y1="549" x2="1300" y2="549" stroke="#e2e8f0"/>
+<text x="16" y="535" font-size="13" font-weight="500" fill="#334155" text-anchor="start">P-M  Models and datasets</text>
+<a href="#package-p-m"><rect x="579" y="514" width="713" height="29" rx="3" fill="#f8fafc" stroke="#94a3b8" stroke-dasharray="5 4"/><text x="591" y="533" font-size="12" font-weight="normal" fill="#475569" text-anchor="start">Select model/data workflow if applicable</text></a>
+<line x1="16" y1="592" x2="1300" y2="592" stroke="#e2e8f0"/>
+<text x="16" y="578" font-size="13" font-weight="500" fill="#334155" text-anchor="start">P-L  Feedback and improvement</text>
+<a href="#package-p-l"><rect x="579" y="557" width="713" height="29" rx="3" fill="#dce9f2"/><text x="591" y="576" font-size="12" font-weight="normal" fill="#243746" text-anchor="start">Capture corrections; evaluate method improvements</text></a>
+<text x="16" y="634" font-size="13" font-weight="normal" fill="#334155" text-anchor="start">Filled bars: suggested core sequence. Dashed bars: select increments. Pale bar: ongoing improvement.</text>
+<text x="16" y="659" font-size="13" font-weight="normal" fill="#334155" text-anchor="start">P1 then P2 is the pilot planning order. P2 can start first with existing records and links.</text>
+<text x="16" y="683" font-size="13" font-weight="normal" fill="#334155" text-anchor="start">P4 documents can start from an external baseline. Required domain evidence must be available from the first relevant workflow.</text>
+<text x="16" y="705" font-size="11" font-weight="normal" fill="#64748b" text-anchor="start">Source: BlueBridge feature map, 9 October 2026. Stage placement is an editorial proposal; bar widths are not estimates.</text>
+</g></svg>
